@@ -1,0 +1,67 @@
+///*------------------------------------*\
+//    #SECONDARY-PANEL
+//\*------------------------------------*/
+
+.secondary-panel {
+  border:        $border--default;
+  width:         100%;
+  border-radius: $border-radius;
+  margin-bottom: 2rem;
+
+  .grid__mobile--overlay & {
+    @media only screen and (max-width: 40rem) {
+      height:        100%;
+      width:         100%;
+      border-radius: 0;
+      margin:        0;
+    }
+  }
+}
+
+.secondary-panel__header {
+  @extend .group;
+  
+  background-color: $color-gray-base;
+  padding:          $spacing-unit--small;
+
+  .grid__mobile--overlay & {
+    @media only screen and (max-width: 40rem) {
+      padding: $spacing-unit;
+    }
+  }
+  
+  >h1 {
+    margin:      0;
+    font-size:   .75rem;
+    font-weight: $font-weight--bold;
+    color:       white;
+  }
+}
+
+.secondary-panel__content {
+  background-color: white;
+
+  .grid__mobile--overlay & {
+    @media only screen and (max-width: 40rem) {
+      height: 100%;
+    }
+  }
+}
+
+.secondary-panel__list {
+  list-style-type: none;
+  padding:         0;
+  margin:          0;
+}
+
+.secondary-panel__item {
+  @extend .group;
+
+  padding:       $spacing-unit--small;
+  font-size:     .75rem;
+  border-bottom: $border--thin;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+}

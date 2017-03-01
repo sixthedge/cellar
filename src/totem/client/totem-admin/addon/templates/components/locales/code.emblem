@@ -1,0 +1,2 @@
+.totem-admin-locales-code class={active:active}
+  a click='"select" code' #{code}

@@ -1,0 +1,55 @@
+if buttons
+
+  if first_button
+    if first_button.route
+      if first_button.model
+        link-to first_button.route first_button.model class='thinkspace-dropdown_link'
+          span.btn.btn-inline.thinkspace-dropdown_split-button class=button_class
+            = first_button.display
+      else
+        link-to first_button.route class='thinkspace-dropdown_link'
+          span.btn.btn-inline.thinkspace-dropdown_split-button class=button_class
+            = first_button.display
+    else
+      a.btn.btn-inline.thinkspace-dropdown_split-button class=button_class click='"_select" first_button'
+        = first_button.display
+
+    a.btn.thinkspace-dropdown_inline-btn data-dropdown=drop_id aria-controls=drop_id aria-expanded='false' class=button_class
+      span.thinkspace-dropdown_caret
+        div class=icon_classes
+
+  else
+
+    a.btn data-toggle=drop_id class=button_class
+      span.thinkspace-dropdown_caret
+        = dropdown_text
+        div class=icon_classes
+
+  ul.dropdown-pane.top.thinkspace-dropdown_list id=drop_id data-dropdown='' data-hover='false' data-hover-pane='true' class=list_width_class
+    each buttons as |params|
+      li
+        if params.route
+          if params.model
+            link-to params.route params.model class='thinkspace-dropdown_link'
+              = params.display
+          else
+            link-to params.route class='thinkspace-dropdown_link'
+              = params.display
+        else
+          a.thinkspace-dropdown_link click='"_select" params'
+            = params.display
+
+else
+
+  if first_button.route
+    if first_button.model
+      link-to first_button.route first_button.model class='thinkspace-dropdown_link'
+        span.btn.thinkspace-dropdown_split-button.right class=button_class
+          = first_button.display
+    else
+      link-to first_button.route class='thinkspace-dropdown_link'
+        span.btn.thinkspace-dropdown_split-button.right class=button_class
+          = first_button.display
+  else
+    a.btn.thinkspace-dropdown_link class=button_class click='"_select" first_button'
+      = first_button.display

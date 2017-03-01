@@ -1,0 +1,19 @@
+div.thinkspace-resource_expansion
+
+  .thinkspace-resource_expansion-header
+    span.thinkspace-resource_expansion-header-text: |Resource Tags
+    span.thinkspace-resource_expansion-header-action-icon click='close': i.im.im-close
+  
+  if create_visible
+    .ts-grid_row: .small-12.ts-grid_columns
+      component 'manage/tag/new' taggable=model cancel='cancel'
+
+  else
+    .ts-grid_row: .small-12.ts-grid_columns: .thinkspace-resource_expansion-header-action
+      a.btn.btn-default.btn-small click='create': i.fa.fa-plus: |Tag
+
+    .thinkspace-resource_resources
+      .thinkspace-resource_tags
+
+        each model.tags as |tag|
+          component 'manage/tag' model=tag taggable=model

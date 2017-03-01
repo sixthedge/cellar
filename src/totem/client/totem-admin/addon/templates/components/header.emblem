@@ -1,0 +1,27 @@
+.totem-admin-header
+  .row: .columns.small-12
+    .totem-admin-header
+      .totem-admin-header-title Totem Admin
+      .totem-admin-sign-out.btn.btn-small.btn-primary click='sign_out' Logout
+
+  .row: .columns.small-12
+    .totem-admin-links
+      .totem-admin-link
+        link-to 'configs'
+          |Configs
+
+      .totem-admin-link
+        link-to 'locales'
+          |Locales (i18n)
+
+      .totem-admin-link
+        link-to 'tracker'
+          |Tracker
+
+      .totem-admin-link
+        link-to 'timers'
+          |Timers
+
+      .totem-admin-link
+        link-to 'rooms'
+          |Rooms

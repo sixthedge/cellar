@@ -1,0 +1,16 @@
+.dialogue.dialogue-actionless
+  h2 Case is in draft mode
+  h5 This case can only be seen by instructors or teaching assistants.
+
+
+  .btn.btn-small.btn-blue{action 'set_active'}
+    | Make live now!
+
+  .btn.btn-small{action 'edit_release_at'} data-open='change-date'
+    | Change Release Date
+
+  if is_editing_release_date
+    component 'overview/date_modal' model=model
+
+  .btn.btn-small{action 'set_archived'}
+    | Archive evaluation

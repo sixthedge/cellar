@@ -1,0 +1,17 @@
+/*jshint node:true*/
+
+/* global require, module */
+var EmberApp = require('ember-cli/lib/broccoli/ember-app');
+
+module.exports = function(defaults) {
+
+  var APP_OPTIONS = {};
+
+<%=template_content%>
+  var app = new EmberApp(defaults, APP_OPTIONS);
+
+  var trees = [];
+<%=imports_and_trees%>
+  return app.toTree(trees);
+
+};

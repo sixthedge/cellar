@@ -1,0 +1,30 @@
+{
+  "name": "totem-socketio-server",
+  "version": "0.0.1",
+  "description": "Totem SocketIO Server",
+  "author": {
+    "name": "sixthedge"
+  },
+  "main": "index.js",
+  "license": "MIT",
+  "homepage": "https://github.com/sixthedge/totem-socketio-server",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sixthedge/totem-socketio-server.git"
+  },
+  "scripts": {
+  },
+  "private": true,
+  "keywords": [
+    "totem",
+    "socketio"
+  ],
+  "directories": {},
+  "dependencies": {
+    "coffee-script": "^1.10.0",
+    "redis": "^2.6.0",
+    "request": "^2.69.0",
+    "socket.io": "^1.4.5"
+  },
+  "devDependencies": {}
+}

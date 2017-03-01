@@ -1,0 +1,73 @@
+balance:
+  assessment:
+    state: active  # uncomment if do not want to require owner to active
+    value:
+      options:
+        type: 'balance'
+        points: {per_member: 10, different: true}
+      quantitative:
+        - id: 1
+          label:    Score 1
+          type:     range
+          settings: 
+            comments: {enabled: true}
+            labels:   {scale: {min: Low, max: High}}
+            points:   {min: 0, max: 15}
+        - id: 2
+          label:    Score 2
+          type:     range
+          settings: 
+            comments: {enabled: true}
+            labels:   {scale: {min: Low, max: High}}
+            points:   {min: 0, max: 15}
+      qualitative:
+        - id: 1
+          label: Indicate specifically how this person contributes to group success.
+          type: textarea
+          feedback_type: positive
+        - id: 2
+          label: Make constructive suggestions about how this person could better contribute to group success.
+          type: textarea
+          feedback_type: constructive
+
+balance_reviews:
+  # read_2 reviews for read_1 and read_3
+  - user: read_2
+    team: team_1
+    for_users:
+      - user: read_1
+        value:
+          quantitative:
+            1: {value: 15, comment: read_1 comment 1}
+            2: {value: 5,  comment: read_1 comment 2}
+          qualitative:
+            1: {value: read_1 positive commment,    feedback_type: positive}
+            2: {value: read_1 constructive comment, feedback_type: constructive}
+      - user: read_3
+        value:
+          quantitative:
+            1: {value: 5,  comment: read_3 comment 1}
+            2: {value: 15, comment: read_3 comment 2}
+          qualitative:
+            1: {value: read_3 positive commment,    feedback_type: positive}
+            2: {value: read_3 constructive comment, feedback_type: constructive}
+  # read_3 reviews for read_1 and read_2
+  - user: read_3
+    team: team_1
+    for_users:
+      - user: read_1
+        value:
+          quantitative:
+            1: {value: 5,  comment: read_1 comment 1}
+            1: {value: 15, comment: read_1 comment 2}
+          qualitative:
+            1: {value: read_1 positive commment,    feedback_type: positive}
+            2: {value: read_1 constructive comment, feedback_type: constructive}
+      - user: read_2
+        value:
+          quantitative:
+            1: {value: 15, comment: read_2 comment 1}
+            1: {value: 5,  comment: read_2 comment 2}
+          qualitative:
+            1: {value: read_2 positive commment,    feedback_type: positive}
+            2: {value: read_2 constructive comment, feedback_type: constructive}

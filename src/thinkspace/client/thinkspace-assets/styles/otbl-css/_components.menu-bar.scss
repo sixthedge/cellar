@@ -1,0 +1,51 @@
+///*------------------------------------*\
+//    #MENU-BAR
+//\*------------------------------------*/
+
+.menu-bar {
+	border-bottom: 2px solid $color-gray-med;
+	height:        2rem;
+	margin-bottom: 2rem;
+
+}
+
+.menu-bar__list {
+	list-style-type: none;
+	margin:          0;
+	padding:         0;
+}
+
+.menu-bar__item {
+	margin:      0 1rem;
+	min-width:   42px;
+	display:     inline-block;
+	height:      2rem;
+	line-height: 2rem;
+
+	&:first-child {
+		margin-left: 0;
+	}
+}
+
+.menu-bar__link {
+	display:         block;
+	border-bottom:   2px solid $color-gray-med;
+	height:          inherit;
+	text-decoration: none;
+	font-size:       .875rem;
+	font-weight:     $font-weight--bold;
+	color:           $color-gray-base;
+	cursor:          pointer;
+	transition:      $transition-animation;
+
+	&.active {
+		color:               $color-blue-base;
+		border-bottom: 2px solid $color-blue-base;
+	}
+
+	&:hover {
+		color: $color-black-base;
+		border-bottom: $border--default;
+	}
+
+}

@@ -1,0 +1,13 @@
+if messages
+  .ts_timer-content: .ts_timer-messages
+
+    each messages as |message|
+      .ts_timer-message
+        .ts_timer-message-text= message.message
+        '
+        .ts_timer-prefix= message.prefix
+        '
+        .ts_timer-time
+          .ts_timer-units= message.units
+          '
+          .ts_timer-label= message.label

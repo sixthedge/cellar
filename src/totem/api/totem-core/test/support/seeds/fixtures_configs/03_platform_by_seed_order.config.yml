@@ -1,0 +1,13 @@
+platform_path: test/platform
+
+seed_order:
+  - test/platform/seed_zero
+  - test/platform/seed_one
+  - test/platform/seed_two
+  - test/platform/main
+
+paths:               
+  - path: test/platform/main
+  - path: test/platform/seed_zero
+  - path: test/platform/seed_one
+  - path: test/platform/seed_two

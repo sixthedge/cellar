@@ -1,0 +1,85 @@
+import ember           from 'ember'
+import tc              from 'totem/cache'
+import totem_changeset from 'totem/changeset'
+import step            from './step'
+
+###
+# # details.coffee
+- Type: **Step Object**
+- Package: **ethinkspace-builder-pe**
+###
+export default step.extend
+
+  id: 'details'
+  index: 0
+  route_path: 'details'
+
+  builder: ember.inject.service()
+
+  create_changeset: ->
+    model     = @get('model')
+    vpresence = totem_changeset.vpresence(presence: true)
+    vlength   = totem_changeset.vlength(min: 4)
+
+    changeset = totem_changeset.create model,
+      title:        [vpresence, vlength]
+      instructions: [vpresence]
+
+    changeset.set 'show_errors', true
+    @set 'changeset', changeset
+
+  ## API Methods
+
+  initialize: ->
+    model = @get('builder.model')
+    @set 'model', model
+    @load_assignment_data().then (assignment) =>
+      @query_team_sets().then (team_sets) =>
+        @initialize_team_set().then (team_set) =>
+          @create_changeset()
+          @set_all_data_loaded()
+
+  save: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      changeset = @get('changeset')
+      changeset.save()
+      @get('model').save().then (saved_model) =>
+        resolve(saved_model)
+      , (error) => reject(error)
+
+  load_assignment_data: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      params = 
+        id: @get('model.id')
+      options =
+        action: 'load'
+        model:  ns.to_p('assignment')
+      tc.query_action(ns.to_p('assignment'), params, options).then (assignment) =>
+        resolve assignment
+
+  query_team_sets: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      @get('model').get(ns.to_p('space')).then (space) =>
+        space.get_team_sets().then (team_sets) =>
+          @set 'team_sets', team_sets
+          resolve()
+
+  select_team_set: (team_set) -> 
+    @set 'selected_team_set', team_set
+    @get('model').get(ns.to_p('phases')).then (phases) =>
+      phase = phases.get('firstObject')
+      phase.set 'team_set_id', team_set.get('id')
+      phase.save()
+
+  initialize_team_set: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      @get('model').get(ns.to_p('phases')).then (phases) =>
+        team_sets   = @get('team_sets')
+        phase       = phases.get('firstObject')
+        if ember.isPresent(phase.get('team_set_id')) 
+          team_set = team_sets.findBy 'id', phase.get('team_set_id').toString()
+          @set 'selected_team_set', team_set
+        else 
+          team_set = team_sets.get('firstObject')
+          @select_team_set team_set
+        resolve()

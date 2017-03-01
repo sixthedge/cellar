@@ -1,0 +1,57 @@
+/ if is_maximized
+/   .toolbar_breadcrumb-link.tsi-hover-color
+/     .toolbar_breadcrumb-header click='toggle_users'
+/         .toolbar_breadcrumb-title
+/           .toolbar_breadcrumb-icon
+/             .tsi.tsi-spaceman-outline.icon-large
+/           = session.user.full_name
+/         i.im.im-open-right.toolbar_breadcrumb-arrow
+/     #user-expansion.toolbar_breadcrumb-content class={user_expansion_visible:is-visible:is-hidden}
+/       ul.toolbar_breadcrumb-flyout click='hide_expansions' 
+/         li.toolbar_breadcrumb-flyout-link
+/           link-to 'thinkspace/common/spaces'
+/             |Dashboard
+/         li.toolbar_breadcrumb-flyout-link click='sign_out'
+/           a Sign Out
+/         if show_switch_user
+/           li.toolbar_breadcrumb-flyout-link
+/             component c_switch_user
+
+/ else
+/   .toolbar_minimized-link.tsi-hover-color title='Profile'
+/     .toolbar_breadcrumb-header click='toggle_users'
+/         .toolbar_breadcrumb-title
+/           .toolbar_breadcrumb-icon
+/             .tsi.tsi-spaceman-outline.icon-large
+/     #user-expansion.toolbar_breadcrumb-content-minimized class={user_expansion_visible:is-visible:is-hidden}
+/       ul.toolbar_breadcrumb-flyout click='hide_expansions'
+/         li.toolbar_breadcrumb-flyout-link
+/           link-to 'thinkspace/common/spaces'
+/             |Dashboard
+/         li.toolbar_breadcrumb-flyout-link click='sign_out'
+/           a Sign Out
+/         if show_switch_user
+/           li.toolbar_breadcrumb-flyout-link
+/             component c_switch_user
+
+
+.ts-nav_item.right click='toggle_users'
+  span = session.user.full_name
+
+/ .toolbar_breadcrumb-link.tsi-hover-color
+/   .toolbar_breadcrumb-header click='toggle_users'
+/       .toolbar_breadcrumb-title
+/         .toolbar_breadcrumb-icon
+/           .tsi.tsi-spaceman-outline.icon-large
+/         = session.user.full_name
+/       i.im.im-open-right.toolbar_breadcrumb-arrow
+/   #user-expansion.toolbar_breadcrumb-content class={user_expansion_visible:is-visible:is-hidden}
+/     ul.toolbar_breadcrumb-flyout click='hide_expansions' 
+/       li.toolbar_breadcrumb-flyout-link
+/         link-to 'thinkspace/common/spaces'
+/           |Dashboard
+/       li.toolbar_breadcrumb-flyout-link click='sign_out'
+/         a Sign Out
+/       if show_switch_user
+/         li.toolbar_breadcrumb-flyout-link
+/           component c_switch_user

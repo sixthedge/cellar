@@ -1,0 +1,4 @@
+.btn.btn-primary.btn-small click='goto_index'
+  | Back
+
+h1 showing team_set #{model.id}

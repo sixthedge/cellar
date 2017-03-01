@@ -1,0 +1,37 @@
+///*------------------------------------*\
+//    #TYPE
+//\*------------------------------------*/
+
+/**
+ * Paragraph.
+ */
+
+p {
+  max-width: $max-width--content;
+}
+
+
+
+
+/**
+ * Bold.
+ */
+b, 
+strong {
+  font-weight: $font-weight--bold;
+}
+
+
+
+
+/**
+ * Horizontal rules.
+ */
+
+hr {
+  border:       solid $color-gray-med;
+  border-width: 2px 0 0;
+  clear:        both;
+  height:       0;
+  margin:       $spacing-unit 0;
+}

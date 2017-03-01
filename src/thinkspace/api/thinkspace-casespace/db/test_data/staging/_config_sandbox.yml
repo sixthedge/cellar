@@ -1,0 +1,71 @@
+require_data_files: [staging/html_samples]
+
+# These variable keys are used in the sandbox tests.
+space_master:  &SPACE_MASTER  Sandbox Space (Master)
+space_read_1:  &SPACE_READ_1  Read 1 Sandbox Space
+space_read_2:  &SPACE_READ_2  Read 2 Sandbox Space
+space_read_3:  &SPACE_READ_3  Read 3 Sandbox Space
+space_owner_1: &SPACE_OWNER_1 Owner 1 Sandbox Space
+case_master:   &CASE Sandbox Case (Master)
+case_read_1:   &CASE_READ_1 Read 1 Sandbox Case (NOT Master)
+
+variables:
+  - &PHASE_HTML Sandbox HTML + Observation
+  - &PHASE_CF   Sandbox HTML Carry Forward
+  - &PHASE_LAB  Sandbox Lab + Observation
+  - &PHASE_DP   Sandbox Diagnostic Path + Observation
+  - &OBS_LIST_PHASES [*PHASE_HTML, *PHASE_LAB, *PHASE_DP]
+
+  - &PT_HTML two_column_html_observation_list_submit
+  - &PT_CF   one_column_html_submit
+  - &PT_LAB  two_column_lab_observation_list_submit
+  - &PT_IL   two_column_indented_list_observation_list_submit
+
+  - &PS_AS   import[phase_settings@auto_score, phase_settings@validate]
+  - &PS_ASUN import[phase_settings@auto_score_unlock_next, phase_settings@validate]
+  - &PS_NOAS import[phase_settings@no_auto_score, phase_settings@validate]
+
+  - &SEC_HTML  {html: {method: staging_html_content_one_each_with_paragraph}}
+  - &SEC_CF    {html: {method: staging_html_carry_forward, carry_forward: *PHASE_HTML}}
+  - &SEC_CHART {chart: sandbox_lab_chart}
+
+users: import[users@superusers]
+
+spaces:
+  - {title: *SPACE_MASTER,  is_sandbox: true, state: system} # 'is_sandbox: true' sets the space.sandbox_space_id = space.id
+  - {title: *SPACE_OWNER_1, sandbox: *SPACE_MASTER}
+  - {title: *SPACE_READ_1,  sandbox: *SPACE_MASTER}
+  - {title: *SPACE_READ_2,  sandbox: *SPACE_MASTER}
+  - {title: *SPACE_READ_3,  sandbox: *SPACE_MASTER}
+
+space_users:
+  - {spaces: *SPACE_MASTER,  users: {role: read, merge_with: 'import[users@owner_1]'}} # making owner_1 a reader of Master
+  - {spaces: *SPACE_MASTER,  users: 'import[users@readers]'}
+  - {spaces: *SPACE_OWNER_1, users: 'import[users@owner_1]'} # owner_1 is the 'owner' of their sandbox space, others are readers
+  - {spaces: *SPACE_READ_1,  users: 'import[users@read_1]'}
+  - {spaces: *SPACE_READ_2,  users: 'import[users@read_2]'}
+  - {spaces: *SPACE_READ_3,  users: 'import[users@read_3]'}
+
+assignments:
+  - {title: *CASE,        space: *SPACE_MASTER}
+  - {title: *CASE_READ_1, space: *SPACE_READ_1}
+
+phases:
+  - {title: *PHASE_HTML, assignment: *CASE, template_name: *PT_HTML, settings: *PS_ASUN, sections: *SEC_HTML}
+  - {title: *PHASE_CF,   assignment: *CASE, template_name: *PT_CF,   settings: *PS_AS,   sections: *SEC_CF,   default_state: locked}
+  - {title: *PHASE_LAB,  assignment: *CASE, template_name: *PT_LAB,  settings: *PS_AS,   sections: *SEC_CHART}
+  - {title: *PHASE_DP,   assignment: *CASE, template_name: *PT_IL,   settings: *PS_AS}
+  - {title: *PHASE_HTML, space: *SPACE_READ_1, assignment: *CASE_READ_1, template_name: *PT_HTML, settings: *PS_ASUN, sections: *SEC_HTML}
+
+# resource_tags:
+#   - assignment: *CASE
+#     user: owner_1
+#     tags: import[resources@assignment]
+#   - phase: *PHASE_HTML
+#     user: owner_1
+#     tags: import[resources@phase]
+
+blueprints: import[labs@blueprints]
+
+lab_charts_from_blueprints:
+  {sandbox_lab_chart: {title: 'Sandbox Lab', merge_with: 'import[labs@lab_chart]'}}

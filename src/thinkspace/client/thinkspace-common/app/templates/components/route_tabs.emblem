@@ -1,0 +1,8 @@
+.ts-grid_row
+  each model as |link|
+    if link.external
+      link-to-external link.path
+        | #{link.display}
+    else
+      link-to link.path
+        | #{link.display}

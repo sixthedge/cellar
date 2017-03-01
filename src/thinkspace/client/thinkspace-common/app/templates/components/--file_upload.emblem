@@ -1,0 +1,54 @@
+a.btn.btn-small.btn-primary data-reveal-id=modal_id
+  = btn_text
+
+.thinkspace-common_fu-modal.reveal-modal id=modal_id data-reveal='' aria-labelledby='thinkspace-common_fu-modal-title' aria-hidden='true' role='dialog'
+  = if modal_template
+    = partial modal_template
+  = else
+    div class={:dialogue :thinkspace-common_fu-modal-instructions show_instructions:dialogue-instruct show_error:dialogue-error show_success:dialogue-success}
+      = if show_success
+        h4.thinkspace-common_fu-modal-title Success!
+        p 
+          | Your 
+          = pluralize-string files.length 'file' 'files'
+          |  
+          = pluralize-string files.length 'was' 'were'
+          |  successfully imported. Feel free to select more files using the button below
+          = if drop
+            |  or drag and drop them here.
+          = else
+            | .
+        ul.thinkspace-common_fu-files
+          = each file in files
+            li.thinkspace-common_fu-file
+              i.im.im-checkmark
+              |  
+              = file.name
+
+      = if show_error
+        h4.thinkspace-common_fu-modal-title Oops, something went wrong
+        p Make sure you selected the correct file and its in the format we're expecting. If you're still having troubles, feel free to contact us using the support button in the bottom right of your screen.
+
+      = if show_instructions
+        h4.thinkspace-common_fu-modal-title Upload Files
+        p 
+          | You can use the button below to select files on your computer
+          = if drop
+            |  or you can drag and drop them here.
+          = else
+            | .
+  = if processing
+    h6.thinkspace-common_fu-loading
+      i.fa.fa-spinner.fa-spin.spinner.thinkspace-common_fu-modal-loading-icon
+      |  
+      = loading_text
+  .thinkspace-common_fu-upload
+    .thinkspace-common_fu-upload-action.btn.btn-medium.btn-primary
+      = select_text
+      form.thinkspace-common_fu-form action=form_url method=verb enctype='multipart/form-data'
+        input type='hidden' name='auth_token' value=auth_token
+        = each param in params_list
+          input type='hidden' name=param.key value=param.value
+        input id=input_id class='thinkspace-common_fu-file-input' type='file' name='files[]'
+  a.thinkspace-common_fu-close-action.close-reveal-modal aria-label='Close'
+    i.im.im-close

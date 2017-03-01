@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+require File.expand_path('../../lib/totem/cli/totem_deploy', __FILE__)
+Totem::Cli::TotemDeploy.start

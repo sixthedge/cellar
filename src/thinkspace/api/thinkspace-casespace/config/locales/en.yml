@@ -1,0 +1,37 @@
+en:
+  thinkspace:
+
+    thinkspace:
+
+      wips:
+
+        casespace:
+
+          assignment:        'Assignment'
+          assignments:       'Assignments'
+          assignment_index:  'All Assignments'
+          open_assignments:  'Open Assignments'
+          add_assignment:    'Add Assignment'
+          create_assignment: 'Create Assignment'
+          edit_assignment:   'Edit Assignment'
+          update_assignment: 'Update Assignment'
+          due_at:            'Due Date'
+          due_at_missing:    'Anytime'
+          next_due_at:       'Next Due Date'
+          completed_phases:  'Completed Phases'
+          total_phases:      'Total Phases'
+
+          phase:       'Phase'
+          phases:      'Phases'
+          phase_index: 'All Phases'
+
+          id:                  'ID'
+          title:               'Title'
+          description:         'Description'
+          general_information: 'General Information'
+
+          footer:         'Casespace footer text'
+          toolbar_footer: 'Toolbar Footer!'
+
+          home_page: 'Home Page'
+          my_links:  'My Links'

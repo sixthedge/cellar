@@ -1,0 +1,10 @@
+platform_path: test/platform
+
+routes:
+  mount:
+    controller: :home
+    action: :index
+
+
+paths:               
+  - path: test/platform/one

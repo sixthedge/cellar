@@ -1,0 +1,3 @@
+# thinkspace-authorization
+## Overview
+The description of `thinkspace-authorization` is...

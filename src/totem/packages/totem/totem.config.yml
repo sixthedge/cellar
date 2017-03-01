@@ -1,0 +1,47 @@
+platform_path: totem
+
+classes:
+  application_controller:        Totem::Core::ApplicationController
+  authentication_controller:     Totem::Authentication::Session::AuthenticationController
+  authentication_api_controller: Totem::Authentication::Session::Api::AuthenticationController
+  authorization_controller:      Totem::Authorization::Cancan::AuthorizationController
+  authorization_api_controller:  Totem::Authorization::Cancan::Api::AuthorizationController
+  base_serializer:               Totem::Core::BaseSerializer
+  error_serializer:              Totem::Core::ErrorSerializer
+  serializer_scope:              Totem::Core::Serializers::Scope
+  serializer_options:            Totem::Core::Serializers::Options
+  oauth_api:                     Totem::Core::Oauth::Api
+
+modules:
+  session_user_model:       Totem::Authentication::Session::Models::User
+  session_user_actions:     Totem::Authentication::Session::Controllers::UserActions
+  controller_model_class:   Totem::Core::Controllers::TotemControllerModelClass
+  controller_api_render:    Totem::Core::Controllers::ApiRender
+  controller_params:        Totem::Core::Controllers::TotemParams
+  controller_json_api:      Totem::Core::Controllers::JsonApi
+  controller_discourse_api: Totem::Core::Controllers::DiscourseApi
+
+authentication:
+  session:
+    timeout_time:      30.minutes
+    expire_after_time: 6.hours
+
+authorization:
+  authorize_by: cancan
+  cancan:
+    classes:
+      ability: Totem::Authorization::Cancan::Ability
+    serializers:
+      modules:
+        serializer:    Totem::Core::Serializers::ActiveModelSerializer
+        authorization: Totem::Authorization::Cancan::Serializers::Authorize
+        ability:       Totem::Authorization::Cancan::Serializers::Ability
+      defaults:
+        authorize_action: read
+        ability_actions:  crud
+
+paths:
+  - path: totem/core
+  - path: totem/authentication/session
+  - path: totem/authorization/cancan
+  - path: totem/pub_sub

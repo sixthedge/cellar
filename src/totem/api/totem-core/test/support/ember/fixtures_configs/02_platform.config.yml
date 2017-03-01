@@ -1,0 +1,30 @@
+platform_path: test/platform
+
+paths:               
+  - path: test/platform/main
+
+  - path: test/platform/common
+    namespace: Test.Platform.MyCommon
+    namespace_alias: [common, my_common]
+
+  - path: test/platform/tools/one
+    namespace: Test.Platform.MyCommon.Tools
+    namespace_alias: tools
+
+  - path: test/platform/tools/two
+
+  - path: test/platform/no_namespace
+    namespace: false
+    namespace_alias: [ignored]
+
+ember:
+
+  path_namespaces:
+    - path: test/platform/special/namespace
+      namespace: Test.Me.Special
+      namespace_alias: 'me_special'
+
+    - path: test/platform/ember/no_namespace
+      namespace: false
+
+    - path: new/top/level/namespace

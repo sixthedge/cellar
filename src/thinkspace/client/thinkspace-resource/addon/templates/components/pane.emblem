@@ -1,0 +1,48 @@
+.ts-grid_row.thinkspace-resource_expansion
+
+  if can_manage_resources
+    .thinkspace-dock-expansion_header
+      h6.btn.btn-rounded class={manage_files_expanded:btn-primary:btn-transparent} click='toggle_files_pane' Files
+      h6.btn.btn-rounded class={manage_links_expanded:btn-primary:btn-transparent} click='toggle_links_pane' Links
+      h6.btn.btn-rounded class={manage_tags_expanded:btn-primary:btn-transparent}  click='toggle_tags_pane'  Tags
+
+  .thinkspace-dock-expansion_display
+
+    if model.tagless_resources
+      .thinkspace-resource_pane-resources
+        fieldset
+          legend No tag (#{model.tagless_resources.length})
+          ul.thinkspace-resource_pane-resource-list
+
+            each model.tagless_files as |file|
+                component 'pane/file' model=file
+
+            each model.tagless_links as |link|
+              component 'pane/link' model=link
+
+    each model.tags as |tag|
+
+      if tag.has_resources
+        .thinkspace-resource_pane-resources
+          fieldset
+            legend #{tag.title} (#{tag.resources.length})
+            ul.thinkspace-resource_pane-resource-list
+
+              if tag.has_files
+                each tag.files as |file|
+                  component 'pane/file' model=file
+  
+              if tag.has_links
+                each tag.links as |link|
+                  component 'pane/link' model=link
+
+  if can_manage_resources
+    if manage_files_expanded
+      component 'manage/files' model=model close='toggle_files_pane'
+
+    if manage_links_expanded
+      component 'manage/links' model=model close='toggle_links_pane'
+
+    if manage_tags_expanded
+      .test-toggle click='toggle_tags_pane'
+      component 'manage/tags' model=model close='toggle_tags_pane'

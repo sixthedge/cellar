@@ -1,0 +1,33 @@
+.totem-admin-engines-default-services {
+  cursor: help;
+}
+
+.totem-admin-engines-add-engine-details {
+  font-weight: bolder;
+  cursor:      pointer;
+  .fa {
+    float:      right;
+    font-size:  80%;
+    margin-top: 4px;
+  }
+}
+
+.totem-admin-engines-add-engine {
+}
+
+ul.totem-admin-engines-list {
+  list-style: inside none decimal;
+  font-size:  85%;
+  .totem-admin-engines-title {
+    text-decoration: underline;
+  }
+
+  li {
+    margin-left: 1em;
+  }
+}
+
+ul.totem-admin-engines-main-list {
+  margin-left: 0;
+  list-style:  inside none decimal;
+}

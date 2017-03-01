@@ -1,0 +1,106 @@
+variables:
+  - &SPACE Paths and Indented Lists
+
+  - &ASSIGNMENT_DIAG       P2L Diagnostic Path
+  - &ASSIGNMENT_DIAG_LARGE P2L LARGE Diagnostic Path
+  - &ASSIGNMENT_DIAG_SMALL P2L SMALL Diagnostic Path
+  - &ASSIGNMENT_DIAG_EMPTY P2L EMPTY Diagnostic Path
+
+  - &ASSIGNMENT_LIST       P2L Indented List
+  - &ASSIGNMENT_LIST_LARGE P2L LARGE Indented List
+  - &ASSIGNMENT_LIST_SMALL P2L SMALL Indented List
+  - &ASSIGNMENT_LIST_EMPTY P2L EMPTY Indented List
+
+  - &PHASE_DIAG             Diagnostic Path
+  - &PHASE_DIAG_LARGE LARGE Diagnostic Path
+  - &PHASE_DIAG_SMALL SMALL Diagnostic Path
+  - &PHASE_DIAG_EMPTY EMPTY Diagnostic Path
+
+  - &PHASE_LIST             Indented List
+  - &PHASE_LIST_LARGE LARGE Indented List
+  - &PHASE_LIST_SMALL SMALL Indented List
+  - &PHASE_LIST_EMPTY EMPTY Indented List
+
+  - &SETTINGS {validation: {validate: false}}
+
+  - &DIAG_PATH_PHASE_TEMPLATE two_column_diagnostic_path_observation_list_submit
+
+spaces:
+  - title: *SPACE
+
+space_users:
+  - spaces: *SPACE
+    users: import[users@space_1]
+
+assignments:
+  - {title: *ASSIGNMENT_DIAG , space: *SPACE}
+  - title: *ASSIGNMENT_DIAG_LARGE
+  - title: *ASSIGNMENT_DIAG_SMALL
+  - title: *ASSIGNMENT_DIAG_EMPTY
+
+  - title: *ASSIGNMENT_LIST
+  - title: *ASSIGNMENT_LIST_LARGE
+  - title: *ASSIGNMENT_LIST_SMALL
+  - title: *ASSIGNMENT_LIST_EMPTY
+
+phases:
+  - assignment:    *ASSIGNMENT_DIAG
+    settings:      *SETTINGS
+    title:         *PHASE_DIAG
+    template_name: *DIAG_PATH_PHASE_TEMPLATE
+  - assignment:    *ASSIGNMENT_DIAG_LARGE
+    settings:      *SETTINGS
+    title:         *PHASE_DIAG_LARGE
+  - assignment:    *ASSIGNMENT_DIAG_SMALL
+    settings:      *SETTINGS
+    title:         *PHASE_DIAG_SMALL
+  - assignment:    *ASSIGNMENT_DIAG_EMPTY
+    settings:      *SETTINGS
+    title:         *PHASE_DIAG_EMPTY
+  # These phases are generated identical to the phases above as diagnostic paths.
+  # Run the rake migrate task to convert to indented lists (seed auto_input[:paths_2_lists] below.)
+  - assignment:    *ASSIGNMENT_LIST
+    settings:      *SETTINGS
+    title:         *PHASE_LIST
+  - assignment:    *ASSIGNMENT_LIST_LARGE
+    settings:      *SETTINGS
+    title:         *PHASE_LIST_LARGE
+  - assignment:    *ASSIGNMENT_LIST_SMALL
+    settings:      *SETTINGS
+    title:         *PHASE_LIST_SMALL
+  - assignment:    *ASSIGNMENT_LIST_EMPTY
+    settings:      *SETTINGS
+    title:         *PHASE_LIST_EMPTY
+
+auto_input:
+
+  observations:                  
+    - only: [*PHASE_DIAG, *PHASE_LIST]
+      observations_per_list:       40
+      observations_per_list_lists: 10
+      max_notes_per_observation:   5
+    - only: [*PHASE_DIAG_LARGE, *PHASE_LIST_LARGE]
+      observations_per_list:       100
+      observations_per_list_lists: 1
+      max_notes_per_observation:   1
+    - only: [*PHASE_DIAG_SMALL, *PHASE_LIST_SMALL]
+      observations_per_list:       10
+      observations_per_list_lists: 1
+      max_notes_per_observation:   1
+    - only: [*PHASE_DIAG_EMPTY, *PHASE_LIST_EMPTY]
+      observations_per_list:       10
+      observations_per_list_lists: 1
+      max_notes_per_observation:   1
+
+  # Also add path items to the indented list phases to be converted into indented lists via rake task.
+  path_items:
+    - only: [*PHASE_DIAG, *PHASE_LIST]
+      pattern: [2,1,2]
+    - only: [*PHASE_DIAG_LARGE, *PHASE_LIST_LARGE]
+      pattern: [2,2]
+    - only: [*PHASE_DIAG_SMALL, *PHASE_LIST_SMALL]
+      pattern: [1,1,1]
+
+  # Run rake task to convert list-paths to indented lists (must be last auth_input key).
+  paths_2_lists:
+    - only: [*PHASE_LIST, *PHASE_LIST_LARGE, *PHASE_LIST_SMALL, *PHASE_LIST_EMPTY]

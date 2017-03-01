@@ -1,0 +1,21 @@
+== content_for :header_title do
+  | You've been invited to join ThinkSpace by 
+  a style='color: #63b4d6; text-decoration: none;' #{@sender.full_name}
+
+== content_for :header_deets do
+  span
+    | You have been given access to the following space:
+    br
+    b #{@invitable.title}
+
+== content_for :content_question, "What if I already have an account?"
+== content_for :content_answer, "If you've already created an account with us then you can use that same login to join the space."
+
+== content_for :content_contact do
+  | For questions, please contact 
+  | #{@sender.full_name}
+  |  at 
+  b #{@sender.email}
+
+== content_for :footer_action, "View Space"
+== content_for :footer_terms, "Learn more about ThinkSpace"

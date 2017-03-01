@@ -1,0 +1,66 @@
+///*------------------------------------*\
+//    #AVATAR
+//\*------------------------------------*/
+
+.avatar {
+  border-radius:    $border-radius;
+  position:         relative;
+  background-color: $color-gray-med;
+  display:          inline-block;
+  background-image: url('images/icons/otbl-icons_default-avatar.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  border: $border--thin;
+
+  .avatar--offline & {
+    opacity: .5;
+  }
+}
+
+.avatar--64 {
+  width:      4rem;
+  height:     4rem;
+  min-width:  4rem;
+  min-height: 4rem;
+  background-size: 4rem 4rem;
+
+}
+
+.avatar--32 {
+  width:      2rem;
+  height:     2rem;
+  min-width:  2rem;
+  min-height: 2rem;
+  background-size: 2rem 2rem;
+
+}
+
+.avatar__status {
+  position:      absolute;
+  border-radius: 7px;
+  bottom:        -3px;
+  right:         -5px;
+  width:         14px;
+  height:        14px;
+  border:        2px solid white;
+
+
+  .avatar--online & {
+    background-color: $color-green-base;
+  }
+
+  .avatar--offline & {
+    background-color: $color-gray-base;
+  }
+}
+
+.avatar__username {
+  display: inline-block;
+  font-size: .75rem;
+  font-weight: $font-weight--bold;
+  line-height: 2rem;
+
+  .avatar--offline & {
+    color: $color-gray-base;
+  }
+}

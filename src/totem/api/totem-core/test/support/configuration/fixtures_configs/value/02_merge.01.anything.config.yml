@@ -1,0 +1,15 @@
+platform_path: test/platform
+
+classes:
+  merge_01: Test::Platform::Class1
+  merge_main: Test::Platform::Main1
+
+modules:
+  merge_01: Test::Platform::Module1
+  merge_main: Test::Platform::Main1
+
+paths:
+  - path: test/platform/merge_01
+  - path: test/platform/another
+  - path: test/platform/main
+    namespace: 'Test.Platform.1.Main'

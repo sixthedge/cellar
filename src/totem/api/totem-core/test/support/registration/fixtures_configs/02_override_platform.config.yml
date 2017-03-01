@@ -1,0 +1,11 @@
+platform_path: test/platform
+
+classes:
+  class_1: Test::Platform::Main::Class1
+  class_2: Test::Platform::Main::Controllers::Class2
+  class_3: Test::Platform::Main::Models::Class3
+
+modules:
+  module_1: Test::Platform::Main::Module1
+  module_2: Test::Platform::Main::Controllers::Module2
+  module_3: Test::Platform::Main::Models::Module3

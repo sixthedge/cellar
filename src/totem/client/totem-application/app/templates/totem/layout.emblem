@@ -1,0 +1,5 @@
+.totem_message_outlet.totem_message_outlet-hide
+  outlet 'totem_message_outlet'
+
+.totem_main_outlet
+  outlet

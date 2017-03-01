@@ -1,0 +1,13 @@
+if engines.thinkspace-markup
+  mount 'thinkspace-markup'
+  / duplicate for testing:
+  mount 'thinkspace-markup'
+
+if engines.thinkspace-gradebook
+  mount 'thinkspace-gradebook'
+
+if engines.thinkspace-resource
+  mount 'thinkspace-resource'
+
+if engines.thinkspace-peer-review
+  mount 'thinkspace-peer-review'

@@ -1,0 +1,8 @@
+h4 Release date
+= model.friendly_release_at
+h4 Due date
+= model.friendly_due_at
+h4 Exercise Type
+= assignment_type.title
+h4 Team set
+= team_set.title

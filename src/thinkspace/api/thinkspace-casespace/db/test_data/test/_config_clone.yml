@@ -1,0 +1,130 @@
+#=> rake totem:db:reset RAILS_ENV='test' CONFIG=clone
+require_data_files: html_samples
+
+auto_input:
+  observations: true
+  path_items:   true
+  responses:    true
+
+# Number legend: 1=clone space tests; 2=clone assignment tests; 3=clone phase tests
+variables:
+  - &SPACE_1  clone_space_1
+  - &SPACE_2  clone_space_2
+  - &SPACE_3  clone_space_3
+
+  - &SPACE_1I clone_space_1_into
+  - &SPACE_2I clone_space_2_into
+  - &SPACE_3I clone_space_3_into
+
+  - &ASSIGNMENT_1 clone_space_1_assignment
+  - &ASSIGNMENT_2 clone_space_2_assignment
+  - &ASSIGNMENT_3 clone_space_3_assignment
+
+  - &ASSIGNMENT_1I clone_space_1_assignment_into
+  - &ASSIGNMENT_2I clone_space_2_assignment_into
+  - &ASSIGNMENT_3I clone_space_3_assignment_into
+
+  - &ASSIGNMENT_TEAM_1 clone_space_1_assignment_teams
+  - &ASSIGNMENT_TEAM_2 clone_space_2_assignment_teams
+  - &ASSIGNMENT_TEAM_3 clone_space_3_assignment
+
+spaces:
+  - title: *SPACE_1
+  - title: *SPACE_2
+  - title: *SPACE_3
+
+  - title: *SPACE_1I
+  - title: *SPACE_2I
+  - title: *SPACE_3I
+
+space_users:
+  - spaces: [*SPACE_1, *SPACE_2, *SPACE_3, *SPACE_1I, *SPACE_2I, *SPACE_3I]
+    users: import[users@space_1, users@space_2]
+
+assignments:
+  - {space: *SPACE_1, title: *ASSIGNMENT_1}
+  - {space: *SPACE_2, title: *ASSIGNMENT_2}
+  - {space: *SPACE_3, title: *ASSIGNMENT_3}
+
+  - {space: *SPACE_1I, title: *ASSIGNMENT_1I}
+  - {space: *SPACE_2I, title: *ASSIGNMENT_2I}
+  - {space: *SPACE_3I, title: *ASSIGNMENT_3I}
+  # - {space: *SPACE_1, title: *ASSIGNMENT_TEAM_1}
+  # - {space: *SPACE_2, title: *ASSIGNMENT_TEAM_2}
+  # - {space: *SPACE_3, title: *ASSIGNMENT_TEAM_3}
+
+phases:
+  - {assignment: *ASSIGNMENT_1, merge_with: 'import[clone@phases]'}
+  - {assignment: *ASSIGNMENT_2, merge_with: 'import[clone@phases]'}
+  - {assignment: *ASSIGNMENT_3, merge_with: 'import[clone@phases]'}
+
+  - {assignment: *ASSIGNMENT_1I, merge_with: 'import[clone@phases]'}
+  - {assignment: *ASSIGNMENT_2I, merge_with: 'import[clone@phases]'}
+  - {assignment: *ASSIGNMENT_3I, merge_with: 'import[clone@phases]'}
+
+# resource_tags:
+#   - {assignment: *ASSIGNMENT_1, merge_with: 'import[clone@resource_tags]'}
+#   - {assignment: *ASSIGNMENT_2, merge_with: 'import[clone@resource_tags]'}
+#   - {assignment: *ASSIGNMENT_3, merge_with: 'import[clone@resource_tags]'}
+
+# teams:
+#   collaboration:
+#     assignment:
+#       teams:
+#         - {assignment: *ASSIGNMENT_1, merge_with: 'import[clone@assignment_teams]'}
+#         - {assignment: *ASSIGNMENT_2, merge_with: 'import[clone@assignment_teams]'}
+#         - {assignment: *ASSIGNMENT_3, merge_with: 'import[clone@assignment_teams]'}
+#       viewers:
+#         - {assignment: *ASSIGNMENT_1, merge_with: 'import[clone@assignment_viewers]'}
+#         - {assignment: *ASSIGNMENT_2, merge_with: 'import[clone@assignment_viewers]'}
+#         - {assignment: *ASSIGNMENT_3, merge_with: 'import[clone@assignment_viewers]'}
+#     phase:
+#       teams:
+#         - {assignment: *ASSIGNMENT_1, merge_with: 'import[clone@phase_teams]'}
+#         - {assignment: *ASSIGNMENT_2, merge_with: 'import[clone@phase_teams]'}
+#         - {assignment: *ASSIGNMENT_3, merge_with: 'import[clone@phase_teams]'}
+#       viewers:
+#         - {assignment: *ASSIGNMENT_1, merge_with: 'import[clone@phase_viewers]'}
+#         - {assignment: *ASSIGNMENT_2, merge_with: 'import[clone@phase_viewers]'}
+#         - {assignment: *ASSIGNMENT_3, merge_with: 'import[clone@phase_viewers]'}
+
+phase_templates:
+  - title: clone_html
+    name: clone_html
+    template: |
+      #{casespace_phase_header}
+      <row>
+        <column>
+          <component section='html-1' title='html'/>
+          <component section='html-2' title='html'/>
+        </column>
+      </row>
+      #{casespace_phase_submit}
+
+  - title: clone_html_and_observation_list
+    name: clone_html_and_observation_list
+    template: |
+      <row>
+        <column width=8>
+          <component section='header' title='casespace-phase-header'/>
+          <component section='html-1' title='html-select-text' select-text='obs-list'/>
+          <component section='submit' title='casespace-phase-submit' data-actions='{"submit":"submit"}'/>
+        </column>
+        <column width=4>
+          <component section='obs-list' title='observation-list'/>
+        </column>
+      </row>
+
+  - title: clone_diagnostic_path_and_observation_list
+    name: clone_diagnostic_path_and_observation_list
+    template: |
+      <row>
+        <column width=8>
+          <component title='casespace-phase-header'/>
+          <component title='diagnostic-path' source='observation-list'/>
+          <component section='submit' title='casespace-phase-submit' data-actions='{"submit":"submit"}'/>
+        </column>
+        <column width=4>
+          <component title='observation-list' droppable='false'/>
+        </column>
+      </row>

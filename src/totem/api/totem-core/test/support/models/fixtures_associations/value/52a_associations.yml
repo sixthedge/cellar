@@ -1,0 +1,8 @@
+- model: test/associations/one/user_52a
+  associations:
+    - has_one: test/associations/one/profile_52a
+      as: polymorphicable
+  serializers:
+    - attributes: [id, name, email]
+
+- model: test/associations/one/profile_52a

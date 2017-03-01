@@ -1,0 +1,3 @@
+.ts-ra_admin-irat-content
+  .ts-ra_admin-selected-component-header= config.title
+  component 'shared/menu' menu=menu selected_components=selected_components

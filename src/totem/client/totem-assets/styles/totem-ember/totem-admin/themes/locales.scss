@@ -1,0 +1,27 @@
+.totem-admin-locales-show {
+
+  td.missing {color: red;}
+
+  .totem-admin-locales-codes {
+    padding-top: .5em;
+    padding-bottom: .5em;
+    margin-bottom: 8px;
+    background-color: $totem-admin-header-background-color;
+    .totem-admin-locales-codes-header {
+      font-weight: 500;
+      display: inline-block;
+    }
+  }
+
+  .totem-admin-locales-code {
+    display: inline-block;
+    margin-left: 1em;
+    &.active {
+      a {
+        font-weight: 500;
+        text-decoration: underline;
+      }
+    }
+  }
+
+}

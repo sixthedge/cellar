@@ -1,0 +1,20 @@
+.ts-ra_admin-phase-states-content
+
+  if ready
+    component 'shared/toggle_select' rad=trad title='Users'
+
+    .ts-ra_admin-select-users class={trad.show_select::hide}
+      component 'shared/teams/select' rad=trad title='Select Teams to change their state'
+
+    component 'shared/phase_states' rad=trad title='Select TRAT state'
+
+    .ts-grid_row: .small-12.ts-grid_columns
+      component 'shared/message' rad=trad optional=true
+
+    if selected_send
+      .ts-ra_admin-selected-send-errors
+        component 'shared/error' errors=trad.errors
+
+    .ts-grid_row: .small-12.ts-grid_columns.ts-grid_columns-thick
+      a.btn.btn-small.btn-primary.right click='send_phase_states' Send
+      a.btn.btn-small  click='done' Cancel

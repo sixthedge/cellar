@@ -1,0 +1,155 @@
+/** 
+* OTBL Purpose starting below
+*/
+
+/**
+ * CONTENTS
+ *
+ * SETTINGS
+ * Global...............Globally-available variables and config.
+ * Colors...............Manage our color palette in isolation.
+ *
+ * TOOLS
+ * Mixins...............Useful mixins.
+ *
+ * GENERIC
+ * Normalize.css........A level playing field.
+ * Box-sizing...........Better default `box-sizing`.
+ *
+ * BASE
+ * Headings.............H1–H6 styles.
+ * Page.................Page-level styles (HTML element).
+ * Links................Base link styles.
+ * Type.................Base type styles.
+ * Lists................Base list styles.
+ *
+ * OBJECTS
+ * Wrappers.............Wrapping and constraining elements.
+ * Buttons..............Button styles.
+ * Grid.................Grid system for columsns and rows.
+ * Icons................System icons in svg.
+ * Radio-buttons........Radio button styling.
+ * Dropdowns............Dropdown stylings.
+ * Branding.............Logo and other branding classes.
+ * Dialogue.............Dialogue containers for error messages and notifications.
+ * Breadcrumbs..........Breadcrumb styles.
+ * Counter-box..........Bordered box used to display a value with its' label i.e., scores, attempts, slider values, etc.. 
+ * Avatar...............Styles for avatar pictures.
+ *
+ * COMPONENTS
+ * Top-bar..............Top bar that you see on all the pages.
+ * Main-content.........Where the meat is at.
+ * Exercise-types.......
+ * Footnote.............Reference section at the bottom of main-content.
+ * Forms................Form styles.
+ * Builder-progress.....Progress bar when going through builder.
+ * Tiles................Case and Exercise list containter tiles.
+ * Menu-bar.............Secondary and tertiary navigations.
+ * Menu-panel...........Floating panel with options.
+ * Bordered-panel.......Bordered panels, i.e., used in builder.
+ * Login................Styles for login/sign up pages.
+ * Date-picker..........Styles for date picker input and container.
+ * Rangeslider..........Sliders used for peer evaluations.
+ * Questions............Styles for student facing questions.
+ * Rat-pr...............RAT progress report styling.
+ * Analytics-panel......Panel used for presenting analytic information on pages. 
+ * Bar-graph............Styles for bar graph.
+ * Multiple-choice......Styles for multiple choice items including RAT IF-AT. 
+ * Secondary-panel......Panels used to compliment main content. Usually on the right side of UI. 
+ * Chat.................Styling chat portion of the panel. 
+ *
+ * HELPERS
+ * Positioning..........Positioning helpers like floats.
+ * Spacing..............Space things apart.
+ * Clearfix.............To do clearfix stuff.
+ * Text.................Text helpers.
+ */
+
+
+
+
+ /**
+  * #SETTINGS
+  */
+ @import "otbl-css/settings.colors";
+ @import "otbl-css/settings.global";
+
+
+
+
+
+ /**
+  * #GENERIC
+  */
+ @import "otbl-css/generic.normalize";
+
+
+
+
+
+ /**
+  * #BASE
+  */
+ @import "otbl-css/base.page";
+ @import "otbl-css/base.links";
+ @import "otbl-css/base.type";
+ @import "otbl-css/base.lists";
+
+
+
+
+
+ /**
+  * #OBJECTS
+  */
+ @import "otbl-css/objects.buttons";
+ @import "otbl-css/objects.grid";
+ @import "otbl-css/objects.icons";
+ @import "otbl-css/objects.radio-buttons";
+ @import "otbl-css/objects.dropdowns";
+ @import "otbl-css/objects.branding";
+ @import "otbl-css/objects.dialogue";
+ @import "otbl-css/objects.breadcrumbs";
+ @import "otbl-css/objects.counter-box";
+ @import "otbl-css/objects.avatar";
+
+
+
+
+
+ /**
+  * #COMPONENTS
+  */
+ @import "otbl-css/components.top-bar";
+ @import "otbl-css/components.main-content";
+ @import "otbl-css/components.exercise-types";
+ @import "otbl-css/components.footnote";
+ @import "otbl-css/components.forms";
+ @import "otbl-css/components.builder-progress";
+ @import "otbl-css/components.tiles";
+ @import "otbl-css/components.menu-bar";
+ @import "otbl-css/components.menu-panel";
+ @import "otbl-css/components.bordered-panel";
+ @import "otbl-css/components.login";
+ @import "otbl-css/components.date-picker";
+ @import "otbl-css/components.rangeslider";
+ @import "otbl-css/components.questions";
+ @import "otbl-css/components.rat-pr";
+ @import "otbl-css/components.analytics-panel";
+ @import "otbl-css/components.bar-graph";
+ @import "otbl-css/components.multiple-choice";
+ @import "otbl-css/components.secondary-panel";
+ @import "otbl-css/components.chat";
+
+
+
+
+
+
+ /**
+  * #HELPERS
+  */
+ @import "otbl-css/helpers.positioning";
+ @import "otbl-css/helpers.spacing";
+ @import "otbl-css/helpers.clearfix";
+ @import "otbl-css/helpers.text";

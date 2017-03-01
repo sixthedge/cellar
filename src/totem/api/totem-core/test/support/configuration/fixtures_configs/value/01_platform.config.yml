@@ -1,0 +1,32 @@
+platform_path: test/platform
+
+classes:
+  application_controller:    Test::Platform::Core::ApplicationController
+  base_serializer:           Test::Platform::Core::BaseSerializer
+  serializer_scope:          Test::Platform::Core::Serializers::Scope
+  authentication_controller: Test::Platform::Oauth::AuthenticationController
+
+modules:
+  core_module:            Test::Platform::Core::Module
+  controller_model_class: Test::Platform::Core::Controllers::TotemControllerModelClass
+  controller_api_render:  Test::Platform::Core::Controllers::ApiRender
+  controller_params:      Test::Platform::Core::Controllers::TotemParams
+
+model_access:
+  test/platform/core/model_1:
+    - model: test/framework/main/user
+      restrictions:
+        - readonly
+
+  test/platform/core/model_2:
+    - model: test/framework*
+      restrictions:
+        - readonly
+
+  test/platform/core/model_3:
+    - model: '*'
+      restrictions:
+        - readonly
+
+
+

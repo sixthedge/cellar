@@ -1,0 +1,42 @@
+prereq_configs: space
+
+variables:
+  import_text[config_space@variables]
+  import_text[readiness_assurance@variables]
+  - &IFAT   true
+  - &RANDOM true
+  - &CASE   Score One
+
+  - &IRAT_PHASE_TITLE 'IRAT Correct=5, Attempted=2, No-answer=0, Incorrect=-1'
+  - &TRAT_PHASE_TITLE 'TRAT Correct=10, Attempted=5, No-answer=1, Incorrect=-2'
+  - irat_scoring: &IRAT_SCORING
+      correct:           5
+      attempted:         2
+      no_answer:         0
+      incorrect_attempt: -1
+  - trat_scoring: &TRAT_SCORING
+      correct:           10
+      attempted:         5
+      no_answer:         1
+      incorrect_attempt: -2
+
+  import_text[readiness_assurance@settings]
+
+assignments:
+  import_text[readiness_assurance@assignments]
+
+phases:
+  import_text[readiness_assurance@phases]
+
+teams:
+  import_text[teams@team_123]
+
+blueprints:
+  import_text[blueprints@templates]
+  import_text[blueprints@irat_1234]
+  import_text[blueprints@trat_abcd]
+
+readiness_assurance:
+  assessments:
+    import_text[readiness_assurance@assessment_irat]
+    import_text[readiness_assurance@assessment_trat]

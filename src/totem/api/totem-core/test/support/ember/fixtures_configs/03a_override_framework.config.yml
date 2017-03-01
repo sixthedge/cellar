@@ -1,0 +1,11 @@
+platform_path: test/framework
+
+paths:               
+  - path: test/framework/core
+
+authentication:
+  session:
+    timeout_time:            30.minutes
+    timeout_warning_time:    2.minutes
+    timeout_warning_message: framework warning message
+    expire_after_time:       6.hours

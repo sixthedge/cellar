@@ -1,0 +1,4 @@
+.forms__label--subtle.text--bold.spacing__margin-bottom--1.spacing__margin-top--1 Quantitative Section
+
+each model as |item index|
+  component 'confirmation/items/quant/quant' model=item index=index

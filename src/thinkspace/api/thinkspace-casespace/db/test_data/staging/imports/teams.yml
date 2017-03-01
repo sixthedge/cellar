@@ -1,0 +1,14 @@
+variables:
+  - &TEAM_SET_A team_set_a
+
+  - &TEAM_1       team_1
+  - &TEAM_1_DESC  'Team-1 : read_1, read_2, read_3'
+  - &TEAM_1_USERS [read_1, read_2, read_3]
+
+all_team_sets: [*TEAM_SET_A]
+
+team_sets:
+  - {title: *TEAM_SET_A, dup: skip}
+
+team_set_teams:
+  - {title: *TEAM_1, description: *TEAM_1_DESC, users: *TEAM_1_USERS, team_set: *TEAM_SET_A, dup: skip}

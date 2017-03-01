@@ -1,0 +1,27 @@
+.ts-ownerable-bar_ownerable click='toggle_show_dropdown'
+  .ts-ownerable-bar_ownerable-info
+    if selected
+      p.ts-ownerable-bar_ownerable-label Viewing:
+      p.ts-ownerable-bar_ownerable-name
+        if is_current_user
+          |Yourself
+        else
+          = selected.full_name
+    else
+      span Select User
+    .ts-ownerable-bar_ownerable-icon
+      .tsi.tsi-right.tsi-tiny.tsi-down-caret-inverse.right
+
+  if show_dropdown
+    .ts-ownerable-selector: .ts-ownerable-selector_menu: ul.ts-ownerable-selector_list
+      each dropdown_users as |user|
+        component '__bar/select_user' model=user select='select' selected=selected class="ts-ownerable-selector_list-item"
+
+.ts-ownerable-bar_actions
+  .btn-group
+    a.btn.btn-tiny.btn-default click='prev'
+      |Previous Student
+      .tsi.tsi-left.tsi-micro.tsi-left-arrow-inverse.left
+    a.btn.btn-tiny.btn-default click='next'
+      |Next Student
+      .tsi.tsi-right.tsi-micro.tsi-right-arrow-inverse.right

@@ -1,0 +1,8 @@
+if is_draft
+  partial 'components/overview/states/draft'
+
+if is_archived
+  partial 'components/overview/states/archived'
+
+if is_active
+  partial 'components/overview/states/active'

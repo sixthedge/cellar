@@ -1,0 +1,9 @@
+platform_path: test/platform
+
+authorization:
+  cancan:
+    classes:     
+      ability: Test::Platform::Authorization::Ability
+
+paths:               
+  - path: test/platform/main

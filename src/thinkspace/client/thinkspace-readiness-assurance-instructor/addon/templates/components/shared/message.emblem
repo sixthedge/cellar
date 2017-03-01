@@ -1,0 +1,10 @@
+.ts-ra_admin-message-title
+  = message_title
+  if optional
+    span.ts-ra_admin-message-title-optional (optional)
+  if rad.message
+    span.ts-ra_admin-message-title-action.right: a click='clear' Clear
+  if show_default
+    span.ts-ra_admin-message-title-action.right: a click='default' Default message
+
+= textarea value=rad.message

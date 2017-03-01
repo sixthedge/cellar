@@ -1,0 +1,23 @@
+{
+  "name": "app-totem-socketio-server",
+  "version": "0.0.1",
+  "description": "Node app for Totem SocketIO Server",
+  "author": "sixthedge",
+  "license": "MIT",
+  "homepage": "https://github.com/sixthedge/totem-client",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sixthedge/totem-client.git"
+  },
+  "private": true,
+  "keywords": [
+    "totem",
+    "socketio"
+  ],
+  "directories": {
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}

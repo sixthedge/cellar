@@ -1,0 +1,77 @@
+- model: thinkspace/casespace/assignment
+  associations:
+    - {belongs_to: thinkspace/common/space,                              readonly: true}
+    - {belongs_to: thinkspace/casespace/assignment_type}
+    - {has_many:   thinkspace/casespace/phases,                          dependent: destroy}
+    - {has_many:   thinkspace/common/timetables,       as: timeable,     dependent: destroy}
+    - {has_many:   thinkspace/resource/files,          as: resourceable, readonly: true}
+    - {has_many:   thinkspace/resource/links,          as: resourceable, readonly: true}
+    - {has_many:   thinkspace/resource/tags,           as: taggable}
+    - {has_many:   thinkspace/team/team_set_teamables, as: teamable}
+    - {has_many:   thinkspace/team/teams,              through: thinkspace/team/team_set_teamables, source: thinkspace/team/teams}
+  serializers:
+    - attributes: [id, title, description, active, instructions, name, bundle_type, state, settings, due_at, release_at]
+
+- model: thinkspace/casespace/assignment_type
+  domain: true
+  associations:
+    - {has_many: thinkspace/casespace/assignments}
+  serializers:
+    - attributes: [id, title, path, description, img_src]
+
+- model: thinkspace/casespace/phase
+  associations:
+    - {belongs_to: thinkspace/casespace/assignment}
+    - {belongs_to: thinkspace/casespace/phase_template}
+    - {belongs_to: thinkspace/team/team_category}
+    - {has_many:   thinkspace/casespace/phase_components,                dependent: destroy}
+    - {has_many:   thinkspace/casespace/phase_states,                    dependent: destroy}
+    - {has_one:    thinkspace/common/configuration,    as: configurable, dependent: destroy}
+    - {has_many:   thinkspace/common/timetables,       as: timeable,     dependent: destroy}
+    - {has_many:   thinkspace/resource/files,          as: resourceable, readonly: true}
+    - {has_many:   thinkspace/resource/links,          as: resourceable, readonly: true}
+    - {has_many:   thinkspace/resource/tags,           as: taggable}
+    - {has_many:   thinkspace/team/team_set_teamables, as: teamable}
+    - {has_many:   thinkspace/casespace/phase_scores,  through: thinkspace/casespace/phase_states}
+    - {has_many:   thinkspace/team/teams,              through: thinkspace/team/team_set_teamables, source: thinkspace/team/teams}
+  serializers:
+    - attributes: [id, title, description, position, active, team_ownerable, default_state, team_category_id, team_set_id, state, settings, due_at, unlock_at, release_at, phase_template_id]
+
+- model: thinkspace/casespace/phase_state
+  associations:
+    - {belongs_to: thinkspace/casespace/phase}
+    - {belongs_to: thinkspace/common/user,           readonly: true}
+    - {belongs_to: ownerable,                        polymorphic: true}
+    - {has_one:    thinkspace/casespace/phase_score, dependent: destroy}
+  serializers:
+    - attributes: [id, title, current_state, phase_id, ownerable_id, ownerable_type]
+
+- model: thinkspace/casespace/phase_score
+  associations:
+    - {belongs_to: thinkspace/casespace/phase_state}
+    - {belongs_to: thinkspace/common/user,     readonly: true}
+    - {has_one:    thinkspace/casespace/phase, through: thinkspace/casespace/phase_state}
+  serializers:
+    - attributes: [id, score]
+
+- model: thinkspace/casespace/case_manager_template
+  associations:
+    - {belongs_to: templateable, polymorphic: true}
+  serializers:
+    - attributes: [id, title, description, templateable_type, templateable_id]
+
+- model: thinkspace/casespace/phase_template
+  domain: true
+  associations:
+    - {has_many: thinkspace/casespace/phases}
+  serializers:
+    - attributes: [id, title, description, template, value]
+
+- model: thinkspace/casespace/phase_component
+  associations:
+    - {belongs_to: thinkspace/common/component}
+    - {belongs_to: thinkspace/casespace/phase}
+    - {belongs_to: componentable,                    polymorphic: true}
+    - {has_one: thinkspace/casespace/phase_template, through: thinkspace/casespace/phase}
+  serializers:
+    - attributes: [id, section, componentable_type, componentable_id, component_id]

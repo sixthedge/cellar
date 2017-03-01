@@ -1,0 +1,37 @@
+.totem-admin-locales-show
+  component 'locales/header'
+
+  .totem-admin-locales-content: .row
+    .columns.small-6
+      component 'locales/codes' select='select_code' header='Locale:' active_code=active_code
+    .columns.small-6
+      component 'locales/codes' select='select_compare_code' header='Compare Locale:' active_code=active_compare_code
+
+  if ready
+    .totem-admin-locales-content: .row: .columns.small-12
+      .btn.btn-small click='clear_sort' Clear Sort
+      .btn.btn-small click='toggle_missing'
+        if show_missing
+          |Show All
+        else
+          |Show Missing
+
+      if default_sort_by
+        .btn.btn-small.totem-admin-right click='default_by' Default Sort
+
+      h6.table-sort-by-display-sorted_by Sorted By: #{display_sorted_by}
+
+      table.table-sort-by style='font-size: 95%;'
+        thead
+          component '__table_sort_by/header' sort=sort.key
+          component '__table_sort_by/header' sort=sort.cnt_key
+          component '__table_sort_by/header' sort=sort.count
+          component '__table_sort_by/header' sort=sort.value
+          if active_compare_code
+            component '__table_sort_by/header' sort=sort.compare_value
+        tbody
+          each sorted_locales as |locale|
+            component 'locales/compare/locale' locale=locale active_compare_code=active_compare_code
+          else
+            if show_missing
+              h6 No missing translations.

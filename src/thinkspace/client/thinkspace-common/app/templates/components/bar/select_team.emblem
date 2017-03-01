@@ -1,0 +1,10 @@
+.ts-ownerable-bar_each_ownerable click='select'
+
+  if is_selected
+    .tsi.tsi-left.tsi-tiny.tsi-right-arrow.left
+
+  span
+    if is_current_team
+      |Your Team
+    else
+      = model.title

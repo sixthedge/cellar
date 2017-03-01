@@ -1,0 +1,39 @@
+variables:
+  - &SPACE_1 serializer_space_1
+  - &SPACE_2 serializer_space_2
+  - &ASSIGNMENT_1 serializer_assignment_1_1
+  - &ASSIGNMENT_2 serializer_assignment_2_1
+  - &TEMPLATE_1 serializer_template_1
+  - &TEMPLATE_2 serializer_template_2
+
+spaces:
+  - title: *SPACE_1
+  - title: *SPACE_2
+
+space_users:
+  - spaces: *SPACE_1
+    users:
+      - {first_name: serializer_read_1,    role: read}
+      - {first_name: serializer_update_1,  role: update}
+  - spaces: *SPACE_2
+    users:
+      - {first_name: serializer_read_1,    role: read}
+      - {first_name: serializer_update_1,  role: update}
+
+assignments:
+  - {title: *ASSIGNMENT_1, space: *SPACE_1}
+  - {title: *ASSIGNMENT_2, space: *SPACE_2}
+
+phases:
+  - {title: serializer_phase_1_1_A, assignment: *ASSIGNMENT_1, template_name: *TEMPLATE_1, sections: {html: {sample: html_only}}}
+  - {title: serializer_phase_1_1_B, assignment: *ASSIGNMENT_1, template_name: *TEMPLATE_2, sections: {html: {sample: html_only}}}
+  - {title: serializer_phase_2_1_A, assignment: *ASSIGNMENT_2, template_name: *TEMPLATE_1, sections: {html: {sample: html_only}}}
+  - {title: serializer_phase_2_1_B, assignment: *ASSIGNMENT_2, template_name: *TEMPLATE_2, sections: {html: {sample: html_only}}}
+
+phase_templates:
+  - title: *TEMPLATE_1
+    name: *TEMPLATE_1
+    template: '<row></row>'
+  - title: *TEMPLATE_2
+    name: *TEMPLATE_2
+    template: '<row></row>'

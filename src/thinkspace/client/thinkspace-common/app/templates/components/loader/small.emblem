@@ -1,0 +1,11 @@
+.ts-loader.ts-loader_center
+  .spinner
+    .ball.ball-1
+    .ball.ball-2
+    .ball.ball-3
+    .ball.ball-4
+
+.thinkspace-common_loading-small
+  .thinkspace-common_loading-content
+    h2.thinkspace-common_loading-header = header
+    p.thinkspace-common_loading-message = message

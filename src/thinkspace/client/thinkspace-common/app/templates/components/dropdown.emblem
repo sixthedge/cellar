@@ -1,0 +1,11 @@
+a tabindex='0' data-toggle=drop_id aria-controls=drop_id aria-expanded='false' class=anchor_classes click='click_callbacks'
+
+  span.thinkspace-dropdown_text
+    = text
+  span.thinkspace-dropdown_caret
+    .tsi.tsi-right.icon-tiny.tsi-down-caret-inverse
+
+/ Position set by the 'list_width_class' (e.g. adding top|bottom|left|right does not work).
+ul.dropdown-pane.thinkspace-dropdown_list id=drop_id data-dropdown='' class=list_width_class tabindex='-1'
+  = each collection as |member|
+    component '__dropdown_link' link=member display_property_master=display_property action_receiver_master=action_receiver select_action_master=select_action select_route_master=select_route list_item_class=list_item_classes link_class=link_classes route_param_key_master=route_param_key

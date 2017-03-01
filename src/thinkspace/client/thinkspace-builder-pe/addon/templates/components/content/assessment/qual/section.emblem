@@ -1,0 +1,9 @@
+fieldset.forms__section.spacing__margin-bottom--4
+  h2.text--inline-block Qualitative Section
+  .btn.is-right click='create'
+    | New Question
+
+  each model as |item|
+    component 'content/assessment/qual/item' model=item
+  else
+    h1 empty

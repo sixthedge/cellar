@@ -1,0 +1,25 @@
+.ts-ra_admin-timers-content
+  .ts-ra_admin-selected-component-header= config.title
+
+  if ready
+    if timers
+      table
+        thead
+          tr
+            th Title
+            th Type
+            th End At
+            th Time Remaining
+            th
+        tbody
+          each timers as |timer|
+            tr.ts-ra_admin-timers
+              td= timer.title
+              td= timer.type
+              td= timer.end_at
+              td class=timer.from_class #{timer.from_now}
+              td
+                a click='"cancel" timer' Cancel
+    else
+      h6 No active timers.
+

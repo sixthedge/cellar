@@ -1,0 +1,21 @@
+.ts-ra_admin-phase-states-content
+
+  if ready
+    component 'shared/toggle_select' rad=irad title='Users'
+
+    .ts-ra_admin-select-users class={irad.show_select::hide}
+      / component 'shared/users_select' rad=irad title='Select users to change their state'
+      component 'shared/team_users/select' rad=irad title='Select users to change their state'
+
+    component 'shared/phase_states' rad=irad title='Select IRAT state'
+
+    .ts-grid_row: .small-12.ts-grid_columns
+      component 'shared/message' rad=irad optional=true
+
+    if selected_send
+      .ts-ra_admin-selected-send-errors
+        component 'shared/error' errors=irad.errors
+
+    .ts-grid_row: .small-12.ts-grid_columns.ts-grid_columns-thick
+      a.btn.btn-small.btn-primary.right click='send_phase_states' Send
+      a.btn.btn-small  click='done' Cancel

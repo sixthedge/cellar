@@ -1,0 +1,55 @@
+variables:
+  - &ITEMS_ALL [1006, 1009, 1013, 1021, 1026, 1029, 1032, 1040, 1045, 1048, 1058, 1062]
+  - &SPACE_1 wf_space_1
+  - &SPACE_2 wf_space_2
+  - &ASSIGNMENT_1 wf_assignment_1
+  - &ASSIGNMENT_2 wf_assignment_2
+  - &ASSESSMENT_1 wf_assessment_1
+  - &ASSESSMENT_2 wf_assessment_2
+  - &PHASE_1 wf_phase_1
+  - &PHASE_2 wf_phase_2
+  - &TEMPLATE wf_template
+
+auto_input:
+  forecasts:
+    days:           10
+    station:        'KDSM'
+    completed_days: 3
+    users:          [read_1, update_1, owner_1, read_2, read_3]
+
+spaces:
+  - title: *SPACE_1
+  - title: *SPACE_2
+
+space_users:
+  - spaces: *SPACE_1
+    users: import[users@space_1]
+  - spaces: *SPACE_2
+    users: import[users@space_2]
+
+assignments:
+  - {title: *ASSIGNMENT_1, space: *SPACE_1}
+  - {title: *ASSIGNMENT_2, space: *SPACE_2}
+
+phases:
+  - {title: *PHASE_1, assignment: *ASSIGNMENT_1, template_name: *TEMPLATE}
+  - {title: *PHASE_2, assignment: *ASSIGNMENT_2, template_name: *TEMPLATE}
+
+weather_forecaster:
+  forecast_days:
+    - start: -20
+
+  assessments:
+    - {title: *ASSESSMENT_1, assignment: *ASSIGNMENT_1, phase: *PHASE_1, station: KDSM, items: *ITEMS_ALL}
+    - {title: *ASSESSMENT_2, assignment: *ASSIGNMENT_2, phase: *PHASE_2, station: KDSM, items: *ITEMS_ALL}
+
+phase_templates:
+  - title: *TEMPLATE
+    name: *TEMPLATE
+    template: |
+      #{casespace_phase_header}
+      <row>
+        <column>
+          <component section='forecast' title='weather-forecaster'/>
+        </column>
+      </row>

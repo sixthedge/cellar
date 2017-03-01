@@ -1,0 +1,17 @@
+tr
+
+  td
+    each phase_states as |phase_state|
+      span.casespace-assignment_phase-state-icon
+        link-to-external 'phases.show' assignment model (query-params query_id=phase_state.id) title=phase_state.title
+          = __phase-state-icon phase_state.computed_current_state
+
+  td
+    span.casespace-assignment_phase-title-link
+      link-to-external 'phases.show' assignment model (query-params query_id='none')
+        span.casespace-assignment_phase-title
+          = model.title
+
+  td
+    if model.team_ownerable
+      img style="width: 20px;" src='/assets/images/ts-icons/phase-settings/ts-builder_phase-settings_tbl.svg' alt_text="Team-based" title="Team-based"

@@ -1,0 +1,11 @@
+variables:
+  - &SPACE import[vars@space]
+
+users: import[users@superusers]
+
+spaces:
+  - title: *SPACE
+
+space_users:
+  - spaces: *SPACE
+    users:  import[users]

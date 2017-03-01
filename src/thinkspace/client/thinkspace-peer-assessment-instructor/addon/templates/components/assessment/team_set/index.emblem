@@ -1,0 +1,4 @@
+ul
+  each model as |team_set|
+    div{action 'goto_show' team_set}
+      component 'assessment/team_set/index/team_set' model=team_set assignment=assignment assessment=assessment

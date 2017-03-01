@@ -1,0 +1,31 @@
+tr
+  td.ts-ra_admin-summary-title= rm.title
+  td.ts-ra_admin-summary-answer
+    if qm.answer_id
+      = qm.answer
+    else
+      .not-answered
+        |Not answered
+
+  td.ts-ra_admin-summary-justification
+    if qm.justification
+      if show_justification
+        .ts-ra_admin-summary-justification-content
+          pre= qm.justification
+      else
+        |yes
+    else
+      |no justification
+
+  td.ts-ra_admin-summary-chat
+    if chat_messages
+      if show_chat
+        each chat_messages as |msg|
+          .ts-ra_admin-summary-chat-header
+            |#{msg.time} -- #{msg.name}
+          .ts-ra_admin-summary-chat-message
+            pre= msg.message
+      else
+        |yes
+    else
+      |no chat

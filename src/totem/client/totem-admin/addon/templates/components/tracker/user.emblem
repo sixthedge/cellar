@@ -1,0 +1,11 @@
+tr
+  td.no-wrap= user.username
+  td.no-wrap= user.show_elapsed_time
+  td.no-wrap= user.route
+  td.no-wrap= user.show_date
+  td.no-wrap= user.show_date1
+  td.no-wrap= user.show_lastdiff
+  td.no-wrap= user.model_title
+  td.no-wrap= user.show_model_name
+  td.no-wrap= user.url
+  td.table-sizing

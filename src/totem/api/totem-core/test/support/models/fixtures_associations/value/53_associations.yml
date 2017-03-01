@@ -1,0 +1,9 @@
+- model: test/associations/one/user_53
+  associations:
+    - has_one: test/associations/one/user_53
+      alias:       parent
+      primary_key: parent_id
+      foreign_key: id
+  serializers:
+    - attributes: [id, name, email]
+

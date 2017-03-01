@@ -1,0 +1,16 @@
+if has_been_selected
+  .multiple-choice__item class={is_correct:multiple-choice__item--is-correct:multiple-choice__item--is-incorrect}
+    .multiple-choice__radio
+      if is_selected
+        .radio__icon.radio__icon--is-checked
+      else
+        .radio__icon
+    label.radio__label = button_label
+else
+  .multiple-choice__item
+    .multiple-choice__radio click='select'
+      if is_selected
+        .radio__icon.radio__icon--is-checked
+      else
+        .radio__icon
+    label.radio__label = button_label

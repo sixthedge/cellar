@@ -1,0 +1,13 @@
+if has_messages
+  .totem_message_outlet-loading-messages
+    each message in totem_outlet_messages
+      h4.totem_message_outlet-loading-message
+        = message.message
+
+.thinkspace-common_loading
+  .thinkspace-common_loading-content
+    .spinner
+      .ball.ball-1
+      .ball.ball-2
+      .ball.ball-3
+      .ball.ball-4

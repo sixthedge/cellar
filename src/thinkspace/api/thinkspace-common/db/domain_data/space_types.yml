@@ -1,0 +1,6 @@
+---
+- id: 1
+  title: Casespace
+  lookup_model: thinkspace/casespace/assignments
+  created_at: 2014-08-24 19:34:15.057288000 Z
+  updated_at: 2014-08-24 19:34:15.057288000 Z

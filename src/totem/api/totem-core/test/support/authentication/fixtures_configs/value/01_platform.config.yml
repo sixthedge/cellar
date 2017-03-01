@@ -1,0 +1,11 @@
+platform_path: test/platform
+
+authentication:
+  routes:
+    home:   /test/platform/home
+    public: /test/platform/public
+  classes:
+    user_model: Test::Platform::Main::User
+
+paths:               
+  - path: test/platform/main

@@ -1,0 +1,47 @@
+$totem-admin-header-background-color: #eeeeee;
+$totem-admin-blue-dark:               #3194bb;
+
+.totem-admin-header {
+  background-color: $totem-admin-header-background-color;
+  width:            100%;
+  min-height:       2.5em;
+  .totem-admin-header-title {
+    display:     inline-block;
+    font-size:   1.5em;
+    font-weight: 500;
+  }
+  .totem-admin-sign-out {
+    display: inline-block;
+    float:   right;
+  }
+}
+
+.totem-admin-links {
+  background-color: $totem-admin-header-background-color;
+  display:          inline-block;
+  height:           30px;
+  line-height:      inherit;
+  width:            100%;
+}
+
+.totem-admin-link {
+  float: left;
+  margin: 1em 2em 0 2em;
+  margin: 0 0 0 2em;
+  a {color: $totem-admin-blue-dark;}
+  a.active {
+    color:            white;
+    background-color: $totem-admin-blue-dark;
+    padding:          1px 5px 2px 5px;
+    border-radius:    4px;
+  }
+}
+
+.totem-admin-error-message {
+  color: red;
+  font-weight: bold;
+}
+
+.totem-admin-right {
+  float: right;
+}

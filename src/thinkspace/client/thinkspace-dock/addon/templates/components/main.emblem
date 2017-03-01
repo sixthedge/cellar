@@ -1,0 +1,5 @@
+.thinkspace-dock class={dock_is_visible::hide}
+  .thinkspace-dock_addons
+    .thinkspace-dock_inline-pane
+      each ordered_addons as |addon|
+        component 'addon' addon=addon

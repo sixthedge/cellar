@@ -1,0 +1,61 @@
+///*------------------------------------*\
+//    #MULTIPLE-CHOICE
+//\*------------------------------------*/
+
+.multiple-choice__list {
+  margin-bottom: 1.5rem;
+
+  &.multiple-choice__list--is-disabled {
+    opacity: .75;
+  }
+
+}
+
+.multiple-choice__item {
+  position:      relative;
+  margin-bottom: .5rem;
+
+  label {
+    text-indent: 0;
+    font-weight: $font-weight--regular;
+  }
+
+  &.multiple-choice__item--is-correct {
+    >label {
+      color: $color-green-base;
+      font-weight: $font-weight--bold;
+    }
+  }
+
+  &.multiple-choice__item--is-incorrect {
+    >label {
+      color: $color-gray-base;
+      font-weight: $font-weight--bold;
+    }
+  }
+}
+
+.multiple-choice__radio {
+  position: absolute;
+
+  .multiple-choice__item--is-correct &, .multiple-choice__item--is-incorrect & {
+    .radio__icon {
+      background-position: 0 0;
+      background-size:     22px 22px;
+    }
+  }
+
+  .multiple-choice__item--is-correct & {
+
+    .radio__icon {
+      background-image:  url('images/icons/otbl-icons_checkmark.svg');
+    }
+  }
+
+  .multiple-choice__item--is-incorrect & {
+
+    .radio__icon {
+      background-image:  url('images/icons/otbl-icons_cross.svg');
+    }
+  }
+}

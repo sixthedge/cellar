@@ -1,0 +1,180 @@
+require_data_files: html_samples
+
+spaces:
+  - title: space_1
+  - title: space_2
+  - title: space_3
+
+space_users:
+  - spaces: space_1
+    users: import[users@space_1]
+  - spaces: space_2
+    users: import[users@space_2]
+  - spaces: space_3
+    users: import[users@space_3]
+
+assignments:
+  - space: space_1
+    release_at: -7
+    due_at: +10
+  - title:
+  - title:
+  - title:
+  - space: space_2
+  - title:
+  - title:
+  - title:
+  - title:
+  - space: space_3
+  - title:
+  - title:
+  - title:
+  - title:
+  - title:
+
+phases:
+  - assignment: assignment_1_1
+    template_name: template_1
+  - template_name: template_2
+  - template_name: template_3
+
+  - assignment: assignment_1_2
+    template_name: template_1
+  - template_name: template_2
+  - template_name: template_3
+  - template_name: template_4
+
+  - assignment: assignment_1_3
+    template_name: template_1
+  - template_name: template_1
+  - template_name: template_1
+  - template_name: template_1
+
+  - assignment: assignment_2_1
+    template_name: template_1
+  - template_name: template_2
+  - template_name: template_3
+  - template_name: template_4
+
+  - assignment: assignment_2_2
+    template_name: template_2
+  - template_name: template_3
+  - template_name: template_4
+
+  - assignment: assignment_2_3
+    template_name: template_1
+  - template_name: template_1
+  - template_name: template_1
+  - template_name: template_1
+
+  - assignment: assignment_2_4
+    template_name: template_2
+  - template_name: template_2
+  - template_name: template_2
+  - template_name: template_2
+
+  - assignment: assignment_3_1
+    template_name: template_1
+  - template_name: template_2
+  - template_name: template_3
+  - template_name: template_4
+
+  - assignment: assignment_3_5
+    template_name: template_1
+  - template_name: template_2
+  - template_name: template_3
+  - template_name: template_4
+  - template_name: template_1
+
+phase_templates:
+
+  - title: Phase Template 1
+    name: template_1
+    description: |
+      Sections:
+        header: casespace-phase-header
+        html-1: html
+        html-2: html-select-text
+        submit: casespace-phase-submit
+    template: |
+      #{casespace_phase_header}
+      <row>
+        <column>
+          <component section='html-1' title='html'/>
+          <component section='html-2' title='html'/>
+        </column>
+      </row>
+      #{casespace_phase_submit}
+
+  - title: Phase Template 2
+    name: template_2
+    description: |
+      Sections:
+        header: casespace-phase-header
+        html-1: html
+        html-2: html-only
+        submit: casespace-phase-submit
+    template: |
+      #{casespace_phase_header}
+      <row>
+        <column>
+          <component section='html-1' title='html'/>
+          <component section='html-2' title='html-only'/>
+        </column>
+      </row>
+      #{casespace_phase_submit}
+
+  - title: Phase Template 3
+    name: template_3
+    description: |
+      Sections:
+        header: casespace-phase-header
+        html: html-select-text
+        submit: casespace-phase-submit
+        obs-list: html
+    template: |
+      <row>
+        <column width=8>
+          <component section='header' title='casespace-phase-header'/>
+          <component section='html'   title='html-select-text' select-text='obs-list'/>
+          <component section='submit' title='casespace-phase-submit' data-actions='{"submit":"submit"}'/>
+        </column>
+        <column width=4>
+          <component section='obs-list' title='observation-list'/>
+        </column>
+      </row>
+
+  - title: Phase Template 4
+    name: template_4
+    description: |
+      Sections:
+        header-1:   casespace-phase-header
+        html-1:     html-select-text
+        submit-1:   casespace-phase-submit
+        obs-list-1: html
+        header-2:   casespace-phase-header
+        html-2:     html-select-text
+        submit-2:   casespace-phase-submit
+        obs-list-2: html
+    template: |
+      <row>
+        <row>
+          <column width=8>
+            <component section='header-1' title='casespace-phase-header'/>
+            <component section='html-1'   title='html-select-text' select-text='obs-list-1 obs-list-2'/>
+            <component section='submit-1' title='casespace-phase-submit' data-actions='{"submit":"submit"}'/>
+          </column>
+          <column width=4>
+            <component section='obs-list-1' title='observation-list'/>
+          </column>
+        <row>
+          <column width=8>
+            <component section='header-2' title='casespace-phase-header'/>
+            <component section='html-2'   title='html-select-text' select-text='obs-list-2'/>
+            <component section='submit-2' title='casespace-phase-submit' data-actions='{"submit":"submit"}'/>
+          </column>
+          <column width=4>
+            <component section='obs-list-2' title='observation-list'/>
+          </column>
+        </row>
+      </row>

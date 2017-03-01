@@ -1,0 +1,2 @@
+each assessment.questions as |question|
+  component 'progress_report/analytics/standard/question' model=question assessment=assessment

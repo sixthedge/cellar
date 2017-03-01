@@ -1,0 +1,16 @@
+th.table-sort-by-sort-action title=sort.title
+
+  .table-sort-by-sort-text-wrapper click='sort'
+    .table-sort-by-sort-text= sort.text
+
+    if has_sort_order
+      .table-sort-by-sort-indicator
+        if is_asc
+          .tsi.tsi-up-caret
+        else
+          if is_desc
+            .tsi.tsi-down-caret
+
+  if has_sort_order
+    .table-sort-by-sort-clear click='clear'
+      .table-sort-by-sort-clear-icon: .tsi.tsi-cross

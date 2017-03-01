@@ -1,0 +1,20 @@
+if has_comments
+  .phase-content_section-heading
+    h5 Team Comments
+    p The following comments were compile dfrom your team member's qualitative assessment of you.
+
+  if has_qualitative_positive_comments
+    .phase-content_section
+      h6 What you are doing well
+      .ts-tblpa-overview_qualitative-comments
+        each calculated_overview.qualitative.positive as |value|
+          .ts-tblpa-overview_qualitative-comment.ts-tblpa-overview_qualitative-positive
+            p #{value}
+
+  if has_qualitative_constructive_comments
+    .phase-content_section.ts-tblpa-overview_qualitative-constructive-section
+      h6 Suggestions for improvement
+      .ts-tblpa-overview_qualitative-comments
+        each calculated_overview.qualitative.constructive as |value|
+          .ts-tblpa-overview_qualitative-comment.ts-tblpa-overview_qualitative-constructive
+            p #{value}

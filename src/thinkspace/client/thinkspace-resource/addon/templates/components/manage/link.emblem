@@ -1,0 +1,11 @@
+if edit_visible
+  component 'manage/link/edit' model=model resourceable=resourceable cancel='cancel' prompt=prompt
+
+else
+  .ts-grid_row
+    .small-3.ts-grid_columns: = model.title
+    .small-7.ts-grid_columns: = model.url
+    .small-2.ts-grid_columns: a.btn.btn-default.btn-small.right click='destroy': i.fa.fa-trash-o: |Delete
+  .ts-grid_row
+    .small-3.ts-grid_columns: a.btn.btn-default.btn-small click='edit': |Edit
+    .small-9.ts-grid_columns: |#{model.tag.title}

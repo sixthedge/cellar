@@ -1,0 +1,9 @@
+if is_selected
+  .tsi.tsi-small.tsi-radio-button-checked
+else
+  if viewonly
+    .tsi.tsi-small.tsi-radio-button-unchecked
+  else
+    .tsi.tsi-small.tsi-radio-button-unchecked click='select'
+
+if label: label.ts-validated-input_label= label

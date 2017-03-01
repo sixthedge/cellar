@@ -1,0 +1,3 @@
+.forms__field-wrapper
+  label #{model.id}.  #{model.label}
+  = textarea value=comment key-up='set_qualitative_value' focus-out='save_review' disabled=is_read_only class='spacing__margin-bottom--0'

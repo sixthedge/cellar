@@ -1,0 +1,9 @@
+.title-region.ts_ra-title-region: .ts-grid_row: .small-12.ts-grid_columns.ts-grid_columns-thick
+
+  span.ts-ra_admin-title Readiness Assurance Dashboard
+  span.ts-ra_admin-model-route
+    link-to-external model_route model
+      |#{model.title}
+
+.ts-grid_row: .small-12.ts-grid_columns.ts-grid_columns-thick
+  component 'shared/menu' menu=menu selected_components=selected_components

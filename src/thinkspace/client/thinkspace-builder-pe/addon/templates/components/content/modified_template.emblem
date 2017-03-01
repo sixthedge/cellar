@@ -1,0 +1,22 @@
+.forms__field-wrapper
+  label You've made some changes to the base template. Would you like to save this?
+  .forms__label-summary Saving it as a template will allow you to easily reuse it in future Peer Evaluations.
+
+if is_adding
+  
+  component '__changeset/input' display_errors=true value=changeset.title changeset=changeset attribute='title'
+
+  if is_invalid
+    ul.input-feedback__list
+      li.input-feedback__item.input-feedback--error
+        = errors.firstObject
+
+  .btn-group
+    button.btn.btn--primary{action 'save_template'}
+      | Save Template
+
+    button.btn{action 'toggle_is_adding'}
+      | Cancel
+else
+  button.btn.btn--primary{action 'toggle_is_adding'}
+    | Yes, make this a template

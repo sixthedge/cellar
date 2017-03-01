@@ -1,0 +1,16 @@
+.thinkspace-resource_link-form
+
+  h6 Title
+  = input value=changeset.title
+  component '__changeset/errors' changeset=changeset attribute='title'
+  h6 URL
+  = input value=changeset.url
+  component '__changeset/errors' changeset=changeset attribute='url'
+  h6 Tag
+  = changeset.new_tags
+  component '__changeset/errors' changeset=changeset attribute='new_tags'
+  / view 'select' selection=selection content=resourceable.tags optionValuePath='content.id' optionLabelPath='content.title' prompt=prompt
+
+
+  a.btn.btn-small.btn-primary click='save' Save 
+  a.btn.btn-small.btn-default.right click='cancel' Cancel

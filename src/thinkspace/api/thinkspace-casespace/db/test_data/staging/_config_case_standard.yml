@@ -1,0 +1,77 @@
+require_data_files: [staging/html_samples]
+
+prereq_configs: space
+
+variables:
+  - &SPACE import[vars@space]
+  - &CASE  import[vars@case_standard]
+
+  - &PHASE_HTML HTML + Observation
+  - &PHASE_CF   HTML Carry Forward
+  - &PHASE_LAB  Lab + Observation
+  - &PHASE_DP   Diagnostic Path + Observation
+  - &PHASE_DPE  Diagnostic Expert Path
+  - &PHASE_ART  Artifact
+  - &OBS_LIST_PHASES [*PHASE_HTML, *PHASE_LAB, *PHASE_DP]
+
+  - &PT_HTML two_column_html_observation_list_submit
+  - &PT_CF   one_column_html_submit
+  - &PT_LAB  two_column_lab_observation_list_submit
+  - &PT_DP   two_column_indented_list_observation_list_submit
+  - &PT_DPE  one_column_indented_list
+  - &PT_ART  one_column_artifact_submit
+
+  - &PS_AS   import[phase_settings@auto_score, phase_settings@validate]
+  - &PS_ASUN import[phase_settings@auto_score_unlock_next, phase_settings@validate]
+  - &PS_NOAS import[phase_settings@no_auto_score, phase_settings@validate]
+
+  - &SEC_HTML  {html: {method: staging_html_content_one_each_with_paragraph}}
+  - &SEC_CF    {html: {method: staging_html_carry_forward, carry_forward: *PHASE_HTML}}
+  - &SEC_CHART {chart: lab_chart}
+  - &SEC_DPE   {indented-list: {expert: true, phase: *PHASE_DP}}
+
+assignments:
+  - {title: *CASE, space: *SPACE}
+
+phases:
+  - {title: *PHASE_HTML, assignment: *CASE, template_name: *PT_HTML, settings: *PS_ASUN, sections: *SEC_HTML}
+  # - {title: *PHASE_CF,   assignment: *CASE, template_name: *PT_CF,   settings: *PS_AS,   sections: *SEC_CF,   default_state: locked}
+  - {title: *PHASE_CF,   assignment: *CASE, template_name: *PT_CF,   settings: *PS_AS,   sections: *SEC_CF}
+  - {title: *PHASE_LAB,  assignment: *CASE, template_name: *PT_LAB,  settings: *PS_AS,   sections: *SEC_CHART}
+  - {title: *PHASE_DP,   assignment: *CASE, template_name: *PT_DP,   settings: *PS_AS}
+  - {title: *PHASE_DPE,  assignment: *CASE, template_name: *PT_DPE,  settings: *PS_AS,   sections: *SEC_DPE}
+  - {title: *PHASE_ART,  assignment: *CASE, template_name: *PT_ART,  settings: *PS_NOAS}
+
+resource_tags:
+  - assignment: *CASE
+    user: owner_1
+    tags: import[resources@assignment]
+  - phase: *PHASE_HTML
+    user: owner_1
+    tags: import[resources@phase]
+
+blueprints: import[labs@blueprints]
+
+lab_charts_from_blueprints:
+  lab_chart: import[labs@lab_chart]
+
+ai_variables:
+  - &AUTO_INPUT_USERS [read_2, read_3, owner_1]
+
+auto_input:
+
+  observations:
+    - only: *OBS_LIST_PHASES
+      users:                       *AUTO_INPUT_USERS
+      indent:                      3
+      observations_per_list_lists: 3
+      max_notes_per_observation:   1
+
+  indented_list_responses:
+    - only: *PHASE_DP
+      users:  owner_1
+      indent: 3
+    - expert: owner_1
+      phase: *PHASE_DPE
+
+  markup_library: import[markup@library]

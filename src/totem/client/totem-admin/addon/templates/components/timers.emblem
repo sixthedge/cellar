@@ -1,0 +1,27 @@
+.btn.btn-small.btn-primary click='refresh' Refresh
+.btn.btn-small click='clear_sort' Clear Sort
+
+h6.table-sort-by-display-sorted_by Sorted By: #{display_sorted_by}
+
+if ready
+  if timer_data
+    table.table-sort-by style='font-size: 95%;'
+      thead
+        tr
+          component '__table_sort_by/header' sort=sort.id
+          component '__table_sort_by/header' sort=sort.room
+          th style='padding: 4px;' Cancel
+          component '__table_sort_by/header' sort=sort.start_at
+          component '__table_sort_by/header' sort=sort.end_at
+          component '__table_sort_by/header' sort=sort.remaining
+          component '__table_sort_by/header' sort=sort.title
+          component '__table_sort_by/header' sort=sort.type
+          component '__table_sort_by/header' sort=sort.message
+          component '__table_sort_by/header' sort=sort.interval
+          component '__table_sort_by/header' sort=sort.user_id
+      tbody
+        each sorted_timers as |timer|
+          component 'timers/timer' timer=timer cancel='cancel'
+
+  else
+    h6 No active timers.

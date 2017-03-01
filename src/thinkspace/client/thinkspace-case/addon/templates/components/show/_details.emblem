@@ -1,0 +1,8 @@
+label Release date
+.text__font-size--14.spacing__margin-bottom--1 = model.friendly_release_at
+label Due date
+.text__font-size--14.spacing__margin-bottom--1 = model.friendly_due_at
+label Exercise Type
+.text__font-size--14.spacing__margin-bottom--1 = assignment_type.title
+label Team set
+.text__font-size--14.spacing__margin-bottom--1 = team_set.title

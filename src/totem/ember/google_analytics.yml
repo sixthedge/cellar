@@ -1,0 +1,2 @@
+commands:
+  - npm install --save-dev ember-cli-google-analytics

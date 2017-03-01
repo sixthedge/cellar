@@ -1,0 +1,6 @@
+- model: thinkspace/builder/template
+  associations:
+    - belongs_to:  templateable
+      polymorphic: true
+  serializers:
+    - attributes: [id, title, description, templateable_type, templateable_id, value]

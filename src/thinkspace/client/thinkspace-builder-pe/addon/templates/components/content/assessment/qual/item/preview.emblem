@@ -1,0 +1,21 @@
+log controller
+if is_managing_settings
+  component 'content/assessment/qual/settings' model=model assessment=assessment back='reset_is_managing_settings'
+else
+  .ts-pa_item-preview
+    if is_edit_mode_content
+      ul.ts-pa_item-toolbar
+        li click='order_up'
+          i.fa.fa-arrow-up
+        li.ts-pa_item-toolbar-separator click='order_down'
+          i.fa.fa-arrow-down
+        li.ts-pa_item-toolbar-separator click='set_is_managing_settings' Settings
+        li.ts-pa_item-toolbar-separator click='duplicate' Duplicate
+        li click='delete' Delete
+        
+    .ts-pa_item-content 
+      .phase-content_question-label #{model.label}
+      if is_textarea
+        textarea placeholder=placeholder_text
+      if is_text
+        input type='text' placeholder=placeholder_text

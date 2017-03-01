@@ -1,0 +1,29 @@
+prereq_configs: space
+
+variables:
+  import_text[config_space@variables]
+  import_text[readiness_assurance@variables]
+  - &IFAT   true
+  - &RANDOM true
+  - &CASE   Random Order - IFAT - No IRAT Justifications
+  - &IRAT_JUSTIFICATION false
+  import_text[readiness_assurance@settings]
+
+assignments:
+  import_text[readiness_assurance@assignments]
+
+phases:
+  import_text[readiness_assurance@phases]
+
+teams:
+  import_text[teams@team_123]
+
+blueprints:
+  import_text[blueprints@templates]
+  import_text[blueprints@irat_1234]
+  import_text[blueprints@trat_abcd]
+
+readiness_assurance:
+  assessments:
+    import_text[readiness_assurance@assessment_irat]
+    import_text[readiness_assurance@assessment_trat]

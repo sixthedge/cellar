@@ -1,0 +1,73 @@
+irat_abcd:
+  - &IRAT_CHOICES   [*CHOICES_ABCD]
+  - &IRAT_QUESTIONS [*QUESTIONS_ABCD]
+  - &IRAT_ANSWERS   [*ANSWERS_ABCD]
+
+trat_abcd:
+  - &TRAT_CHOICES   [*CHOICES_ABCD]
+  - &TRAT_QUESTIONS [*QUESTIONS_ABCD]
+  - &TRAT_ANSWERS   [*ANSWERS_ABCD]
+
+irat_1234:
+  - &IRAT_CHOICES   [*CHOICES_1234]
+  - &IRAT_QUESTIONS [*QUESTIONS_1234]
+  - &IRAT_ANSWERS   [*ANSWERS_1234]
+
+trat_1234:
+  - &TRAT_CHOICES   [*CHOICES_1234]
+  - &TRAT_QUESTIONS [*QUESTIONS_1234]
+  - &TRAT_ANSWERS   [*ANSWERS_1234]
+
+templates:
+  - choices: &CHOICES_ABCD
+      - {id: a, label: Choice A}
+      - {id: b, label: Choice B}
+      - {id: c, label: Choice C}
+      - {id: d, label: Choice D}
+    questions: &QUESTIONS_ABCD
+      - {id: ra_1_1, question: Question 1, choices: *CHOICES_ABCD}
+      - {id: ra_1_2, question: Question 2, choices: *CHOICES_ABCD}
+      - {id: ra_1_3, question: Question 3, choices: *CHOICES_ABCD}
+      - {id: ra_1_4, question: Question 4, choices: *CHOICES_ABCD}
+      - {id: ra_1_5, question: Question 5, choices: *CHOICES_ABCD}
+      - {id: ra_1_6, question: Question 6, choices: *CHOICES_ABCD}
+      - {id: ra_1_7, question: Question 7, choices: *CHOICES_ABCD}
+      - {id: ra_1_8, question: Question 8, choices: *CHOICES_ABCD}
+      - {id: ra_1_9, question: Question 9, choices: *CHOICES_ABCD}
+      - {id: ra_1_10, question: Question 10, choices: *CHOICES_ABCD}
+      - {id: ra_1_11, question: Question 11, choices: *CHOICES_ABCD}
+      - {id: ra_1_12, question: Question 12, choices: *CHOICES_ABCD}
+      - {id: ra_1_13, question: Question 13, choices: *CHOICES_ABCD}
+      - {id: ra_1_14, question: Question 14, choices: *CHOICES_ABCD}
+      - {id: ra_1_15, question: Question 15, choices: *CHOICES_ABCD}
+    answers: &ANSWERS_ABCD
+      correct:
+        ra_1_1: a
+        ra_1_2: b
+        ra_1_3: c
+        ra_1_4: d
+        ra_1_5: a
+        ra_1_6: b
+        ra_1_7: c
+        ra_1_8: d
+        ra_1_9: a
+        ra_1_10: b
+        ra_1_11: c
+        ra_1_12: d
+        ra_1_13: a
+        ra_1_14: b
+        ra_1_15: c
+  - choices: &CHOICES_1234
+      - {id: '1', label: Choice 1}
+      - {id: '2', label: Choice 2}
+      - {id: '3', label: Choice 3}
+      - {id: '4', label: Choice 4}
+    questions: &QUESTIONS_1234
+      - {id: ra_1_1, question: Question 1, choices: *CHOICES_1234}
+      - {id: ra_1_2, question: Question 2, choices: *CHOICES_1234}
+      - {id: ra_1_3, question: Question 3, choices: *CHOICES_1234}
+    answers: &ANSWERS_1234
+      correct:
+        ra_1_1: '1'
+        ra_1_2: '2'
+        ra_1_3: '3'

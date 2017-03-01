@@ -1,0 +1,5 @@
+tr
+  td.no-wrap= locale.key
+  td.no-wrap= locale.cnt_key
+  td.no-wrap.center= locale.count
+  td= locale.value

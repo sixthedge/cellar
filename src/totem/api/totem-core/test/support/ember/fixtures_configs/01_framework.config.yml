@@ -1,0 +1,51 @@
+platform_path: test/framework
+
+paths:               
+  - path: test/framework/core
+
+ember:
+
+  default_fatal_message: 'A fatal framework error occurred.'
+
+  route_map_paths: test/framework/ember/config/routes
+
+  api_handler_root_path: test/framework/ember/lib/messages/handlers/   # api handler modules root path (handlers in this folder)
+
+  template_paths:
+    template_path_1: test/framework/ember/auth/path1
+    template_path_2: test/framework/ember/path2
+
+  auth:
+    sign_out_url:       /test/framework/authentication/oauth/sign_out
+    tokenKey:           auth_token
+    tokenIdKey:         user_id
+    modules:            [emberData, rememberable]
+    authRedirectable:   
+      route:   sign_in
+      another: another
+    actionRedirectable:
+      signInSmart:     true
+      signInBlacklist: [sign_in]
+
+  register:     
+    route:
+      sign_in:  test.framework.auth_ns.SignInRoute
+      sign_out: test.framework.auth_ns.SignOutRoute
+    controller:
+      sign_in:  test.framework.auth_ns.SignInController
+      sign_out: test.framework.auth_ns.SignOutController
+
+  require_paths:
+
+    test/framework/ember/auth:
+      test.framework.auth: test/framework/ember/auth/config/initializers/auth
+
+    test/framework/ember:
+      test.framework.ember:   test/framework/ember/config/initializers/ember
+      test.framework.app:     test/framework/ember/config/app
+      test.framework.store:   test/framework/ember/config/initializers/data_stores/store
+      test.framework.logger:  test/framework/ember/lib/logger
+
+  css:
+    body_class: [test-framework, more-framework]
+    another_class: test-framework-another

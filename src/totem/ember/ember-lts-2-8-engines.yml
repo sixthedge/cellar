@@ -1,0 +1,6 @@
+commands:
+  - {command: comment, say: '  Removing ember-data to enable installing version 2.8.1', args: [yellow, bold]}
+  - npm uninstall --save-dev ember-data
+  - {command: prompt, prompt_command: 'bower install --save ember#lts-2-8', select: [1]}
+  - ember install --save-dev ember-data@2.8.1
+  - ember install ember-engines@0.3.4

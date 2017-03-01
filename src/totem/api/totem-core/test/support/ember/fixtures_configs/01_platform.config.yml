@@ -1,0 +1,47 @@
+platform_path: test/platform
+
+paths:               
+  - path: test/platform/main
+
+routes:
+  url:        api
+  glob_match: '*ember'
+
+ember:
+
+  default_fatal_message: 'A fatal platform error occurred.'
+
+  path_namespaces:
+    - path: test/platform/special/namespace
+
+  template_paths:
+    template_path_1: test/platform/path1
+    template_path_2: test/platform/path2
+    template_path_3: test/platform/path3
+
+  auth:
+    sign_out_url:   /test/platform/main/home/sign_out
+    user_namespace: test.platform.main.user_ns
+
+    signInEndPoint:     /test/platform/main/users/sign_in
+    actionRedirectable: 
+      signInRoute: test/platform/main/sign_in_route
+
+  route_map_paths:
+    - test/platform/main/config/routes
+    - test/platform/one/config/routes
+    - test/platform/two/config/routes
+
+  require_paths:
+    test/platform/main:
+      test.platform.module_1: test/platform/main/lib/module_1
+      test.platform.module_2: test/platform/main/lib/module_2
+      platform.locales:       test/platform/main/locales/locales
+    test/platform/one:
+      test.platform.one.module_1: test/platform/one/lib/module_1
+      test.platform.one.module_2: test/platform/one/lib/module_1
+    test/platform/two:
+      test.platform.two.module_1: test/platform/two/lib/module_1
+  css:
+    body_class: test-platform
+    another_class: test-platform-another

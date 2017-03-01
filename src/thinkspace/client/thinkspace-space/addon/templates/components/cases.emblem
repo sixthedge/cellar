@@ -1,0 +1,32 @@
+if all_data_loaded 
+  .grid__container--flex
+    .grid__col--3of4.grid__mobile--full-width
+      if model.assignments
+        if model.active_assignments
+          h2 Recent Exercises
+          ul.tile__list
+            each model.active_assignments as |case|
+              component 'case' model=case
+        else
+          h1 No active cases.
+
+
+      .space-content_container
+        .space-content_heading
+          h4 Draft Cases
+        if model.draft_assignments
+          ul.assignment-list.primary-list
+            each model.draft_assignments as |case|
+              component 'case' model=case
+        else
+          h5 No draft cases.
+
+      .space-content_container
+        .space-content_heading
+          h4 Archived Cases
+        if model.archived_assignments
+          ul.assignment-list.primary-list
+            each model.archived_assignments as |case|
+              component 'case' model=case
+        else
+          h5 No archived cases.

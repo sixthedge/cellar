@@ -1,0 +1,261 @@
+# NEED TO UPDATE FOR NEW STRUCTURE
+
+#
+# ### NOTE: Spaces, Assignments, Phase Templates and Phases are at bottom of this file.
+#
+variables:
+  - &SPACE         peer assessments
+  - &BUNDLE_TYPE   assessment
+  - &TEAM_CATEGORY assessment
+  - &TEAM_1_USERS  [read_1, read_2, read_3, read_4, read_5]
+  - &TEAM_1        'Team 1 : [read_1, read_2, read_3, read_4, read_5]'
+# #
+# # At bottom of the file so can reference the above chart definition variables in the phases below.
+# #
+spaces:
+  - title: *SPACE
+
+space_users:
+  - spaces: *SPACE
+    users: import[users]
+
+assignments:
+  - title: &ASSIGNMENT_PEER_ASSESSMENT_CATEGORIES categories
+    space: *SPACE
+    bundle_type: *BUNDLE_TYPE
+  - title: &ASSIGNMENT_PEER_ASSESSMENT_BALANCE balance points
+    bundle_type: *BUNDLE_TYPE
+  - title: &ASSIGNMENT_PEER_ASSESSMENT_CUSTOM custom
+    bundle_type: *BUNDLE_TYPE
+
+phases:
+  - assignment: *ASSIGNMENT_PEER_ASSESSMENT_CATEGORIES
+    team_category: *TEAM_CATEGORY
+    title:         &TEAM_PHASE_CATEGORIES peer assessment categories
+    template_name: template_peer_assessment
+    sections:
+      assessment:
+        value:
+          qualitative:
+            - id: 1
+              label: Indicate specifically how this person contributes to group success.
+              type: textarea
+              feedback_type: positive
+            - id: 2
+              label: Make constructive suggestions about how this person could better contribute to group success.
+              type: textarea
+              feedback_type: constructive
+          quantitative:
+            - id: 1
+              label: Did their fair share of work
+              type: range
+              settings:
+                comments:
+                  enabled: true
+                labels:
+                  scale:
+                    min: Low
+                    max: High
+                points:
+                  min: 1
+                  max: 10
+            - id: 2
+              label: Shared responsibility instead of taking charge of every activity
+              type: range
+              settings:
+                comments:
+                  enabled: true
+                labels:
+                  scale:
+                    min: Low
+                    max: High
+                points:
+                  min: 1
+                  max: 10
+            - id: 3
+              label: Shared fairly when asked to do so
+              type: range
+              settings:
+                comments:
+                  enabled: true
+                labels:
+                  scale:
+                    min: Low
+                    max: High
+                points:
+                  min: 1
+                  max: 10
+            - id: 4
+              label: Completed their assignments on schedule
+              type: range
+              settings:
+                comments:
+                  enabled: true
+                labels:
+                  scale:
+                    min: Low
+                    max: High
+                points:
+                  min: 1
+                  max: 10
+            - id: 5
+              label: Was well prepared for accomplishing the group project
+              type: range
+              settings:
+                comments:
+                  enabled: true
+                labels:
+                  scale:
+                    min: Low
+                    max: High
+                points:
+                  min: 1
+                  max: 10
+          options:
+            type: 'categories'
+  - assignment: *ASSIGNMENT_PEER_ASSESSMENT_CATEGORIES
+    team_category: *TEAM_CATEGORY
+    title:         peer assessment categories OVERVIEW
+    template_name: template_peer_assessment_overview
+    default_state: locked
+    sections:
+      overview:
+        assessment_id: 1
+
+  - assignment: *ASSIGNMENT_PEER_ASSESSMENT_BALANCE
+    team_category: *TEAM_CATEGORY
+    title:         &TEAM_PHASE_BALANCE peer assessment balance
+    template_name: template_peer_assessment
+    sections:
+      assessment:
+        value:
+          qualitative:
+            - id: 1
+              label: Indicate specifically how this person contributes to group success.
+              type: textarea
+              feedback_type: positive
+            - id: 2
+              label: Make constructive suggestions about how this person could better contribute to group success.
+              type: textarea
+              feedback_type: constructive
+          quantitative:
+            - id: 1
+              label: Score
+              type: range
+              settings:
+                comments:
+                  enabled: true
+                labels:
+                  scale:
+                    min: Low
+                    max: High
+                points:
+                  min: 1
+                  max: 10
+          options:
+            type: 'balance'
+            points:
+              per_member:  10
+              different:   true
+  - assignment: *ASSIGNMENT_PEER_ASSESSMENT_BALANCE
+    team_category: *TEAM_CATEGORY
+    title:         peer assessment balance OVERVIEW
+    template_name: template_peer_assessment_overview
+    default_state: locked
+    sections:
+      overview:
+        assessment_id: 2
+
+  - assignment: *ASSIGNMENT_PEER_ASSESSMENT_CUSTOM
+    team_category: *TEAM_CATEGORY
+    title:         &TEAM_PHASE_CUSTOM peer assessment custom
+    template_name: template_peer_assessment
+    sections:      
+      assessment:
+        value:
+          qualitative:
+            - id: 1
+              label: Indicate specifically how this person contributes to group success.
+              type: textarea
+              feedback_type: positive
+            - id: 2
+              label: Make constructive suggestions about how this person could better contribute to group success.
+              type: textarea
+              feedback_type: constructive
+          quantitative:
+            - id: 1
+              label: Did their fair share of work
+              type: range
+              settings:
+                comments:
+                  enabled: true
+                labels:
+                  scale:
+                    min: Low
+                    max: High
+                points:
+                  min: 1
+                  max: 10
+            - id: 2
+              label: Shared responsibility instead of taking charge of every activity
+              type: range
+            - id: 3
+              label: Shared fairly when asked to do so
+              type: range
+            - id: 4
+              label: Completed their assignments on schedule
+              type: range
+            - id: 5
+              label: Was well prepared for accomplishing the group project
+              type: range
+          options:
+            type: 'free'
+            points:
+              min: 0
+              max: 5
+              per_member: 10
+
+  - assignment: *ASSIGNMENT_PEER_ASSESSMENT_CUSTOM
+    team_category: *TEAM_CATEGORY
+    title:         peer assessment custom OVERVIEW
+    template_name: template_peer_assessment_overview
+    default_state: locked
+    sections:
+      overview:
+        assessment_id: 3
+
+phase_templates:
+  - title: Peer Asessment
+    name: template_peer_assessment
+    template: |
+      #{casespace_phase_header}
+      <row>
+        <column>
+          <component section='assessment' title='peer-assessment'/>
+        </column>
+      </row>
+  - title: Peer Asessment Overview
+    name: template_peer_assessment_overview
+    template: |
+      #{casespace_phase_header}
+      <row>
+        <column>
+          <component section='overview' title='peer-assessment-overview'/>
+        </column>
+      </row>
+
+teams:
+  team_sets:
+    - {title: team_set_1, space: *SPACE}
+
+  team_set_teams:
+    - {title: *TEAM_1, users: *TEAM_1_USERS, team_set: team_set_1, space: *SPACE}
+
+  phase:
+    - {title: *TEAM_PHASE_CATEGORIES, assignment: *ASSIGNMENT_PEER_ASSESSMENT_CATEGORIES,  team_sets: team_set_1, space: *SPACE}
+    - {title: *TEAM_PHASE_BALANCE,    assignment: *ASSIGNMENT_PEER_ASSESSMENT_BALANCE,     team_sets: team_set_1}
+    - {title: *TEAM_PHASE_CUSTOM,     assignment: *ASSIGNMENT_PEER_ASSESSMENT_CUSTOM,      team_sets: team_set_1}
+
+auto_input:
+  peer_assessment_reviews:
+    teams: *TEAM_1

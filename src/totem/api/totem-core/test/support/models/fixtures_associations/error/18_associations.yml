@@ -1,0 +1,4 @@
+- model: test/associations/one/error_user_18
+  serializers:
+    - attributes: [id, name]
+    - bad_key: 'test/associations/one/user'

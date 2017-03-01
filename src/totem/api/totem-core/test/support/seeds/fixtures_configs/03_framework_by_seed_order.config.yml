@@ -1,0 +1,13 @@
+platform_path: test/framework
+
+seed_order:
+  - test/framework/seed_zero
+  - test/framework/seed_one
+  - test/framework/seed_two
+  - test/framework/core
+
+paths:               
+  - path: test/framework/core
+  - path: test/framework/seed_one
+  - path: test/framework/seed_two
+  - path: test/framework/seed_zero

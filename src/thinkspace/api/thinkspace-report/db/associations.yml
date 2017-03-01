@@ -1,0 +1,26 @@
+- model: thinkspace/report/file
+  associations:
+    - belongs_to: thinkspace/report/report
+    - belongs_to: thinkspace/common/user
+  serializers:
+    - attributes: [id, url, title, content_type, size, attachment_updated_at, user_id, created_at]
+
+- model: thinkspace/report/report
+  associations:
+    - has_many: thinkspace/report/report_tokens
+      dependent: destroy
+    - has_many: thinkspace/report/files
+      dependent: destroy
+    - belongs_to: thinkspace/common/user
+    - belongs_to: authable
+      polymorphic: true
+  serializers:
+    - attributes: [id, title, created_at, authable_type, authable_id]
+    - scoped_attributes: [token]
+
+- model: thinkspace/report/report_token
+  associations:
+    - belongs_to: thinkspace/report/report
+    - belongs_to: thinkspace/common/user
+  serializers:
+    - attributes: [id]

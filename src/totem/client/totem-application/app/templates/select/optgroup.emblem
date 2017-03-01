@@ -1,0 +1,3 @@
+h1 View helper(s) commented out in this template.
+= each content as |item|
+  / = view 'select/option' is_record=is_record_list content=item content_display_property=display_property class_names=option_class_names selected_items=selected_items disabled_items=disabled_items data_placeholder=data_placeholder

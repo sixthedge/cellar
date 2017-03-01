@@ -1,0 +1,11 @@
+.ts-ra_radio-buttons
+
+  if button_columns
+    each button_columns as |column_buttons|
+      .ts-ra_radio-button-column
+        each column_buttons as |button|
+          component 'shared/radio/button' button=button selected_id=selected_id select='select' label_selectable=label_selectable
+
+  else
+    each buttons as |button|
+      component 'shared/radio/button' button=button selected_id=selected_id select='select' label_selectable=label_selectable

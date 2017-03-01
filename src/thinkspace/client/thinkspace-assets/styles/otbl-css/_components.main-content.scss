@@ -1,0 +1,29 @@
+///*------------------------------------*\
+//    #MAIN-CONTENT
+//\*------------------------------------*/
+
+.main-content {
+	padding:   $top-bar-height $spacing-unit 0;
+	margin:    0 auto;
+	width:     100%;
+	max-width: $max-width;
+}
+
+.main-content__header {
+	padding-top:   2rem;
+	margin-bottom: 2rem;
+
+	>h1 {
+		font-size: 1.875rem;
+		margin:    0; 
+	}
+
+	>p {
+		margin-top: 0;
+	}
+
+	>.btn-group {
+		margin-top: 6px;
+	}
+
+}

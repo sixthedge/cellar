@@ -1,0 +1,78 @@
+///*------------------------------------*\
+//    #COUNTER-BOX
+//\*------------------------------------*/
+
+.counter-box {
+  @extend .group;
+
+  display:   inline-block;
+  height:    2rem;
+  font-size: .875rem;
+}
+
+.counter-box__label {
+  border:                    2px solid;
+  border-top-left-radius:    $border-radius;
+  border-bottom-left-radius: $border-radius;
+  padding:                   .25rem .75rem;
+  display:                   inline-block;
+  vertical-align:            middle;
+  background-color:          white;
+  height:                    2rem;
+  font-weight:               $font-weight--bold;
+
+  .counter-box--gray & {
+    border-color: $color-gray-base;
+    color:        $color-gray-base;
+  }
+
+  .counter-box--green & {
+    border-color: $color-green-base;
+    color:        $color-green-base;
+  }
+
+  .counter-box--red & {
+    border-color: $color-red-base;
+    color:        $color-red-base;
+  }
+
+  .counter-box--blue & {
+    border-color: $color-blue-base;
+    color:        $color-blue-base;
+  }
+}
+
+.counter-box__value {
+  border:                     2px solid;
+  color:                      white;
+  font-weight:                $font-weight--bold;
+  margin-left:                -2px;
+  border-top-right-radius:    $border-radius;
+  border-bottom-right-radius: $border-radius;
+  padding:                    .25rem 0;
+  display:                    inline-block;
+  vertical-align:             middle;
+  height:                     2rem;
+  width:                      2rem;
+  text-align:                 center;
+
+  .counter-box--gray & {
+    background-color: $color-gray-base;
+    border-color:     $color-gray-base;
+  }
+
+  .counter-box--green & {
+    border-color: $color-green-base;
+    background-color:        $color-green-base;
+  }
+
+  .counter-box--red & {
+    border-color: $color-red-base;
+    background-color:        $color-red-base;
+  }
+
+  .counter-box--blue & {
+    border-color: $color-blue-base;
+    background-color:        $color-blue-base;
+  }
+}

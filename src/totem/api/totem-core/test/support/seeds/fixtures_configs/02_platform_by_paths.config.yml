@@ -1,0 +1,8 @@
+platform_path: test/platform
+
+paths:               
+  - path: test/platform/main
+  - path: test/platform/seed_zero
+  - path: test/platform/seed_one
+  - path: test/platform/seed_two
+  - path: test/platform/not_mounted

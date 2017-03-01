@@ -1,0 +1,25 @@
+.grid__container--flex.spacing__margin-bottom--4
+  .grid__col--4of4
+    unless is_edit
+      unless viewonly
+
+        if model.configuration_validate
+          if has_values
+            .casespace_phase-input_element-status
+              span.casespace_phase-input_element-label Responses:
+              span.casespace_phase-input_element-text.casespace_phase-input_element-text_completed completed:
+              span.casespace_phase-input_element-count.casespace_phase-input_element-count_completed #{valid_count}
+              span.casespace_phase-input_element-text.casespace_phase-input_element-text_remaining remaining:
+              span.casespace_phase-input_element-count.casespace_phase-input_element-count_remaining #{invalid_count}
+
+        if submit_messages
+          .casespace_phase-submit-message-title= submit_messages_title
+          each submit_messages as |message|
+            .casespace_phase-submit-message= message
+
+        if model.friendly_submit_visible
+          .casespace_phase-submit.grid__container--centered
+            .ts-grid_row
+              .small-4.ts-grid_columns.ts-grid_columns-centered
+                a.btn.btn--primary click='submit'
+                  = model.friendly_submit_text

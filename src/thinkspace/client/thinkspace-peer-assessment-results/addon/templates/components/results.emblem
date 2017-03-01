@@ -1,0 +1,5 @@
+if all_data_loaded
+  if overview_error
+    h4 There was a problem loading the results.
+  else
+    component 'type/base' model=model calculated_overview=calculated_overview assessment=assessment

@@ -1,0 +1,95 @@
+- model: thinkspace/common/api_session
+  associations:
+    - {belongs_to: thinkspace/common/user}
+
+- model: thinkspace/common/agreement
+  domain: true
+  serializers:
+    - attributes: [id, doc_type, link]
+
+- model: thinkspace/common/discipline
+  domain: true
+  associations:
+    - {has_many: thinkspace/common/user_disciplines, as: discipline, serialize: false}
+  serializers:
+    - attributes: [id, title]
+
+- model: thinkspace/common/user_discipline
+  associations:
+    - {belongs_to: user,       polymorphic: true}
+    - {belongs_to: discipline, polymorphic: true}
+  serializers:
+    - attributes: [id]
+
+- model: thinkspace/common/user
+  associations:
+    - {has_many: thinkspace/common/space_users}
+    - {has_many: thinkspace/common/spaces,      through: thinkspace/common/space_users}
+    - {has_many: thinkspace/common/disciplines, through: thinkspace/common/user_disciplines, source: discipline, source_type: 'Thinkspace::Common::Discipline'}
+    - {has_many: thinkspace/common/user_disciplines, as: user, serialize: false}
+    - {has_one:  thinkspace/common/configuration,    as: configurable, dependent: destroy, serialize: false}
+  serializers:
+    - attributes: [id, first_name, last_name, email, state, avatar_url, avatar_title, avatar_updated_at, profile, email_optin, activated_at, tos_current]
+
+- model: thinkspace/common/space_type
+  domain: true
+  associations:
+    - {has_many: thinkspace/common/space_space_types}
+    - {has_many: thinkspace/common/spaces, through:  thinkspace/common/space_space_types}
+  serializers:
+    - attributes: [id, title, lookup_model]
+
+- model: thinkspace/common/space
+  associations:
+    - {belongs_to: thinkspace/common/space, alias: sandbox_space, foreign_key: sandbox_space_id}
+    - {has_many: thinkspace/common/space_users}
+    - {has_many: thinkspace/common/space_space_types}
+    - {has_many: thinkspace/team/team_sets}
+    - {has_many: thinkspace/casespace/assignments, readonly: true}
+    - {has_many: thinkspace/common/space_types, through: thinkspace/common/space_space_types}
+    - {has_many: thinkspace/common/users,       through: thinkspace/common/space_users, readonly: true, alias: owners, foreign_key: space_id, scope: "where('thinkspace_common_space_users.role = ? AND thinkspace_common_space_users.state = ?', 'owner', 'active')"}
+    - {has_many: thinkspace/common/users,       through: thinkspace/common/space_users, readonly: true}
+    - {has_many: thinkspace/team/teams,         through: thinkspace/team/team_set_teamables, source: thinkspace/team/teams}
+    - {has_many: thinkspace/common/invitations,      as: invitable}
+    - {has_many: thinkspace/team/team_set_teamables, as: teamable}
+  serializers:
+    - attributes: [id, title]
+
+- model: thinkspace/common/space_space_type
+  associations:
+    - {belongs_to: thinkspace/common/space_type}
+    - {belongs_to: thinkspace/common/space}
+
+- model: thinkspace/common/space_user
+  associations:
+    - {belongs_to: thinkspace/common/space}
+    - {belongs_to: thinkspace/common/user, readonly: true}
+  serializers:
+    - attributes: [id, role, space_id, state]
+
+- model: thinkspace/common/configuration
+  associations:
+    - {belongs_to: configurable, polymorphic: true}
+  serializers:
+    - attributes: [id, settings]
+
+- model: thinkspace/common/component
+  domain: true
+  serializers:
+    - attributes: [id, value, preprocessors]
+
+- model: thinkspace/common/invitation
+  associations:
+    - {belongs_to: thinkspace/common/user}
+    - {belongs_to: invitable, polymorphic: true}
+  serializers:
+    - attributes: [id, email, state, role, accepted_at, created_at, expires_at, invitable_type, invitable_id]
+
+- model: thinkspace/common/password_reset
+  serializers:
+    - attributes: [id, token]
+
+- model: thinkspace/common/timetable
+  associations:
+    - {belongs_to: timeable,  polymorphic: true}
+    - {belongs_to: ownerable, polymorphic: true}

@@ -1,0 +1,7 @@
+- model: test/associations/one/user_32
+  associations:
+    - belongs_to: polymorphicable
+      polymorphic: true
+  serializers:
+    - attributes: [id, name, email]
+

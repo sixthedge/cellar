@@ -1,0 +1,14 @@
+prereq_configs: default
+
+repeat_space_users:
+  - spaces: space_1
+    repeat:       20
+    first_name:   Jane
+    last_name:    Doe
+    start_number: 1
+
+  - spaces: [space_2, space_3]
+    repeat:       20
+    first_name:   John
+    last_name:    Doe
+    start_number: 1

@@ -1,0 +1,17 @@
+assignment:
+  - title: Syllabus
+    links:
+      - {title: iowa state, url: 'http://iastate.edu'}
+      - {title: thinkspace, url: 'http://thinkspace.org'}
+    files:
+      - {source: file.pdf, name: syllabus.pdf}
+
+phase:
+  - title: Phase Resources
+    links:
+      - {title: thinkspace, url: 'http://thinkspace.org'}
+    files:
+      - {source: file.pdf, name: work sheet 1.pdf}
+      - {source: file.pdf, name: work sheet 2.pdf}
+      - {source: file.txt, name: work sheet 3.txt}
+      - {source: file.txt, name: work sheet 4.txt}

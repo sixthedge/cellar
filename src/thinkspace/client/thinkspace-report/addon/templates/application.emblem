@@ -1,0 +1,5 @@
+if is_route
+  outlet
+
+else
+  component 'main'

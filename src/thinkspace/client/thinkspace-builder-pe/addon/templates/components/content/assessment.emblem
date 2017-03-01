@@ -1,0 +1,22 @@
+.main-content__header
+	h1 Peer Evaluation Content 
+
+.forms__field-wrapper.spacing__margin-bottom--2
+  label.forms__label--subtle Using Template
+  div.text--bold = template.title
+  a.action-link--small{action 'change_template'}
+  	| Change Template
+
+if template.is_balance
+  .forms__field-wrapper
+    label How many points per member for total points
+    .forms__label-summary 
+      | i.e. 10 points x 5 peers = 50 total points to distribute
+    component '__changeset/input' value=step.assessment_changeset.points_per_member changeset=step.assessment_changeset attribute='points_per_member' display_errors=true class='forms__input--50'
+
+component 'content/assessment/quant/section' model=quant_items
+
+component 'content/assessment/qual/section' model=qual_items
+
+if step.assessment.modified_template
+  component 'content/modified_template' model=step.assessment step=step

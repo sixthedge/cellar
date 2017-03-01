@@ -1,0 +1,138 @@
+---
+- id: 1
+  ownerable_type: 
+  ownerable_id: 
+  value:
+    options:
+      type: balance
+      points:
+        per_member: 10
+        different: true
+    quantitative:
+    - id: 1
+      label: Michaelsen's Quant 1
+      type: range
+      settings:
+        comments:
+          enabled: true
+        labels:
+          scale:
+            min: Low
+            max: High
+        points:
+          min: 0
+          max: 15
+    - id: 2
+      label: Michaelsen's Quant 2
+      type: range
+      settings:
+        comments:
+          enabled: true
+        labels:
+          scale:
+            min: Low
+            max: High
+        points:
+          min: 0
+          max: 15
+    qualitative:
+    - id: 1
+      label: "[Michaelsen's] Indicate specifically how this person contributes to
+        group success."
+      type: textarea
+      feedback_type: positive
+    - id: 2
+      label: "[Michaelsen's] Make constructive suggestions about how this person could
+        better contribute to group success."
+      type: textarea
+      feedback_type: constructive
+  title: Michaelsen's Method (Balance Points)
+  description: Students will be given a set number of points to distribute among their
+    peers.
+  state: system
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2017-01-12 18:15:48.252303000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2017-01-12 18:15:48.252303000 Z
+    zone: *2
+    time: *3
+- id: 2
+  ownerable_type: 
+  ownerable_id: 
+  value:
+    options:
+      type: categories
+      points: 
+        per_member: 10
+        different: true
+    quantitative:
+    - id: 1
+      label: Categories Quant 1
+      type: range
+      settings:
+        comments:
+          enabled: true
+        labels:
+          scale:
+            min: Low
+            max: High
+        points:
+          min: 0
+          max: 15
+    - id: 2
+      label: Categories Quant 2
+      type: range
+      settings:
+        comments:
+          enabled: true
+        labels:
+          scale:
+            min: Low
+            max: High
+        points:
+          min: 0
+          max: 15
+    qualitative:
+    - id: 1
+      label: "[Categories] Indicate specifically how this person contributes to group
+        success."
+      type: textarea
+      feedback_type: positive
+    - id: 2
+      label: "[Categories] Make constructive suggestions about how this person could
+        better contribute to group success."
+      type: textarea
+      feedback_type: constructive
+  title: Categories
+  description: Students will be given a set of categories or questions to evaluate
+    their peers by.
+  state: system
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &4 2017-01-12 18:15:48.262308000 Z
+    zone: *2
+    time: *4
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &5 2017-01-12 18:15:48.262308000 Z
+    zone: *2
+    time: *5
+- id: 3
+  ownerable_type: 
+  ownerable_id: 
+  value:
+    options: {}
+    quantitative: {}
+    qualitative: {}
+  title: Blank Canvas
+  description: Start fresh.
+  state: system
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &6 2017-01-16 18:16:47.032326000 Z
+    zone: *2
+    time: *6
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &7 2017-01-16 18:16:47.032326000 Z
+    zone: *2
+    time: *7

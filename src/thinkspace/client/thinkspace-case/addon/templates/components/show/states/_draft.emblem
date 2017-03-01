@@ -1,0 +1,16 @@
+.dialogue
+  h1 Exercise is in draft mode
+  p This case can only be seen by instructors or teaching assistants.
+
+  .btn-group
+    button.btn.btn--primary{action 'set_active'}
+      | Make live now!
+
+    button.btn{action 'edit_release_at'} data-open='change-date'
+      | Add Release Date
+
+    if is_editing_release_date
+      component 'show/date_modal' model=model
+
+    button.btn{action 'set_archived'}
+      | Archive exercise

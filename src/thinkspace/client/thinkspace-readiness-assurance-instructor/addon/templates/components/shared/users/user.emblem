@@ -1,0 +1,17 @@
+.ts-ra_admin-select-users
+
+  span.ts-ra_radio-button click='select'
+    .ts-ra_radio-button-status
+      if selected
+        .tsi.tsi-small.tsi-ra-item-checked
+      else
+        .tsi.tsi-small.tsi-ra-item-unchecked
+    .ts-ra_radio-button-label.selectable= user.name
+
+  span.ts-ra_admin-select-users-team
+    if show_team
+      span.ts-ra_admin-select-users-team-title (#{user.team.title})
+      a click='toggle_team' hide team
+    else
+      a click='toggle_team' show team
+        

@@ -1,0 +1,20 @@
+.ts-ra_admin-tracker-content
+  .ts-ra_admin-selected-component-header= config.title
+
+  if ready
+    if has_tracker_users
+      table.ts-ra_admin-track-users
+        thead
+          th.ts-ra_admin-table-sort-action click='by_tracked' title='sort by tracked, user'
+            i.tsi.tsi-user-color.ts-ra_admin-tracked-user
+          th.ts-ra_admin-table-sort-action click='by_user'    title='sort by user' User 
+          th.ts-ra_admin-table-sort-action click='by_teams'   title='sort by team, user' Team
+          th.ts-ra_admin-table-sort-action click='by_title'   title='sort by title, user' Title
+          th.ts-ra_admin-table-sort-action click='by_url'     title='sort by url, user' Url
+          th.ts-ra_admin-table-sort-action click='by_date'    title='sort by data, user' Date
+        tbody
+          each sorted_user_data as |user|
+            component 'tracker/user' user=user
+
+    else
+      .ts-ra_tracker-model-heading No users.

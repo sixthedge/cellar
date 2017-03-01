@@ -1,0 +1,24 @@
+platform_path: test/platform
+
+authentication:
+  session:
+    timeout_time:      10.minutes
+    expire_after_time: 1.hours
+    sample_key:        platform
+  routes:
+    home:   /test/platform/home
+    public: /test/platform/public
+  classes:
+    user_model: Test::Platform::Main::User
+  # oauth:
+  #   providers:
+  #     test_oauth_1:
+  #       site: http://framework_site1
+  #       active: false
+  #     test_oauth_2:
+  #       active: false
+  #     test_oauth_4:
+  #       site: http://platform_site4
+
+paths:               
+  - path: test/platform/main

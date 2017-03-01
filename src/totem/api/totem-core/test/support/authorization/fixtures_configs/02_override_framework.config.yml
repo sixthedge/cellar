@@ -1,0 +1,18 @@
+platform_path: test/framework
+
+authorization:
+  authorize_by: cancan
+  cancan:
+    classes:     
+      ability: Test::Framework::Cancan::Ability
+    serializers:
+      modules:
+        serializer:    Test::Framework::ActiveModelSerializer
+        authorization: Test::Framework::Authorize
+        ability:       Test::Framework::Ability
+      defaults:
+        authorize_action: update
+        ability_actions:  crud
+
+paths:               
+  - path: test/framework/core

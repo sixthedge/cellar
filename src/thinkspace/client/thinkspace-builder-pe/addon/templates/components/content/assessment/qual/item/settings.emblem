@@ -1,0 +1,14 @@
+.ts-pa_item-settings
+  .ts-forms_inline-heading
+    h4 Input Settings
+    .ts-forms_heading-actions
+      a.btn.btn-small.btn-primary click='save' Save settings
+      a.btn.btn-small.btn-default click='back' Cancel
+  label.ts-forms_field-label Label
+  = input value=label placeholder='Label for question'
+  hr
+  label.ts-forms_field-label Feedback Type
+  component '__dropdown' selected=feedback_type collection=feedback_types text=feedback_type_label display_property='label' select_action='select_feedback_type' action_receiver=this class='btn-small btn-default' 
+  hr
+  label.ts-forms_field-label Display Type
+  component '__dropdown' selected=type collection=types text=type_label display_property='label' select_action='select_type' action_receiver=this class='btn-small btn-default'

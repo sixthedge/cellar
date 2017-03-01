@@ -1,0 +1,11 @@
+if show_user
+
+  .ts-ra_admin-select-users
+
+    span.ts-ra_radio-button
+      .ts-ra_radio-button-status click='select'
+        if selected
+          .tsi.tsi-small.tsi-item-selected
+
+        span.ts-ra_admin-select-users-user
+          |#{user.name}

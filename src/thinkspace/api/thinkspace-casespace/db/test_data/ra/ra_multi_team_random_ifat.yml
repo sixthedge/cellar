@@ -1,0 +1,34 @@
+prereq_configs: space
+
+variables:
+  import_text[config_space@variables]
+  import_text[readiness_assurance@variables]
+  - &IFAT   true
+  - &RANDOM true
+  - &CASE   Multi-Team Random Order - IFAT
+  import_text[readiness_assurance@settings]
+
+space_users:
+  - {spaces: *SPACE, users: 'import[users@users_456]'}
+  - {spaces: *SPACE, users: 'import[users@users_789]'}
+
+assignments:
+  import_text[readiness_assurance@assignments]
+
+phases:
+  import_text[readiness_assurance@phases]
+
+teams:
+  import_text[teams@team_123]
+  import_text[teams@team_456]
+  import_text[teams@team_789]
+
+blueprints:
+  import_text[blueprints@templates]
+  import_text[blueprints@irat_abcd]
+  import_text[blueprints@trat_abcd]
+
+readiness_assurance:
+  assessments:
+    import_text[readiness_assurance@assessment_irat]
+    import_text[readiness_assurance@assessment_trat]

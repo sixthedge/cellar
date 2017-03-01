@@ -1,0 +1,61 @@
+- model: thinkspace/peer_assessment/assessment
+  associations:
+    - belongs_to: authable
+      polymorphic: true
+    - has_many: thinkspace/peer_assessment/team_sets
+    - has_many: thinkspace/peer_assessment/overviews
+    - belongs_to: thinkspace/peer_assessment/assessment_template
+  serializers:
+    - attributes: [id, authable_id, authable_type, assessment_template_id, value, state, modified_template]
+
+- model: thinkspace/peer_assessment/assessment_template
+  domain: true
+  associations:
+    - belongs_to: ownerable
+      polymorphic: true
+  serializers:
+    - attributes: [id, ownerable_id, ownerable_type, value, title, description, state]
+
+- model: thinkspace/peer_assessment/review
+  delegate:
+    - method: authable
+      to: thinkspace/peer_assessment/review_set
+    - method: ownerable
+      to: thinkspace/peer_assessment/review_set
+  associations:
+    - belongs_to: reviewable
+      polymorphic: true
+    - belongs_to: thinkspace/peer_assessment/review_set
+  serializers:
+    - attributes: [id, reviewable_id, reviewable_type, value, state]
+
+- model: thinkspace/peer_assessment/review_set
+  delegate:
+    - method: authable
+      to: thinkspace/peer_assessment/team_set
+  associations:
+    - belongs_to: ownerable
+      polymorphic: true
+    - has_many: thinkspace/peer_assessment/reviews
+    - belongs_to: thinkspace/peer_assessment/team_set
+  serializers:
+    - attributes: [id, ownerable_id, ownerable_type, state]
+
+- model: thinkspace/peer_assessment/team_set
+  delegate:
+    - method: authable
+      to: thinkspace/peer_assessment/assessment
+  associations:
+    - belongs_to: thinkspace/team/team
+    - has_many: thinkspace/peer_assessment/review_sets
+    - belongs_to: thinkspace/peer_assessment/assessment
+  serializers:
+    - attributes: [id, state, team_id]
+
+- model: thinkspace/peer_assessment/overview
+  associations:
+    - belongs_to: authable
+      polymorphic: true
+    - belongs_to: thinkspace/peer_assessment/assessment
+  serializers:
+    - attributes: [id, authable_id, authable_type]

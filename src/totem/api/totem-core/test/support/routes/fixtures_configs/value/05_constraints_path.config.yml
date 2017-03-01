@@ -1,0 +1,16 @@
+platform_path: test/platform
+
+routes:
+  url: api
+
+paths:               
+  - path: test/platform/one
+    routes:
+      match:
+        test/one/match_one:
+          constraints:
+            path: /test/one/match_1
+        test/one/match_another:
+          to:  somewhere
+          via: put
+          constraints: false

@@ -1,0 +1,26 @@
+.multiple-choice__list class={qm.answers_disabled:multiple-choice__list--is-disabled}
+
+  each qm.choices as |choice|
+    component 'radio/ifat_button' qm=qm choice=choice select='select'
+
+hr
+if has_selections
+  .is-left class={is_correct:ifat-correct:ifat-incorrect}
+    if is_correct
+      span.text__font-size--14.text__color--green Correct!
+    else
+      span.text__font-size--14.text__color--red
+        'Incorrect!
+        unless qm.readonly
+          |Please try again.
+
+.is-right
+  if qm.rm.room_users
+    .btn.btn--primary click='toggle_chat'
+      if qm.chat_displayed 
+        | Close Chat
+      else
+        | Open Chat
+  .counter-box.counter-box--gray.is-right.spacing__margin-left--1
+    .counter-box__label Score:
+    .counter-box__value #{score}

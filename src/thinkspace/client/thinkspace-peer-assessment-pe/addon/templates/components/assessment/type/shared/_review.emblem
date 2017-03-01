@@ -1,0 +1,44 @@
+.grid__container--flex
+  .grid__col--3of4.grid__mobile--full-width
+    partial 'components/assessment/actions'
+
+    / Quantitative
+    .forms__section.spacing__margin-bottom--4
+      h2 Quantitative Assessment
+      p.forms__heading-summary Use the sliders below to score your team member's performance
+
+      each model.quantitative_items as |item|
+        component 'assessment/item/quantitative' manager=manager model=item class='bordered-panel'
+
+    / Qualitative (optional)
+    if has_qualitative_section
+      .forms__section.spacing__margin-bottom--4
+        h2.spacing__margin-bottom--0 Qualitative Assessment
+        p.forms__heading-summary All comments will be anonymous
+
+        each model.qualitative_items as |item|
+          component 'assessment/item/qualitative' manager=manager model=item class='bordered-panel'
+
+    .grid__container.grid__container--content-width.spacing__margin-bottom--4
+      hr
+      a.btn click='previous' 
+        .tsi.tsi-left.icon-small.tsi-left-arrow-inverse
+        | Previous Member
+
+      a.btn.btn--primary.is-right click='next' 
+        | Next Member
+        .tsi.tsi-right.icon-small.tsi-right-arrow-inverse
+
+  .grid__col--1of4 
+    if is_balance
+      if has_negative_points_remaining
+        .counter-box.counter-box--red.spacing__margin-bottom--1
+          span.counter-box__label Points remaining:
+          span.counter-box__value #{points_remaining}
+      else
+        .counter-box.counter-box--blue.spacing__margin-bottom--1
+          span.counter-box__label Points remaining:
+          span.counter-box__value #{points_remaining}
+
+    component 'assessment/team' manager=manager
+    partial 'components/assessment/rules'

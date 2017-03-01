@@ -1,0 +1,162 @@
+///*------------------------------------*\
+//    #DATE-PICKER
+//\*------------------------------------*/
+
+// Input class
+.ts-picker_input {
+  cursor: pointer;
+}
+
+// Picker container
+.picker {
+  font-size: .875rem;
+  color: $color-black-base;
+
+  .picker--focused {
+    outline: none;
+  }
+
+  &:focus {
+    outline: none;
+  } 
+}
+
+.picker__input {
+
+  &.picker__input--active {
+    border-color: $color-blue-base;
+  }
+}
+
+.picker--opened .picker__holder {
+  border: $border--active;
+  border-radius: $border-radius;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.picker__day--highlighted {
+  border-color: $color-blue-base;
+}
+
+.picker__month,
+.picker__year {
+  font-weight: $font-weight--bold;
+}
+
+.picker__footer {
+  margin-bottom: 1rem;
+
+  .picker__button--clear, .picker__button--close, .picker__button--today {
+    line-height: 1rem;
+    vertical-align: middle;
+
+    transition: background-color .29s ease-in-out 0s;
+  }
+
+  .picker__button--clear, .picker__button--close {
+    background-color: $color-gray-base;
+    border: none;
+
+    &:hover, &:focus {
+      background-color: darken($color-gray-base, 10%);
+      border: none;
+    }
+
+    &:active {
+      background-color: darken($color-gray-base, 15%);
+      border: none;
+    }
+
+    &:focus {
+      outline:        1px dotted white;
+      outline-offset: -4px;
+    }
+  }
+
+  .picker__button--today {
+    background-color: $color-blue-base;
+    border: none;
+
+    &:hover, &:focus {
+      background-color: darken($color-blue-base, 10%);
+      border: none;
+    }
+    
+    &:active {
+      background-color: darken($color-blue-base, 15%);
+      border: none;
+    }
+
+    &:before {
+      border-top-color: white;
+    }
+  }
+
+  .picker__button--clear:before {
+    border-top-color: white;
+  }
+
+  .picker__button--close:before {
+    font-size: 1rem;
+    padding-top: 2px;
+    color: white;
+  }
+}
+
+
+// Today caret 
+.picker__day--today:before {
+  border-top: 0.5em solid $color-blue-base;
+}
+
+// Today background color when focused
+
+.picker__day--selected, .picker__day--selected:hover, .picker--focused .picker__day--selected {
+  background: $color-blue-base;
+
+  &:before {
+    border-top-color: white;
+  }
+}
+
+// Day when hovered over 
+
+.picker__day--infocus:hover, .picker__day--outfocus:hover {
+  color: $color-black-base;
+  background: lighten($color-blue-base, 40%);
+}
+
+.picker__day--highlighted:hover, .picker--focused .picker__day--highlighted {
+  color: $color-black-base;
+  background: lighten($color-blue-base, 40%);
+
+}
+
+// Arrows
+.picker__nav--next:before {
+  border-left-color: $color-black-base;
+}
+
+.picker__nav--prev:before {
+  border-right-color: $color-black-base;
+}
+
+
+// Picker list selected
+
+.picker__list-item--selected, .picker__list-item--selected:hover, .picker--focused .picker__list-item--selected {
+  background: $color-blue-base;
+}
+
+.picker__list-item--highlighted {
+  border-color: $color-blue-base;
+}
+
+.picker__list-item:hover {
+  background: lighten($color-blue-base, 40%);
+  border-color: $color-blue-base;
+  color: $color-black-base;
+}

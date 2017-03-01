@@ -1,0 +1,11 @@
+---
+- id: 1
+  title: 'Peer Evaluation'
+  description: 'Peer evaluations are great for allowing students to assess the performance of their peers in a constructive way.'
+  created_at: 2015-08-02 23:20:42.883264000 Z
+  updated_at: 2016-03-22 14:25:18.589912000 Z
+- id: 2
+  title: 'Readiness Assurance'
+  description: 'Assess student readiness and stimulate learning with multiple-choice questions targeting core concepts.'
+  created_at: 2015-08-02 23:20:42.883264000 Z
+  updated_at: 2016-03-22 14:25:18.589912000 Z

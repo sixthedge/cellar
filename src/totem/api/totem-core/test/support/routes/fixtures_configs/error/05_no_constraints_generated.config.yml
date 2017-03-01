@@ -1,0 +1,12 @@
+platform_path: test/platform
+
+paths:               
+  - path: test/platform/one
+    routes:
+      mount:
+        constraints:
+          engine_path:      false
+          engine_url_path:  false
+          add_engine_paths:     
+          add_engine_url_paths: 
+          add_paths:        

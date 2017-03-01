@@ -1,0 +1,14 @@
+.ts-ra_radio-button
+
+  .ts-ra_radio-button-status click='select'
+    if is_selected
+      .tsi.tsi-small.tsi-radio-button-checked
+    else
+      .tsi.tsi-small.tsi-radio-button-unchecked
+
+  if label_select
+    .ts-ra_radio-button-label.selectable click='select'
+      = button_label
+  else
+    .ts-ra_radio-button-label
+      = button_label

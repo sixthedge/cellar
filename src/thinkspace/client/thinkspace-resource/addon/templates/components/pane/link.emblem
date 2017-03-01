@@ -1,0 +1,5 @@
+li.thinkspace-resource_pane-resource-item
+
+  a href=link_url target='_blank' class='thinkspace-resource_pane-resource-item-link'
+    i.fa.fa-link.thinkspace-resource_pane-resource-item-icon
+    = model.title

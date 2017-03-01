@@ -1,0 +1,4 @@
+.nav-link
+  link-to 'thinkspace/common/spaces'
+    h4.ts-branding.ts-branding-color
+      == t 'thinkspace.branding'

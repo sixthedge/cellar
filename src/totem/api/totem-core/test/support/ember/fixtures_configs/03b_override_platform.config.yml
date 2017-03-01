@@ -1,0 +1,9 @@
+platform_path: test/platform
+
+paths:               
+  - path: test/platform/main
+
+authentication:
+  session:
+    timeout_warning_time:    5.minutes
+    timeout_warning_message: platform warning message

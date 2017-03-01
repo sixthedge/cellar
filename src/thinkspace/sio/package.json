@@ -1,0 +1,23 @@
+{
+  "name": "thinkspace-socketio-server",
+  "version": "0.0.1",
+  "description": "Thinkspace SocketIO Server",
+  "author": {
+    "name": "sixthedge"
+  },
+  "main": "index.js",
+  "license": "MIT",
+  "homepage": "https://github.com/sixthedge/thinkspace-socketio-server",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sixthedge/thinkspace-socketio-server"
+  },
+  "private": true,
+  "keywords": [
+    "thinkspace",
+    "socketio"
+  ],
+  "directories": {},
+  "dependencies": {},
+  "devDependencies": {}
+}

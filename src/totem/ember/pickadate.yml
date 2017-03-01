@@ -1,0 +1,11 @@
+commands:
+  - bower install --save pickadate
+  - bower install --save intl
+  # remove multiple files with mixed case filenames e.g. fa_ir and fa_IR
+  # - command: delete_file
+  #   file: bower_components/pickadate/lib/translations/fa_ir.js
+
+import:
+  - pattern: bower_components/pickadate/lib/picker*.js
+    order:   picker.js
+    comment: pick a date

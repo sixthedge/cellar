@@ -1,0 +1,24 @@
+is_framework: true
+
+oauth_providers:
+  totem_oauth_1:
+    development:
+      site:   http://localhost:3333
+      active: true
+    test:
+      site:   http://localhost:3333
+      active: true
+    production:
+      site:   https://auth.thinkspace.org
+      active: true
+
+route_root: "root to: 'totem/core/application#serve_index_from_redis'"
+
+inflections:
+  - "irregular 'cache', 'caches'"
+
+gemfile:
+  - '# totem-core'
+  - '# Using a local version to freeze code that works with totem.'
+  - "gem 'active_model_serializers', path: '<%=vendor_path%>/active_model_serializers-0.10.2'"
+  - ''

@@ -1,0 +1,4 @@
+if is_confirmation
+  partial 'components/assessment/type/shared/confirmation'
+else
+  partial 'components/assessment/type/shared/review'

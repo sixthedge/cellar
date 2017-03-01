@@ -1,0 +1,12 @@
+if is_maximized
+  .toolbar_breadcrumb-link.tsi-hover-color
+    link-to 'thinkspace/casespace/assignments.show' current_assignment
+      .toolbar_breadcrumb-header
+        .toolbar_breadcrumb-title
+          .toolbar_breadcrumb-icon
+            .tsi.tsi-phases-outline
+          | Overview
+
+else
+  link-to 'thinkspace/casespace/assignments.show' current_assignment class='toolbar_minimized-link tsi-hover-color' title='Case Overview'
+    .tsi.tsi-phases-outline

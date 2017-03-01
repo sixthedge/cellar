@@ -1,0 +1,19 @@
+///*------------------------------------*\
+//    #BORDERED-PANEL
+//\*------------------------------------*/
+
+.bordered-panel {
+ border:           $border--default; 
+ margin-bottom:    1rem;
+ border-radius:    $border-radius;
+ padding:          $spacing-unit;
+ background-color: white;
+ max-width:        $max-width--content;
+}
+
+.bordered-panel--active {
+  border-color:              $color-blue-base;
+  border-left-width:         6px;
+  border-top-left-radius:    0;
+  border-bottom-left-radius: 0;
+}

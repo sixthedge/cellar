@@ -1,0 +1,45 @@
+variables:
+  - &SPACE diagnostic_path_viewers
+  - &ASSIGNMENT diagnostic_path_viewer_assignment
+
+spaces:
+  - title: *SPACE
+
+space_users:
+  - spaces: *SPACE
+    users: import[users@space_1]
+
+assignments:
+  - {title: *ASSIGNMENT , space: *SPACE}
+
+phases:
+  - assignment:    *ASSIGNMENT
+    title:         &PHASE_A phase_diag_path_viewer
+    template_name: template_diag_path_viewer
+    sections:
+      viewer:
+        phase:     *PHASE_A
+        ownerable: {first_name: update_1}
+        section:   diagnostic-path
+
+phase_templates:
+  - title: Diagnostic Path Viewer
+    name: template_diag_path_viewer
+    template: |
+      #{casespace_phase_header}
+      <row>
+        <column width=6>
+          <component section='viewer' title='diagnostic-path-viewer'/>
+        </column>
+        <column width=6>
+          <component title='diagnostic-path'/>
+        </column>
+      </row>
+      #{casespace_phase_submit}
+
+auto_input:
+
+  path_items:
+    - only: [*PHASE_A]
+      count: 20
+      pattern: [2,1,2]

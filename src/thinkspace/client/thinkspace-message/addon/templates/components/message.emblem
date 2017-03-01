@@ -1,0 +1,6 @@
+.dialogue.dialogue--red class={model.type is_debug:debug-on}
+  h1 #{type_header}
+  p
+    if is_debug
+      = model.timestamp
+    = model.message

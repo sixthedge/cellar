@@ -1,0 +1,19 @@
+///*------------------------------------*\
+//    #MENU-PANEL
+//\*------------------------------------*/
+
+.menu-panel {
+	position:         absolute;
+  top:              0;
+  bottom:           0;
+  padding:          70px $spacing-unit--large 0;
+  max-width:        500px;
+  background-color: white;
+  height:           100%;
+}
+
+.menu-panel--right {
+	right:       0;
+	border-left: $border--thin;
+	box-shadow: $box-shadow--light;
+}

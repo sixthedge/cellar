@@ -1,0 +1,26 @@
+.ts-grid_row: .ts-grid_columns.small-12: .btn-group
+  if first_button
+    a.btn.btn-primary.btn-inline.thinkspace-dropdown_split-button click='"generate" first_button' #{first_button.display}
+
+    if report_dropdown
+      a.btn.btn-primary.btn-inline tabindex='0' data-toggle=drop_id aria-controls=drop_id aria-expanded='false'
+        span.thinkspace-dropdown_caret: .tsi.tsi-right.icon-tiny.tsi-down-caret-inverse
+      ul.dropdown-pane.thinkspace-dropdown_list id=drop_id data-dropdown='' tabindex='-1'
+        = each report_dropdown as |member|
+          a click='"generate" member' #{member.display}
+
+.ts-grid_row: .ts-grid_columns.small-12
+  table
+    thead
+      tr
+        th Title
+        th Created
+    tbody
+      each reports as |report|
+        tr
+          td
+            link-to-external 'show_report' report.token
+              | #{report.title}
+          td #{report.created_at}
+      else
+        |No Reports.

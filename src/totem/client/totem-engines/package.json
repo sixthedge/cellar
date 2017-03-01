@@ -1,0 +1,31 @@
+{
+  "name": "totem-engines",
+  "version": "0.0.1",
+  "description": "Totem Engines",
+  "author": "sixthedge",
+  "license": "MIT",
+  "homepage": "https://github.com/sixthedge/totem-client",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sixthedge/totem-client.git"
+  },
+  "private": true,
+  "ember-addon": {
+    "main": "index.js",
+    "after": [
+      "totem"
+    ]
+  },
+  "keywords": [
+    "ember-addon",
+    "totem"
+  ],
+  "directories": {
+  },
+  "dependencies": {
+    "ember-cli-coffeescript": "*",
+    "ember-cli-coffees6": "*"
+  },
+  "devDependencies": {
+  }
+}

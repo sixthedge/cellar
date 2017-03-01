@@ -1,0 +1,7 @@
+.inline-group
+  .inline-group__item--1of3
+    component '__date_picker' value=datetime select='select_date'
+  .inline-group__item--1of3.text__align--center
+    span.text__font-size--12.text--bold at 
+  .inline-group__item--1of3
+    component '__time_picker' value=datetime select='select_time'

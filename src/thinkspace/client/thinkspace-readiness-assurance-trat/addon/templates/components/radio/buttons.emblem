@@ -1,0 +1,13 @@
+.multiple-choice__list class={qm.answers_disabled:multiple-choice__list--is-disabled}
+
+  each qm.choices as |choice|
+    component 'radio/button' qm=qm choice=choice select='select'
+
+hr
+.is-right
+  if qm.rm.room_users
+    .btn.btn--primary click='toggle_chat'
+      if qm.chat_displayed 
+        | Close Chat
+      else
+        | Open Chat

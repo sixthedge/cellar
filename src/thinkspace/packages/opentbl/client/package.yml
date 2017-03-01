@@ -1,0 +1,33 @@
+commands:
+  - run: ember-lts-2-8-engines
+  - run: ember-lts-2-8-common
+  - run: foundation
+  - run: app_clean_up
+  - run: ember-deploy
+
+variables:
+  rootURL: '/'
+  pubsub:
+    namespace: thinkspace
+  index_html_title: OpenTBL Index
+  dev:
+    api_host:     http://localhost:3000
+    asset_path:   http://localhost:4200/assets
+    sio_url:      http://localhost:4444
+    sio_cdn:      https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js
+
+# ## Ember CLI Build
+# What to set in the `ember-cli-build.js` file.
+ember_cli_build:
+
+  import_before:
+    - pattern: bower_components/ember/ember-template-compiler.js
+      comment: compile runtime templates
+
+  import:
+    # - tree: node_modules/thinkspace-assets/fonts
+    #   options: {srcDir: 'icomoon', include: ['**/*.*'], destDir: 'assets/fonts'}
+    #   comment: ['', thinkspace-assets fonts]
+    - tree: node_modules/thinkspace-assets/images
+      options: {srcDir: '/', include: ['**/*.*'], destDir: 'assets/images'}
+      comment: thinkspace-assets images

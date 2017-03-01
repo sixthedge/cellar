@@ -1,0 +1,28 @@
+# require_data_files: auto_input
+
+auto_input:
+  # 'scope: all' will perform auto input on all phases (note: only one 'scope: all' is premitted per seed run)
+  scope: all
+
+  ## observations_per_list:       number of observations when only a single list
+  ## observations_per_list_lists: number of observations when multiple lists (e.g. list_lists)
+  observations:                  
+    - observations_per_list:       5
+      observations_per_list_lists: 3
+      max_notes_per_observation:   3
+
+  ## roles:    add responses to users in the roles (e.g. read, [read], [read, update])
+  ## except:   do not add responses for the phase titles (e.g. [phase_1_1_A])
+  responses: 
+    - except:  [phase_2_1_C]
+      # roles: read
+
+  ## pattern for nesting a path item's children and grand-children.
+  ## e.g. [2,1] = each path item has two children each with one child (e.g. grand-child).
+  ## pattern = [0] (default) results in un-nested path items.
+  path_items:
+    - pattern:
+      - [2,2]
+      # - [2]
+      # - [1]
+      # - [0]

@@ -1,0 +1,7 @@
+.thinkspace-resource_tag-form
+
+  h6 Title
+  = input value=title placeholder=placeholder
+
+  a.btn.btn-medium.btn-primary click='save' Save 
+  a.btn.btn-small.btn-default.right click='cancel' Cancel

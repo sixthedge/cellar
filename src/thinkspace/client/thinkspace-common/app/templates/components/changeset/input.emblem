@@ -1,0 +1,19 @@
+if label
+  label
+    | #{label}
+  .forms__label-summary #{summary}
+  if is_text_area
+    = textarea placeholder=placeholder value=value save='save' type=type focus-out='focus_out' disabled=disabled name=name tabindex=tabindex size=size
+  else
+    = input placeholder=placeholder value=value save='save' type=type focus-out='focus_out' disabled=disabled name=name tabindex=tabindex size=size
+  if display_errors
+    component '__changeset/errors' changeset=changeset attribute=attribute errors_visible=display_errors
+
+else
+  if is_text_area
+    = textarea placeholder=placeholder value=value save='save' type=type focus-out='focus_out' disabled=disabled name=name tabindex=tabindex size=size
+  else
+    = input placeholder=placeholder value=value save='save' type=type focus-out='focus_out' disabled=disabled name=name tabindex=tabindex size=size
+  if display_errors
+    component '__changeset/errors' changeset=changeset attribute=attribute errors_visible=display_errors
+

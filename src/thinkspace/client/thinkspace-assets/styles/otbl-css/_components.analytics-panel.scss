@@ -1,0 +1,28 @@
+///*------------------------------------*\
+//    #ANALYTICS-PANEL
+//\*------------------------------------*/
+
+.analytics-panel {
+  border:                     $border--default;
+  border-left-width:          6px;
+  padding:                    1rem;
+  background-color:           white;
+  max-width:                  $max-width--content;
+  display:                    flex;
+  border-top-right-radius:    $border-radius;
+  border-bottom-right-radius: $border-radius;
+}
+
+.analytics-panel__item {
+  width: 33%;
+
+  >label {
+    color:     $color-gray-base;
+    font-size: .75rem;
+  }
+}
+
+.analytics-panel__data {
+  font-size:   30px;
+  font-weight: $font-weight--bold;
+}

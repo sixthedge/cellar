@@ -1,0 +1,37 @@
+if is_viewing_scorecard
+  if addon_ownerable
+    .ts-grid_row.ts-ownerable-bar.ts-scorecard
+      .ts-scorecard_branding
+        a.btn.btn-small.btn-warning.ts-menu_btn click='delete_ownerable_data' Reset Phase Data
+      ul.ts-scorecard_actions.clearfix
+
+        li.ts-scorecard_action
+          .ts-scorecard_action-title Phase Score
+          component 'score' model=current_phase save='phase_score'
+
+        li.ts-scorecard_action
+          .ts-scorecard_bar click='toggle_is_viewing_total_score'
+            .ts-scorecard_action-title Total Score
+            .ts-scorecard_action-value
+              = total_score
+              .ts-scorecard_action-value-icon
+                .tsi.tsi-right.tsi-tiny.tsi-down-caret.right
+          if is_viewing_total_score
+            .ts-scorecard_flyout
+              table
+                each current_assignment.phases as |phase|
+                  component 'overview' model=phase save='phase_score'
+
+        li.ts-scorecard_action click='toggle_is_viewing_phase_state'
+          .ts-scorecard_action-title Phase State
+          .ts-scorecard_action-value
+            = __phase-state-icon current_phase.phase_state.current_state
+            .ts-scorecard_action-value-icon
+              .tsi.tsi-right.tsi-tiny.tsi-down-caret.right
+          if is_viewing_phase_state
+            .ts-scorecard_flyout
+              table
+                component 'state' model=current_phase save='phase_state'
+  else
+    .ts-grid_row.ts-ownerable-bar.ts-scorecard
+      .ts-scorecard_empty-msg Please select a learner to use the scorecard.

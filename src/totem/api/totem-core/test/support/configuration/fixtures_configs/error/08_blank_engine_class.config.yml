@@ -1,0 +1,5 @@
+platform_path: test/platform
+
+paths:
+
+  - path: test/platform/main

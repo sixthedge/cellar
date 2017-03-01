@@ -1,0 +1,10 @@
+if rm.ready
+  .grid__container--flex
+    .grid__col--3of4.grid__mobile--full-width
+      h4= rm.assessment.title
+      component 'questions' rm=rm chat='chat' chat_close='chat_close'
+
+    .grid__col--1of4.grid__mobile--full-width
+      if rm.room_users
+        component 'users' rm=rm
+        component 'chats' rm=rm chat_ids=chat_ids close='chat_close'

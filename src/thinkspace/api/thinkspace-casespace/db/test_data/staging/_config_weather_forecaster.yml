@@ -1,0 +1,74 @@
+# If seed with auto_input and want to score all the forecasts do:
+#   rails thinkspace:weather_forecaster:score:assessments[days:10,m:10]
+variables:
+  - &SPACE Weather Forecaster
+
+  - &CASE          Forecasts
+  - &CASE_OVERRIDE Forecasts with Overrides
+
+  - &PHASE_ALL      All Input Types
+  - &PHASE_INPUT    Input Only
+  - &PHASE_RADIO    Radio Only
+  - &PHASE_CHECKBOX Checkbox Only
+  - &PHASE_ONE_EACH One of Each
+
+  - &ITEMS_ALL      [1006, 1009, 1013, 1021, 1026, 1029, 1032, 1040, 1045, 1048, 1058, 1062]
+  - &ITEMS_INPUT    [1006, 1026, 1045]
+  - &ITEMS_RADIO    [1009, 1013, 1021, 1029, 1032, 1040, 1048, 1058]
+  - &ITEMS_CHECKBOX [1062]
+  - &ITEMS_ONE_EACH [1006, 1013, 1062]
+
+  - &OVERRIDE_HELP_TIP     {html: '<h4>Help tip override.</h4>'}
+  - &OVERRIDE_PRESENTATION 'Presentation override qestion?'
+  - &OVERRIDE_SETTINGS     {actions: {add: 3}, outcome: {max_value: 5}}
+
+  - &PHASE_TEMPLATE template_weather_forecaster
+
+  - &STATION KDSM
+
+auto_input:
+  forecasts:
+    days:           10
+    # completed_days: 3
+    # users:        read_1
+    # only:         [*PHASE_A, *PHASE_E]
+
+spaces:
+  - {title: *SPACE}
+
+space_users:
+  - {spaces: *SPACE, users: 'import[users]'}
+
+assignments:
+  - {title: *CASE,          space: *SPACE}
+  - {title: *CASE_OVERRIDE, space: *SPACE}
+
+phases:
+  - {title: *PHASE_ALL,      assignment: *CASE, template_name: *PHASE_TEMPLATE}
+  - {title: *PHASE_INPUT,    assignment: *CASE, template_name: *PHASE_TEMPLATE}
+  - {title: *PHASE_RADIO,    assignment: *CASE, template_name: *PHASE_TEMPLATE}
+  - {title: *PHASE_CHECKBOX, assignment: *CASE, template_name: *PHASE_TEMPLATE}
+  - {title: *PHASE_ONE_EACH, assignment: *CASE, template_name: *PHASE_TEMPLATE}
+
+  - {title: *PHASE_ALL, assignment: *CASE_OVERRIDE, template_name: *PHASE_TEMPLATE, settings: *OVERRIDE_SETTINGS}
+
+
+weather_forecaster:
+
+  forecast_days:
+    - start: -20
+
+  assessments:
+    - {title: *PHASE_ALL,      assignment: *CASE, phase: *PHASE_ALL,      items: *ITEMS_ALL,      station: *STATION}
+    - {title: *PHASE_INPUT,    assignment: *CASE, phase: *PHASE_INPUT,    items: *ITEMS_INPUT,    station: *STATION}
+    - {title: *PHASE_RADIO,    assignment: *CASE, phase: *PHASE_RADIO,    items: *ITEMS_RADIO,    station: *STATION}
+    - {title: *PHASE_CHECKBOX, assignment: *CASE, phase: *PHASE_CHECKBOX, items: *ITEMS_CHECKBOX, station: *STATION}
+    - {title: *PHASE_ONE_EACH, assignment: *CASE, phase: *PHASE_ONE_EACH, items: *ITEMS_ONE_EACH, station: *STATION}
+
+    - title: *PHASE_ALL
+      assignment:   *CASE_OVERRIDE
+      phase:        *PHASE_ALL
+      items:        *ITEMS_ALL
+      station:      *STATION
+      presentation: *OVERRIDE_PRESENTATION
+      help_tip:     *OVERRIDE_HELP_TIP

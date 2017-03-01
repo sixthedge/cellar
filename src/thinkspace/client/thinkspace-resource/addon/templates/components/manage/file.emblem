@@ -1,0 +1,9 @@
+h1 View helper(s) commented out in this template.
+.ts-grid_row
+  .small-3.ts-grid_columns: = model.title
+  .small-7.ts-grid_columns: = file_updated_at
+  .small-2.ts-grid_columns: a.btn.btn-default.btn-small.right click='destroy': i.fa.fa-trash-o: |Delete
+.ts-grid_row
+  .small-3.ts-grid_columns
+  .small-9.ts-grid_columns
+    / view 'select' selection=selection content=model.resourceable.tags optionValuePath='content.id' optionLabelPath='content.title' prompt=prompt

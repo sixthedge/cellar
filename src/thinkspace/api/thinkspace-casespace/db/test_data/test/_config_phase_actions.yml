@@ -1,0 +1,55 @@
+variables:
+  - &SPACE            phase_actions_space
+  - &ASSIGNMENT       phase_actions_assignment
+  - &TEMPLATE         phase_actions_template
+  - &ASSIGNMENT_TEAM  phase_actions_team_assignment
+  - &TEAM_SET_A       team_set_A
+  - &TEAM_1           phase_action_team_1
+  - &TEAM_2           phase_action_team_2
+  - &TEAM_3           phase_action_team_3
+  - &TEAM_1_USERS     [read_1, read_2, read_3]
+  - &TEAM_2_USERS     [read_4, read_5, read_6]
+  - &TEAM_3_USERS     [read_9, read_2]
+
+spaces:
+  - title: *SPACE
+
+space_users:
+  - spaces: *SPACE
+    users: import[users]
+
+assignments:
+  - {title: *ASSIGNMENT,      space: *SPACE}
+  - {title: *ASSIGNMENT_TEAM, space: *SPACE}
+
+phases:
+  - {title: phase_actions_phase_A, assignment: *ASSIGNMENT, template_name: *TEMPLATE}
+  - {title: phase_actions_phase_B, assignment: *ASSIGNMENT, template_name: *TEMPLATE}
+  - {title: phase_actions_phase_C, assignment: *ASSIGNMENT, template_name: *TEMPLATE}
+  - {title: phase_actions_phase_D, assignment: *ASSIGNMENT, template_name: *TEMPLATE}
+
+  - {title: phase_actions_noteam_phase_A, assignment: *ASSIGNMENT_TEAM, default_state: unlocked, template_name: *TEMPLATE}
+  - {title: phase_actions_team_phase_B,   assignment: *ASSIGNMENT_TEAM, default_state: locked,   template_name: *TEMPLATE, team_category: collaboration}
+  - {title: phase_actions_noteam_phase_C, assignment: *ASSIGNMENT_TEAM, default_state: locked,   template_name: *TEMPLATE, description: no teams}
+  - {title: phase_actions_team_phase_D,   assignment: *ASSIGNMENT_TEAM, default_state: locked,   template_name: *TEMPLATE, team_category: collaboration}
+  - {title: phase_actions_team_phase_E,   assignment: *ASSIGNMENT_TEAM, default_state: locked,   template_name: *TEMPLATE, team_category: collaboration}
+
+teams:
+
+  team_sets:
+    - {title: *TEAM_SET_A, space: *SPACE}
+
+  team_set_teams:
+    - {title: *TEAM_1, users: *TEAM_1_USERS , team_set: *TEAM_SET_A, space: *SPACE}
+    - {title: *TEAM_2, users: *TEAM_2_USERS , team_set: *TEAM_SET_A, space: *SPACE}
+    - {title: *TEAM_3, users: *TEAM_3_USERS , team_set: *TEAM_SET_A, space: *SPACE}
+
+  phase:
+    - {title: phase_actions_team_phase_B, assignment: *ASSIGNMENT_TEAM, team_sets: *TEAM_SET_A, space: *SPACE}
+    - {title: phase_actions_team_phase_D, assignment: *ASSIGNMENT_TEAM, team_sets: *TEAM_SET_A, space: *SPACE}
+    - {title: phase_actions_team_phase_E, assignment: *ASSIGNMENT_TEAM, team_sets: *TEAM_SET_A, space: *SPACE}
+
+phase_templates:
+  - title: *TEMPLATE
+    name: *TEMPLATE
+    template: '<row></row>'

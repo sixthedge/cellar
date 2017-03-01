@@ -1,0 +1,5 @@
+---
+- id: 1
+  doc_type:     terms_of_service
+  effective_at: 2016-10-31 21:00:00.000000000 Z
+  link:         http://www.thinkspace.org

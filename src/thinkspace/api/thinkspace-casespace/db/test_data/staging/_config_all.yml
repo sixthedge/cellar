@@ -1,0 +1,4 @@
+include_configs:
+  - case_standard
+  - case_teambased
+  # - case_readiness_assurance

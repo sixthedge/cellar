@@ -1,0 +1,3 @@
+
+each model as |item|
+  component '__radio/item' model=item select='select' selected_item=selected_item

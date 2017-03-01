@@ -1,0 +1,31 @@
+.top-bar.top-bar--white
+  .top-bar__info.is-left
+    .nav-list__logo
+      img src='/assets/images/branding/otbl-logo_builder.svg' alt="Builder" title="Builder"
+    .top-bar__info-item
+      | Building - Untitled
+  nav.top-bar__nav.is-right
+    ul.nav-list
+      li.nav-list__item
+        a.nav-list__link 
+          | Exit Builder
+
+.main-content
+  .grid__container--flex
+    .grid__col--4of4
+      .main-content__header
+        h1 Exercise Builder
+        p Time to create a new exercise
+
+      if all_data_loaded
+        ul.exercise-types__list
+          each assignment_types as |assignment_type|
+            component 'assignment_type' model=assignment_type create='create' class='exercise-type__item'
+
+      else
+        / Need loading img or graphic
+        h1 Loading..
+
+      .footnote
+        p.spacing__margin-top--0.spacing__margin-bottom--0 Need a crash course in exercise types?
+        a Read about exercise types.

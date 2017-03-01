@@ -1,0 +1,7 @@
+tr
+  td.no-wrap= locale.key
+  td.no-wrap= locale.cnt_key
+  td.no-wrap.center= locale.count
+  td class={locale.missing:missing} #{locale.value}
+  if active_compare_code
+    td class={locale.compare_missing:missing} #{locale.compare_value}

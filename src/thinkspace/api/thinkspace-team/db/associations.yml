@@ -1,0 +1,82 @@
+- model: thinkspace/team/team_category
+  domain: true
+  serializers:
+    - attributes: [id, title, category]
+
+- model: thinkspace/team/team
+  associations:
+    - belongs_to: authable
+      polymorphic: true
+    - has_many: thinkspace/team/team_users
+      dependent: :destroy
+    - has_many: thinkspace/common/users
+      through: thinkspace/team/team_users
+    - has_many: thinkspace/team/team_teamables
+      dependent: :destroy
+    - has_many: thinkspace/team/team_viewers
+      dependent: :destroy
+    - belongs_to: thinkspace/team/team_set
+    - has_many: thinkspace/team/team_set_teamables
+      through:  thinkspace/team/team_set
+      source:   thinkspace/team/team_set_teamables
+  serializers:
+    - attributes:        [id, title, description, authable_type, authable_id, color, state]
+    - scoped_attributes: [is_member]
+
+- model: thinkspace/team/team_user
+  delegate:
+    - method: authable
+      to: thinkspace/team/team
+  associations:
+    - belongs_to: thinkspace/common/user
+    - belongs_to: thinkspace/team/team
+  serializers:
+    - attributes: [id, team_id, user_id]
+
+- model: thinkspace/team/team_teamable
+  delegate:
+    - method: authable
+      to: thinkspace/team/team
+  associations:
+    - belongs_to: thinkspace/team/team
+    - belongs_to: teamable
+      polymorphic: true
+  serializers:
+    - attributes: [id, team_id, teamable_type, teamable_id]
+
+- model: thinkspace/team/team_set_teamable
+  delegate:
+    - method: authable
+      to: thinkspace/team/team_set
+  associations:
+    - belongs_to: thinkspace/team/team_set
+    - belongs_to: teamable
+      polymorphic: true
+    - has_many: thinkspace/team/teams
+      through: thinkspace/team/team_set
+      source: thinkspace/team/teams
+  serializers:
+    - attributes: [id, team_set_id, teamable_type, teamable_id]
+
+
+- model: thinkspace/team/team_viewer
+  delegate:
+    - method: authable
+      to: thinkspace/team/team
+  associations:
+    - belongs_to: thinkspace/team/team
+    - belongs_to: viewerable
+      polymorphic: true
+  serializers:
+    - attributes: [id, team_id, viewerable_type, viewerable_id]
+
+- model: thinkspace/team/team_set
+  associations:
+    - belongs_to: thinkspace/common/space
+    - belongs_to: thinkspace/common/user
+    - has_many:   thinkspace/team/teams
+    - has_many:   thinkspace/team/team_set_teamables
+      dependent: :destroy
+  serializers:
+    - attributes: [id, title, description, default, settings, space_id, state]
+    - scoped_attributes: [metadata]

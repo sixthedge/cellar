@@ -1,0 +1,51 @@
+#
+# ### NOTE: Spaces, Assignments, Phase Templates and Phases are at bottom of this file.
+#
+variables:
+  - &SPACE simulations
+
+# #
+# # At bottom of the file so can reference the above chart definition variables in the phases below.
+# #
+spaces:
+  - title: *SPACE
+
+space_users:
+  - spaces: *SPACE
+    users: import[users]
+
+assignments:
+  - title: &ASSIGNMENT_SIMULATIONS simulations
+    space: *SPACE
+
+phases:
+  - assignment: *ASSIGNMENT_SIMULATIONS
+    title:         radiation_simulation_phase
+    template_name: template_simulations
+    sections:
+      simulation:
+        path: radiation
+  - assignment: *ASSIGNMENT_SIMULATIONS
+    title:         budget_simulation_phase
+    template_name: template_simulations
+    sections:
+      simulation:
+        path: budget
+  - assignment: *ASSIGNMENT_SIMULATIONS
+    title:         mountain_simulation_phase
+    template_name: template_simulations
+    sections:
+      simulation:
+        path: mountain
+
+
+phase_templates:
+  - title: Simulations
+    name: template_simulations
+    template: |
+      #{casespace_phase_header}
+      <row>
+        <column>
+          <component section='simulation' title='simulation'/>
+        </column>
+      </row>

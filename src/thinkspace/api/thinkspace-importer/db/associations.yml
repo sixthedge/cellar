@@ -1,0 +1,5 @@
+- model: thinkspace/importer/file
+  associations:
+    - belongs_to: thinkspace/common/user
+  serializers:
+    - attributes: [id, url, title, content_type, size, attachment_updated_at, user_id]

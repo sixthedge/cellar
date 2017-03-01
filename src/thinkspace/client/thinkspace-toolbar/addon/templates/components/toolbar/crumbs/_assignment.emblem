@@ -1,0 +1,12 @@
+if is_maximized
+  .toolbar_breadcrumb-link.tsi-hover-color
+    link-to 'thinkspace/common/spaces.show' current_space
+      .toolbar_breadcrumb-header
+        .toolbar_breadcrumb-title
+          .toolbar_breadcrumb-icon
+            .tsi.tsi-assignments-outline.icon-large
+          | Cases
+
+else
+  link-to 'thinkspace/common/spaces.show' current_space class='toolbar_minimized-link tsi-hover-color' title='Cases'
+    .tsi.tsi-assignments-outline.icon-large

@@ -1,0 +1,15 @@
+.grid__container.grid__container--content-width.spacing__margin-bottom--2
+  .avatar.avatar--64.is-left.spacing__margin-right--2
+  .text--inline-block
+    .text__font-size--14.text__font-style--italic Now evaluating
+    .text--bold #{review.reviewable.full_name}
+
+.grid__container.grid__container--content-width
+  a.btn click='previous' 
+    .tsi.tsi-left.icon-small.tsi-left-arrow-inverse
+    | Previous Member
+
+  a.btn.btn--primary.is-right click='next' 
+    | Next Member
+    .tsi.tsi-right.icon-small.tsi-right-arrow-inverse
+  hr

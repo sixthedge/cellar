@@ -1,0 +1,4 @@
+ol.question-list
+  each question_managers as |qm|
+    .bordered-panel.spacing__pad-left--2
+      component 'question' qm=qm chat='chat' chat_close='chat_close'

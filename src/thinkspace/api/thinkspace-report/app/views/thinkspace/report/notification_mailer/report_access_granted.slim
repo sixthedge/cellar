@@ -1,0 +1,9 @@
+== content_for :header_title do
+  | Hi #{@user.first_name}, your report is ready!
+
+== content_for :header_deets do
+  span
+    | You can access the report via the link below or the report's page in the relevant case.
+
+== content_for :footer_action, "View Report"
+== content_for :footer_terms, "Learn more about ThinkSpace"

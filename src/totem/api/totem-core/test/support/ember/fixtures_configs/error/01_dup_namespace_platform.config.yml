@@ -1,0 +1,9 @@
+platform_path: test/platform
+
+paths:               
+  - path: test/platform/main
+
+  - path: test/platform/common
+
+  - path: test/platform/tools/one
+    namespace: Test.Platform.Common

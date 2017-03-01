@@ -1,0 +1,37 @@
+/ li.primary-list_link
+
+/   .ts-grid_row: .small-12.ts-grid_columns.primary-list_link-item
+
+/     link-to-external 'cases.show' model
+/       .small-12.medium-12.large-3.ts-grid_columns.primary-list_link-item: h5.primary-list_link-item-title= model.title
+/       .small-12.medium-12.large-7.ts-grid_columns.primary-list_link-item
+/         .ts-grid_row
+/           .small-12.large-6.ts-grid_columns
+/             h5.primary-list_link-item-heading Due Date
+/             if model.due_at
+/               h6.primary-list_link-item-value
+/                 = model.friendly_due_at
+/                 / small.primary-list_link-item-value-ago: |(#{ago model.due_at})
+/           .small-12.large-3.ts-grid_columns
+/             h5.primary-list_link-item-heading Completed Phases
+/             if metadata.completed
+/               h6.primary-list_link-item-value = metadata.completed
+/             else
+/               h6.primary-list_link-item-value None
+/           .small-12.large-3.ts-grid_columns
+/             h5.primary-list_link-item-heading Total Phases
+/             h6.primary-list_link-item-value= metadata.count
+
+/     / if has_actions
+/     /   .small-12.medium-12.large-2.ts-grid_columns.primary-list_link-item: .action-buttons.right
+/     /     component c_dropdown_split_button collection=dropdown_collection button_class='btn-small btn-default'
+
+li.tile__container
+  link-to-external 'cases.show' model class='tile__item'
+    h1.tile__name = model.title
+    .tile__sub-caption 
+      if model.due_at
+        = model.friendly_due_at
+    div.group
+      span.tile__info.is-left Readiness Assurance Test
+      .tile__status.tile__status--live.is-right Open

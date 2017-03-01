@@ -1,0 +1,40 @@
+///*------------------------------------*\
+//    #GLOBAL
+//\*------------------------------------*/
+
+$border-radius:        4px;
+$top-bar-height:       60px;
+
+$max-width:            1200px;
+$max-width--content:   700px;
+
+// type
+$font-family:          "Noto Sans", sans-serif;
+$font-weight--regular: 300;
+$font-weight--bold:    700;
+
+// Spacing
+$spacing-unit:        0.9375rem;
+$spacing-unit--large: ($spacing-unit*2);
+$spacing-unit--small: ($spacing-unit/2);
+
+// Borders
+$border--default: 2px solid $color-gray-base;
+$border--active:  2px solid $color-blue-base;
+$border--thin:    1px solid $color-gray-med;
+
+
+// Box Shadoes
+$box-shadow--light: 4px -9px 14px rgba(78, 78, 78, 0.16);
+
+
+// Animation
+$transition-animation: all .29s ease-in-out 0s;
+$transition-animation--color: color .29s ease-in-out 0s;
+$transition-animation--background-color: background-color .29s ease-in-out 0s;
+
+///*------------------------------------*\
+//    #MEDIA QUERIES
+//\*------------------------------------*/
+
+// $media-query--retina: (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi);

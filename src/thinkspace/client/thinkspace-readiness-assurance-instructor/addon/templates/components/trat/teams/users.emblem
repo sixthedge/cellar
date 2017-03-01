@@ -1,0 +1,42 @@
+.ts-ra_admin-room-users
+
+  span.ts-ra_admin-room-users-header click='toggle_collapsed'
+    '#{header}
+    |(
+    if show_number_of_users
+      span.ts-ra_admin-room_users-number-change
+        span.ts-ra_admin-room_users-number
+          '#{number_of_users}
+        span.ts-ra_admin-room_users-number-of
+          'of 
+        span.ts-ra_admin-room_users-number
+          |#{users.length}
+    |)
+    if collapsed
+      i.tsi.tsi-down-caret.ts-ra_admin-room-users-collapsed
+    else
+      i.tsi.tsi-up-caret.ts-ra_admin-room-users-collapsed
+
+  span.ts-ra_admin-room-users-refresh click='refresh'
+    i.tsi.tsi-gear-color.ts-ra_admin-room-users-refresh title='refresh'
+
+  unless collapsed
+    ul.ts-ra_admin-user-list
+      each all_sorted_users as |user|
+        li
+          if user.present
+            i.tsi.tsi-user-color.ts-ra_admin-user-present
+          else
+            i.tsi.tsi-phase-incorrect.ts-ra_admin-user-not-present
+          |#{user.name}
+      else
+        |None
+
+.ts-ra_admin-room-user-changes
+  ul
+    if users_added
+      each users_added as |user|
+        li.ts-ra_admin-room-user-join #{user.name} (in room)
+    if users_removed
+      each users_removed as |user|
+        li.ts-ra_admin-room-user-left #{user.name} (left room)

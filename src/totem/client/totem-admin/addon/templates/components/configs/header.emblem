@@ -1,0 +1,14 @@
+.row: .columns.small-12
+  .totem-admin-links
+
+    .totem-admin-link
+      link-to 'configs/routes'
+        |Routes
+
+    .totem-admin-link
+      link-to 'configs/engines'
+        |Engines
+
+    .totem-admin-link
+      link-to 'configs/mounts'
+        |Router Mounts

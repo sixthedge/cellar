@@ -1,0 +1,8 @@
+link-to 'overview'
+  | Overview
+
+link-to 'progress_report'
+  | Progress Report
+
+link-to 'scores' model
+  | Scores

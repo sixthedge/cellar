@@ -1,0 +1,3 @@
+- model: test/associations/one/user
+  serializers:
+    - attributes: [id, name]

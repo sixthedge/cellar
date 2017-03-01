@@ -1,0 +1,19 @@
+.ts-ra_dashbaord-summary-answer-counts
+
+  h6 #{qnumber}. #{question}
+
+  table
+    thead
+      tr
+        th
+        th Answer
+        th.text-right Count
+    tbody
+      each choice_counts as |choice|
+        tr
+          td.ts-ra_admin-correct-answer
+            if choice.correct
+              i.tsi.tsi-phase-complete.ts-ra_admin-correct-answer-icon
+          td class={choice.max:max-count} #{choice.label}
+          td.text-right class={choice.max:max-count} #{choice.count}
+

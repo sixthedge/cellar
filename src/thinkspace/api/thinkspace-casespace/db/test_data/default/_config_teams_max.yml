@@ -1,0 +1,216 @@
+require_data_files: html_samples
+
+variables:
+  - &SPACE teams_max
+  - &PHASE_ONLY_COLLABORATION_TEAMS      ONLY PHASE collaboration teams - users only on ONE team
+  - &PHASE_ONLY_PEER_REVIEW_TEAMS        ONLY PHASE peer review teams - users only on ONE team
+  - &ASSIGNMENT_ALL_COLLABORATION_TEAMS  ASSIGNMENT teams - all collaboration
+  - &ASSIGNMENT_ALL_PEER_REVIEW_TEAMS    ASSIGNMENT teams - all peer review
+  - &ASSIGNMENT_MIXED_TEAMS              ASSIGNMENT teams - mix collaboration and peer review
+  - &ASSIGNMENT_SOME_TEAMS               ASSIGNMENT teams - mix collaboration, peer reivew and NO teams
+  - &ASSIGNMENT_AND_PHASE_TEAMS          ASSIGNMENT and PHASE teams - collaboration and peer review
+  - &PHASE_MIXED_TEAMS                   PHASE teams - mix collaboration and peer review
+  - &PHASE_SOME_TEAMS                    PHASE teams - mix collaboration, peer reivew and NO teams
+  - &ASSIGNMENT_TEAM_VIEWERS            viewers - assignment teams only
+  - &PHASE_TEAM_VIEWERS                 viewers - phase teams only
+  - &ASSIGNMENT_AND_PHASE_TEAM_VIEWERS  viewers - assignment and phase teams
+
+  # Team Sets
+  - &TEAM_SET_A    team_set_a
+  - &TEAM_SET_B    team_set_b
+  - &TEAM_SET_C    team_set_c
+  - &ALL_TEAM_SETS [*TEAM_SET_A, *TEAM_SET_B, *TEAM_SET_C]
+  # Teams
+  - &TEAM_1   'Team-1 : read_1, read_2, read_3'
+  - &TEAM_2   'Team-2 : read_4, read_5, read_6'
+  - &TEAM_3   'Team-3 : read_7, read_8'
+  - &TEAM_4   'Team-4 : john_01, john_02, john_03, john_04, john_05'
+  - &TEAM_5   'Team-5 : john_06, john_07, john_08, john_09, john_10'
+  - &TEAM_9_1 'Team-9-1 : read_9, read_1'
+  - &TEAM_9_2 'Team-9-2 : read_9, read_2'
+  - &TEAM_9_3 'Team-9-3 : read_9, read_3'
+  # Team users
+  - &TEAM_1_USERS   [read_1, read_2, read_3]
+  - &TEAM_2_USERS   [read_4, read_5, read_6]
+  - &TEAM_3_USERS   [read_7, read_8]
+  - &TEAM_4_USERS   [john_01, john_02, john_03, john_04, john_05]
+  - &TEAM_5_USERS   [john_06, john_07, john_08, john_09, john_10]
+  - &TEAM_9_1_USERS [read_9, read_1]
+  - &TEAM_9_2_USERS [read_9, read_2]
+  - &TEAM_9_3_USERS [read_9, read_3]
+
+spaces:
+  - title: *SPACE
+
+space_users:
+  - {spaces: *SPACE, users: 'import[users]'}
+
+repeat_space_users:
+  - {spaces: *SPACE, repeat: 10, merge_with: 'import[users@repeat_john_doe]'}
+
+assignments:
+  - {title: *PHASE_ONLY_COLLABORATION_TEAMS, space: *SPACE}
+  - {title: *PHASE_ONLY_PEER_REVIEW_TEAMS}
+  - {title: *ASSIGNMENT_ALL_COLLABORATION_TEAMS}
+  - {title: *ASSIGNMENT_ALL_PEER_REVIEW_TEAMS}
+  - {title: *ASSIGNMENT_MIXED_TEAMS}
+  - {title: *ASSIGNMENT_SOME_TEAMS}
+  - {title: *ASSIGNMENT_AND_PHASE_TEAMS}
+  - {title: *PHASE_MIXED_TEAMS}
+  - {title: *PHASE_SOME_TEAMS}
+  - {title: *PHASE_TEAM_VIEWERS}
+  - {title: *ASSIGNMENT_TEAM_VIEWERS}
+  - {title: *ASSIGNMENT_AND_PHASE_TEAM_VIEWERS}
+
+phases:
+  # Phase teams only, user on one team
+  - {title: phase_A, team_category: collaboration, assignment: *PHASE_ONLY_COLLABORATION_TEAMS, template_name: template_teams}
+  - {title: phase_B, team_category: collaboration}
+  - {title: phase_C, team_category: collaboration}
+  - {title: phase_D, team_category: collaboration}
+  - {title: phase_A, team_category: peer_review, assignment: *PHASE_ONLY_PEER_REVIEW_TEAMS}
+  - {title: phase_B, team_category: peer_review}
+  - {title: phase_C, team_category: peer_review}
+  - {title: phase_D, team_category: peer_review}
+  # Assignment collaboration teams
+  - {title: phase_A, team_category: collaboration, assignment: *ASSIGNMENT_ALL_COLLABORATION_TEAMS}
+  - {title: phase_B, team_category: collaboration}
+  - {title: phase_C, team_category: collaboration}
+  - {title: phase_D, team_category: collaboration}
+  # Assignment peer review teams
+  - {title: phase_A, team_category: peer_review, assignment: *ASSIGNMENT_ALL_PEER_REVIEW_TEAMS}
+  - {title: phase_B, team_category: peer_review}
+  - {title: phase_C, team_category: peer_review}
+  - {title: phase_D, team_category: peer_review}
+  # Assignment collaboration and peer review teams
+  - {title: 'collaboration1: assignment_team', team_category: collaboration, assignment: *ASSIGNMENT_MIXED_TEAMS}
+  - {title: 'peer_review1: assignment_team',   team_category: peer_review}
+  - {title: 'collaboration2: assignment_team', team_category: collaboration}
+  - {title: 'peer_review2: assignment_team',   team_category: peer_review}
+  # Assignment collaboration, peer review teams and without teams
+  - {title: 'collaboration1: assignment_team', team_category: collaboration, assignment: *ASSIGNMENT_SOME_TEAMS}
+  - {title: no_teams1}
+  - {title: 'collaboration2: assignment_team', team_category: collaboration}
+  - {title: no_teams2}
+  - {title: 'peer_review1: assignment_team',   team_category: peer_review}
+  - {title: no_teams3}
+  - {title: 'peer_review2: assignment_team',   team_category: peer_review}
+  - {title: no_teams4}
+  # Assignment teams and phase teams
+  - {title: 'collaboration: assignment_and_phase_team',    team_category: collaboration, assignment: *ASSIGNMENT_AND_PHASE_TEAMS}
+  - {title: 'peer_review: assignment_team_and_phase_team', team_category: peer_review}
+  # Phase collaboration and peer review teams
+  - {title: 'collaboration1: phase_team', team_category: collaboration, assignment: *PHASE_MIXED_TEAMS}
+  - {title: 'peer_review1: phase_team',   team_category: peer_review}
+  - {title: 'collaboration2: phase_team', team_category: collaboration}
+  - {title: 'peer_review2: phase_team',   team_category: peer_review}
+  # Phase collaboration, peer review and no teams
+  - {title: 'collaboration1: phase_team', team_category: collaboration, assignment: *PHASE_SOME_TEAMS}
+  - {title: no_teams1}
+  - {title: 'collaboration2: phase_team', team_category: collaboration}
+  - {title: no_teams2}
+  - {title: 'peer_review1: phase_team',   team_category: peer_review}
+  - {title: no_teams3}
+  - {title: 'peer_review2: phase_team',   team_category: peer_review}
+  - {title: no_teams4}
+  # User, assignment and phase viewers
+  - {title: 'collaboration: team_view_team', team_category: collaboration, assignment: *ASSIGNMENT_TEAM_VIEWERS}
+  - {title: 'collaboration: user_view_team', team_category: collaboration}
+  - {title: 'peer_review: team_view_team',   team_category: peer_review}
+  - {title: 'peer_review: user_view_team',   team_category: peer_review}
+  - {title: 'collaboration: team_view_team', team_category: collaboration, assignment: *PHASE_TEAM_VIEWERS}
+  - {title: 'collaboration: user_view_team', team_category: collaboration}
+  - {title: 'peer_review: team_view_team',   team_category: peer_review}
+  - {title: 'peer_review: user_view_team',   team_category: peer_review}
+  - {title: 'collaboration: assignment_team_view_assignment_team',   team_category: collaboration, assignment: *ASSIGNMENT_AND_PHASE_TEAM_VIEWERS}
+  - {title: 'collaboration: assignment_team_view_phase_team',        team_category: collaboration}
+  - {title: 'collaboration: phase_team_view_phase_team',             team_category: collaboration}
+  - {title: 'collaboration: phase_team_view_assignment_team',        team_category: collaboration}
+  - {title: 'collaboration: user_view_assignment_team',              team_category: collaboration}
+  - {title: 'collaboration: user_view_phase_team',                   team_category: collaboration}
+  - {title: 'collaboration: user_view_assignment_and_phase_team',    team_category: collaboration}
+  - {title: 'peer_review: assignment_team_view_assignment_team',     team_category: peer_review}
+  - {title: 'peer_review: assignment_team_view_phase_team',          team_category: peer_review}
+  - {title: 'peer_review: phase_team_view_assignment_team',          team_category: peer_review}
+  - {title: 'peer_review: phase_team_view_phase_team',               team_category: peer_review}
+  - {title: 'peer_review: user_view_assignment_team',                team_category: peer_review}
+  - {title: 'peer_review: user_view_phase_team',                     team_category: peer_review}
+  - {title: 'peer_review: user_view_assignment_team_and_phase_team', team_category: peer_review}
+
+teams:
+
+  team_sets:
+    - {title: *TEAM_SET_A, space: *SPACE}
+    - {title: *TEAM_SET_B}
+    - {title: *TEAM_SET_C}
+
+  team_set_teams:
+    - {title: *TEAM_1,   users: *TEAM_1_USERS,   team_set: *TEAM_SET_A, space: *SPACE}
+    - {title: *TEAM_2,   users: *TEAM_2_USERS,   team_set: *TEAM_SET_A}
+    - {title: *TEAM_3,   users: *TEAM_3_USERS,   team_set: *TEAM_SET_A}
+    - {title: *TEAM_4,   users: *TEAM_4_USERS,   team_set: *TEAM_SET_B}
+    - {title: *TEAM_5,   users: *TEAM_5_USERS,   team_set: *TEAM_SET_B}
+    - {title: *TEAM_9_1, users: *TEAM_9_1_USERS, team_set: *TEAM_SET_C}
+    - {title: *TEAM_9_2, users: *TEAM_9_2_USERS, team_set: *TEAM_SET_C}
+    - {title: *TEAM_9_3, users: *TEAM_9_3_USERS, team_set: *TEAM_SET_C}
+
+  assignment:
+    - {title: *ASSIGNMENT_ALL_COLLABORATION_TEAMS, team_sets: *ALL_TEAM_SETS, space: *SPACE}
+    - {title: *ASSIGNMENT_ALL_PEER_REVIEW_TEAMS,   team_sets: *ALL_TEAM_SETS}
+    - {title: *ASSIGNMENT_MIXED_TEAMS,             team_sets: *ALL_TEAM_SETS}
+    - {title: *ASSIGNMENT_SOME_TEAMS,              team_sets: *ALL_TEAM_SETS}
+    - {title: *ASSIGNMENT_AND_PHASE_TEAMS,         team_sets: [*TEAM_SET_A]}
+    - {title: *ASSIGNMENT_TEAM_VIEWERS,            team_sets: *ALL_TEAM_SETS}
+    - {title: *ASSIGNMENT_AND_PHASE_TEAM_VIEWERS,  team_sets: [*TEAM_SET_A]}
+
+  phase:
+    # Phase only teams, user (read_1) only on one team
+    - {title: 'phase_A', assignment: *PHASE_ONLY_COLLABORATION_TEAMS,  team_sets: [*TEAM_SET_A], space: *SPACE}
+    - {title: 'phase_B', assignment: *PHASE_ONLY_COLLABORATION_TEAMS,  team_sets: [*TEAM_SET_A]}
+    - {title: 'phase_C', assignment: *PHASE_ONLY_COLLABORATION_TEAMS,  team_sets: [*TEAM_SET_A]}
+    - {title: 'phase_D', assignment: *PHASE_ONLY_COLLABORATION_TEAMS,  team_sets: [*TEAM_SET_A]}
+    - {title: 'phase_D', assignment: *PHASE_ONLY_PEER_REVIEW_TEAMS,    team_sets: [*TEAM_SET_A]}
+    - {title: 'phase_B', assignment: *PHASE_ONLY_PEER_REVIEW_TEAMS,    team_sets: [*TEAM_SET_A]}
+    - {title: 'phase_C', assignment: *PHASE_ONLY_PEER_REVIEW_TEAMS,    team_sets: [*TEAM_SET_A]}
+    - {title: 'phase_D', assignment: *PHASE_ONLY_PEER_REVIEW_TEAMS,    team_sets: [*TEAM_SET_A]}
+    # Phase team sets to assignment team set
+    - {title: 'collaboration: assignment_and_phase_team',    assignment: *ASSIGNMENT_AND_PHASE_TEAMS, team_sets: [*TEAM_SET_B, *TEAM_SET_C]}
+    - {title: 'peer_review: assignment_team_and_phase_team', assignment: *ASSIGNMENT_AND_PHASE_TEAMS, team_sets: [*TEAM_SET_B, *TEAM_SET_C]}
+    # All teams to phases
+    - {title: 'collaboration1: phase_team',    assignment: *PHASE_MIXED_TEAMS,   team_sets: *ALL_TEAM_SETS}
+    - {title: 'collaboration2: phase_team',    assignment: *PHASE_MIXED_TEAMS,   team_sets: *ALL_TEAM_SETS}
+    - {title: 'peer_review1: phase_team',      assignment: *PHASE_MIXED_TEAMS,   team_sets: *ALL_TEAM_SETS}
+    - {title: 'peer_review2: phase_team',      assignment: *PHASE_MIXED_TEAMS,   team_sets: *ALL_TEAM_SETS}
+    - {title: 'collaboration1: phase_team',    assignment: *PHASE_SOME_TEAMS,    team_sets: *ALL_TEAM_SETS}
+    - {title: 'collaboration1: phase_team',    assignment: *PHASE_SOME_TEAMS,    team_sets: *ALL_TEAM_SETS}
+    - {title: 'peer_review1: phase_team',      assignment: *PHASE_SOME_TEAMS,    team_sets: *ALL_TEAM_SETS}
+    - {title: 'peer_review2: phase_team',      assignment: *PHASE_SOME_TEAMS,    team_sets: *ALL_TEAM_SETS}
+    - {title: 'collaboration: team_view_team', assignment: *PHASE_TEAM_VIEWERS,  team_sets: *ALL_TEAM_SETS}
+    - {title: 'collaboration: user_view_team', assignment: *PHASE_TEAM_VIEWERS,  team_sets: *ALL_TEAM_SETS}
+    - {title: 'peer_review: team_view_team',   assignment: *PHASE_TEAM_VIEWERS,  team_sets: *ALL_TEAM_SETS}
+    - {title: 'peer_review: team_view_team',   assignment: *PHASE_TEAM_VIEWERS,  team_sets: *ALL_TEAM_SETS}
+
+  viewers:
+    # Team peer review another team (phase ownerable = team; view ownerable = team)
+    - {team_sets: *ALL_TEAM_SETS, teams: [*TEAM_1], view: [*TEAM_2, *TEAM_3], space: *SPACE}
+    - {team_sets: *ALL_TEAM_SETS, teams: [*TEAM_2], view: [*TEAM_1, *TEAM_3]}
+    - {team_sets: *ALL_TEAM_SETS, teams: [*TEAM_3], view: [*TEAM_1, *TEAM_2]}
+    # User peer view another user on their team(s) or another team(s) (phase ownerable = user; view ownerable = user)
+    - {team_sets: *ALL_TEAM_SETS, users: update_1, view: [*TEAM_1, *TEAM_2, *TEAM_3]}
+    - {team_sets: *ALL_TEAM_SETS, users: read_1,   view: [*TEAM_2, *TEAM_3]}
+
+phase_templates:
+
+  - title: Phase Template Teams
+    name: template_teams
+    template: |
+      #{casespace_phase_header}
+      <row>
+        <column>
+          <component section='html' title='html'/>
+        </column>
+      </row>
+      #{casespace_phase_submit}
+
+auto_input:
+  responses: true

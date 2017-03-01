@@ -1,0 +1,13 @@
+platform_path: test/platform
+
+routes:
+  url: api
+  mount:
+    at: '/main'
+
+paths:               
+  - path: test/platform/one
+    routes:
+      mount:
+        at: '/one'
+  - path: test/platform/two

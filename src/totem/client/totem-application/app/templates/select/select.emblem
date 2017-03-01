@@ -1,0 +1,9 @@
+h1 View helper(s) commented out in this template.
+= if show_empty_option
+  / = view 'select/option' empty=true is_record=is_record_list class_names=option_class_names selected_items=selected_items disabled_items=disabled_items data_placeholder=no_select_option_text
+= if optgroup
+  = each groups as |group|
+    / = view 'select/optgroup' optgroups=optgroups content=group is_record_list=is_record_list display_property=display_property selected_items=selected_items disabled_items=disabled_items data_placeholder=data_placeholder option_class_names=option_class_names
+= else
+  = each content as |item|
+    / = view 'select/option' is_record=is_record_list content=item content_display_property=display_property class_names=option_class_names selected_items=selected_items disabled_items=disabled_items data_placeholder=data_placeholder

@@ -1,0 +1,27 @@
+= if label
+  label.ts-validated-input_label
+    = test
+  h1 
+    | test
+  if is_text_area
+    component '__text_area' placeholder=placeholder value=value save='save' type=type focus_out='focus_out' disabled=disabled name=name tabindex=tabindex size=size
+  else
+    component '__input' placeholder=placeholder value=value save='save' type=type focus_out='focus_out' disabled=disabled name=name tabindex=tabindex size=size
+  if display_errors
+    ul.ts-validated-input_input-errors
+      each message in errors
+        li.ts-validated-input_input-error
+          i.fa.fa-close
+          | #{message}
+= else
+  if is_text_area
+    //.right_pocket_text-area
+    component '__text_area' placeholder=placeholder value=value save='save' type=type focus_out='focus_out' disabled=disabled name=name tabindex=tabindex size=size
+  else
+    component '__input' placeholder=placeholder value=value save='save' type=type focus_out='focus_out' disabled=disabled name=name tabindex=tabindex size=size
+  if display_errors
+    ul.ts-validated-input_input-errors
+      each message in errors
+        li.ts-validated-input_input-error
+          i.fa.fa-close
+          | #{message}

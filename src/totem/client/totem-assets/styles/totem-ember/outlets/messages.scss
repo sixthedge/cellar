@@ -1,0 +1,101 @@
+.totem_message_outlet-hide {
+  display: none;
+}
+
+.totem_main_outlet-fade {
+  opacity:        0.2;
+  pointer-events: none;
+}
+
+.totem_message_outlet-container {
+  background: white;
+  position:   fixed;
+  top:        0;
+  left:       0;
+  z-index:    9000;
+  opacity:    1;
+  height:     50%;
+  width:      100%;
+
+  button {
+    margin-top:  30px;
+    margin-left: 30px;
+  }
+}
+
+.totem_message_outlet-view {
+  height:       90%;
+  width:        90%;
+  margin:       15px;
+  background:   #E6E6E6;
+  border:       10px solid;
+  border-color: #CCCCCC;
+}
+
+.totem_message_outlet-header {
+}
+
+.totem_message_outlet-messages {
+  margin-top:  30px;
+  margin-left: 30px;
+}
+
+.totem_message_outlet-footer {
+}
+
+.totem_message_outlet-loading {
+  position:       fixed;
+  top:            0;
+  left:           0;
+  opacity:        1;
+  z-index:        9000;
+  height:         100%;
+  width:          100%;
+}
+
+.totem_message_outlet-loading-messages {
+  background:    black;
+  position:      fixed;
+  top:           0;
+  left:          0;
+  opacity:       1;
+  width:         100%;
+  padding-left:  1.875em;
+  padding-right: 1.875em;
+  text-align:    center;
+}
+
+.totem_message_outlet-loading-message {
+  color: white;
+}
+
+// Session Timeout.
+.totem_session-timeout {
+  margin-left: 25%;
+
+  .totem_session-timeout-message {
+    font-weight: 500;
+    font-size:   200%;
+    margin-top:  1em;
+  }
+
+  .totem_session-timeout-time-remaining {
+    margin: 1em 0 1em 0;
+    .totem_session-timeout-remaining-text {
+      display:     inline-block;
+      font-weight: 500;
+    }
+    .totem_session-timeout-remaining-time {
+      display:     inline-block;
+      font-size:   1.2em;
+      font-weight: 500;
+      margin-left: .5em;
+      color:       red
+    }
+  }
+
+  .totem_session-timeout-footer {
+    .btn {font-weight: bold;}
+    .continue {margin-left: 2em;}
+  }
+}

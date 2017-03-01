@@ -1,0 +1,6 @@
+platform_path: test/platform
+
+paths:
+
+  - path: test/platform/engine_path_mismatch
+

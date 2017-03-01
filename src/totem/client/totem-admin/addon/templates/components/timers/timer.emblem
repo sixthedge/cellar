@@ -1,0 +1,32 @@
+if show_cancel_timer_prompt
+  tr
+    td colspan='10'
+      .ts-grid_row: .small-12.ts-grid_columns.ts-grid_columns-thick
+        h6 Do you really want to cancel this timer? #{timer.id}
+        .btn.btn-small.btn-primary click='cancel_timer' Yes
+        .btn.btn-small click='done' No
+
+      if error_message
+        .totem-admin-error-message= error_message
+
+tr
+  td= timer.id
+  td
+    = timer.room
+    ol.totem-admin-timer-users
+      .totem-admin-timer-user-title click='toggle_users' title='toggle users' Users (#{timer.users.length})
+      if show_users
+        if timer.users
+          each timer.users as |user|
+            li.totem-admin-timer-user= user
+        else
+          li No Users.
+  td: a click='"cancel" timer' Cancel
+  td= timer.show_start_at
+  td= timer.show_end_at
+  td= timer.from_now
+  td= timer.title
+  td= timer.type
+  td= timer.message
+  td= timer.show_interval
+  td.center= timer.user_id

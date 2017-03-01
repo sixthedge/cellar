@@ -1,0 +1,41 @@
+.ts_messages
+  if has_messages
+    .ts_messages-header
+      if new_messages
+        .ts_messages-header-toggle-new class={show_new:active} click='toggle_new' New Messages (#{new_messages.length})
+        if show_new
+          .ts_messages-header-mark-previous: a click='mark_all_previous' Move All New to Previous
+      if previous_messages
+        .ts_messages-header-toggle-previous class={show_previous:active} click='toggle_previous' Previous Messages (#{previous_messages.length})
+
+    if show_new
+      hr.ts_message_hr
+      .ts-grid_row: .small-12.ts-grid_columns.ts-grid_columns-thick
+        .ts_message-type-header
+          |New Messages
+        each new_messages as |msg|
+          .ts_message-header
+            .ts_message-from from: #{msg.from}
+            .ts_message-clear click="'mark_previous' msg" Mark Read
+            .ts_message-time= msg.time
+          if msg.to
+            .ts_message-to to: #{msg.to}
+          .ts_message-body= msg.body
+
+    if show_previous
+      hr.ts_message_hr
+      .ts-grid_row: .small-12.ts-grid_columns.ts-grid_columns-thick
+        .ts_message-type-header
+          |Previous Messages
+          span.ts_messages-clear-all
+            a click='mark_all_previous_inactive' Clear all
+        each previous_messages as |msg|
+          .ts_message-header
+            .ts_message-from from: #{msg.from}
+            .ts_message-time= msg.time
+          if msg.to
+            .ts_message-to to: #{msg.to}
+          .ts_message-body= msg.body
+
+  else
+    .ts_messages-no-messages No messages.

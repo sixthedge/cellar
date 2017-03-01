@@ -1,0 +1,24 @@
+- model: test/associations/one/user_38
+  associations:
+    - belongs_to: test/associations/one/user_38
+      # Rails options
+      polymorphic:  false
+      class_name:   should_be_ignored
+      foreign_key:  foreign_key_override
+      foreign_type: foreign_type_override
+      primary_key:  primary_key_override
+      dependent:    :dependent_value
+      validate:     validate_value
+      autosave:     autosave_value
+      touch:        :mydate_at
+      inverse_of:   :some_inverse_association
+      bad_option:   bad_option_still_included
+      # non-Rails options
+      alias:    some_alias
+      readonly: true
+      scope:    order("name")
+      accepts_nested_attributes_for:
+        key: value
+
+  serializers:
+    - attributes: [id, name, email, another]

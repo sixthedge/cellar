@@ -1,0 +1,69 @@
+# If seed with auto_input and want to score all the forecasts do:
+#   rake thinkspace:weather_forecaster:score:assessments[days:10,m:10]
+variables:
+  - &SPACE weather_forecaster
+  - &ASSIGNMENT_1 assessment 
+  - &ASSIGNMENT_2 assessment with overrides
+  - &PHASE_A Forecast All
+  - &PHASE_B Forecast Input Only
+  - &PHASE_C Forecast Radio Only
+  - &PHASE_D Forecast Checkbox Only
+  - &PHASE_E Forecast One of Each
+  - &ITEMS_ALL      [1006, 1009, 1013, 1021, 1026, 1029, 1032, 1040, 1045, 1048, 1058, 1062]
+  - &ITEMS_INPUT    [1006, 1026, 1045]
+  - &ITEMS_RADIO    [1009, 1013, 1021, 1029, 1032, 1040, 1048, 1058]
+  - &ITEMS_CHECKBOX [1062]
+  - &ITEMS_ONE_EACH [1006, 1013, 1062]
+  - &PRESENT_OVERRIDE 'Presentation override qestion?'
+  - &HELP_TIP_OVERRIDE {html: '<h4>Help tip override.</h4>'}
+  - &PROCESSING_OVERRIDE { actions: {add: 3}, outcome: {max_value: 5} }
+
+auto_input:
+  forecasts:
+    days:           10
+    # completed_days: 3
+    # users:        read_1
+    # only:         [*PHASE_A, *PHASE_E]
+
+spaces:
+  - title: *SPACE
+
+space_users:
+  - spaces: *SPACE
+    users: import[users]
+
+assignments:
+  - {title: *ASSIGNMENT_1, space: *SPACE}
+  - {title: *ASSIGNMENT_2, space: *SPACE}
+
+phases:
+  - {title: *PHASE_A, assignment: *ASSIGNMENT_1, template_name: template_weather_forecaster}
+  - {title: *PHASE_B}
+  - {title: *PHASE_C}
+  - {title: *PHASE_D}
+  - {title: *PHASE_E}
+  - {title: *PHASE_A, assignment: *ASSIGNMENT_2, template_name: template_weather_forecaster}
+
+weather_forecaster:
+
+  forecast_days:
+    - start: -20
+
+  assessments:
+    - {title: *PHASE_A, assignment: *ASSIGNMENT_1, phase: *PHASE_A, station: KDSM, items: *ITEMS_ALL}
+    - {title: *PHASE_B, phase: *PHASE_B, items: *ITEMS_INPUT}
+    - {title: *PHASE_C, phase: *PHASE_C, items: *ITEMS_RADIO}
+    - {title: *PHASE_D, phase: *PHASE_D, items: *ITEMS_CHECKBOX}
+    - {title: *PHASE_E, phase: *PHASE_E, items: *ITEMS_ONE_EACH}
+    - {title: *PHASE_A, assignment: *ASSIGNMENT_2, phase: *PHASE_A, station: KDSM, items: *ITEMS_ONE_EACH, presentation: *PRESENT_OVERRIDE, help_tip: *HELP_TIP_OVERRIDE}
+
+phase_templates:
+  - title: Weather Forecaster template
+    name: template_weather_forecaster
+    template: |
+      #{casespace_phase_header}
+      <row>
+        <column>
+          <component section='forecast' title='weather-forecaster'/>
+        </column>
+      </row>

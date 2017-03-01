@@ -1,0 +1,23 @@
+.secondary-panel
+  .secondary-panel__header
+    h1.text--inline-block.is-left
+      | #{qm.qn}. #{qm.question}
+    a.icon.icon--16.icon__cross--white.is-right click='close' aria-label='close team chat'
+
+  .secondary-panel__content
+    .chat__container
+      each cm.messages as |msg|
+        .chat__item
+          .avatar.avatar--32.spacing__margin-right--1
+          .chat__item-content
+            .chat__item-author
+              .avatar__username #{msg.name}
+              .chat__item-time = msg.time
+            .text--regular.text__font-size--12 = msg.message
+      else
+        .text__font-size--12.text--bold Start a discussion!
+        .text__font-size--12.spacing__margin-bottom--2 Type something here so your teammates get in on the discussion. 
+    unless cm.readonly
+      .chat__input-container
+        =textarea value=cm.message
+        a.btn.btn--primary click='send' Send

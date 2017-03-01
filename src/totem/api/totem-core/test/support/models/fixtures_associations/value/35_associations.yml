@@ -1,0 +1,13 @@
+- model: test/associations/one/account_35
+  associations:
+    - has_many: test/associations/one/user_35s
+  serializers:
+    - attributes: [id, title]
+
+- model: test/associations/one/user_35
+  associations:
+    - belongs_to: test/associations/one/account_35
+      scope: order("id")
+  serializers:
+    - attributes: [id, name, email]
+

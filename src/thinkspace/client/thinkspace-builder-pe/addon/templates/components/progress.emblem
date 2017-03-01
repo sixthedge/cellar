@@ -1,0 +1,7 @@
+.builder-progress
+
+  h2 Builder Progress
+
+  ul.builder-progress__list
+    each steps as |step|
+      component 'progress/step' step=step

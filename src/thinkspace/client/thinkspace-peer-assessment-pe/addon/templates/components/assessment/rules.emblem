@@ -1,0 +1,18 @@
+if manager.is_balance
+  .secondary-panel
+    .secondary-panel__header
+      h1.text--inline-block.is-left Evaluation Rules
+    .secondary-panel__content
+      ul.secondary-panel__list
+        li.secondary-panel__item class={has_points_remaining_rule:text__color--gray:text__color--green}
+          if has_points_remaining_rule
+            span.tsi
+          else
+            span.tsi
+          span Spend EXACTLY #{manager.points_total} points.
+        li.secondary-panel__item class={has_points_different_rule:text__color--gray:text__color--green}
+          if has_points_different_rule  
+            span.tsi
+          else
+            span.tsi
+          span Can not give same score to all members

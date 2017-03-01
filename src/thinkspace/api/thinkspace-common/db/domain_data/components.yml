@@ -1,0 +1,486 @@
+---
+- id: 1
+  title: artifact-bucket
+  description: ''
+  value:
+    path:
+    - artifact
+    - bucket
+    ember:
+      engine: thinkspace-artifact
+    builder:
+      friendly_name: Student File Upload
+      paths:
+        content:
+        - artifact
+        - builder
+        - bucket
+        - content
+        preview:
+        - artifact
+        - builder
+        - bucket
+        - preview
+        settings:
+        - artifact
+        - builder
+        - bucket
+        - settings
+  preprocessors:
+  created_at: 2015-07-26 17:28:06.765014000 Z
+  updated_at: 2016-04-13 20:46:08.657816000 Z
+- id: 2
+  title: casespace-phase-header
+  description: ''
+  value:
+    path:
+    - casespace
+    - phase
+    - header
+    ember:
+      component: header
+    builder:
+      friendly_name: Phase Title
+      paths:
+        preview:
+        - casespace
+        - builder
+        - phase
+        - header
+        - preview
+        content:
+        - casespace
+        - builder
+        - phase
+        - header
+        - content
+  preprocessors:
+  created_at: 2015-07-26 17:28:06.771159000 Z
+  updated_at: 2016-04-13 20:46:08.664012000 Z
+- id: 3
+  title: casespace-phase-submit
+  description: ''
+  value:
+    path:
+    - casespace
+    - phase
+    - submit
+    ember:
+      component: submit
+    builder:
+      friendly_name: Submit
+      paths:
+        preview:
+        - casespace
+        - builder
+        - phase
+        - submit
+        - preview
+  preprocessors:
+  created_at: 2015-07-26 17:28:06.776511000 Z
+  updated_at: 2016-04-13 20:46:08.668681000 Z
+# - id: 4
+#   title: diagnostic-path-viewer
+#   description: ''
+#   value:
+#     path:
+#     - diagnostic_path_viewer
+#     - viewer
+#     ember:
+#       engine: thinkspace-diagnostic-expert-path
+#     builder:
+#       friendly_name: Expert Path (Old)
+#       paths:
+#         content:
+#         - diagnostic_path_viewer
+#         - builder
+#         - viewer
+#         - content
+#         preview:
+#         - diagnostic_path_viewer
+#         - builder
+#         - viewer
+#         - preview
+#         settings:
+#         - diagnostic_path_viewer
+#         - builder
+#         - viewer
+#         - settings
+#   preprocessors:
+#   created_at: 2015-07-26 17:28:06.809484000 Z
+#   updated_at: 2016-04-13 20:46:08.673308000 Z
+# - id: 5
+#   title: diagnostic-path-viewer-ownerable
+#   description: ''
+#   value:
+#     path:
+#     - diagnostic_path_viewer
+#     - viewer_ownerable
+#     builder:
+#       friendly_name: Expert Path (Old)
+#       paths:
+#         content:
+#         - diagnostic_path_viewer
+#         - builder
+#         - viewer
+#         - content
+#         preview:
+#         - diagnostic_path_viewer
+#         - builder
+#         - viewer
+#         - preview
+#         settings:
+#         - diagnostic_path_viewer
+#         - builder
+#         - viewer
+#         - settings
+#   preprocessors:
+#   created_at: 2015-07-26 17:28:06.816762000 Z
+#   updated_at: 2016-04-13 20:46:08.677647000 Z
+# - id: 6
+#   title: diagnostic-path
+#   description: ''
+#   value:
+#     path:
+#     - diagnostic_path
+#     - path
+#     ember:
+#       engine: thinkspace-diagnostic-path
+#     builder:
+#       friendly_name: Diagnostic Path (Old)
+#       paths:
+#         content:
+#         - diagnostic_path
+#         - builder
+#         - path
+#         - content
+#         preview:
+#         - diagnostic_path
+#         - builder
+#         - path
+#         - preview
+#         settings:
+#         - diagnostic_path
+#         - builder
+#         - path
+#         - settings
+#   preprocessors:
+#   created_at: 2015-07-26 17:28:06.820826000 Z
+#   updated_at: 2016-04-13 20:46:08.681921000 Z
+- id: 7
+  title: html
+  description: ''
+  value:
+    path:
+    - html
+    - html
+    ember:
+      engine: thinkspace-html
+    builder:
+      friendly_name: HTML
+      paths:
+        content:
+        - html
+        - builder
+        - html
+        - content
+        preview:
+        - html
+        - builder
+        - html
+        - preview
+  preprocessors:
+  - attribute: html_content
+    paths:
+    - - input_element
+      - preprocessors
+      - responses
+    - - input_element
+      - preprocessors
+      - carry_forward
+  created_at: 2015-07-26 17:28:06.827969000 Z
+  updated_at: 2016-04-13 20:46:08.686899000 Z
+- id: 8
+  title: html-only
+  description: ''
+  value:
+    path:
+    - html
+    - html_only
+    ember:
+      engine: thinkspace-html
+    builder:
+      friendly_name: HTML
+      paths:
+        content:
+        - html
+        - builder
+        - html
+        - content
+        preview:
+        - html
+        - builder
+        - html
+        - preview
+  preprocessors:
+  created_at: 2015-07-26 17:28:06.832959000 Z
+  updated_at: 2016-04-13 20:46:08.691856000 Z
+- id: 9
+  title: html-select-text
+  description: ''
+  value:
+    path:
+    - html
+    - html_select_text
+    ember:
+      engine: thinkspace-html
+    builder:
+      friendly_name: HTML
+      paths:
+        content:
+        - html
+        - builder
+        - html
+        - content
+        preview:
+        - html
+        - builder
+        - html
+        - preview
+  preprocessors:
+  - attribute: html_content
+    paths:
+    - - input_element
+      - preprocessors
+      - responses
+    - - input_element
+      - preprocessors
+      - carry_forward
+  created_at: 2015-07-26 17:28:06.836929000 Z
+  updated_at: 2016-04-13 20:46:08.697944000 Z
+- id: 10
+  title: lab
+  description: ''
+  value:
+    path:
+    - lab
+    - lab
+    ember:
+      engine: thinkspace-lab-vet-med
+    builder:
+      friendly_name: Lab Chart
+      paths:
+        content:
+        - lab
+        - builder
+        - lab
+        - content
+        preview:
+        - lab
+        - builder
+        - lab
+        - preview
+        settings:
+        - lab
+        - builder
+        - lab
+        - settings
+  preprocessors:
+  created_at: 2015-07-26 17:28:06.840987000 Z
+  updated_at: 2016-04-13 20:46:08.702631000 Z
+- id: 11
+  title: observation-list
+  description: ''
+  value:
+    path:
+    - observation_list
+    - list
+    ember:
+      engine: thinkspace-observation-list
+    builder:
+      friendly_name: Observation List
+      paths:
+        preview:
+        - observation_list
+        - builder
+        - list
+        - preview
+        settings:
+        - observation_list
+        - builder
+        - list
+        - settings
+  preprocessors:
+  created_at: 2015-07-26 17:28:06.844879000 Z
+  updated_at: 2016-04-13 20:46:08.707756000 Z
+- id: 12
+  title: weather-forecaster
+  description: Weather Forecaster Assessment
+  value:
+    path:
+    - weather_forecaster
+    - assessment
+    ember:
+      engine: thinkspace-weather-forecaster
+    builder:
+      friendly_name: Dynamic Weather Forecaster
+      paths:
+        content:
+        - weather_forecaster
+        - builder
+        - assessment
+        - content
+        preview:
+        - weather_forecaster
+        - builder
+        - assessment
+        - preview
+        settings:
+        - weather_forecaster
+        - builder
+        - assessment
+        - settings
+  preprocessors:
+  created_at: 2015-07-26 17:28:06.848756000 Z
+  updated_at: 2016-04-13 20:46:08.714610000 Z
+- id: 13
+  title: peer-assessment
+  description: Peer Assessment
+  value:
+    path:
+    - peer_assessment
+    - assessment
+    ember:
+      engine: thinkspace-peer-assessment-pe
+    builder:
+      friendly_name: Peer Evaluation
+      paths:
+        content:
+        - peer_assessment
+        - builder
+        - assessment
+        - content
+        preview:
+        - peer_assessment
+        - builder
+        - assessment
+        - preview
+        settings:
+        - peer_assessment
+        - builder
+        - assessment
+        - settings
+  preprocessors:
+  created_at: 2015-07-13 12:53:52.745822000 Z
+  updated_at: 2016-04-13 20:46:08.737214000 Z
+- id: 14
+  title: peer-assessment-overview
+  description: Anonymized peer assessment overviews.
+  value:
+    path:
+    - peer_assessment
+    - overview
+    ember:
+      engine: thinkspace-peer-assessment
+    builder:
+      friendly_name: Peer Evaluation Overview
+      paths:
+        preview:
+        - peer_assessment
+        - builder
+        - overview
+        - preview
+        settings:
+        - peer_assessment
+        - builder
+        - overview
+        - settings
+  preprocessors:
+  created_at: 2015-07-13 12:53:52.745822000 Z
+  updated_at: 2016-04-13 20:49:10.640351000 Z
+- id: 15
+  title: simulation
+  description: Simulation Render
+  value:
+    path:
+    - simulation
+    - simulation
+    builder:
+      friendly_name: Simulation
+      paths:
+        preview:
+        - simulation
+        - builder
+        - simulation
+        - preview
+        settings:
+        - simulation
+        - builder
+        - simulation
+        - settings
+  preprocessors:
+  created_at: 2015-07-13 12:53:52.745822000 Z
+  updated_at: 2016-04-13 20:46:08.747032000 Z
+- id: 16
+  title: indented-list
+  description: Indented List
+  value:
+    path:
+    - indented_list
+    - list
+    builder:
+      friendly_name: Diagnostic Path
+      paths:
+        preview:
+        - indented_list
+        - builder
+        - list
+        - preview
+        settings:
+        - indented_list
+        - builder
+        - list
+        - settings
+  preprocessors:
+  created_at: 2016-03-23 12:53:52.745822000 Z
+  updated_at: 2016-04-13 20:46:08.751267000 Z
+
+# Diagnostic Expert Path
+- id:
+  title: diagnostic-expert-path
+  description: Diagnostic Expert Path
+  value:
+    path:
+    - indented_list
+    - list
+    ember:
+      engine: thinkspace-diagnostic-expert-path
+    builder:
+      friendly_name: Diagnostic Expert Path
+  preprocessors:
+
+# Diagnostic Path
+- id:
+  title: diagnostic-path
+  description: ''
+  value:
+    path:
+    - indented_list
+    - list
+    ember:
+      engine: thinkspace-diagnostic-path
+    builder:
+      friendly_name: Diagnostic Path
+  preprocessors:
+
+# Readiness Assurance Component
+- id:
+  title: readiness-assurance
+  description: Readiness Assurance
+  value:
+    path:
+    - readiness_assurance
+    - assessment
+    ember:
+      engine: thinkspace-readiness-assurance
+  preprocessors:

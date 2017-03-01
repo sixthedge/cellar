@@ -1,0 +1,23 @@
+.ts-grid_columns.ts-grid_columns-thick.small-8
+  .phase-content_heading 
+    h4 Your Peer Evaluation Summary
+    p Below is a compilation of your evaluation done by your peers.
+
+  if assessment.is_balance
+    .phase-content_section-heading
+      h5 Overall Score:
+      p Lowest possible score is #{calculated_overview.options.points.min} and the highest is a #{calculated_overview.options.points.max}
+      span.ts-tblpa-overview_overall-score #{overview_score}
+      span points
+  else
+    .phase-content_section-heading
+      h5 Assessment Category Scores:
+      p Points below are the average of each category. Lowest possible score is #{calculated_overview.options.points.min} and the highest is a #{calculated_overview.options.points.max}
+      ul.ts-tblpa-overview_category-list
+        each categories as |category|
+          li.ts-tblpa-overview_category
+            span.ts-tblpa-overview_category-label #{category.label}:
+            span.ts-tblpa-overview_overall-score #{category.value}
+            span points
+
+  partial 'components/type/shared/qualitative'

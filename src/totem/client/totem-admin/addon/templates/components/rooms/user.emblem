@@ -1,0 +1,6 @@
+tr
+  td.no-wrap= user.username
+  td.no-wrap= user.room
+  td.no-wrap= user.url
+  td.no-wrap= user.sid
+  td.table-sizing

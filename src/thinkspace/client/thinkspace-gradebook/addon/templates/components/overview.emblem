@@ -1,0 +1,39 @@
+/ If the current phase is team based, only show phases that this team is assigned.
+if current_phase.team_ownerable
+  each phase_states as |phase_state|
+    tr
+      td.gradebook_table-current-row= __are-equal model current_phase if_true=phase_manager.is_current_html
+      td.gradebook_table-phase-state= __phase-state-icon phase_state.current_state
+      td.gradebook_table-phase-title= model.title
+      td.gradebook_table-phase-score= phase_state.score
+
+else
+  if model.team_ownerable
+    tr
+      td
+      td.gradebook_table-phase-title #{model.title} (team)
+      td
+      td
+    / If the phase is team based, the user may have be multiple teams for the phase.
+    each phase_states as |phase_state|
+      tr
+        td.gradebook_table-current-row= __are-equal model current_phase
+        td.gradebook_table-phase-state= __phase-state-icon phase_state.current_state
+        td.gradebook_table-phase-title: small: =phase_state.title
+        td.gradebook_table-phase-score= phase_state.score
+    else
+      tr
+        td
+        td.gradebook_table-phase-title: small: |no teams assigned
+        td
+        td
+
+  else
+    / If the phase is NOT team based, should only be one phase state for the user in the array.
+    each phase_states as |phase_state|
+      tr
+        td.gradebook_table-current-row= __are-equal model current_phase if_true=phase_manager.is_current_html
+        td.gradebook_table-phase-state= __phase-state-icon phase_state.current_state
+        td.gradebook_table-phase-title= model.title
+        td.gradebook_table-phase-score
+          component 'score' model=model save='save_phase_score' table_score=true

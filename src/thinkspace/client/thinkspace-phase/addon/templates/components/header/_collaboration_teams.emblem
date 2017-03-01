@@ -1,0 +1,9 @@
+if model.team_ownerable
+
+  if selected_phase_state
+
+    .phase-header_resource-title-team-title.right
+      .ts-grid_row: .small-12.ts-grid_columns: small
+        i.fa.fa-users title='Team based phase'
+        '
+        = selected_phase_state.title

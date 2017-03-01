@@ -1,0 +1,12 @@
+- model: test/associations/one/user_31
+  associations:
+    - belongs_to: test/associations/two/profile_31
+  serializers:
+    - attributes: [id, name]
+
+- model: test/associations/two/profile_31
+  associations:
+    - belongs_to: test/associations/one/user_31
+  serializers:
+    - attributes: [id, settings]
+

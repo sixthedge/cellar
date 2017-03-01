@@ -1,0 +1,10 @@
+- model: test/associations/one/account_72
+  associations:
+    - has_many: test/associations/one/user_72s
+      as: polymorphicable
+  serializers:
+    - attributes: [id, title]
+
+- model: test/associations/one/user_72
+  serializers:
+    - attributes: [id, name, email]

@@ -1,0 +1,24 @@
+component 'rooms/header'
+
+.btn.btn-small.btn-primary click='refresh' Refresh
+.btn.btn-small click='clear_sort' Clear Sort
+if default_sort_by
+  .btn.btn-small.totem-admin-right click='default_by' Default Sort
+
+if ready
+  if has_users
+    h6.table-sort-by-display-sorted_by Sorted By: #{display_sorted_by}
+
+    table.table-sort-by style='font-size: 95%;'
+      thead
+        component '__table_sort_by/header' sort=sort.user
+        component '__table_sort_by/header' sort=sort.room
+        component '__table_sort_by/header' sort=sort.url
+        component '__table_sort_by/header' sort=sort.sid
+        th.table-sizing
+      tbody
+        each sorted_user_data as |user|
+          component 'rooms/user' user=user
+
+  else
+    h5 No users in rooms.

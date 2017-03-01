@@ -1,0 +1,32 @@
+log this
+.bordered-panel click='edit_team_member'
+  .grid__container
+    .avatar.avatar--32.is-left.spacing__margin-right--2
+    .text--inline-block
+      .text__font-size--14.text__font-style--italic Evaluation for
+      .text--bold = model.reviewable.full_name
+    if has_errors
+      i.im.im-info-circle style='float:right; color: red;'
+  .grid__container
+    if assessment.is_balance
+      label.spacing__margin-bottom--0 Score
+      p.text__font-size--14.spacing__margin-top--0 #{expended_points}
+
+    if assessment.is_categories
+      ul.clear-list
+        each category_responses as |response|
+          li
+            label.spacing__margin-bottom--0 #{response.label}
+            p.text__font-size--14.spacing__margin-top--0 #{response.value}
+
+    if assessment.is_custom
+      label.spacing__margin-bottom--0 #{model.reviewable.full_name}
+      p.text__font-size--14.spacing__margin-top--0 #{expended_points}
+
+    each qualitative_responses as |response|
+      label.spacing__margin-bottom--0 #{response.label}
+      p.text__font-size--14.spacing__margin-top--0
+        if response.value
+          | {response.value}
+        else
+          | --

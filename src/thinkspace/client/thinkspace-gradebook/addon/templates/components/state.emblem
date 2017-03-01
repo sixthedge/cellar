@@ -1,0 +1,9 @@
+each domain_phase_states as |phase_state|
+  tr click="'save' phase_state.state"
+    td= __are-equal model.phase_state.current_state phase_state.state if_true=phase_manager.is_current_html
+    td.gradebook_table-phase-state
+      span.gradebook_phase-state-action click='"change" phase_state.state' title='{{unbound phase_state.title}}'
+        a= __phase-state-icon phase_state.state
+    td.gradebook_phase-state-info
+      h1 #{phase_state.title}
+      p #{phase_state.description}

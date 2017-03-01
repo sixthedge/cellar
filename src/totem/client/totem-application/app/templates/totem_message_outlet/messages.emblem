@@ -1,0 +1,5 @@
+.totem_message_outlet-container
+
+  .totem_message_outlet-messages
+    each totem_outlet_messages as |message|
+      h4= message.message

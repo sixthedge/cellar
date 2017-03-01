@@ -1,0 +1,56 @@
+platform_path: test/platform
+
+routes:
+  url: api
+  match:
+    '*home':
+      to:          test/platform/main/home#index
+      constraints: false
+
+paths:
+
+  - path: test/platform/one
+    routes:
+      mount:
+        via:        put
+        to:         somewhere
+        at:         at
+        controller: mycontroller
+        action:     myaction
+        module:     mymodule
+        as:         as
+        # on key must be in quotes else yaml will interpret as true/false
+        'on':       on
+        defaults:   defaults
+        anchor:     anchor
+        format:     format
+        constraints:
+          id:     /[A-Z]\d{5}/
+          ip:     /192\.168\.\d+\.\d+/
+          path:   /test/platform/one_path
+          format: jpg
+      match:
+        test/one/match_another:
+          via:        put
+          to:         somewhere
+          at:         at
+          controller: mycontroller
+          action:     myaction
+          module:     mymodule
+          as:         as
+          'on':       on
+          defaults:   defaults
+          anchor:     anchor
+          format:     format
+          constraints: 
+            ip:     /192\.168\.\d+\.\d+/
+            path:   /test/platform/one_path
+            format: jpg
+
+  - path: test/platform/two
+
+  # three does not have a config/routes.rb so should be ignored
+  - path: test/platform/three
+    routes:
+      mount:
+        at: '/mount_three'

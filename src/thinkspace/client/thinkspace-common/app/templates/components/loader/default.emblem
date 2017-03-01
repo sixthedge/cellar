@@ -1,0 +1,9 @@
+if message
+  h5 #{message}
+else
+  .ts-loader
+    .spinner
+      .ball.ball-1
+      .ball.ball-2
+      .ball.ball-3
+      .ball.ball-4

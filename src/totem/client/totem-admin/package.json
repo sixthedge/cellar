@@ -1,0 +1,38 @@
+{
+  "name": "totem-admin",
+  "version": "0.0.1",
+  "description": "Totem Admin",
+  "author": "sixthedge",
+  "license": "MIT",
+  "homepage": "https://github.com/sixthedge/thinkspace-client",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sixthedge/thinkspace-client.git"
+  },
+  "private": true,
+  "ember-addon": {
+    "main": "index.js",
+    "after": [
+      "totem-base",
+      "totem-engines"
+    ]
+  },
+  "keywords": [
+    "ember-addon",
+    "totem"
+  ],
+  "directories": {
+  },
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "dependencies": {
+    "ember-cli-htmlbars": "*",
+    "ember-cli-emblem": "*",
+    "ember-cli-coffeescript": "*",
+    "ember-cli-coffees6": "*"
+  },
+  "devDependencies": {
+  },
+  "readme": "No README data."
+}

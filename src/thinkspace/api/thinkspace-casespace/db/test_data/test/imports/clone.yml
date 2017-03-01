@@ -1,0 +1,79 @@
+variables:
+  - &TEAM_A [read_1, read_2]
+  - &TEAM_B [read_3, read_4]
+  - tags: &RESOURCE_TAGS_ASSIGNMENT
+    - title: Assignment Resources
+      links:
+        - {title: assignment_link_1, url: 'http://iastate.edu'}
+        - {title: assignment_link_2, url: 'http://thinkspace.org'}
+      files:
+        - {source: file.pdf, name: assignment_pdf.pdf}
+        - {source: file.txt, name: assignment_txt.txt}
+  - tags: &RESOURCE_TAGS_PHASE
+    - title: Phase Resources
+      links:
+        - {title: phase_link_1, url: 'http://thinkspace.org'}
+      files:
+        - {source: file.pdf, name: phase_pdf.pdf}
+        - {source: file.txt, name: phase_txt.txt}
+
+phases:
+  - title: clone_html
+    template_name: clone_html
+    sections:      
+      html-1: {sample: html_input_b}
+      html-2: {sample: html_input_b}
+  - title: clone_html_and_observation_list
+    template_name: clone_html_and_observation_list
+    sections:      
+      html-1: {sample: html_input_b}
+  - title: clone_diagnostic_path_and_observation_list
+    template_name: clone_diagnostic_path_and_observation_list
+  - title: clone_resources
+    template_name: clone_html
+    sections:      
+      html-1: {sample: html_input_a}
+      html-2: {sample: html_input_b}
+  - title: clone_teams
+    template_name: clone_html
+    sections:      
+      html-1: {sample: html_input_b}
+      html-2: {sample: html_input_b}
+  # Team assignment.
+  - title: clone_assignment_teams
+    template_name: clone_html
+    sections:      
+      html-1: {sample: html_input_b}
+      html-2: {sample: html_input_b}
+
+assignment_resource_tags:
+  - user: {first_name: update_1}
+    tags: *RESOURCE_TAGS_ASSIGNMENT
+
+phase_resource_tags:
+  - user: {first_name: update_1}
+    tags: *RESOURCE_TAGS_PHASE
+
+assignment_teams:
+  - {name: team_A, users: *TEAM_A}
+  - {name: team_B, users: *TEAM_B}
+
+assignment_viewers:
+  - {teams: [team_A], view: [team_A]}
+  - {teams: [team_B], view: [team_A]}
+
+phase_teams:
+  - {name: team_A, users: *TEAM_A}
+  - {name: team_B, users: *TEAM_B}
+
+phase_viewers:
+  - {teams: [team_A], view: [team_A]}
+  - {teams: [team_B], view: [team_A]}
+
+resource_tags:
+  - tags: *RESOURCE_TAGS_ASSIGNMENT
+    user: {first_name: update_1}
+  - tags: *RESOURCE_TAGS_PHASE
+    user: {first_name: update_1}
+    phase: clone_resources
+

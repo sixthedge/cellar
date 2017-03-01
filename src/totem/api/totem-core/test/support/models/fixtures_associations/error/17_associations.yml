@@ -1,0 +1,7 @@
+- model: test/associations/one/error_user_17
+  serializers:
+    - attributes: [id, name]
+    - serializer:
+      - suffix: Single
+    - serializer:
+      - suffix: Single

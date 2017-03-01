@@ -1,0 +1,9 @@
+platform_path: test/platform
+
+routes:
+  url: api
+
+paths:               
+  - path: test/platform/one
+    routes:
+      url: path_api

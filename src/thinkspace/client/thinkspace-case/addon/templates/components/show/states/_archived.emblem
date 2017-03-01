@@ -1,0 +1,6 @@
+.dialogue
+  h1 Case is in archive mode
+  p Archived cases can be seen by students but only as read-only.
+
+  .btn.btn--primary{action 'set_drafting'}
+    | Transition To Draft

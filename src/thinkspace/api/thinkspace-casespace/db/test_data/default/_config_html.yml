@@ -1,0 +1,171 @@
+require_data_files: html_samples
+
+variables:
+  - &SPACE html
+  - &ASSIGNMENT html_assignment
+
+auto_input:
+  responses:
+    except: no_auto_input
+  observations:
+    observations_per_list:       10
+    max_notes_per_observation:   3
+
+spaces:
+  - title: *SPACE
+
+space_users:
+  - spaces: *SPACE
+    users: import[users]
+
+assignments:
+  - {title: *ASSIGNMENT , space: *SPACE}
+
+phases:
+
+  - title: html_only
+    assignment:    *ASSIGNMENT
+    template_name: template_html_only
+    sections:      
+      html-1: {sample: html_only}
+
+  - title: html_only_x_2_side_by_side
+    template_name: template_html_only_x_2_side_by_side
+    sections:      
+      html-1: {sample: html_only}
+      html-2: {sample: html_only}
+
+  - title: no_auto_input
+    template_name: template_html_input_a
+    sections:      
+      html-1: {sample: html_input_a}
+
+  - title: html_input_a one checkbox text textarea
+    template_name: template_html_input_a
+    sections:      
+      html-1: {sample: html_input_a}
+
+  - title: html_input_a stacked one checkbox text textarea
+    template_name: template_html_input_a_stacked
+    sections:      
+      html-1: {sample: html_input_a}
+      html-2: {sample: html_input_a}
+
+  - title: html_input_b two checkbox text textarea
+    template_name: template_html_input_b
+    sections:      
+      html-1: {sample: html_input_b}
+
+  - title: html_select_text with observation list_1
+    template_name: template_html_select_text
+    sections:      
+      html-1: {sample: html_only}
+
+  - title: html_select_text with observation list_2
+    template_name: template_html_select_text
+    sections:      
+      html-1: {sample: html_only}
+
+  - title: &TEAM_PHASE teams_html_input
+    template_name: template_html_input_a
+    sections:      
+      html-1: {sample: html_input_a}
+
+  - title: html_carry_forward
+    template_name: template_html_carry_forward
+    sections:      
+      html-1: {method: html_sample_content_html_carry_forward_assignment_all}
+
+phase_templates:
+
+  - title: html only
+    name: template_html_only
+    template: |
+      #{casespace_phase_header}
+      <row>
+        <column>
+          <component section='html-1' title='html-only'/>
+        </column>
+      </row>
+
+  - title: html only x 2
+    name: template_html_only_x_2_side_by_side
+    template: |
+      #{casespace_phase_header}
+      <row>
+        <column width=6>
+          <component section='html-1' title='html-only'/>
+        </column>
+        <column width=6>
+          <component section='html-2' title='html-only'/>
+        </column>
+      </row>
+
+  - title: html input a
+    name: template_html_input_a
+    template: |
+      #{casespace_phase_header}
+      <row>
+        <column>
+          <component section='html-1' title='html'/>
+        </column>
+      </row>
+      #{casespace_phase_submit}
+
+  - title: html input b
+    name: template_html_input_b
+    template: |
+      #{casespace_phase_header}
+      <row>
+        <column>
+          <component section='html-1' title='html'/>
+        </column>
+      </row>
+      #{casespace_phase_submit}
+
+  - title: html input a stacked
+    name: template_html_input_a_stacked
+    template: |
+      #{casespace_phase_header}
+      <row>
+        <column>
+          <component section='html-1' title='html'/>
+          <component section='html-2' title='html'/>
+        </column>
+      </row>
+      #{casespace_phase_submit}
+
+  - title: html select text
+    name: template_html_select_text
+    template: |
+      <row>
+        <column width=8>
+          <component section='header' title='casespace-phase-header'/>
+          <component section='html-1' title='html-select-text' select-text='obs-list'/>
+          <component section='submit' title='casespace-phase-submit' data-actions='{"submit":"submit"}'/>
+        </column>
+        <column width=4>
+          <component section='obs-list' title='observation-list'/>
+        </column>
+      </row>
+
+  - title: html carry forward
+    name: template_html_carry_forward
+    template: |
+      #{casespace_phase_header}
+      <row>
+        <column>
+          <component section='html-1' title='html'/>
+        </column>
+      </row>
+      #{casespace_phase_submit}
+
+teams:
+  collaboration:
+    phase:
+      teams:
+        - {name: team_1, users: [read_1, read_2], phase: *TEAM_PHASE, assignment: *ASSIGNMENT}
+        - {name: team_2, users: [read_3, read_4]}
+        - {name: team_3, users: [read_4, read_5, read_9]}
+        - {name: team_4, users: [read_6, read_7, read_9]}
+        - {name: team_5, users: [read_8, read_9]}

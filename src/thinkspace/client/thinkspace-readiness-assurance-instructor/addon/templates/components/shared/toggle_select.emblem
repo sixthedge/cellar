@@ -1,0 +1,9 @@
+.ts-ra_admin-teams-toggle
+  .ts-ra_admin-menu
+    ul.ts-action-bar
+      li.ts-action-bar_action
+        a click='toggle'
+          if rad.show_select
+            |Hide #{title}
+          else
+            |Show #{title}

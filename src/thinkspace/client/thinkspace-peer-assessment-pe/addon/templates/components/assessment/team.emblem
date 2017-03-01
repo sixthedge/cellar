@@ -1,0 +1,11 @@
+.secondary-panel
+  .secondary-panel__header
+    h1.text--inline-block.is-left
+      | Team Members
+
+  .secondary-panel__content
+    ul.secondary-panel__list
+      each reviewables as |member|
+        component 'assessment/team/member' manager=manager model=member reviewable=reviewable class="secondary-panel__item"
+
+

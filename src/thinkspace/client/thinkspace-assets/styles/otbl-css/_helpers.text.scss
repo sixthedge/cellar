@@ -1,0 +1,86 @@
+///*------------------------------------*\
+//    #TEXT
+//\*------------------------------------*/
+
+
+
+
+/**
+ * Font size. 
+ */
+
+.text__font-size--12 {
+  font-size: .75rem;
+}
+
+.text__font-size--14 {
+  font-size: .875rem;
+}
+
+
+
+
+/**
+ * Font weight. 
+ */
+
+.text--regular {
+	font-weight: $font-weight--regular;
+}
+
+.text--bold {
+  font-weight: $font-weight--bold;
+}
+
+
+
+/**
+ * Display. 
+ */
+
+.text--inline-block {
+	display: inline-block !important;
+}
+
+
+
+
+/**
+ * Alignment. 
+ */
+
+.text__align--center {
+  text-align: center;
+}
+
+
+
+/**
+ * Color. 
+ */
+
+.text__color--gray {
+  color: $color-gray-base;
+}
+
+.text__color--blue {
+  color: $color-blue-base;
+}
+
+.text__color--green {
+  color: $color-green-base;
+}
+
+.text__color--red {
+  color: $color-red-base;
+}
+
+
+
+/**
+ * Font style.
+ */
+
+ .text__font-style--italic {
+  font-style: italic;
+ }

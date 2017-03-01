@@ -1,0 +1,16 @@
+- model: test/associations/one/account_37
+  associations:
+    - has_many: test/associations/one/user_37s
+      dependent: :destroy
+  serializers:
+    - attributes: [id, title]
+
+- model: test/associations/one/user_37
+  associations:
+    - belongs_to: test/associations/one/account_37
+      accepts_nested_attributes_for:
+        allow_destroy: true
+      readonly: true
+      scope:    order(:id)
+  serializers:
+    - attributes: [id, name, email]

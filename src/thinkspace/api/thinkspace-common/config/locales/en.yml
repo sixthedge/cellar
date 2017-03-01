@@ -1,0 +1,24 @@
+en:
+  thinkspace:
+
+    thinkspace:
+
+      common:
+
+        home:             'Home'
+        welcome:          'Welcome'
+        welcome_message:  'Welcome to Thinkspace 2.0!  Please sign in.'
+        application_name: 'Thinkspace 2.0'
+        footer:           'Public footer text'
+        loading:          'Loading...'
+        branding:         "Think<span class='ts-branding_space'>Space</span>"
+        branding_short:   "T<span class='ts-branding_space'>S</span>"
+
+        create:  'Add'
+        read:    'View'
+        update:  'Edit'
+        destroy: 'Remove'
+        cancel:  'Cancel'
+        actions: 'Actions'
+
+

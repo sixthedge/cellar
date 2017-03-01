@@ -1,0 +1,5 @@
+- model: test/associations/one/error_user_16
+  serializers:
+    - attributes: [id, name]
+    - serializer:
+      - class: Bad::Class

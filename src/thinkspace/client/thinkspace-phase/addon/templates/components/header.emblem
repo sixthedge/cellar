@@ -1,0 +1,55 @@
+/ .phase-header.title-region.title-region-stretched
+
+/   .ts-grid_row: .small-12.ts-grid_columns.ts-grid_columns-thick
+/     partial 'components/header/crumbs'
+/     h3.phase-header_resource-title
+/       = model.title
+/       partial 'components/header/collaboration_teams'
+
+/   .ts-grid_row: .small-12.ts-grid_columns.ts-grid_columns-thick
+/     .phase-progress
+/       component 'header/progress' model=model
+
+/   .ts-grid_row: .small-12.ts-grid_columns.ts-grid_columns-thick
+/     .phase-header_navigation
+/       .btn-group
+/         if model.previous_phase
+/           link-to 'show' model.assignment model.previous_phase (query-params query_id='none') class='btn phase-header_button'
+/             i.fa.fa-chevron-left
+/         else
+/           a.btn.btn-locked.phase-header_button.phase-header_button-disabled
+/             i.fa.fa-chevron-left
+
+/         span.phase-header_phase-count #{model.position_in_assignment.value} of #{model.assignment.active_phases.length} Phases
+
+/         if model.next_phase
+/           link-to 'show' model.assignment model.next_phase (query-params query_id='none') class='btn phase-header_button'
+/             i.fa.fa-chevron-right
+/         else
+/           a.btn.btn-locked.phase-header_button.phase-header_button-disabled
+/             i.fa.fa-chevron-right
+
+/       .btn-cluster.right-cluster
+/         link-to-external 'spaces.show' model.assignment.space
+/           .btn.btn-small.btn-primary
+/             | Save & Exit Case
+
+
+/ if model.can.update
+/   link-to 'edit' model
+/     .btn.btn-small.btn-default
+/       | Edit Phase
+/       .tsi.tsi-left.icon-tiny.tsi-edit-inverse.left
+
+/ .ts-grid_row: .small-12.ts-grid_columns.ts-grid_columns-thick
+/   h4 = model.title
+
+
+.grid__container--flex
+  .grid__col--4of4
+    .main-content__header
+      partial 'components/header/crumbs'
+      h1.text--inline-block = model.title
+      .btn-group.is-right
+        link-to-external 'spaces.show' model.assignment.space class='btn btn--primary'
+          | Submit Exercise

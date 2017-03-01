@@ -1,0 +1,25 @@
+.totem-admin-room-count-caution {
+  float: left;
+  color: red;
+}
+
+.totem-admin-room-count-clear-all {
+  .totem-admin-room-count-clear-all-confirm {
+    margin-right: 2em;
+    float: right;
+  }
+  .totem-admin-room-count-clear-all-button {float: right;}
+  .totem-admin-room-count-clear-all-yes {float: right;}
+  .totem-admin-room-count-clear-all-no  {float: left;}
+}
+
+.totem-admin-room-count-value {
+  font-weight: 500;
+  a.totem-admin-room-count-save   {padding: 0 1em 0 1em;}
+  a.totem-admin-room-count-cancel {}
+}
+
+.totem-admin-room-count-confirm {
+  .totem-admin-room-count-yes {float: right;}
+  .totem-admin-room-count-no  {float: left;}
+}

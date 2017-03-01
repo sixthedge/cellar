@@ -1,0 +1,12 @@
+.ts-ownerable-bar_each_ownerable click='select'
+  if is_current_user
+    if is_selected
+      .tsi.tsi-left.tsi-tiny.tsi-right-arrow.left
+    span Yourself
+  else
+    if is_selected
+      span
+        .tsi.tsi-left.tsi-tiny.tsi-right-arrow.left
+        | #{model.full_name}
+    else
+      span #{model.full_name}

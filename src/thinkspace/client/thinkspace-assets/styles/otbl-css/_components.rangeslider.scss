@@ -1,0 +1,126 @@
+///*------------------------------------*\
+//    #RANGESLIDER
+//\*------------------------------------*/
+
+.ts-rangeslider, .ts-rangeslider_fill {
+  display:               block;
+  margin-bottom:         1em;
+  height:                14px;
+  width:                 100%;
+  border:                2px solid white;
+  box-shadow:            none;
+  -moz-border-radius:    10px;
+  -webkit-border-radius: 10px;
+  border-radius:         10px;
+  position:              relative;
+
+  &.is-descriptive { margin-bottom: 1em; }
+}
+
+.ts-rangeslider_background {
+  position:              absolute;
+  bottom:                -2px;
+  width:                 100%;
+  height:                14px;
+  background:            $color-gray-med;
+  -moz-border-radius:    10px;
+  -webkit-border-radius: 10px;
+  border-radius:         10px;
+  border:                2px solid white;
+  z-index:               10;
+
+
+}
+
+.ts-rangeslider_value {
+  margin-bottom: 1.5em;
+}
+
+.ts-rangeslider_fill {
+  background: $color-blue-base;
+  position:   absolute;
+  top:        -2px;
+  border:     2px solid white;
+  z-index:    11;
+}
+
+.ts-rangeslider_handle {
+  background:            white;
+  border:                $border--default;
+  cursor:                pointer;
+  display:               inline-block;
+  width:                 30px;
+  height:                30px;
+  position:              absolute;
+  top:                   -10px;
+  background-image:      none;
+  background-size:       100%;
+  box-shadow:            none;
+  -moz-border-radius:    50%;
+  -webkit-border-radius: 50%;
+  border-radius:         50%;
+  z-index:               15;
+  box-shadow:            rgba(78, 78, 78, 0.15) -1px 0px 4px 1px;
+
+  &:after {
+    width:            18px;
+    height:           18px;
+    margin:           auto;
+    position:         absolute;
+    top:              0;
+    right:            0;
+    bottom:           0;
+    left:             0;
+    background-image: none;
+    border-radius:    none;
+  } 
+
+  &:hover, &:focus {
+    border-color:     $color-blue-base;
+    background-color: lighten($color-blue-base, 50%);
+    background-image: none;
+  }
+
+  &:active {
+    border-color:    $color-blue-dark;
+    background-color: lighten($color-blue-base, 50%);
+    background-image: none;
+
+  }
+
+}
+
+.ts-rangeslider_ruler {
+  cursor:      pointer;
+  font-size:   1rem;
+  font-weight: 400;
+  margin:      0rem 0.25rem 0 0.25rem;
+  padding:     0.5rem;
+  position:    relative;
+  bottom:      250%;
+  text-align:  justify;
+  &:after {
+    content: '';
+    display: inline-block;
+    width:   100%;
+  }
+  
+}
+
+.ts-rangeslider_ticks {
+  cursor:      pointer;
+  font-size:   1.5625rem;
+  font-weight: 500;
+  position:    relative;
+  color:       $color-gray-base;
+  bottom:      100%;
+  top:         -10px;
+  text-align:  justify;
+  padding:     1.5px 0.75rem 0;
+  z-index:     5;
+  &:after {
+    content: '';
+    display: inline-block;
+    width:   100%;
+  }
+}

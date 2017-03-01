@@ -1,0 +1,37 @@
+.forms__field-wrapper
+  label.spacing__margin-bottom--1 #{model.model.label}
+  input.ts-rangeslider type='range' min=model.points_min max=model.points_max step=model.slider_step value=model.slider_value
+  .tbl-category_descriptive-values
+    .tbl-category_descriptive-text.low.numeric 
+      | #{model.points_min}
+      if model.points_descriptive_enabled
+        |  - #{model.points_descriptive_low}
+    .tbl-category_descriptive-text.high.numeric 
+      if model.points_descriptive_enabled
+        | #{model.points_descriptive_high} - 
+      | #{model.points_max}
+  / if is_read_only
+  /   if comment
+  /     = input value=comment disabled=is_read_only
+  /   else
+  /     p No comment added.
+  / else
+  /   if model.has_comments
+  /     .tbl-category_comment-container
+  /       p comments enabled:
+hr
+.btn-group
+  .btn.btn--primary click='edit'
+    | Edit question
+  .btn.btn-small click='duplicate'
+    | Duplicate
+  / .btn.btn-small click='reorder_up'
+  /   | Up
+  / .btn.btn-small click='reorder_down'
+  /   | Down
+  / .btn.btn-small click='reorder_top'
+  /   | Top
+  / .btn.btn-small click='reorder_bottom'
+  /   | Bottom
+  / .btn.btn-small click='delete'
+  /   | Delete

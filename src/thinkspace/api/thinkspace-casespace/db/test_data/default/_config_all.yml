@@ -1,0 +1,15 @@
+include_configs:
+  - artifacts
+  - gradebook
+  - html
+  - indented_lists
+  - labs_more
+  - path_viewers
+  - paths
+  # - peer_assessment # until updated for new structure
+  # - resources  # until AWS issue resolved for development
+  # - readiness_assurance
+  - simulations
+  - teams
+  # - teams_max  # requires supporting assignment and phase teams
+  - weather_forecaster

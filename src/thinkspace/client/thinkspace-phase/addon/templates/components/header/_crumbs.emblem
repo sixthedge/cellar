@@ -1,0 +1,6 @@
+.breadcrumbs
+  link-to-external 'spaces.show' model.assignment.space class='breadcrumbs__link'
+    = model.assignment.space.title
+  '  |
+  link-to-external 'cases.show' model.assignment class='breadcrumbs__link'
+    = model.assignment.title

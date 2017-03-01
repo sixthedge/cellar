@@ -1,0 +1,31 @@
+.ts-password.fade-in
+  .ts-password_content
+    .ts-grid_row: .large-4.small-10.small-centered.ts-grid_columns
+      h2.ts-password_header
+        | Think
+        span.ts-password_branding-space
+          | Space
+      .ts-password_invitation
+        .ts-grid_row 
+          .small-4.ts-grid_columns
+            .ts-password_invitation-img
+          .small-8.ts-grid_columns
+            .ts-password_invitation-text
+              h5.ts-password_invitation-header
+                | Forgot your password?
+              p.ts-password_invitation-details 
+                | No worries. We can email you some instructions on resetting your password.
+
+      form#ts-password_form.ts-password_fields
+        component c_validated_input value=model.email errors=errors.email type='email' initial_validate=false label='Email Address' disabled=authenticating poll=true
+
+
+      .ts-password_submit
+        = if authenticating
+          component c_loader type='small' header='Blasting off!' message='You will arrive shortly.'
+        = else
+          button.ts-password_submit-action.btn.btn-medium.btn-primary{action 'submit'} form='ts-password_form' type='submit'
+            | Email Instructions
+          .ts-password_terms
+            = link-to r_users_sign_in
+              | Back to log in

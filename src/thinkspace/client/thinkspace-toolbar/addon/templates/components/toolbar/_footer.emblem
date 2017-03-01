@@ -1,0 +1,15 @@
+/ if is_maximized
+/   footer.toolbar_footer
+/     ul.toolbar_footer-links
+/       li
+/         a.toolbar_footer-link About
+/       li
+/         a.toolbar_footer-link Blog
+/       li
+/         a.toolbar_footer-link Help
+/       li
+/         a.toolbar_footer-link Legal
+/       li
+/         a.toolbar_footer-link Keyboard Shortcuts
+footer.support_toolbar-footer class={is_minimized:support_toolbar-footer-minimized}
+  component c_support

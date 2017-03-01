@@ -1,0 +1,12 @@
+platform_path: test/framework
+
+paths:               
+  - path: test/framework/core
+
+  - path: test/framework/ember
+
+ember:
+
+  path_namespaces:
+    - path: test/framework/special/namespace
+

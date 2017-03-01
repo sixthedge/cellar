@@ -1,0 +1,73 @@
+require_data_files: html_samples
+
+variables:
+  - &SPACE gradebook
+
+  # Assignment titles
+  - &ASSIGNMENT_1  assignment_with_mixed_phases_of_user_and_phase_based_teams
+  - &ASSIGNMENT_2  assignment_with_mixed_phases_of_user_and_assignment_based_teams
+
+  # Teams members
+  - &TEAM_9_1 [read_9, read_1]
+  - &TEAM_9_2 [read_9, read_2]
+  - &TEAM_9_3 [read_9, read_3]
+
+spaces:
+  - title: *SPACE
+
+space_users:
+  - spaces: *SPACE
+    users: import[users]
+
+assignments:
+  - {title: *ASSIGNMENT_1 , space: *SPACE}
+  - title: *ASSIGNMENT_2
+
+phases:
+  - {assignment: *ASSIGNMENT_1, title: phase_A, template_name: template_gradebook}
+  - title: phase_B
+  - title: phase_C
+  - title: phase_D
+  - title: phase_E
+  - {assignment: *ASSIGNMENT_2, title: phase_A, template_name: template_gradebook}
+  - title: phase_B
+  - title: phase_C
+  - title: phase_D
+  - title: phase_E
+
+teams:
+
+  # Users on a collaboration team can update the 'team' based data.
+  collaboration:
+    phase:
+      teams:
+        - {name: team_9_1A, users: *TEAM_9_1, phase: phase_A, assignment: *ASSIGNMENT_1}
+        - {name: team_9_2A, users: *TEAM_9_2}
+        - {name: team_9_3A, users: *TEAM_9_3}
+        - {name: team_9_1B, users: *TEAM_9_1, phase: phase_B}
+        - {name: team_9_1E, users: *TEAM_9_1, phase: phase_E}
+        - {name: team_9_2E, users: *TEAM_9_2}
+    assignment:
+      teams:
+        - {name: team_9_1, users: *TEAM_9_1, assignment: *ASSIGNMENT_2}
+        - {name: team_9_2, users: *TEAM_9_2}
+        - {name: team_9_3, users: *TEAM_9_3}
+      team_phases:
+        - {assignment: *ASSIGNMENT_2, phases: [phase_A, phase_B, phase_E]}
+
+
+phase_templates:
+  - title: Phase Gradebook
+    name: template_gradebook
+    template: |
+      #{casespace_phase_header}
+      <row>
+        <column>
+          <component section='html-1' title='html'/>
+          <component section='html-2' title='html'/>
+        </column>
+      </row>
+      #{casespace_phase_submit}
+
+auto_input:
+  responses: true

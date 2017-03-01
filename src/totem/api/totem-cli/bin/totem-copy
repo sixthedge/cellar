@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+require File.expand_path('../../lib/totem/cli/totem_copy', __FILE__)
+Totem::Cli::TotemCopy.start

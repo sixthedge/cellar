@@ -1,0 +1,22 @@
+if ready
+  .ts-ra_admin-teams-content
+
+    .ts-ra_admin-teams-toggle
+      .ts-grid_row: .small-12.ts-grid_columns.ts-grid_columns-thick
+        .ts-ra_admin-menu
+          ul.ts-action-bar
+            li.ts-action-bar_action
+              a click='toggle_team_members'
+                if show_team_members
+                  |Hide Team Members
+                else
+                  |Show Team Members
+
+    .ts-ra_admin-teams
+      each team_member_rows as |row|
+        .ts-grid_row
+          each row as |data|
+            .ts-grid_columns.ts-grid_columns-thick class=columns_class
+              component 'trat/teams/users' team=data.team team_users=data.users show_all=show_team_members
+      else
+        |No teams assigned.

@@ -1,0 +1,37 @@
+- model: thinkspace/readiness_assurance/assessment
+  associations:
+    - {belongs_to: authable, polymorphic: true}
+    - {belongs_to: thinkspace/common/user, readonly: true}
+    - {has_many: thinkspace/readiness_assurance/responses, dependent: destroy}
+  serializers:
+    - attributes: [id, title, authable_type, authable_id, question_settings, ra_type]
+
+- model: thinkspace/readiness_assurance/response
+  delegate:
+    - {method: authable, to: thinkspace/readiness_assurance/assessment}
+  associations:
+    - {belongs_to: thinkspace/readiness_assurance/assessment}
+    - {belongs_to: ownerable, polymorphic: true}
+    - {belongs_to: thinkspace/common/user, readonly: true}
+    - {has_one: thinkspace/readiness_assurance/status, dependent: destroy}
+    - {has_one: thinkspace/readiness_assurance/chat,   dependent: destroy}
+  serializers:
+    - attributes: [id, ownerable_type, ownerable_id, answers, justifications, userdata]
+
+- model: thinkspace/readiness_assurance/chat
+  delegate:
+    - {method: authable,  to: thinkspace/readiness_assurance/response}
+    - {method: ownerable, to: thinkspace/readiness_assurance/response}
+  associations:
+    - {belongs_to: thinkspace/readiness_assurance/response}
+  serializers:
+    - attributes:  [id, messages]
+
+- model: thinkspace/readiness_assurance/status
+  delegate:
+    - {method: authable,  to: thinkspace/readiness_assurance/response}
+    - {method: ownerable, to: thinkspace/readiness_assurance/response}
+  associations:
+    - {belongs_to: thinkspace/readiness_assurance/response}
+  serializers:
+    - attributes: [id, settings, questions]

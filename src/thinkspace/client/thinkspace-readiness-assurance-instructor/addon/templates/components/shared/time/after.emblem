@@ -1,0 +1,9 @@
+.ts-ra_admin-message-title
+  if title
+    = title
+  if show_formatted
+    span.ts-ra-admin-after-time
+      |#{formatted} #{formatted_time}
+
+.ts-ra_admin-after-radio-buttons
+  component 'shared/radio/buttons' buttons=after_buttons selected_id=selected_minutes select='select' columns=columns

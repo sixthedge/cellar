@@ -1,0 +1,27 @@
+/ if is_maximized
+/   if space_link_active
+/     .toolbar_breadcrumb-link.tsi-hover-color
+/       link-to 'thinkspace/common/spaces'
+/         .toolbar_breadcrumb-header
+/           .toolbar_breadcrumb-title
+/             .toolbar_breadcrumb-icon
+/               .tsi.tsi-spaceship-outline.icon-large
+/             | Spaces
+/   else
+/     .toolbar_breadcrumb-link.toolbar_breadcrumb-inactive-link
+/       .toolbar_breadcrumb-header
+/         .toolbar_breadcrumb-title
+/           .toolbar_breadcrumb-icon
+/             .tsi.tsi-spaceship-outline.icon-large
+/           | Spaces
+
+/ else
+/   if space_link_active
+/     link-to 'thinkspace/common/spaces' class='toolbar_minimized-link tsi-hover-color' title='Spaces'
+/       .tsi.tsi-spaceship-outline.icon-large
+/   else
+/     .tsi.tsi-spaceship-outline.icon-large.toolbar_breadcrumb-inactive-link title='Spaces'
+
+
+.nav-link 
+  span Spaces

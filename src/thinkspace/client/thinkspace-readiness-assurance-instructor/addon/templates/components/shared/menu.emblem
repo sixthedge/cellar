@@ -1,0 +1,9 @@
+.ts-ra_admin-menu
+
+  ul.ts-action-bar
+    each menu as |config|
+      li.ts-action-bar_action class={config.active:active}
+        a click="'select' config" #{config.title}
+
+  each selected_components as |config|
+    component config.component config=config done='done'

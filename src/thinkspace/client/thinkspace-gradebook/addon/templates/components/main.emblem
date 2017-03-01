@@ -1,0 +1,16 @@
+if show_addon
+  .ts-grid_row.ts-ownerable-bar
+    if ownerables
+      if is_team_ownerables
+        component '__bar/select_teams' teams=ownerables selected=selected_ownerable select='select' current_team=current_team
+      else
+        component '__bar/select_users' users=ownerables selected=selected_ownerable select='select'
+
+      .ts-ownerable-bar_actions
+        .ts-ownerable-bar_showcard click='toggle_is_viewing_scorecard'
+          if is_viewing_scorecard
+            | Hide Scorecard
+          else
+            | Show Scorecard
+
+      component 'phase' is_viewing_scorecard=is_viewing_scorecard

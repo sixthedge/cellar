@@ -1,0 +1,4 @@
+if phase_score
+  span #{phase_score.score}
+else
+  span 0

@@ -1,0 +1,10 @@
+mount 'thinkspace-message-pubsub'
+
+.ts-grid_row: .ts-grid_columns.ts-grid_columns-thick.small-12
+
+  if all_data_loaded
+    .ra
+      if is_irat
+        mount 'thinkspace-readiness-assurance-irat'
+      if is_trat
+        mount 'thinkspace-readiness-assurance-trat'

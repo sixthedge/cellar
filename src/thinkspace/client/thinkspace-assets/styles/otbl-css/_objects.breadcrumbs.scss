@@ -1,0 +1,24 @@
+///*------------------------------------*\
+//    #BREADCRUMBS
+//\*------------------------------------*/
+
+
+.breadcrumbs {
+  display: block;
+  color:   $color-gray-base;
+}
+
+.breadcrumbs__link {
+  font-weight: $font-weight--bold;
+  font-size: .875rem;
+  color: $color-gray-base;
+  transition: $transition-animation--color;
+
+  &:hover, &:focus {
+    color: $color-blue-base;
+  }
+
+  &:active {
+    color: $color-blue-dark;
+  }
+}

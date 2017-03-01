@@ -1,0 +1,6 @@
+platform_path: test/framework
+
+paths:               
+  - path: test/framework/core
+  - path: test/framework/seed*
+  - path: test/framework/not_an_engine

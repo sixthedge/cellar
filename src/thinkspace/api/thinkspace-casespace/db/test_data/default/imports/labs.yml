@@ -1,0 +1,185 @@
+space:         labs_vet_med
+assignment:    Vet Med
+template_name: template_lab_vet_med_self_evaluation
+
+phase_templates:
+  - title: Lab chart self evaluation
+    name: template_lab_vet_med_self_evaluation
+    template: |
+      <row>
+        <column width=8>
+          #{casespace_phase_header}
+          <component section='chart' title='lab'/>
+          #{casespace_phase_submit}
+        </column>
+        <column width=4>
+          <component section='obs-list' title='observation-list'/>
+        </column>
+      </row>
+
+blueprints:
+  category:
+    value:
+      component: vet_med
+      columns:
+        - {heading: Test Name,   source: title}
+        - {heading: Test Result, source: result}
+        - {heading: Units,       source: units}
+        - {heading: Range,       source: ratings, range: true}
+        - {heading: Analysis,         observation: analysis}
+        - {heading: Abnormality Name, observation: abnormality}
+      correctable_prompt: Should this be corrected?
+    metadata: {}
+
+  result_rbc:
+    title:    RBC
+    position: 1
+    value:    
+      type:        result
+      description: Red Blood Cell Count
+      columns:     
+        units:   'n*10^6/ul'
+        result:  '13.1'
+        ratings: {lower: '6', upper: '12'}
+      observations:
+        analysis:
+          input_type: select
+          selections: [{id: normal, label: Normal}, {id: high, label: High}, {id: low, label: Low}]
+          normal:     normal
+        abnormality:
+          input_type: input
+    metadata:
+      analysis:
+        validate: {correct: high}
+      abnormality:
+        validate:     {correct: [kitten, Kitty, Cat]}
+        max_attempts: 3
+
+  result_hgb:
+    title:    HGB
+    position: 2
+    value:    
+      type:        result
+      description: Hemoglobin
+      columns:     
+        units:   g/dl
+        result:  '19'
+        ratings: {lower: '10', upper: '18'}
+      observations:
+        analysis:
+          input_type: select
+          selections: [{id: normal, label: Normal}, {id: high, label: High}, {id: low, label: Low}]
+          normal:     normal
+        abnormality:
+          input_type: input
+    metadata:
+      analysis:
+        validate: {correct: high}
+      abnormality:
+        validate:     {correct: [kitten, Kitty, Cat]}
+        max_attempts: 3
+
+  result_hct:
+    title:    HCT
+    position: 3
+    value:    
+      type:        result
+      description: Hematocrit
+      columns:     
+        units:   '%'
+        result:  '52'
+        ratings: {lower: '32', upper: '48'}
+      observations:
+        analysis:
+          input_type: select
+          selections: [{id: normal, label: Normal}, {id: high, label: High}, {id: low, label: Low}]
+          normal:     normal
+        abnormality:
+          input_type: input
+    metadata:
+      analysis:
+        validate: {correct: high}
+      abnormality:
+        validate:     {correct: [dog, puppy]}
+        max_attempts: 3
+
+  result_mcv:
+    title:    MCV
+    position: 4
+    value:    
+      type:        result
+      description: Mean Corpuscular Volume
+      columns:     
+        units:   fl
+        result:  '39.7'
+        ratings: {lower: '34', upper: '58'}
+      observations:
+        analysis:
+          input_type: select
+          selections: [{id: normal, label: Normal}, {id: high, label: High}, {id: low, label: Low}]
+          normal:     normal
+        abnormality:
+          input_type: input
+    metadata:
+      analysis:
+        validate: {correct: normal}
+      abnormality:
+        validate:     {correct: [normal, normalish]}
+        max_attempts: 3
+
+  result_mcv2:
+    title:    MCV2
+    position: 5
+    value:    
+      type:        result
+      description: Mean Corpuscular Volume2
+      columns:     
+        units:   fl
+        result:  '39.7'
+        ratings: {lower: '34', upper: '58'}
+      observations:
+        analysis:
+          input_type: select
+          selections: [{id: normal, label: Normal}, {id: high, label: High}, {id: low, label: Low}]
+          normal:     normal
+        abnormality:
+          input_type: input
+    metadata:
+      analysis:
+        validate: {correct: normal}
+
+  result_wbc:
+    title:    WBC MORPH
+    position: 6
+    value:    
+      type:        html_result
+      description: WHITE BLOOD CELL MORPHOLOGY
+      columns:     
+        result:  '<h6>some html</h6>'
+      observations: {}
+    metadata: {}
+
+  result_retic:
+    title: RETIC
+    position: 7
+    value:    
+      type: adjusted_result
+      description: Reticulocyte Count
+      columns:
+        units: "%"
+        result: '1.5'
+        ratings:
+          lower: '0.0'
+          upper: '1.5'
+      observations:
+        analysis:
+          input_type: correctable
+        abnormality:
+          input_type: none
+    metadata:
+      analysis:
+        validate:     {correct_method: standard_adjusted, correct: 0.9}
+        max_attempts: 3
+        lock_on_max_attempts: false
+      abnormality:
+        no_value: true

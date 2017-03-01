@@ -1,0 +1,5 @@
+div style='border: 2px solid red;'
+  h1 Team Set: #{model.team.title}
+
+  each review_sets as |review_set|
+    component 'assessment/team_set/index/review_set' model=review_set team_members=team_members assignment=assignment assessment=assessment

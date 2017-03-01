@@ -1,0 +1,12 @@
+platform_path: test/platform
+
+classes:
+  merge_02:   Test::Platform::Class2
+  merge_main: Test::Platform::Main2
+
+modules:
+  merge_02: Test::Platform::Module2
+  merge_main: Test::Platform::Main2
+
+paths:
+  - path: test/platform/merge_02

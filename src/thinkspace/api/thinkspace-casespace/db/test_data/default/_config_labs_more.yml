@@ -1,0 +1,91 @@
+prereq_configs: [labs]
+
+variables:
+  - &SPACE      import[labs@space]
+  - &ASSIGNMENT import[labs@assignment]
+  - &TEMPLATE_NAME import[labs@template_name]
+
+auto_input:
+  observations: true
+
+phases:
+  - assignment: *ASSIGNMENT
+    template_name: *TEMPLATE_NAME
+    title:         Vet Med Lab Small
+    sections:      
+      chart: chart_small
+  - assignment: *ASSIGNMENT
+    template_name: *TEMPLATE_NAME
+    title:         Vet Med Lab Large
+    sections:      
+      chart: chart_large
+
+blueprints: import[labs@blueprints]
+
+lab_charts_from_blueprints:
+
+  chart_small:
+    title: Lab chart for Vet Med - small
+    categories:
+      - title: lab small A
+        blueprint: category
+        results:
+         - blueprint: result_rbc
+         - blueprint: result_hgb
+      - title: lab small B
+        blueprint: category
+        results:
+         - blueprint: result_rbc
+         - blueprint: result_hgb
+
+  chart_large:
+    title: Lab chart for Vet Med - large
+    categories:
+      - title: lab large A
+        blueprint: category
+        results:
+         - blueprint: result_rbc
+         - blueprint: result_hgb
+         - blueprint: result_hct
+         - blueprint: result_mcv
+         - blueprint: result_mcv2
+         - blueprint: result_wbc
+         - blueprint: result_retic
+         - blueprint: result_rbc
+         - blueprint: result_hgb
+         - blueprint: result_hct
+         - blueprint: result_mcv
+         - blueprint: result_mcv2
+         - blueprint: result_wbc
+         - blueprint: result_retic
+         - blueprint: result_rbc
+         - blueprint: result_hgb
+         - blueprint: result_hct
+         - blueprint: result_mcv
+         - blueprint: result_mcv2
+         - blueprint: result_wbc
+         - blueprint: result_retic
+      - title: lab B large
+        blueprint: category
+        results:
+         - blueprint: result_rbc
+         - blueprint: result_rbc
+         - blueprint: result_rbc
+         - blueprint: result_hgb
+         - blueprint: result_hgb
+         - blueprint: result_hgb
+         - blueprint: result_hct
+         - blueprint: result_hct
+         - blueprint: result_hct
+         - blueprint: result_mcv
+         - blueprint: result_mcv
+         - blueprint: result_mcv
+         - blueprint: result_mcv2
+         - blueprint: result_mcv2
+         - blueprint: result_mcv2
+         - blueprint: result_wbc
+         - blueprint: result_wbc
+         - blueprint: result_wbc
+         - blueprint: result_retic
+         - blueprint: result_retic
+         - blueprint: result_retic

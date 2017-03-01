@@ -1,0 +1,10 @@
+if show_select
+
+  .ts-ra_admin-message-title
+    = title
+    if optional
+      span.ts-ra_admin-message-title-optional (optional)
+    if can_clear
+      span.ts-ra_admin-message-title-action.right: a click='clear' Clear
+
+  component '__time_picker' value=selected_at select='select' time_options=time_options

@@ -1,0 +1,9 @@
+== content_for :header_title do
+  | Your space #{@original_space.title} has been successfully cloned!
+
+== content_for :header_deets do
+  span
+    | You can view the new space, titled #{@cloned_space.title} here:
+    
+== content_for :footer_action, "View #{@cloned_space.title}"
+== content_for :footer_terms, "Learn more about ThinkSpace"

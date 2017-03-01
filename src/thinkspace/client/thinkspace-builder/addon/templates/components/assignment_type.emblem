@@ -1,0 +1,10 @@
+img src=model.img_url
+h2 = model.title
+p = model.description
+.btn-group.btn-group--left
+	button.btn.btn--primary click='create'
+		| Select Exercise
+
+	/ Note - Can we really do this now? 
+	/ button.btn click='try_out'
+	/  	| Try out

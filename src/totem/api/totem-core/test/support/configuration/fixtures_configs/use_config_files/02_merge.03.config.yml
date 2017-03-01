@@ -1,0 +1,7 @@
+platform_path: test/platform
+
+classes:
+  merge_03: Test::Platform::Core::ApplicationController
+
+paths:
+  - path: test/platform/merge_03

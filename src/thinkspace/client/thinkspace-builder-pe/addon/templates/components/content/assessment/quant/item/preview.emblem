@@ -1,0 +1,36 @@
+if is_managing_settings
+  component c_quant_settings model=model assessment=assessment back='reset_is_managing_settings'
+else
+  .ts-pa_item-preview
+    if is_edit_mode_content
+      ul.ts-pa_item-toolbar
+        li click='order_up'
+          i.fa.fa-arrow-up
+        li.ts-pa_item-toolbar-separator click='order_down'
+          i.fa.fa-arrow-down
+        li.ts-pa_item-toolbar-separator click='set_is_managing_settings' Settings
+        li.ts-pa_item-toolbar-separator click='duplicate' Duplicate
+        li click='delete' Delete
+        
+    .ts-pa_item-content.tbl-category_item-container 
+      .phase-content_question-label #{model.label}
+      input.ts-rangeslider type='range' min=model.points_min max=model.points_max step=model.slider_step value=model.slider_value
+      .tbl-category_descriptive-values
+        .tbl-category_descriptive-text.low.numeric 
+          | #{model.points_min}
+          if model.points_descriptive_enabled
+            |  - #{model.points_descriptive_low}
+        .tbl-category_descriptive-text.high.numeric 
+          if model.points_descriptive_enabled
+            | #{model.points_descriptive_high} - 
+          | #{model.points_max}
+      if is_read_only
+        if comment
+          = input value=comment disabled=is_read_only
+        else
+          p No comment added.
+      else
+        if model.has_comments
+          .tbl-category_comment-container
+            label Comment:
+            = input value=comment

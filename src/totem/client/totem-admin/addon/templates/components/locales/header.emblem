@@ -1,0 +1,11 @@
+.totem-admin-locales-header
+  .row: .columns.small-12
+    .totem-admin-links
+
+      .totem-admin-link
+        link-to 'locales/show'
+          |Show
+
+      .totem-admin-link
+        link-to 'locales/compare'
+          |Compare

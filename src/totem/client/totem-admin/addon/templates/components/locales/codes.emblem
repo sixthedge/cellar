@@ -1,0 +1,5 @@
+.totem-admin-locales-codes
+  .row: .columns.small-12
+    .totem-admin-locales-codes-header #{header}
+    each locale_codes as |code|
+      component 'locales/code' code=code active_code=active_code select='select'

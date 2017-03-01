@@ -1,0 +1,4 @@
+.thinkspace-dock_addon.thinkspace-dock_addon-blue click='select' class={active:darken}
+  if addon.icon
+    div class=addon.icon
+  span.thinkspace-dock_addon-title= addon.display

@@ -1,0 +1,10 @@
+include_configs:
+  - ra_fixed_ifat
+  - ra_fixed
+  - ra_multi_team_random_ifat
+  - ra_multi_team_random
+  - ra_random_ifat
+  - ra_random_ifat_no_just
+  - ra_random_ifat_no_just_irat
+  - ra_random
+  - ra_score_1

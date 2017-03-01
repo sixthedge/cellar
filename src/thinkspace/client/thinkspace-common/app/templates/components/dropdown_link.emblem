@@ -1,0 +1,10 @@
+if select_action
+  a{action select_action link target=action_receiver_master} class=link_class
+    = display
+else
+  if route_param
+    link-to select_route route_param class=link_class
+      = display
+  else
+    link-to select_route link class=link_class
+      = display

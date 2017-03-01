@@ -1,0 +1,5 @@
+- model: test/associations/one/user
+  associations:
+    - belongs_to: test/associations/two/user
+  serializers:
+    - attributes: [id, name]

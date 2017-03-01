@@ -1,0 +1,34 @@
+{
+  "name": "thinkspace-readiness-assurance",
+  "version": "0.0.1",
+  "description": "Thinkspace Readiness Assurance",
+  "author": "sixthedge",
+  "license": "MIT",
+  "homepage": "https://github.com/sixthedge/ethinkspace-client",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sixthedge/ethinkspace-client.git"
+  },
+  "private": true,
+  "ember-addon": {
+    "main": "index.js",
+    "after": [
+      "thinkspace-base"
+    ]
+  },
+  "keywords": [
+    "ember-addon",
+    "thinkspace"
+  ],
+  "directories": {
+  },
+  "dependencies": {
+    "ember-cli-htmlbars": "*",
+    "ember-cli-emblem": "*",
+    "ember-cli-coffeescript": "*",
+    "ember-cli-coffees6": "*"
+  },
+  "devDependencies": {
+  },
+  "readme": "No README data."
+}

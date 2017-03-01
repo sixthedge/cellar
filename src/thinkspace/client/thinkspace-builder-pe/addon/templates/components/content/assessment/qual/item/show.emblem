@@ -1,0 +1,19 @@
+.forms__field-wrapper
+  label #{model.model.label}
+  .forms__label-summary #{model.model.feedback_type}
+hr
+.btn-group
+  .btn.btn--primary click='edit'
+    | Edit question
+  .btn click='duplicate'
+    | Duplicate
+  / .btn.btn-small click='reorder_up'
+  /   | Up
+  / .btn.btn-small click='reorder_down'
+  /   | Down
+  / .btn.btn-small click='reorder_top'
+  /   | Top
+  / .btn.btn-small click='reorder_bottom'
+  /   | Bottom
+  / .btn.btn-small click='delete'
+  /   | Delete

@@ -1,0 +1,2 @@
+if show_phase
+  component 'layout'

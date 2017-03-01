@@ -1,0 +1,42 @@
+platform_path: test/platform
+
+routes:
+  url: api
+  match:
+    '*home':
+      to:          test/platform/main/home#index
+      constraints: false
+
+paths:
+
+  - path: test/platform/one
+    routes:
+      match:
+        test/one/match_one:
+          constraints:
+            path: /test/one/match_1
+        test/one/match_another:
+          to:  somewhere
+          via: put
+          constraints: false
+
+  - path: test/platform/two
+    routes:
+      mount:
+        at: '/mount_two'
+        constraints:
+          add_engine_paths: users
+          engine_url_path: true
+      match:
+        test/two/match_two:
+          constraints:
+            path: /test/two/match_1
+        test/two/match_another:
+          to:  somewhere/else
+          via: [get, post]
+
+  # three does not have a config/routes.rb so should be ignored
+  - path: test/platform/three
+    routes:
+      mount:
+        at: '/mount_three'

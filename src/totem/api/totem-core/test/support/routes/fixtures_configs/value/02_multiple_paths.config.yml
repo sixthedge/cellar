@@ -1,0 +1,17 @@
+platform_path: test/platform
+
+routes:
+  url: api
+  match:
+    '*ember':
+      to:          test/platform/one/home#index
+      constraints: false
+
+paths:               
+  - path: test/platform/one
+    routes:
+      mount:
+        constraints:
+          add_paths: [/user]
+
+  - path: test/platform/two

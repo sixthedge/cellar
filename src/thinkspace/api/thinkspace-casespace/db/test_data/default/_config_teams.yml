@@ -1,0 +1,109 @@
+require_data_files: html_samples
+
+variables:
+  - &SPACE teams
+  - &PHASE_ONLY_COLLABORATION_TEAMS ONLY PHASE collaboration teams - users only on ONE team
+  - &PHASE_ONLY_PEER_REVIEW_TEAMS   ONLY PHASE peer review teams - users only on ONE team
+
+  # Team Sets
+  - &TEAM_SET_A    team_set_a
+  - &TEAM_SET_B    team_set_b
+  - &TEAM_SET_C    team_set_c
+  - &ALL_TEAM_SETS [*TEAM_SET_A, *TEAM_SET_B, *TEAM_SET_C]
+  # Teams
+  - &TEAM_1 'Team-1 : read_1, read_2, read_3'
+  - &TEAM_2 'Team-2 : read_4, read_5, read_6'
+  - &TEAM_3 'Team-3 : read_7, read_8'
+  - &TEAM_4 'Team-4 : john_01, john_02, john_03, john_04, john_05'
+  - &TEAM_5 'Team-5 : john_06, john_07, john_08, john_09, john_10'
+  - &TEAM_9 'Team-9 : read_9'
+  # Team users
+  - &TEAM_1_USERS [read_1, read_2, read_3]
+  - &TEAM_2_USERS [read_4, read_5, read_6]
+  - &TEAM_3_USERS [read_7, read_8]
+  - &TEAM_4_USERS [john_01, john_02, john_03, john_04, john_05]
+  - &TEAM_5_USERS [john_06, john_07, john_08, john_09, john_10]
+  - &TEAM_9_USERS [read_9]
+
+spaces:
+  - title: *SPACE
+
+space_users:
+  - {spaces: *SPACE, users: 'import[users]'}
+
+repeat_space_users:
+  - {spaces: *SPACE, repeat: 10, merge_with: 'import[users@repeat_john_doe]'}
+
+assignments:
+  - {title: *PHASE_ONLY_COLLABORATION_TEAMS, space: *SPACE}
+  - {title: *PHASE_ONLY_PEER_REVIEW_TEAMS}
+
+phases:
+  - {title: phase_A, team_category: collaboration, assignment: *PHASE_ONLY_COLLABORATION_TEAMS, template_name: template_teams_min}
+  - {title: phase_B, team_category: collaboration}
+  - {title: phase_C, team_category: collaboration}
+  - {title: phase_D, team_category: collaboration}
+  - {title: phase_A, team_category: peer_review, assignment: *PHASE_ONLY_PEER_REVIEW_TEAMS}
+  - {title: phase_B, team_category: peer_review}
+  - {title: phase_C, team_category: peer_review}
+  - {title: phase_D, team_category: peer_review}
+
+teams:
+
+  team_sets:
+    - {title: *TEAM_SET_A, space: *SPACE}
+    - {title: *TEAM_SET_B}
+    - {title: *TEAM_SET_C}
+
+  team_set_teams:
+    - {title: *TEAM_1,   users: *TEAM_1_USERS,   team_set: *TEAM_SET_A, space: *SPACE}
+    - {title: *TEAM_2,   users: *TEAM_2_USERS,   team_set: *TEAM_SET_A}
+    - {title: *TEAM_3,   users: *TEAM_3_USERS,   team_set: *TEAM_SET_A}
+    - {title: *TEAM_4,   users: *TEAM_4_USERS,   team_set: *TEAM_SET_B}
+    - {title: *TEAM_5,   users: *TEAM_5_USERS,   team_set: *TEAM_SET_B}
+    - {title: *TEAM_9,   users: *TEAM_9_USERS,   team_set: *TEAM_SET_C}
+
+  # Phase teams only, user (e.g. read_1) only on one team
+  phase:
+    # Collaboration teams: all team users create one 'team' response (e.g. ownerable = team)
+    - {title: 'phase_A', assignment: *PHASE_ONLY_COLLABORATION_TEAMS,  team_sets: *ALL_TEAM_SETS, space: *SPACE}
+    - {title: 'phase_B', assignment: *PHASE_ONLY_COLLABORATION_TEAMS,  team_sets: *ALL_TEAM_SETS}
+    - {title: 'phase_C', assignment: *PHASE_ONLY_COLLABORATION_TEAMS,  team_sets: *ALL_TEAM_SETS}
+    - {title: 'phase_D', assignment: *PHASE_ONLY_COLLABORATION_TEAMS,  team_sets: *ALL_TEAM_SETS}
+    # Peer review teams: each user creates own response but can review other team member's responses (e.g. ownerable = user)
+    - {title: 'phase_A', assignment: *PHASE_ONLY_PEER_REVIEW_TEAMS,    team_sets: *ALL_TEAM_SETS}
+    - {title: 'phase_B', assignment: *PHASE_ONLY_PEER_REVIEW_TEAMS,    team_sets: *ALL_TEAM_SETS}
+    - {title: 'phase_C', assignment: *PHASE_ONLY_PEER_REVIEW_TEAMS,    team_sets: *ALL_TEAM_SETS}
+    - {title: 'phase_D', assignment: *PHASE_ONLY_PEER_REVIEW_TEAMS,    team_sets: *ALL_TEAM_SETS}
+
+  viewers:
+    # Team peer review another team (phase ownerable = team; view ownerable = team)
+    - {team_sets: *ALL_TEAM_SETS, teams: [*TEAM_1], view: [*TEAM_2, *TEAM_3], space: *SPACE}
+    - {team_sets: *ALL_TEAM_SETS, teams: [*TEAM_2], view: [*TEAM_1, *TEAM_3]}
+    - {team_sets: *ALL_TEAM_SETS, teams: [*TEAM_3], view: [*TEAM_1, *TEAM_2]}
+    # User peer view another user on their team(s) or another team(s) (phase ownerable = user; view ownerable = user)
+    - {team_sets: *ALL_TEAM_SETS, users: update_1, view: [*TEAM_1, *TEAM_2, *TEAM_3]}
+    - {team_sets: *ALL_TEAM_SETS, users: read_1,   view: [*TEAM_2, *TEAM_3]}
+
+phase_templates:
+
+  - title: Phase Template Teams Min
+    name: template_teams_min
+    template: |
+      <row>
+        <column width=8>
+          <component section='header' title='casespace-phase-header'/>
+          <component section='html' title='html-select-text' select-text='obs-list'/>
+          <component section='submit' title='casespace-phase-submit' data-actions='{"submit":"submit"}'/>
+        </column>
+        <column width=4>
+          <component section='obs-list' title='observation-list'/>
+        </column>
+      </row>
+
+auto_input:
+  responses: true
+  observations:
+    observations_per_list:       10
+    max_notes_per_observation:   3
+

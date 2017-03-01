@@ -1,0 +1,29 @@
+es:
+  thinkspace:
+
+    thinkspace:
+
+      casespace:
+
+        assignment:        'asignación'
+        assignments:       'Asignaciones'
+        assignment_index:  'Todas las asignaciones'
+        add_assignment:    'Añadir Asignación'
+        create_assignment: 'Crear Asignación'
+        edit_assignment:   'Editar asignación'
+        update_assignment: 'Actualización de Asignación'
+
+        phase:       'fase'
+        phases:      'Fases'
+        phase_index: 'Todas las Fases'
+
+        id:                  'ID'
+        title:               'título'
+        description:         'descripción'
+        general_information: 'Información General'
+
+        footer:         'Casespace texto del pie'
+        toolbar_footer: 'Barra de herramientas de Pie!'
+
+        home_page: 'Página de inicio'
+        my_links:  'Mis Enlaces'

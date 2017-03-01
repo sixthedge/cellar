@@ -1,0 +1,19 @@
+platform_path: test/platform
+
+authorization:
+  authorize_by: overcan
+  overcan:
+    classes:     
+      ability: Test::Framework::Cancan::Ability
+    serializers:
+      modules:
+        ability:       Test::Framework::Ability
+        authorization: Test::Framework::Authorize
+        serializer:    Test::Framework::ActiveModelSerializer
+      defaults:
+        authorize_action: destroy
+        ability_actions:  [read, update, destroy]
+        another:          another default
+
+paths:               
+  - path: test/platform/main

@@ -1,0 +1,5 @@
+if title
+  .ts-ra_admin-message-title= title
+
+.ts-ra_admin-after-radio-buttons
+  component 'shared/radio/buttons' buttons=state_buttons selected_id=selected_state select='select'

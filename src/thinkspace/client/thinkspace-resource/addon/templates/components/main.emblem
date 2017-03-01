@@ -1,0 +1,2 @@
+if show_addon
+  component 'pane' model=resource_model addon=addon can_manage_resources=can_manage_resources

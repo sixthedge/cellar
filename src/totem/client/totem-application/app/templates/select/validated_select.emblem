@@ -1,0 +1,3 @@
+= chosen-select content=content multiple=multiple display_property=display_property value=value data_placeholder=data_placeholder selected_items=selected_items disabled_items=disabled_items disabled=disabled no_select=no_select validated=true select_action=select_action deselect_action=deselect_action is_object_list=is_object_list
+= if errors_partial
+  = partial errors_partial

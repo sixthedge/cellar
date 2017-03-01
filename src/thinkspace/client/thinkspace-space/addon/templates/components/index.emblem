@@ -1,0 +1,43 @@
+/ .title-region
+/   .ts-grid_row: .small-12.ts-grid_columns.ts-grid_columns-thick
+/     h3.title-region_title Spaces
+
+/ .ts-grid_row: .small-12.ts-grid_columns.ts-grid_columns-thick
+/   / if can.create
+/   /   .space-content_actions
+/   /     link-to r_spaces_new
+/   /       a.btn.btn-primary.btn-small
+/   /         .tsi.tsi-left.icon-small.tsi-add-inverse.left
+/   /         | New Space
+
+/ .ts-grid_row: .small-12.ts-grid_columns.ts-grid_columns-thick
+/   .space-content_heading
+/       h4 Active Spaces
+/       p Spaces are equivalent to courses. These are the spaces you have access to.
+
+/   ul.space-list.primary-list
+/     each model as |space|
+/       component 'space' model=space
+/ /
+/ / h1 ---ROUTEABLE COMPONENT SPACES INDEX
+/ /
+/ / h1 SPACES:
+/ / ol
+/ /   each model as |space|
+/ /     = log space
+/ /     li= space.title
+/ / component 'index-c'
+
+
+.grid__container--flex
+  .grid__col--4of4
+    .main-content__header
+      h1 Welcome Back, Jose!
+      p Here's an overview of what's happening in your spaces.
+
+.grid__container--flex
+  .grid__col--3of4.grid__mobile--full-width
+    h2 Recent Spaces
+    ul.tile__list
+      each model as |space|
+        component 'space' model=space

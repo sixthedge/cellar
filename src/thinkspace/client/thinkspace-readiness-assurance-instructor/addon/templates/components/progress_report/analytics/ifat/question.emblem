@@ -1,0 +1,25 @@
+.grid__container--flex
+  .grid__col--1of3.grid__mobile--full-width
+    .rat-report__overview-container
+      .rat-report__overview-number 1
+      .rat-report__bar-graph
+        component 'progress_report/analytics/ifat/percentages' assessment=assessment data=data
+        / span Correct: #{correct_label} - total: #{correct_total} | #{correct_total_choices} | #{correct_average}
+      .rat-report__overview-avg
+        .rat-report__overview-avg-number #{correct_average}
+        .rat-report__overview-avg-label Attempts
+  .grid__col--2of3.grid__mobile--full-width
+    if is_expanded
+      .rat-report__question-container
+        .forms__field-wrapper
+          label #{model.question}
+          hr
+        each choices as |choice|
+          .rat-report__question-choice
+            label #{choice.label}
+            each choice.attempts as |attempt|
+              .text--regular #{attempt.attempt} - #{attempt.count}
+          
+  / .small-4.columns
+  /   if is_expanded
+  /     h1 3rd Data Column

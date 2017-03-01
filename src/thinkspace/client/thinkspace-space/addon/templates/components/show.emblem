@@ -1,0 +1,5 @@
+component 'header' model=model
+
+
+each model.space_types as |space_type|
+  component space_type.component model=model

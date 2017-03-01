@@ -1,0 +1,159 @@
+require_data_files: html_samples
+
+variables:
+  - &SPACE indented_lists
+  - &ASSIGNMENT_SMALL  SMALL Indented List
+  - &PHASE_SMALL_PATH  SMALL diagnostic_path_layout
+  - &ASSIGNMENT        Indented List (diagnostic path layout and other layout)
+  - &PHASE_PATH        diagnostic_path_layout
+  - &PHASE_OTHER       other_layout
+  - &ASSIGNMENT_REALLY REALY Indented List
+  - &PHASE_REALLY      REALY indented list
+  - &ASSIGNMENT_LARGE  LARGE Indented List
+  - &PHASE_LARGE       LARGE indented list
+  - &ASSIGNMENT_LARGE_LIST  LARGE Indented List without observations
+  - &PHASE_LARGE_LIST       LARGE_indented_list_without_obervations
+  - &SETTINGS {validation: {validate: false}}
+  # Expert
+  - &ASSIGNMENT_EXPERT   EXPERT Indented List
+  - &PHASE_EX_OBS_HTML   USER observation list - category html
+  - &PHASE_EX_OBS_LAB    USER observation list - category lab
+  - &PHASE_EX_USERLIST   USER diagnostic path layout
+  - &PHASE_EX_READONLY   EXPERT with READONLY user
+  # Sections
+  - &SECTIONS_OTHER_LAYOUT  {indented-list: {layout: other}}
+  - &SECTIONS_EXPERT        {indented-list: {expert: true,  phase: *PHASE_EX_USERLIST}}
+  - &SECTIONS_OBS_LIST_HTML {obs-list: {category: {name: H}}, html: {sample: html_only}}
+  - &SECTIONS_OBS_LIST_LAB  {obs-list: {category: {name: D}}, html: {sample: html_only}}
+
+spaces:
+  - title: *SPACE
+
+space_users:
+  - spaces: *SPACE
+    users: import[users@space_1]
+
+assignments:
+  - {title: *ASSIGNMENT_EXPERT, space: *SPACE}
+  - {title: *ASSIGNMENT_SMALL}
+  - {title: *ASSIGNMENT}
+  - {title: *ASSIGNMENT_REALLY}
+  - {title: *ASSIGNMENT_LARGE}
+  - {title: *ASSIGNMENT_LARGE_LIST}
+
+phases:
+  # Expert
+  - {title: *PHASE_EX_OBS_HTML,  assignment: *ASSIGNMENT_EXPERT, template_name: template_indented_list_html, sections: *SECTIONS_OBS_LIST_HTML, settings: *SETTINGS}
+  - {title: *PHASE_EX_OBS_LAB,   assignment: *ASSIGNMENT_EXPERT, template_name: template_indented_list_html, sections: *SECTIONS_OBS_LIST_LAB,  settings: *SETTINGS}
+  - {title: *PHASE_EX_USERLIST,  assignment: *ASSIGNMENT_EXPERT, template_name: template_indented_list_A, settings: *SETTINGS}
+  - {title: *PHASE_EX_READONLY,  assignment: *ASSIGNMENT_EXPERT, template_name: template_indented_list_B, sections: *SECTIONS_EXPERT, settings: *SETTINGS}
+  # Indented Lists
+  - {title: *PHASE_SMALL_PATH,   assignment: *ASSIGNMENT_SMALL,      template_name: template_indented_list_A, settings: *SETTINGS}
+  - {title: *PHASE_PATH,         assignment: *ASSIGNMENT,            settings: *SETTINGS}
+  - {title: *PHASE_OTHER,        assignment: *ASSIGNMENT,            sections: *SECTIONS_OTHER_LAYOUT, settings: *SETTINGS}
+  - {title: *PHASE_REALLY,       assignment: *ASSIGNMENT_REALLY,     settings: *SETTINGS}
+  - {title: *PHASE_LARGE,        assignment: *ASSIGNMENT_LARGE,      settings: *SETTINGS}
+  - {title: *PHASE_LARGE_LIST ,  assignment: *ASSIGNMENT_LARGE_LIST, template_name: template_indented_list_B, settings: *SETTINGS}
+
+phase_templates:
+  - title: Indented List html select text
+    name: template_indented_list_html
+    template: |
+      <row>
+        <column width=8>
+          <component section='header' title='casespace-phase-header'/>
+          <component section='html'   title='html-select-text' select-text='obs-list'/>
+          <component section='submit' title='casespace-phase-submit' data-actions='{"submit":"submit"}'/>
+        </column>
+        <column width=4>
+          <component section='obs-list' title='observation-list'/>
+        </column>
+      </row>
+  - title: Indented List
+    name: template_indented_list_A
+    template: |
+      <row>
+        <column width=8>
+          <component title='casespace-phase-header'/>
+          <component title='indented-list' source='observation-list'/>
+          <component section='submit' title='casespace-phase-submit' data-actions='{"submit":"submit"}'/>
+        </column>
+        <column width=4>
+          <component title='observation-list' sortable='false'/>
+        </column>
+      </row>
+  - title: Indented List
+    name: template_indented_list_B
+    template: |
+      <row>
+        <column width=12>
+          <component title='casespace-phase-header'/>
+          <component title='indented-list'/>
+          <component section='submit' title='casespace-phase-submit' data-actions='{"submit":"submit"}'/>
+        </column>
+      </row>
+
+auto_input:
+
+  ## 'observations' options:
+  ##   observations_per_list:       number of observations when only a single list
+  ##   observations_per_list_lists: number of observations when multiple lists (e.g. list_lists)
+  ##   max_notes_per_observation:   maximum number of observation notes to generate
+  observations: 
+    - only: [*PHASE_EX_OBS_HTML, *PHASE_EX_OBS_LAB]
+      observations_per_list:       10
+      observations_per_list_lists: 5
+      max_notes_per_observation:   1
+    - only: *PHASE_SMALL_PATH
+      observations_per_list:       10
+      observations_per_list_lists: 3
+      max_notes_per_observation:   1
+    - only: *PHASE_PATH
+      observations_per_list:       20
+      observations_per_list_lists: 10
+      max_notes_per_observation:   1
+    - only: *PHASE_OTHER
+      observations_per_list:       20
+      observations_per_list_lists: 10
+      max_notes_per_observation:   1
+    - only: *PHASE_REALLY
+      observations_per_list:       20
+      observations_per_list_lists: 10
+      max_notes_per_observation:   1
+    - only: *PHASE_LARGE
+      observations_per_list:       100
+      observations_per_list_lists: 1
+      max_notes_per_observation:   1
+
+  ## 'indented_list_items' options:
+  ##   indent: [number]
+  ##     Number of child indents to create.
+  ##     Default is [0]; results in an un-indented list.
+  ##   observation_list: [true|false]
+  ##     Whether to create list items from the lists's observation list.
+  ##     Default is true when the list has an observation list, otherwise ignored.
+  ##   count: [number]
+  ##     Number of list items to generate.
+  ##     If list has an observation list, default is number of observations, otherwise 0.
+  ##     Will always generate this number of list items (using observations if they exist).
+  ##   only|except: [phase title]
+  indented_list_responses:
+    # Expert
+    - only: *PHASE_EX_USERLIST
+      indent: 2
+    - expert: update_1
+      phase: *PHASE_EX_READONLY
+    # Indented List
+    - only: *PHASE_SMALL_PATH
+      indent: 3
+    - only: *PHASE_PATH
+      indent: 3
+    - only: *PHASE_OTHER
+      indent: 3
+    - only: *PHASE_REALLY
+      indent: 6
+    - only: *PHASE_LARGE
+      indent: 3
+    - only: *PHASE_LARGE_LIST
+      indent: 3
+      count:  400

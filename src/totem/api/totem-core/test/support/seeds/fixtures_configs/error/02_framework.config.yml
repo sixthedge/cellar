@@ -1,0 +1,5 @@
+platform_path: test/framework
+
+paths:
+
+  - path: test/framework/core

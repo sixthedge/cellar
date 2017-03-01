@@ -1,0 +1,33 @@
+variables:
+  - &SPACE artifacts
+
+spaces:
+  - title: *SPACE
+
+space_users:
+  - spaces: *SPACE
+    users: import[users@space_1]
+
+assignments:
+  - space: *SPACE
+    title: assignment_artifact_1
+
+phases:
+  - assignment: assignment_artifact_1
+    title:         phase_artifact_1_A
+    template_name: template_artifact
+  - assignment: assignment_artifact_1
+    title:         phase_artifact_1_B
+    template_name: template_artifact
+
+phase_templates:
+  - title: Artifact template
+    name: template_artifact
+    template: |
+      #{casespace_phase_header}
+      <row>
+        <column>
+          <component section='artifact' title='artifact-bucket'/>
+        </column>
+      </row>
+      #{casespace_phase_submit}

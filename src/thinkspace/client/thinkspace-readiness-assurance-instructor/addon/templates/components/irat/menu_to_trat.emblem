@@ -1,0 +1,2 @@
+.ts-ra_admin-irat-to-trat-content
+  component 'shared/menu' menu=menu selected_components=selected_components

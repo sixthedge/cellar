@@ -1,0 +1,30 @@
+{
+  "name": "thinkspace-assets",
+  "version": "0.0.1",
+  "description": "Thinkspace Assets",
+  "author": "sixthedge",
+  "license": "MIT",
+  "homepage": "https://github.com/sixthedge/ethinkspace-client",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sixthedge/ethinkspace-client.git"
+  },
+  "private": true,
+  "ember-addon": {
+    "main": "index.js",
+    "after": [
+      "thinkspace-base"
+    ]
+  },
+  "keywords": [
+    "ember-addon",
+    "thinkspace"
+  ],
+  "directories": {
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
+  "readme": "No README data."
+}

@@ -1,0 +1,49 @@
+mount 'thinkspace-toolbar'
+.main-content
+  .grid__container--flex
+    .grid__col--4of4
+      .main-content__header
+        .breadcrumbs
+          link-to-external 'spaces.show' model.space class='breadcrumbs__link'
+            = model.space.title
+        h1.text--inline-block Individual RAT
+        .btn-group.is-right
+          button.btn.btn--primary
+            | Start iRAT
+          button.btn
+            | Set Timer
+        .text__font-size--14.text--bold.text__color--gray = model.friendly_due_at
+
+  .grid__container--flex
+    .grid__col--4of4
+      .analytics-panel
+        .analytics-panel__item
+          label iRATs Completed: 
+          .analytics-panel__data #{progress_report.completed}
+        .analytics-panel__item
+          label iRAT Average: 
+          .analytics-panel__data #{progress_report.average}
+        .analytics-panel__item
+          label Questions <50%: 
+          .analytics-panel__data #{progress_report.concerns.length}
+
+      / if progress_report.concerns
+      /   ul
+      /     each progress_report.concerns as |concern|
+      /       li #{concern}
+      hr
+  .grid__container--flex.spacing__margin-bottom--4
+    .grid__col--4of4
+      if ready
+        if is_ifat
+          .text--bold.text__font-size--14.text__color--gray.spacing__margin-bottom--1 IF-AT Enabled
+          component 'progress_report/analytics/ifat' model=assessment
+        else
+          .text--bold.text__font-size--14.text__color--gray.spacing__margin-bottom--1 Standard
+          component 'progress_report/analytics/standard' model=assessment
+
+  .grid__container--flex
+    .grid__col--4of4
+      .footnote
+        p.spacing__margin-top--0.spacing__margin-bottom--0 Use the <strong>progress report</strong> to keep up with your students.
+        a Learn about exercise

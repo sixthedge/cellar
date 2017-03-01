@@ -1,0 +1,106 @@
+///*------------------------------------*\
+//    #BUILDER-PROGRESS
+//\*------------------------------------*/
+
+.builder-progress {
+	padding-top:  2rem;
+	padding-left: 2rem;
+
+	>h2 {
+		font-size: 1rem;
+	}
+
+}
+
+.builder-progress__list {
+	list-style-type: none;
+	margin:          0;
+	padding-left:    0;
+}
+
+.builder-progress__item {
+	width: 100%;
+	position: relative;
+}
+
+.builder-progress__link {
+	display:        block;
+	font-size:      .875rem;
+	color:          $color-black-base;
+	font-weight:    $font-weight--bold;
+	border-bottom:  2px solid $color-gray-med;
+	padding:        .875rem 1rem;
+	text-transform: capitalize;
+	cursor:         pointer;
+	transition:     $transition-animation;
+
+	.builder-progress__item--is-currrent & {
+		color: $color-blue-base;
+	}
+
+	&:hover {
+		background-color: $color-gray-med;
+	}
+}
+
+.builder-progress__current-icon {
+	position: absolute;
+	color:    $color-blue-base;
+	top:      11px;
+}
+
+/**
+ * Mobile progress
+ */
+
+.mobile-progress {
+	position: fixed;
+	bottom: 0;
+	display:          none;
+	background-color: $color-gray-med;
+	margin-top:       60px;
+	height:           60px;
+  width: 100%;
+
+  z-index: 5000;
+
+	@media only screen and (max-width: 40rem) {
+		display: block;
+		
+  }
+}
+
+.mobile-progress__item {
+	height:      60px;
+}
+
+.mobile-progress__link {
+	cursor:      pointer;
+	min-width:   150px;
+	height:      60px;
+	line-height: 24px;
+	padding:     .25rem $spacing-unit;
+	color:       white;
+
+
+	.is-right & {
+		text-align: right;
+		border-left: 2px solid white;
+		background-color: $color-blue-base;
+
+		&:hover, &:focus {
+			background-color: $color-blue-dark;
+		}
+	}
+
+	.is-left & {
+		text-align: left;
+		border-right: 2px solid white;
+		background-color: $color-gray-base;
+
+		&:hover, &:focus {
+			background-color: $color-gray-dark;
+		}
+	}
+
+}

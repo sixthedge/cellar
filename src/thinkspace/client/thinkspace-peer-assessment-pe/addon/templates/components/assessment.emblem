@@ -1,0 +1,18 @@
+if all_data_loaded
+  component 'assessment/type/base' manager=manager 
+else
+  if has_team_members
+    /component '__loader'
+  else
+    .ts-grid_row: .ts-grid_columns.small-8.small-centered
+      .dialogue.dialogue-error
+        h4 Whoops, something doesn't look right
+        p See the details in the message in the lower right of your screen for more information. The evaluation may not be active yet or you may not have a team.
+
+      if model.authable.can.update
+        .dialogue.dialogue-instruct
+          h4 Instructor FAQ
+          ul
+            li You need to be on a team assigned to this phase to preview the content of the evaluation.
+            if model.is_not_active
+              li You need to activate the evaluation through the case builder for it to be available to students.

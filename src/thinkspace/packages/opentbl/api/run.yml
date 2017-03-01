@@ -1,0 +1,51 @@
+# # Application Run Options
+# Preset configuration options for building a new Rails API through `totem-app`.
+# ## Options
+# ```
+# app_run_options:         Preset configuration options for totem-app
+#   app_path:              Relative path indicating where to install the Rails API
+#   db_name_prefix:        String that is appended to all environment names, e.g. otbl_development, otbl_production
+#   db_user:               Which Postgres role to use  (default: 'postgres')
+#   new:                   Create a new Rails app
+#   framework_run_options: Pointers to Totem
+#     all:                 To install all of the frameworks in the package_file
+#     platform:            Relative path to folder that contains the framework-api engines
+#     src_paths:           []
+#     package_files:       Array (or String) of package files for the framework
+#     config_files:        Array (or String) of config files for the framework
+#   platform_run_options:  Pointers to the related ThinkSpace files
+#     all:                 To install all of the platforms in the package_file
+#     platform:            Relative path to folder that contains the platform-api engines
+#     src_paths:           []
+#     package_files:       Array (or String) of package files for the platform
+#     config_files:        Array (or String) of config files for the platform
+#     ability_paths:       Array (or String) of paths containing ability files
+# ```
+app_run_options:
+  app_path:              ../../apps-rails/orchid-otbl
+  db_name_prefix:        otbl
+  db_user:               postgres
+  new:                   true
+  framework_run_options: &FRAMEWORK_RUN_OPTIONS
+    all:           true
+    platform:      src/totem/api
+    src_paths:     src/totem/api
+    package_files: src/totem/packages/totem/package.yml
+    config_files:  src/totem/packages/totem/totem.config.yml
+  platform_run_options: &PLATFORM_RUN_OPTIONS
+    all:            true
+    platform:       src/thinkspace/api
+    src_paths:      src/thinkspace/api
+    package_files:  src/thinkspace/packages/opentbl/api/package.yml
+    config_files:   src/thinkspace/packages/opentbl/api/opentbl.config.yml
+    ability_paths:  src/thinkspace/ability
+    template_paths: src/thinkspace/templates/api
+
+deploy_run_options:
+  app_path: ../../apps-rails/deployorchid-otbl
+  deploy:   true
+  new:      false
+  framework_run_options:
+    <<: *FRAMEWORK_RUN_OPTIONS
+  platform_run_options:
+    <<: *PLATFORM_RUN_OPTIONS

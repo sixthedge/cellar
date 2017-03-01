@@ -1,0 +1,132 @@
+require_data_files: html_samples
+
+variables:
+  - &SPACE_ACTIVE   ACTIVE space model state
+  - &SPACE_INACTIVE INACTIVE space model state
+  - &SPACE_NEUTRAL  NEUTRAL space model state
+  - &SPACE_DELETED  DELETED space model state
+  - &ASSIGNMENT_ACTIVE   active
+  - &ASSIGNMENT_INACTIVE inactive
+  - &ASSIGNMENT_NEUTRAL  neutral
+  - &ASSIGNMENT_DELETED  deleted
+  - &PHASE_ACTIVE   active
+  - &PHASE_INACTIVE inactive
+  - &PHASE_NEUTRAL  neutral
+  - &PHASE_DELETED  deleted
+  - &STATE_ACTIVE   active
+  - &STATE_INACTIVE inactive
+  - &STATE_NEUTRAL  neutral
+  # - &STATE_DELETED  deleted
+  - &STATE_DELETED  neutral
+  - &TEMPLATE model_state_template
+  - &SECTIONS {html: {sample: html_only}}
+spaces:
+  - {title: *SPACE_ACTIVE,   state: *STATE_ACTIVE}
+  - {title: *SPACE_INACTIVE, state: *STATE_INACTIVE}
+  - {title: *SPACE_NEUTRAL,  state: *STATE_NEUTRAL}
+  - {title: *SPACE_DELETED,  state: *STATE_DELETED}
+
+space_users:
+  - spaces: [*SPACE_ACTIVE, *SPACE_INACTIVE, *SPACE_NEUTRAL, *SPACE_DELETED]
+    users: import[users@space_1]
+
+assignments:
+  - {space: *SPACE_ACTIVE,   title: *ASSIGNMENT_ACTIVE,   state: *STATE_ACTIVE}
+  - {space: *SPACE_ACTIVE,   title: *ASSIGNMENT_INACTIVE, state: *STATE_INACTIVE}
+  - {space: *SPACE_ACTIVE,   title: *ASSIGNMENT_NEUTRAL,  state: *STATE_NEUTRAL}
+  - {space: *SPACE_ACTIVE,   title: *ASSIGNMENT_DELETED,  state: *STATE_DELETED}
+
+  - {space: *SPACE_INACTIVE, title: *ASSIGNMENT_ACTIVE,   state: *STATE_ACTIVE}
+  - {space: *SPACE_INACTIVE, title: *ASSIGNMENT_INACTIVE, state: *STATE_INACTIVE}
+  - {space: *SPACE_INACTIVE, title: *ASSIGNMENT_NEUTRAL,  state: *STATE_NEUTRAL}
+  - {space: *SPACE_INACTIVE, title: *ASSIGNMENT_DELETED,  state: *STATE_DELETED}
+
+  - {space: *SPACE_NEUTRAL,  title: *ASSIGNMENT_ACTIVE,   state: *STATE_ACTIVE}
+  - {space: *SPACE_NEUTRAL,  title: *ASSIGNMENT_INACTIVE, state: *STATE_INACTIVE}
+  - {space: *SPACE_NEUTRAL,  title: *ASSIGNMENT_NEUTRAL,  state: *STATE_NEUTRAL}
+  - {space: *SPACE_NEUTRAL,  title: *ASSIGNMENT_DELETED,  state: *STATE_DELETED}
+
+  - {space: *SPACE_DELETED,  title: *ASSIGNMENT_ACTIVE,   state: *STATE_ACTIVE}
+  - {space: *SPACE_DELETED,  title: *ASSIGNMENT_INACTIVE, state: *STATE_INACTIVE}
+  - {space: *SPACE_DELETED,  title: *ASSIGNMENT_NEUTRAL,  state: *STATE_NEUTRAL}
+  - {space: *SPACE_DELETED,  title: *ASSIGNMENT_DELETED,  state: *STATE_DELETED}
+
+phases:
+  - {space: *SPACE_ACTIVE,   assignment: *ASSIGNMENT_ACTIVE,   title: *PHASE_ACTIVE,   state: *STATE_ACTIVE,   template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_ACTIVE,   assignment: *ASSIGNMENT_ACTIVE,   title: *PHASE_INACTIVE, state: *STATE_INACTIVE, template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_ACTIVE,   assignment: *ASSIGNMENT_ACTIVE,   title: *PHASE_NEUTRAL,  state: *STATE_NEUTRAL,  template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_ACTIVE,   assignment: *ASSIGNMENT_ACTIVE,   title: *PHASE_DELETED,  state: *STATE_DELETED,  template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_ACTIVE,   assignment: *ASSIGNMENT_INACTIVE, title: *PHASE_ACTIVE,   state: *STATE_ACTIVE,   template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_ACTIVE,   assignment: *ASSIGNMENT_INACTIVE, title: *PHASE_INACTIVE, state: *STATE_INACTIVE, template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_ACTIVE,   assignment: *ASSIGNMENT_INACTIVE, title: *PHASE_NEUTRAL,  state: *STATE_NEUTRAL,  template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_ACTIVE,   assignment: *ASSIGNMENT_INACTIVE, title: *PHASE_DELETED,  state: *STATE_DELETED,  template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_ACTIVE,   assignment: *ASSIGNMENT_NEUTRAL,  title: *PHASE_ACTIVE,   state: *STATE_ACTIVE,   template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_ACTIVE,   assignment: *ASSIGNMENT_NEUTRAL,  title: *PHASE_INACTIVE, state: *STATE_INACTIVE, template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_ACTIVE,   assignment: *ASSIGNMENT_NEUTRAL,  title: *PHASE_NEUTRAL,  state: *STATE_NEUTRAL,  template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_ACTIVE,   assignment: *ASSIGNMENT_NEUTRAL,  title: *PHASE_DELETED,  state: *STATE_DELETED,  template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_ACTIVE,   assignment: *ASSIGNMENT_DELETED,  title: *PHASE_ACTIVE,   state: *STATE_ACTIVE,   template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_ACTIVE,   assignment: *ASSIGNMENT_DELETED,  title: *PHASE_INACTIVE, state: *STATE_INACTIVE, template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_ACTIVE,   assignment: *ASSIGNMENT_DELETED,  title: *PHASE_NEUTRAL,  state: *STATE_NEUTRAL,  template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_ACTIVE,   assignment: *ASSIGNMENT_DELETED,  title: *PHASE_DELETED,  state: *STATE_DELETED,  template_name: *TEMPLATE, sections: *SECTIONS}
+
+  - {space: *SPACE_INACTIVE, assignment: *ASSIGNMENT_ACTIVE,   title: *PHASE_ACTIVE,   state: *STATE_ACTIVE,   template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_INACTIVE, assignment: *ASSIGNMENT_ACTIVE,   title: *PHASE_INACTIVE, state: *STATE_INACTIVE, template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_INACTIVE, assignment: *ASSIGNMENT_ACTIVE,   title: *PHASE_NEUTRAL,  state: *STATE_NEUTRAL,  template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_INACTIVE, assignment: *ASSIGNMENT_ACTIVE,   title: *PHASE_DELETED,  state: *STATE_DELETED,  template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_INACTIVE, assignment: *ASSIGNMENT_INACTIVE, title: *PHASE_ACTIVE,   state: *STATE_ACTIVE,   template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_INACTIVE, assignment: *ASSIGNMENT_INACTIVE, title: *PHASE_INACTIVE, state: *STATE_INACTIVE, template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_INACTIVE, assignment: *ASSIGNMENT_INACTIVE, title: *PHASE_NEUTRAL,  state: *STATE_NEUTRAL,  template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_INACTIVE, assignment: *ASSIGNMENT_INACTIVE, title: *PHASE_DELETED,  state: *STATE_DELETED,  template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_INACTIVE, assignment: *ASSIGNMENT_NEUTRAL,  title: *PHASE_ACTIVE,   state: *STATE_ACTIVE,   template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_INACTIVE, assignment: *ASSIGNMENT_NEUTRAL,  title: *PHASE_INACTIVE, state: *STATE_INACTIVE, template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_INACTIVE, assignment: *ASSIGNMENT_NEUTRAL,  title: *PHASE_NEUTRAL,  state: *STATE_NEUTRAL,  template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_INACTIVE, assignment: *ASSIGNMENT_NEUTRAL,  title: *PHASE_DELETED,  state: *STATE_DELETED,  template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_INACTIVE, assignment: *ASSIGNMENT_DELETED,  title: *PHASE_ACTIVE,   state: *STATE_ACTIVE,   template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_INACTIVE, assignment: *ASSIGNMENT_DELETED,  title: *PHASE_INACTIVE, state: *STATE_INACTIVE, template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_INACTIVE, assignment: *ASSIGNMENT_DELETED,  title: *PHASE_NEUTRAL,  state: *STATE_NEUTRAL,  template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_INACTIVE, assignment: *ASSIGNMENT_DELETED,  title: *PHASE_DELETED,  state: *STATE_DELETED,  template_name: *TEMPLATE, sections: *SECTIONS}
+
+  - {space: *SPACE_NEUTRAL,  assignment: *ASSIGNMENT_ACTIVE,   title: *PHASE_ACTIVE,   state: *STATE_ACTIVE,   template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_NEUTRAL,  assignment: *ASSIGNMENT_ACTIVE,   title: *PHASE_INACTIVE, state: *STATE_INACTIVE, template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_NEUTRAL,  assignment: *ASSIGNMENT_ACTIVE,   title: *PHASE_NEUTRAL,  state: *STATE_NEUTRAL,  template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_NEUTRAL,  assignment: *ASSIGNMENT_ACTIVE,   title: *PHASE_DELETED,  state: *STATE_DELETED,  template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_NEUTRAL,  assignment: *ASSIGNMENT_INACTIVE, title: *PHASE_ACTIVE,   state: *STATE_ACTIVE,   template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_NEUTRAL,  assignment: *ASSIGNMENT_INACTIVE, title: *PHASE_INACTIVE, state: *STATE_INACTIVE, template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_NEUTRAL,  assignment: *ASSIGNMENT_INACTIVE, title: *PHASE_NEUTRAL,  state: *STATE_NEUTRAL,  template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_NEUTRAL,  assignment: *ASSIGNMENT_INACTIVE, title: *PHASE_DELETED,  state: *STATE_DELETED,  template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_NEUTRAL,  assignment: *ASSIGNMENT_NEUTRAL,  title: *PHASE_ACTIVE,   state: *STATE_ACTIVE,   template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_NEUTRAL,  assignment: *ASSIGNMENT_NEUTRAL,  title: *PHASE_INACTIVE, state: *STATE_INACTIVE, template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_NEUTRAL,  assignment: *ASSIGNMENT_NEUTRAL,  title: *PHASE_NEUTRAL,  state: *STATE_NEUTRAL,  template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_NEUTRAL,  assignment: *ASSIGNMENT_NEUTRAL,  title: *PHASE_DELETED,  state: *STATE_DELETED,  template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_NEUTRAL,  assignment: *ASSIGNMENT_DELETED,  title: *PHASE_ACTIVE,   state: *STATE_ACTIVE,   template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_NEUTRAL,  assignment: *ASSIGNMENT_DELETED,  title: *PHASE_INACTIVE, state: *STATE_INACTIVE, template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_NEUTRAL,  assignment: *ASSIGNMENT_DELETED,  title: *PHASE_NEUTRAL,  state: *STATE_NEUTRAL,  template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_NEUTRAL,  assignment: *ASSIGNMENT_DELETED,  title: *PHASE_DELETED,  state: *STATE_DELETED,  template_name: *TEMPLATE, sections: *SECTIONS}
+
+  - {space: *SPACE_DELETED,  assignment: *ASSIGNMENT_ACTIVE,   title: *PHASE_ACTIVE,   state: *STATE_ACTIVE,   template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_DELETED,  assignment: *ASSIGNMENT_ACTIVE,   title: *PHASE_INACTIVE, state: *STATE_INACTIVE, template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_DELETED,  assignment: *ASSIGNMENT_ACTIVE,   title: *PHASE_NEUTRAL,  state: *STATE_NEUTRAL,  template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_DELETED,  assignment: *ASSIGNMENT_ACTIVE,   title: *PHASE_DELETED,  state: *STATE_DELETED,  template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_DELETED,  assignment: *ASSIGNMENT_INACTIVE, title: *PHASE_ACTIVE,   state: *STATE_ACTIVE,   template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_DELETED,  assignment: *ASSIGNMENT_INACTIVE, title: *PHASE_INACTIVE, state: *STATE_INACTIVE, template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_DELETED,  assignment: *ASSIGNMENT_INACTIVE, title: *PHASE_NEUTRAL,  state: *STATE_NEUTRAL,  template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_DELETED,  assignment: *ASSIGNMENT_INACTIVE, title: *PHASE_DELETED,  state: *STATE_DELETED,  template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_DELETED,  assignment: *ASSIGNMENT_NEUTRAL,  title: *PHASE_ACTIVE,   state: *STATE_ACTIVE,   template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_DELETED,  assignment: *ASSIGNMENT_NEUTRAL,  title: *PHASE_INACTIVE, state: *STATE_INACTIVE, template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_DELETED,  assignment: *ASSIGNMENT_NEUTRAL,  title: *PHASE_NEUTRAL,  state: *STATE_NEUTRAL,  template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_DELETED,  assignment: *ASSIGNMENT_NEUTRAL,  title: *PHASE_DELETED,  state: *STATE_DELETED,  template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_DELETED,  assignment: *ASSIGNMENT_DELETED,  title: *PHASE_ACTIVE,   state: *STATE_ACTIVE,   template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_DELETED,  assignment: *ASSIGNMENT_DELETED,  title: *PHASE_INACTIVE, state: *STATE_INACTIVE, template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_DELETED,  assignment: *ASSIGNMENT_DELETED,  title: *PHASE_NEUTRAL,  state: *STATE_NEUTRAL,  template_name: *TEMPLATE, sections: *SECTIONS}
+  - {space: *SPACE_DELETED,  assignment: *ASSIGNMENT_DELETED,  title: *PHASE_DELETED,  state: *STATE_DELETED,  template_name: *TEMPLATE, sections: *SECTIONS}
+
+phase_templates:
+  - title: Model State Template
+    name: model_state_template
+    template: |
+      #{casespace_phase_header}
+      <row>
+        <column>
+          <component section='html' title='html-only'/>
+        </column>
+      </row>

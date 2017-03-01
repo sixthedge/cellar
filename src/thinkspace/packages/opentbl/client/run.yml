@@ -1,0 +1,17 @@
+# # Ember Run Options
+
+ember_run_options:
+  app_path:             ../../apps-ember/orchid
+  # ember_cli_version: 2.9.1
+  # node_version:      6.9.1
+  command_paths:        src/totem/ember
+  bundle_lock_versions: true
+
+  platform_run_options:
+    platform:  src/thinkspace/client
+    src_paths:
+      - src/totem/client
+      - src/thinkspace/client
+    package_files:  src/thinkspace/packages/opentbl/client/package.yml
+    config_files:   src/thinkspace/packages/opentbl/api/opentbl.config.yml
+    template_paths: src/thinkspace/templates/client

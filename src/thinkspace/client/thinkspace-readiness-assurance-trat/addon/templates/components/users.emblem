@@ -1,0 +1,31 @@
+.secondary-panel
+  .secondary-panel__header
+    h1 #{header}
+  .secondary-panel__content
+    ul.secondary-panel__list
+      each all_sorted_users as |user|
+        li.secondary-panel__item
+          if user.present
+            if user.current_user
+              .avatar__container.avatar--online
+                .avatar.avatar--32.is-left.spacing__margin-right--1
+                  .avatar__status
+                .avatar__username = user.name
+            else
+              .avatar__container.avatar--online
+                .avatar.avatar--32.is-left.spacing__margin-right--1
+                  .avatar__status
+                .avatar__username = user.name
+          else
+            .avatar__container.avatar--offline
+                .avatar.avatar--32.is-left.spacing__margin-right--1
+                  .avatar__status
+                .avatar__username = user.name
+          / {{/if}}
+          /   .avatar.avatar--32.is-left.spacing__margin-right--1
+          /     .avatar__status
+          /   .avatar__username = user.name
+
+            
+      else
+        |None

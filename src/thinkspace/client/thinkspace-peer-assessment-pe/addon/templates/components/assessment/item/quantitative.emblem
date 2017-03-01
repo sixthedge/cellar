@@ -1,0 +1,23 @@
+.forms__field-wrapper
+  label.spacing__margin-bottom--1 #{model.id} .   #{model.label}
+  input.ts-rangeslider type='range' min=points_min max=points_max step=slider_step value=slider_value disabled=is_read_only
+  if points_descriptive_enabled
+    .grid__container.text__font-size--12.text--bold
+      .is-left #{points_descriptive_low}
+      .is-right #{points_descriptive_high}
+  .counter-box.counter-box--gray.spacing__margin-top--1
+    span.counter-box__label Score:
+    span.counter-box__value #{slider_value}
+  if is_read_only
+    if comment
+      hr
+      if comment
+      = input value=comment disabled=is_read_only
+    else
+      p No comment added.
+  else
+    if can_comment
+      hr
+      .forms__field-wrapper 
+        label Leave a comment:
+        = input value=comment focus-out='save_comment' class='spacing__margin-bottom--0'

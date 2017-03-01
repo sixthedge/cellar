@@ -1,0 +1,1 @@
+component c_dropdown text=selected_zone.friendly collection=zones display_property='friendly' select_action='select' action_receiver=this anchor_classes='thinkspace-dropdown_anchor-light'

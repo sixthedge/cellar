@@ -1,0 +1,5 @@
+if all_data_loaded
+  if selected_team_set
+    component 'assessment/team_set/show' model=selected_team_set assignment=assignment assessment=model
+  else
+    component 'assessment/team_set/index' model=team_sets assignment=assignment assessment=model

@@ -1,0 +1,120 @@
+///*------------------------------------*\
+//    #TOP-BAR
+//\*------------------------------------*/
+
+.top-bar {
+	position:    fixed;
+	z-index:     5000;
+	top:         0;
+	height:      $top-bar-height;
+	line-height: $top-bar-height;
+	width:       100%;
+}
+
+.top-bar--white {
+	background-color: white;
+	border-bottom:    $border--thin;
+
+}
+
+.top-bar--main {
+	background-color: $color-blue-base;
+	border-bottom:    1px solid darken($color-blue-base, 5%);
+	color:            white;
+}
+
+.top-bar__info {
+	height: $top-bar-height;
+}
+
+.top-bar__info-item {
+	display:        inline-block;
+	font-size:      .75rem;
+	font-weight:    $font-weight--bold;
+	text-align:     center;
+	vertical-align: middle;
+	line-height:    $top-bar-height;
+	padding:        0 1.15rem;
+
+}
+
+///*------------------------------------*\
+//    #NAV-LISTS
+//\*------------------------------------*/
+
+.nav-list {
+	list-style-type: none;
+	margin:          0;
+	padding:         0;
+	height:          $top-bar-height;
+}
+
+.nav-list__item {
+	float:   left;
+	height: $top-bar-height;
+	line-height: inherit;
+	display: inline-block;
+}
+
+.nav-list__link {
+	display:        block;
+	color:          white;
+	font-size:      .75rem;
+	cursor:         pointer;
+	padding:        0 1.15rem;
+	font-weight:    $font-weight--bold;
+	text-align:     center;
+	vertical-align: middle;
+	line-height:    $top-bar-height;
+	transition:     $transition-animation;
+
+	.top-bar--white & {
+		color: $color-black-base;
+
+		&:hover {
+			background-color: $color-gray-med;
+			color:            $color-black-base;
+		}
+	}
+
+	.top-bar--main & {
+		&:hover, &:focus {
+			background-color: lighten($color-blue-base, 5%);
+			color:            white;
+		}
+	}
+}
+
+.nav-list__logo {
+	float:       left;
+	line-height: inherit;
+	height:      $top-bar-height;
+	padding:     10px $spacing-unit;
+
+	>img {
+		width: 40px;
+	}
+}
+
+.nav-list__avatar {
+	width:           30px;
+	position:        relative;
+	height:          30px;
+	vertical-align:  middle;
+	background-size: 30px;
+	display:         inline-block;
+	background-color: $color-gray-med;
+	border-radius: $border-radius;
+}
+
+.nav-list__account-info {
+	display:        inline-block;
+	vertical-align: middle;
+	overflow:       hidden;
+	text-overflow:  ellipses;
+	white-space:    nowrap;
+	max-width:      180px;
+	line-height:    1.15rem;
+	text-align:     right;
+	margin-right:   .75rem;
+}

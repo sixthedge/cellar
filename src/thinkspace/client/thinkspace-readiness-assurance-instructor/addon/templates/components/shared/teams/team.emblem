@@ -1,0 +1,20 @@
+.ts-ra_admin-teams
+
+  span.ts-ra_radio-button click='select'
+    .ts-ra_radio-button-status.ts-ra_admin-radio-button-status
+      if selected
+        .tsi.tsi-small.tsi-item-selected
+    .ts-ra_radio-button-label.selectable #{team.title} (#{users.length})
+  
+  span.ts-ra_admin-room-users-header click='toggle_collapsed'
+    if collapsed
+      i.tsi.tsi-down-caret.ts-ra_admin-room-users-collapsed
+    else
+      i.tsi.tsi-up-caret.ts-ra_admin-room-users-collapsed
+
+  unless collapsed
+    ol.ts-ra_admin-user-list
+      each sorted_users as |user|
+        li.ts-ra_admin-select-users= user.name
+      else
+        |None

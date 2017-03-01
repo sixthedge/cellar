@@ -1,0 +1,25 @@
+.ts-pa_item-settings
+  .ts-forms_inline-heading
+    h4 Scale Settings
+    .ts-forms_heading-actions
+      a.btn.btn-small.btn-primary click='save' Save settings
+      a.btn.btn-small.btn-default click='back' Cancel
+  
+  label.ts-forms_field-label Choose the range for your scale
+  component c_validated_input value=points_min placeholder='Minimum points' errors=errors.points_min
+  | to
+  component c_validated_input value=points_max placeholder='Maximum points' errors=errors.points_max
+  hr
+  label.ts-forms_field-label Scale label
+  = input value=label
+  hr
+  .ts-forms_field-label-container 
+    label.ts-forms_field-label End point labels
+    .ts-forms_fields-label-description Labels that let students know what the end values mean.
+  = input value=scale_label_min placeholder="Min label"
+  to
+  = input value=scale_label_max placeholder="Max label"
+  hr
+  label.ts-checkbox click='toggle_has_comments'
+    component c_checkbox checked=has_comments disable_click=true
+    span Enable comments on this scale

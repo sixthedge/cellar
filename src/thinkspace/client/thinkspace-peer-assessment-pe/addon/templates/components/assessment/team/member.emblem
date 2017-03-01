@@ -1,0 +1,8 @@
+if is_selected
+  i.im.im-open-right
+.avatar__container.is-left
+  .avatar.avatar--32.is-left.spacing__margin-right--1
+  .avatar__username = model.full_name
+if is_balance
+  .is-right 
+    span = points_expended

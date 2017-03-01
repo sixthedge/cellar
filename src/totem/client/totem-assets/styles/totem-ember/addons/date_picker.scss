@@ -1,0 +1,57 @@
+.picker--opened .picker__holder {
+  border: 2px solid #bcbcbc;
+  border-radius: 3px;
+}
+
+
+.picker__header {
+  .picker__nav--prev:hover, .picker__nav--next:hover {
+    background: none;
+  }
+
+}
+
+
+.picker__footer {
+
+  .picker__button--clear, .picker__button--close, .picker__button--today {
+    border-radius: 3px;
+    box-shadow: none;
+    transition: border-color 300ms ease-out 0s;
+    transition: background-color-color 300ms ease-out 0s;
+    margin: .5em 1em;
+    width: 25%;
+  }
+
+  .picker__button--clear:hover, .picker__button--close:hover {
+    color: white;
+    background-color: #797979;
+    border-color: #797979;
+  }
+
+  .picker__button--today:hover {
+    color: white;
+    background-color: #3194BB;
+    border-color: #3194BB;
+  }
+
+  .picker__button--close:before {
+    color: #000;
+  }
+
+
+  .picker__button--clear {
+    background-color: #BCBCBC;
+    border: 2px solid #BCBCBC;
+  }
+
+  .picker__button--close {
+    background-color: #BCBCBC;
+    border: 2px solid #BCBCBC;
+  }
+
+  .picker__button--today {
+    background-color: #63B4D6;
+    border: 2px solid #63B4D6;
+  }
+}

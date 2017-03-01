@@ -1,0 +1,50 @@
+owners: &OWNERS
+  - {first_name: owner_1,  role: owner}
+  - {first_name: owner_2,  role: owner}
+  - {first_name: owner_3,  role: owner}
+
+updaters: &UPDATERS
+  - {first_name: update_1, role: update}
+  - {first_name: update_2, role: update}
+  - {first_name: update_3, role: update}
+
+readers: &READERS
+  - first_name: read_1
+  - first_name: read_2
+  - first_name: read_3
+  - first_name: read_4
+  - first_name: read_5
+  - first_name: read_6
+  - first_name: read_7
+  - first_name: read_8
+  - first_name: read_9
+
+import:
+  - *OWNERS
+  - *UPDATERS
+  - *READERS
+
+space_1: &SPACE_1
+  - {first_name: read_1,    role: read}
+  - {first_name: update_1,  role: update}
+  - {first_name: owner_1,   role: owner}
+
+space_2: &SPACE_2
+  - {first_name: read_2,    role: read}
+  - {first_name: update_2,  role: update}
+  - {first_name: owner_2,   role: owner}
+
+space_3: &SPACE_3
+  - {first_name: read_3,    role: read}
+  - {first_name: update_3,  role: update}
+  - {first_name: owner_3,   role: owner}
+
+repeat_john_doe:
+  repeat:       20
+  first_name:   john
+  last_name:    doe
+
+repeat_jane_doe:
+  repeat:       20
+  first_name:   jane
+  last_name:    doe

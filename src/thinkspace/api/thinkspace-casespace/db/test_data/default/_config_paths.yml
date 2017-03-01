@@ -1,0 +1,90 @@
+variables:
+  - &SPACE diagnostic_paths
+  - &ASSIGNMENT diagnostic_path_assignment
+
+spaces:
+  - title: *SPACE
+
+space_users:
+  - spaces: *SPACE
+    users: import[users@space_1]
+
+assignments:
+  - {title: *ASSIGNMENT , space: *SPACE}
+  - title: &LARGE large
+  - title: &SMALL small
+  - title: &EMPTY empty
+
+phases:
+  - assignment:    *ASSIGNMENT
+    title:         phase_diag_path_A
+    template_name: template_diag_path_A
+  - assignment:    *LARGE
+    title:         phase_large_diag_path
+    template_name: template_diag_path_A
+  - assignment:    *SMALL
+    title:         phase_small_diag_path
+    template_name: template_diag_path_A
+  - assignment:    *EMPTY
+    title:         phase_empty_diag_path
+    template_name: template_diag_path_A
+
+phase_templates:
+  - title: Diagnostic Path A
+    name: template_diag_path_A
+    template: |
+      <row>
+        <column width=8>
+            <component title='casespace-phase-header'/>
+            <component title='diagnostic-path' source='observation-list'/>
+            <component section='submit' title='casespace-phase-submit' data-actions='{"submit":"submit"}'/>
+        </column>
+        <column width=4>
+          <component title='observation-list' droppable='false' has_path='true' />
+        </column>
+      </row>
+
+auto_input:
+
+  ## 'observations' options:
+  ##   observations_per_list:       number of observations when only a single list
+  ##   observations_per_list_lists: number of observations when multiple lists (e.g. list_lists)
+  ##   max_notes_per_observation:   maximum number of observation notes to generate
+  observations:                  
+    - only: [phase_diag_path_A]
+      observations_per_list:       20
+      observations_per_list_lists: 10
+      max_notes_per_observation:   5
+    - only: [phase_large_diag_path]
+      observations_per_list:       100
+      observations_per_list_lists: 1
+      max_notes_per_observation:   1
+    - only: [phase_small_diag_path]
+      observations_per_list:       10
+      observations_per_list_lists: 1
+      max_notes_per_observation:   1
+    - only: [phase_empty_diag_path]
+      observations_per_list:       10
+      observations_per_list_lists: 1
+      max_notes_per_observation:   1
+
+  ## 'path_items' options:
+  ##   pattern: [array]
+  ##     Pattern to nest path items.
+  ##     e.g. [2,1] = each path item has two children each with one child (e.g. grand-child).
+  ##     Default is [0]; results in un-nested path items.
+  ##   list: [true|false]
+  ##     Whether to create path items from the path's observation list.
+  ##     Default is true when the path has an observation list, otherwise ignored.
+  ##   count: [number]
+  ##     Number of path items to generate.
+  ##     If path has an observation list, default is number of observations, otherwise 0.
+  ##     Will always generate this number of path items (using observations if they exist).
+  ##   only|except: [phase title]
+  path_items:
+    - only: [phase_diag_path_A]
+      pattern: [2,1,2]
+    - only: [phase_large_diag_path]
+      pattern: [2,2]
+    - only: [phase_small_diag_path]
+      pattern: [1,1,1]

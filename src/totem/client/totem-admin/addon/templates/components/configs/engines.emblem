@@ -1,0 +1,38 @@
+component 'configs/header'
+
+.btn.btn-small click='clear_sort' Clear Sort
+if default_sort_by
+  .btn.btn-small.totem-admin-right click='default_by' Default Sort
+
+h6.table-sort-by-display-sorted_by Sorted By: #{display_sorted_by}
+
+table.table-sort-by style='font-size: 95%;'
+  thead
+    component '__table_sort_by/header' sort=sort.engine
+    component '__table_sort_by/header' sort=sort.external_routes
+    component '__table_sort_by/header' sort=sort.services
+    component '__table_sort_by/header' sort=sort.add_engines
+  tbody
+    each sorted_engines as |engine|
+      tr
+        td title=engine.module
+          = engine.name
+
+        td
+          if engine.external_routes
+            ul.totem-admin-engines-main-list
+              each engine.external_routes as |route|
+                li= route
+
+        td
+          if engine.services
+            ul.totem-admin-engines-main-list
+              each engine.services as |service|
+                li= service
+          else
+            .totem-admin-engines-default-services title=default_services
+              |default
+
+        td
+          each engine.add_engines as |add_engine|
+            component 'configs/engines/add' add_engine=add_engine

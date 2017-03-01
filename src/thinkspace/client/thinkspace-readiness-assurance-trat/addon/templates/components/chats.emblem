@@ -1,0 +1,2 @@
+each chat_managers as |am|
+  component 'chat' cm=am.cm qm=am.qm close='close' class='grid__mobile--overlay'

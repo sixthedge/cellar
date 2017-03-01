@@ -1,0 +1,5 @@
+.phase-progress_section
+  each phase_states as |ps_array|
+    .phase-progress_phase-states
+      each ps_array as |phase_state|
+        component 'header/phase_state' model=phase_state selected=selected assignment=assignment

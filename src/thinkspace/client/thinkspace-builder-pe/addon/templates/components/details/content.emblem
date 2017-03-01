@@ -1,0 +1,16 @@
+.main-content__header
+  h1 Peer Evaluation Details
+  p Time to create a new exercise!
+
+/ if step.all_data_loaded
+component '__changeset/input' value=step.changeset.title changeset=step.changeset attribute='title' label='Exercise name' summary='This is what your students will see it as'
+
+component '__changeset/input' value=step.changeset.instructions changeset=step.changeset attribute='instructions' label='Exercise overview/instructions' summary='Students will see this before they start the exercise. The overview is a good place to provide context before they go into the exercise'
+
+.forms__field-wrapper
+  label  
+    | Choose a team set
+  .forms__label-summary
+    | This will use team distribution
+
+  component '__dropdown' collection=team_sets display_property='title' text=selected_team_set.title selected=selected_team_set select_action='select_team_set' action_receiver=this

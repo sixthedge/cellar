@@ -1,0 +1,21 @@
+///*------------------------------------*\
+//    #PAGE
+//\*------------------------------------*/
+
+html {
+	font-family:             $font-family;
+	font-weight:             $font-weight--regular;
+	color:                   $color-black-base;
+	background-color:        $color-gray-light;
+	box-sizing:              border-box;
+	-webkit-font-smoothing:  antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+

@@ -1,0 +1,19 @@
+component 'configs/header'
+
+.btn.btn-small click='clear_sort' Clear Sort
+if default_sort_by
+  .btn.btn-small.totem-admin-right click='default_by' Default Sort
+
+h6.table-sort-by-display-sorted_by Sorted By: #{display_sorted_by}
+
+table.table-sort-by style='font-size: 95%;'
+  thead
+    component '__table_sort_by/header' sort=sort.name
+    component '__table_sort_by/header' sort=sort.path
+  tbody
+    each sorted_routes as |route|
+      tr
+        td= route.name
+        td= route.path
+    else
+      h6 No root routes defined.

@@ -1,0 +1,23 @@
+.ts-ra_dashbaord-summary-team-answers
+
+  h6 #{qnumber}. #{question}
+
+  table.ts-ra_admin-summary-table
+    thead
+      tr
+        th Team
+        th Answer
+        th 
+          if show_justification
+            a click='hide_justification' Hide Justifications
+          else
+            a click='show_justification' View Justifications
+        th
+          if show_chat
+            a click='hide_chat' Hide Chats
+          else
+            a click='show_chat' View Chats
+
+    tbody
+      each qms as |qm|
+        component 'trat/summary/teams/team_qm' qm=qm show_justification=show_justification show_chat=show_chat

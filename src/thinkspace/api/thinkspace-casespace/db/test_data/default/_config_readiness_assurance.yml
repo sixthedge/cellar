@@ -1,0 +1,149 @@
+variables:
+  - &SPACE Readiness Assurance
+  - &ASSIGNMENT_1 Assignment 1 - Readiness Assurance Testing
+  - &PHASE_IRAT   IRAT
+  - &PHASE_TRAT   TRAT
+  - &PHASE_VIEW   TRAT Overview
+  # Team Sets
+  - &TEAM_SET_A    ra_team_set_a
+  - &ALL_TEAM_SETS [*TEAM_SET_A]
+  # Teams
+  - &TEAM_1 'Team-1 : read_1, read_2'
+  - &TEAM_2 'Team-2 : read_4, read_5, read_6'
+  - &TEAM_3 'Team-3 : read_7, read_8, read_9'
+  # Team users
+  - &TEAM_1_USERS [read_1, read_2]
+  - &TEAM_2_USERS [read_4, read_5, read_6]
+  - &TEAM_3_USERS [read_7, read_8, read_9]
+  # Assignment settings
+  - assignment_settings: &ASSIGNMENT_SETTINGS
+      ember: 
+        components:
+          show:
+            - [readiness_assurance, assignment_show]
+  # Phase settings
+  - &TRAT_PHASE_VIEW_SETTINGS {readiness_assurance: {trat_overview: true}}
+  - irat_settings: &IRAT_PHASE_SETTINGS
+      actions: 
+        submit:
+          class:  thinkspace/readiness_assurance/phase_actions/action/irat_submit
+          state:  complete
+          unlock: next_after_all_ownerables
+          auto_score: {score_with: thinkspace/readiness_assurance/phase_actions/score/response}
+  - trat_settings: &TRAT_PHASE_SETTINGS
+      actions: 
+        submit:
+          class:  thinkspace/readiness_assurance/phase_actions/action/trat_submit
+          unlock: next
+          auto_score: {score_with: thinkspace/readiness_assurance/phase_actions/score/response}
+
+spaces:
+  - title: *SPACE
+
+space_users:
+  - {spaces: *SPACE, users: 'import[users]'}
+
+assignments:
+  - {title: *ASSIGNMENT_1, space: *SPACE, settings: *ASSIGNMENT_SETTINGS}
+
+phases:
+  - {title: *PHASE_IRAT, assignment: *ASSIGNMENT_1,                               template_name: readiness_assurance_irat, settings: *IRAT_PHASE_SETTINGS}
+  - {title: *PHASE_TRAT, assignment: *ASSIGNMENT_1, team_category: collaboration, template_name: readiness_assurance_trat, default_state: locked, settings: *TRAT_PHASE_SETTINGS}
+  - {title: *PHASE_VIEW, assignment: *ASSIGNMENT_1, team_category: collaboration, template_name: readiness_assurance_view, default_state: locked, settings: *TRAT_PHASE_VIEW_SETTINGS}
+
+phase_templates:
+  - title: Readiness Assurance IRAT
+    name: readiness_assurance_irat
+    template: |
+      <row>
+        <column>
+          <component section='header' title='casespace-phase-header'/>
+          <component section='irat'   title='readiness-assurance-irat'/>
+          <component section='submit' title='casespace-phase-submit' data-actions='{"submit":"submit"}'/>
+      </row>
+  - title: Readiness Assurance TRAT
+    name: readiness_assurance_trat
+    template: |
+      <row>
+        <column>
+          <component section='header' title='casespace-phase-header'/>
+          <component section='trat'   title='readiness-assurance-trat'/>
+          <component section='submit' title='casespace-phase-submit' data-actions='{"submit":"submit"}'/>
+      </row>
+  - title: Readiness Assurance TRAT view
+    name: readiness_assurance_view
+    template: |
+      <row>
+        <column>
+          <component section='header'        title='casespace-phase-header'/>
+          <component section='trat_overview' title='readiness-assurance-trat-overview'/>
+      </row>
+
+teams:
+  team_sets:
+    - {title: *TEAM_SET_A, space: *SPACE}
+  team_set_teams:
+    - {title: *TEAM_1,   users: *TEAM_1_USERS,   team_set: *TEAM_SET_A, space: *SPACE}
+    - {title: *TEAM_2,   users: *TEAM_2_USERS,   team_set: *TEAM_SET_A}
+    - {title: *TEAM_3,   users: *TEAM_3_USERS,   team_set: *TEAM_SET_A}
+  phase:
+    - {title: *PHASE_TRAT, assignment: *ASSIGNMENT_1, team_sets: *ALL_TEAM_SETS, space: *SPACE}
+    - {title: *PHASE_VIEW, assignment: *ASSIGNMENT_1, team_sets: *ALL_TEAM_SETS, space: *SPACE}
+
+blueprints:
+  choices_a: &CHOICES_A
+    - {id: a, label: Choice A}
+    - {id: b, label: Choice B}
+    - {id: c, label: Choice C}
+    - {id: d, label: Choice D}
+  questions_a: &QUESTIONS_A
+    - {id: ra_1_1, question: Question 1, choices: *CHOICES_A}
+    - {id: ra_1_2, question: Question 2, choices: *CHOICES_A}
+    - {id: ra_1_3, question: Question 3, choices: *CHOICES_A}
+  answers_a: &ANSWERS_A
+    correct:
+      ra_1_1: a
+      ra_1_2: b
+      ra_1_3: c
+
+readiness_assurance:
+  assessments:
+    - space: *SPACE
+      assignment: *ASSIGNMENT_1
+      phases:     *PHASE_IRAT
+      user:       update_1
+      assessment: 
+        title: ra-assessment-irat
+        settings:
+          ra_type: irat
+          submit: {transition_user_team_members_on_last_user_submit: true}
+          questions:
+            type:   multiple_choice
+            random: true
+            ifat:   true
+          scoring:
+            correct:    3
+            attempted:  1
+            no_answer:  0
+            incorrect_attempt: -1
+        questions: *QUESTIONS_A
+        answers:   *ANSWERS_A
+    - space: *SPACE
+      assignment: *ASSIGNMENT_1
+      phases:     *PHASE_TRAT
+      user:       update_1
+      assessment: 
+        title: ra-assessment-trat
+        settings:
+          ra_type: trat
+          questions:
+            type:   multiple_choice
+            random: true
+            ifat:   true
+          scoring:
+            correct:   5
+            no_answer: 0
+            attempted: 1
+            incorrect_attempt: -1
+        questions: *QUESTIONS_A
+        answers:   *ANSWERS_A

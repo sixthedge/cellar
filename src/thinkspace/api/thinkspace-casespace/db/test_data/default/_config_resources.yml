@@ -1,0 +1,81 @@
+variables:
+  - &SPACE resources
+  - tags: &RESOURCE_TAGS_ASSIGNMENT
+    - title: Syllabus
+      links:
+        - {title: iowa state, url: 'http://iastate.edu'}
+        - {title: thinkspace, url: 'http://thinkspace.org'}
+      files:
+        - {source: file.pdf, name: syllabus.pdf}
+  - tags: &RESOURCE_TAGS_PHASE
+    - title: Phase Resources
+      links:
+        - {title: thinkspace, url: 'http://thinkspace.org'}
+      files:
+        - {source: file.pdf, name: work sheet 1.pdf}
+        - {source: file.pdf, name: work sheet 2.pdf}
+        - {source: file.txt, name: work sheet 3.txt}
+        - {source: file.txt, name: work sheet 4.txt}
+
+spaces:
+  - title: *SPACE
+
+space_users:
+  - spaces: *SPACE
+    users: import[users@space_1]
+
+assignments:
+  - {title: assignment_resources, space: *SPACE}
+  - title: phase_resources
+  - title: assignment_and_phase_resources
+
+phases:
+  - assignment:    assignment_resources
+    title:         assignment_resources_A
+    template_name: template_resource
+
+  - assignment:    phase_resources
+    title:         phase_resources_A
+  - title:         phase_resources_B
+
+  - assignment:    assignment_and_phase_resources
+    title:         assignment_and_phase_resources_A
+  - title:         assignment_and_phase_resources_B
+
+phase_templates:
+  - title: Resource template
+    name: template_resource
+    template: |
+      #{casespace_phase_header}
+      <row>
+        <column>
+        </column>
+      </row>
+      #{casespace_phase_submit}
+
+resource_tags:
+
+  - assignment: assignment_resources
+    user: {first_name: update_2}
+    tags: *RESOURCE_TAGS_ASSIGNMENT
+
+  - phase: phase_resources_A
+    user: {first_name: update_2}
+    tags: *RESOURCE_TAGS_PHASE
+
+  - phase: phase_resources_B
+    user: {first_name: update_2}
+    tags: *RESOURCE_TAGS_PHASE
+
+  - assignment: assignment_and_phase_resources
+    user: {first_name: update_2}
+    tags: *RESOURCE_TAGS_ASSIGNMENT
+
+  - phase: assignment_and_phase_resources_A
+    user: {first_name: update_2}
+    tags: *RESOURCE_TAGS_PHASE
+
+  - phase: assignment_and_phase_resources_B
+    user: {first_name: update_2}
+    tags: *RESOURCE_TAGS_PHASE
+

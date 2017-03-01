@@ -1,0 +1,24 @@
+.forms__field-wrapper
+  label.spacing__margin-bottom--half
+    = qm.question
+
+  if qm.rm.room_users
+    .ts-ra_question-chat click='toggle_chat'
+      if qm.chat_displayed
+        |Close Chat
+      else
+        |Chat
+
+if qm.is_ifat
+  component 'radio/ifat_buttons' qm=qm select='select_answer' class='group'
+else
+  component 'radio/buttons' qm=qm select='select_answer' class='group'
+
+if qm.has_justification
+  component 'justification' qm=qm focus_in='focus_justification' save='save_justification' cancel='cancel_justification'
+
+if qm.question_disabled_by
+  .text--regular.text__font-size--12
+    | <strong>#{qm.question_disabled_by}</strong> is currently typing... 
+
+component '__changeset/errors' changeset=changeset

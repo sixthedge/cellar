@@ -1,0 +1,72 @@
+partial 'components/header'
+
+if model.is_pubsub
+  mount 'thinkspace-message-pubsub'
+
+.ts-grid_row: .small-12.ts-grid_columns.ts-grid_columns-thick
+  / if can.update
+  /   .assignment-content_actions
+  /     link-to r_assignments_edit model
+  /       a.btn.btn-primary.btn-small
+  /         | Edit Case
+  /         .tsi.tsi-left.icon-tiny.tsi-edit-inverse.left
+  link-to 'results' model
+    | RESULTS
+
+.ts-grid-row
+  .small-12.ts-grid_columns.ts-grid_columns-thick
+    partial 'components/overview/tabs'
+
+.ts-grid_row
+  .small-12.large-8.ts-grid_columns.ts-grid_columns-thick
+    .ts-grid_row
+      // Component for state display and transitions
+      if can.update
+        component 'overview/states' model=model assignment_type=assignment_type
+      / if can.update
+      /   if model.active
+      /     .dialogue.dialogue-success
+      /       h1 Case is Live!
+      /       p This case is currently active and can be seen by students after the set release date.
+      /       .btn.btn-default.btn-small click='inactivate' Deactivate Case
+      /   else
+      /     .dialogue.dialogue-actionless
+      /       h1 Case is Inactive
+      /       p This case is currently inactive. Students will not be able to see this case until you activate it.
+      /       .btn.btn-primary.btn-small click='activate' Activate Case
+
+    .ts-grid_row
+      .dialogue.dialogue-instruct
+        h1 About this case
+        if model.instructions
+          p== model.instructions
+        else
+          p No instructions given.
+
+    .ts-grid_row.casespace-assignment_resume-link
+      .small-12.large-8.ts-grid_columns.ts-grid_columns-centered
+
+        / Values set by the assignments#show router on the assignments#show controller in setupController.
+        / if all_phases_completed
+        /   | {{model.assignment_name}} Completed
+        / else
+        /   if is_in_progress
+        /     = link-to r_phases_show model resume_phase class='btn btn-primary btn-medium'
+        /       |Resume {{model.assignment_name}}
+        /   else
+        /     = link-to r_phases_show model model.first_phase class='btn btn-primary btn-medium'
+        /       |Start {{model.assignment_name}}
+
+  / if phase_states_loaded
+  .small-12.large-4.ts-grid_columns.ts-grid_columns-thick
+    partial 'components/overview/details'
+
+      / h5 Phase List
+      / p.casespace-assignment_phase-tagline A list of the total phases that make up this case.  Click on one to jump in.
+
+      / .casespace-assignment_phase-list
+      /   table
+      /     thead
+      /     tbody
+      /       each model.active_phases as |phase|
+      /         component 'phase' model=phase assignment=model

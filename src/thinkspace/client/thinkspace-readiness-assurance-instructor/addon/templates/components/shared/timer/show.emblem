@@ -1,0 +1,20 @@
+if have_time_for_reminder
+  .ts-grid_row: .small-12.ts-grid_columns: .ts-ra_admin-manage-select-teams-links: .ts-ra_admin-menu: ul.ts-action-bar
+    li.ts-action-bar_action class={add_reminder::active} 
+      a click='select_no_reminder' No Reminder
+    li.ts-action-bar_action class={add_reminder:active}
+      a click='select_reminder' Add Reminder
+
+  if add_reminder
+    .ts-ra_admin-timer
+      .ts-ra_admin-reminder-interval
+        .ts-ra_admin-message-title Interval
+        component 'shared/timer/interval' time_at=time_at intervals=rad.timer_intervals select='select_interval' clear='clear_interval'
+      .ts-ra_admin-reminders
+        if interval
+          .ts-ra_admin-message-title Number
+          component 'shared/timer/reminders' time_at=time_at interval=interval select='select_reminders' clear='clear_reminder'
+
+else
+  .ts-grid_row: .small-12.ts-grid_columns: .ts-ra_admin-manage-select-teams-links: .ts-ra_admin-menu: ul.ts-action-bar
+    li.ts-action-bar_action No time for a reminder

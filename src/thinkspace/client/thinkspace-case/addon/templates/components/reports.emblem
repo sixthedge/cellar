@@ -1,0 +1,3 @@
+partial 'components/header'
+
+mount 'thinkspace-report'

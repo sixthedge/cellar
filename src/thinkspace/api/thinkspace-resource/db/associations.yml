@@ -1,0 +1,48 @@
+- model: thinkspace/resource/file
+  associations:
+    - belongs_to: thinkspace/common/user
+    - belongs_to: resourceable
+      polymorphic: true
+    - has_many: thinkspace/resource/file_tags
+      dependent: :destroy
+    - has_many: thinkspace/resource/tags
+      through:  thinkspace/resource/file_tags
+  serializers:
+    - attributes: [id, url, title, content_type, size, file_updated_at, resourceable_type, resourceable_id]
+
+- model: thinkspace/resource/link
+  associations:
+    - belongs_to: thinkspace/common/user
+    - belongs_to: resourceable
+      polymorphic: true
+    - has_many: thinkspace/resource/link_tags
+      dependent: :destroy
+    - has_many: thinkspace/resource/tags
+      through:  thinkspace/resource/link_tags
+  serializers:
+    - attributes: [id, url, title, resourceable_type, resourceable_id]
+
+- model: thinkspace/resource/link_tag
+  associations:
+    - belongs_to: thinkspace/resource/link
+    - belongs_to: thinkspace/resource/tag
+
+- model: thinkspace/resource/file_tag
+  associations:
+    - belongs_to: thinkspace/resource/file
+    - belongs_to: thinkspace/resource/tag
+
+- model: thinkspace/resource/tag
+  associations:
+    - has_many:  thinkspace/resource/link_tags
+      dependent: :destroy
+    - has_many:  thinkspace/resource/links
+      through:   thinkspace/resource/link_tags
+    - has_many:  thinkspace/resource/file_tags
+      dependent: :destroy
+    - has_many:  thinkspace/resource/files
+      through:   thinkspace/resource/file_tags
+    - belongs_to: taggable
+      polymorphic: true
+  serializers:
+    - attributes: [id, title, taggable_type, taggable_id]

@@ -1,0 +1,36 @@
+.title-region
+  .ts-grid_row: .small-12.ts-grid_columns.ts-grid_columns-thick
+      .title-region_breadcrumbs
+        link-to-external 'spaces.show' model.space
+          = model.space.title
+      h3 = model.title
+      = model.friendly_due_at
+
+      ul.ts-action-bar
+        / li.ts-action-bar_action
+        /   link-to r_assignments_show model
+        /     | Overview
+        if model.can.update
+          / li.ts-action-bar_action
+          /   link-to r_assignments_scores model
+          /     | Scores
+          / li.ts-action-bar_action
+          /   link-to 'reports' model
+          /     | Reports
+
+          li.ts-action-bar_action
+            if reports_visible
+              a.active click='done' Reports
+            else
+              link-to 'reports' model
+                | Reports
+
+      log phase
+      = phase
+      link-to-external 'phases.show' phase
+        .btn.btn-small.right
+          | Go to exercise
+        / if model.metadata.has_assessments
+        /   li.ts-action-bar_action
+        /     link-to r_cm_assessments model
+        /       | Evaluation Dashboard

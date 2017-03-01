@@ -1,0 +1,29 @@
+{
+  "name": "totem-assets",
+  "version": "0.0.1",
+  "description": "Totem Assets",
+  "author": "sixthedge",
+  "license": "MIT",
+  "homepage": "https://github.com/sixthedge/totem-client",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sixthedge/totem-client.git"
+  },
+  "private": true,
+  "ember-addon": {
+    "main": "index.js",
+    "after": [
+      "totem-base"
+    ]
+  },
+  "keywords": [
+    "ember-addon",
+    "totem"
+  ],
+  "directories": {
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}

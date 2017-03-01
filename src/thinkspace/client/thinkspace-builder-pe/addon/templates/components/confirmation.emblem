@@ -1,0 +1,30 @@
+partial 'components/header'
+.main-content
+  .grid__container--flex.spacing__margin-bottom--4
+    .grid__col--3of4.grid__mobile--full-width
+      .main-content__header
+        h1 Peer Evaluation Confirmation
+        p Make sure everything looks fine
+
+      component 'confirmation/details'
+      component 'confirmation/content'
+      component 'confirmation/settings'
+  .grid__container--flex.spacing__margin-bottom--4
+    .grid__col--4of4.grid__mobile--hidden
+      button.btn.is-left{action 'prev_step'}
+        | Back
+      button.btn.btn--primary.is-right{action 'exit'}
+        | Finish Building
+.mobile-progress
+  .mobile-progress__item.is-left
+    .mobile-progress__link click='prev_step'
+      .text__font-size--12.text--bold
+        | Back
+      .text__font-size--14
+        | Settings
+  .mobile-progress__item.is-right
+    .mobile-progress__link click='next_step'
+      .text__font-size--12.text--bold
+        | Complete!
+      .text__font-size--14
+        | Finish Building

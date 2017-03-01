@@ -1,0 +1,16 @@
+superuser:  &SUPERUSER [{first_name: superuser, last_name: QAS, superuser: true}]
+superusers: &SUPERUSERS [*SUPERUSER]
+
+owner_1: &OWNER_1 {first_name: owner_1, last_name: 0QA, email: 'owner_1@sixthedge.com', role: owner}
+
+read_1:  &READ_1  {first_name: read_1, last_name: 1QA, email: 'read_1@sixthedge.com', role: read}
+read_2:  &READ_2  {first_name: read_2, last_name: 2QA, email: 'read_2@sixthedge.com', role: read}
+read_3:  &READ_3  {first_name: read_3, last_name: 3QA, email: 'read_3@sixthedge.com', role: read}
+
+owners:  &OWNERS  [*OWNER_1]
+readers: &READERS [*READ_1, *READ_2, *READ_3]
+
+import: [*OWNERS, *READERS]
+
+all_users:  [read_1, read_2, read_3, owner_1]
+read_users: [read_1, read_2, read_3]

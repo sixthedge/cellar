@@ -1,0 +1,6 @@
+- model: thinkspace/pub_sub/server_event
+  associations:
+    - {belongs_to: authable,  polymorphic: true}
+    - {belongs_to: thinkspace/common/user, readonly: true}
+  serializers:
+    - attributes: [id, state, room_event, rooms, value]

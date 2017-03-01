@@ -1,0 +1,16 @@
+- model: test/associations/one/account_54
+  associations:
+    - has_many: test/associations/one/user_54s
+  serializers:
+    - attributes: [id, title]
+
+- model: test/associations/one/user_54
+  associations:
+    - has_one: test/associations/one/account_54
+      readonly: true
+      scope: where(:active => true)
+      accepts_nested_attributes_for:
+        allow_destroy: true
+  serializers:
+    - attributes: [id, name, email]
+

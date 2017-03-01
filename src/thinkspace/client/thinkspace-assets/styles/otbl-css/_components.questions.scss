@@ -1,0 +1,39 @@
+///*------------------------------------*\
+//    #QUESTIONS
+//\*------------------------------------*/
+
+.question-list {
+  padding-left: 0;
+  font-size: .875rem;
+  font-weight: $font-weight--bold;
+}
+
+.question-list__item {
+  border: $border--default;
+}
+
+
+
+
+///*------------------------------------*\
+//    #CHOICES
+//\*------------------------------------*/
+
+.choice-list__item {
+  font-weight: $font-weight--regular;
+  cursor: pointer;
+  margin-bottom: .45rem;
+}
+
+.choice-list__radio-button {
+
+
+}
+
+.choice-list__radio-button--checked {
+
+}
+
+.choice-list__item-label {
+  
+}

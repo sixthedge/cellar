@@ -1,0 +1,26 @@
+if send_message
+  tr
+    td colspan='6'
+      .ts-grid_row: .small-12.ts-grid_columns.ts-grid_columns-thick
+        h6 To: #{user.username}
+        = textarea value=rad.message
+      .ts-grid_row: .small-12.ts-grid_columns.ts-grid_columns-thick
+        a.btn.btn-small.btn-primary.right click='send' Send
+        a.btn.btn-small  click='done' Cancel
+
+tr
+  if user.untracked
+    td: i.tsi.tsi-phase-incorrect.ts-ra_admin-tracked-user
+    td #{user.username}
+  else
+    td: i.tsi.tsi-phase-complete.ts-ra_admin-untracked-user
+    td.ts-ra_admin-table-user-action click='toggle_send_message' title='send message to user' #{user.username}
+  td= user.teams
+  if user.untracked
+    td
+    td
+    td
+  else
+    td= user.model_title
+    td= user.url
+    td= user.date

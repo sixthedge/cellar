@@ -1,0 +1,9 @@
+if edit_visible
+  .ts-grid_row: .small-12.ts-grid_columns
+    component 'manage/tag/edit' model=model taggable=taggable cancel='cancel' prompt=prompt
+
+else
+  .ts-grid_row
+    .small-8.ts-grid_columns: .thinkspace-resource_tag-title: = model.title
+    .small-2.ts-grid_columns: a.btn.btn-default.btn-small.left  click='edit': i.im.im-pencil: |Edit
+    .small-2.ts-grid_columns: a.btn.btn-default.btn-small.right click='destroy': i.fa.fa-trash-o: |Delete

@@ -1,0 +1,13 @@
+es:
+  thinkspace:
+
+    thinkspace:
+
+      common:
+      
+        create:  'añadir'
+        read:    'ver'
+        update:  'editar'
+        destroy: 'eliminar'
+        cancel:  'cancelar'
+        actions: 'Acciones'

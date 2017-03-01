@@ -1,0 +1,22 @@
+tr
+  td.no-wrap= room.room
+  td.right.no-wrap= room.count
+  td.center.no-wrap
+    a click='zero' reset-to-zero
+  td.center.no-wrap
+    a click='get_count' set-count-value
+  td.no-wrap
+
+    if show_count
+      .totem-admin-room-count-value
+        = input value=value
+        a.totem-admin-room-count-save   click='set_count' Save
+        a.totem-admin-room-count-cancel click='hide' Cancel
+
+    if show_confirm
+      .totem-admin-room-count-confirm
+        h6 Do you really want to change room "#{room.room}" from #{room.count} to #{value}?
+        .btn.btn-small.btn-warning.totem-admin-room-count-yes click='send_reset' Yes
+        .btn.btn-small.totem-admin-room-count-no click='hide' No
+
+  td.table-sizing

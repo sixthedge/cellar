@@ -1,0 +1,13 @@
+.forms__field-wrapper
+  label.spacing__margin-bottom--half
+    = qm.question
+
+if qm.is_ifat
+  component 'radio/ifat_buttons' qm=qm select='select_answer' class='group'
+else
+  component 'radio/buttons' qm=qm select='select_answer' class='group'
+
+if qm.has_justification
+  component 'justification' qm=qm save='save_justification'
+
+component '__changeset/errors' changeset=changeset

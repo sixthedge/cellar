@@ -1,0 +1,57 @@
+# Server Framework
+gem 'rails', '> 5.0.0'
+gem 'pg'
+
+gem 'responders'
+
+group :development do
+  gem 'thin'
+  gem 'rails-erd'
+end
+
+group :production do
+  gem 'passenger'
+  gem 'newrelic_rpm'
+  gem 'dalli' # MemCachier store.
+end
+
+group :test do
+  gem 'simplecov', :require => false
+end
+
+# Auditing
+gem 'paper_trail'
+gem 'deep_cloneable'
+
+# Amazon SQS
+gem 'aws-sdk', '>= 2.0'
+
+# CORS - config in application.rb
+gem 'rack-cors', require: 'rack/cors'
+
+# Server to Server API (rails-to-oauth)
+gem 'rest-client'
+
+# Redis for serving Index.
+gem 'redis'
+
+# Slim for Mailer Views
+gem 'slim'
+
+# State Machine
+gem 'aasm'
+
+# For quickly parsing CSVs into arrays of hashes
+gem 'smarter_csv'
+
+# Delayed Job (background processing)
+gem 'delayed_job_active_record'
+
+# Discourse API
+gem 'discourse_api'
+
+# Tagging gem
+gem 'acts-as-taggable-on', '~> 4.0'
+
+# Pagination
+gem 'kaminari'

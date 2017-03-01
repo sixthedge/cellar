@@ -1,0 +1,21 @@
+if has_args
+  .totem-admin-engines-add-engine-details click='toggle_show'
+    = add_engine.engine
+    .fa.fa-plus
+else
+  .totem-admin-engines-add-engine= add_engine.engine
+
+if show
+  if external_routes
+    ul.totem-admin-engines-list
+      .totem-admin-engines-title
+        |External Routes:
+      each-in external_routes as |key value|
+        li #{key}: #{value}
+
+  if services
+    ul.totem-admin-engines-list
+      .totem-admin-engines-title
+        |Services
+      each services as |service|
+        li= service

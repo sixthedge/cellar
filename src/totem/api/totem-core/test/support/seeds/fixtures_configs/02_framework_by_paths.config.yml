@@ -1,0 +1,8 @@
+platform_path: test/framework
+
+paths:               
+  - path: test/framework/core
+  - path: test/framework/seed_one
+  - path: test/framework/seed_two
+  - path: test/framework/seed_zero
+  - path: test/framework/not_mounted

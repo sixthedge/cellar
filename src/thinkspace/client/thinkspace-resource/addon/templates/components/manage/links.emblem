@@ -1,0 +1,35 @@
+.thinkspace-resource_expansion
+
+  .thinkspace-resource_expansion-header
+    span.thinkspace-resource_expansion-header-text: |Resource Links
+    span.thinkspace-resource_expansion-header-action-icon click='close': i.im.im-close
+  
+  if create_visible
+    .ts-grid_row: .small-12.ts-grid_columns
+      component 'manage/link/new' resourceable=model cancel='cancel' prompt=prompt
+  else
+    .ts-grid_row: .small-12.ts-grid_columns: .thinkspace-resource_expansion-header-action
+      a.btn.btn-default.btn-small click='create': i.fa.fa-plus: |Link
+
+    .thinkspace-resource_resources
+      .thinkspace-resource_links
+
+        if model.links
+
+          if model.tagless_links
+            fieldset
+              legend No tag (#{model.tagless_links.length})
+
+              each model.tagless_links as |link|
+                component 'manage/link' model=link resourceable=model
+
+          each model.tags as |tag|
+            if tag.links
+
+              fieldset
+                legend
+                  'Tag:
+                  span.thinkspace-resource_legend-tag: |#{tag.title} (#{tag.links.length})
+
+                each tag.links as |link|
+                  component 'manage/link' model=link resourceable=model

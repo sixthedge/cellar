@@ -1,0 +1,11 @@
+if all_data_loaded
+  span.casespace-assignment_phase-state-icon
+    if model.is_mock
+      link-to 'show' assignment phase (query-params query_id='none') title=title
+        if is_selected
+          .casespace-phase_header-mock-progress-icon: i.fa.fa-dot-circle-o
+        else
+          .casespace-phase_header-mock-progress-icon: i.fa.fa-circle-o
+    else
+      link-to 'show' assignment phase (query-params query_id=model.id) title=title
+        = __phase-progress-icon selected model model.computed_current_state

@@ -1,0 +1,8 @@
+platform_path: test/platform
+
+paths:               
+  - path: test/platform/one
+    routes:
+      mount:
+        at: /
+        bad_key: 'bad'

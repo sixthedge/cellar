@@ -1,0 +1,19 @@
+.totem-error
+  .row: .small-4.columns.large-centered
+    .callout.callout-failure
+      .callout_bubble: .callout_img
+      .callout_content
+        h6.callout_content-header Houston..
+        p.callout_content-text We have a problem..
+
+      h6: a= totem_error_template_message
+
+  .totem-messages
+      each totem_messages.message_queue as |message|
+        if message.visible
+          .totem-message class={message.type totem_messages.debug_on:debug-on}
+            if totem_messages.debug_on
+              |#{message.date} #{message.timestamp} #{message.message}
+            else
+              |#{message.date} #{message.message}
+              / |#{row-number}. #{message.date} #{message.message}

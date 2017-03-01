@@ -1,0 +1,14 @@
+- model: test/associations/one/account_36
+  associations:
+    - has_many: test/associations/one/user_36s
+  serializers:
+    - attributes: [id, title]
+
+- model: test/associations/one/user_36
+  associations:
+    - belongs_to: test/associations/one/account_36
+      readonly: true
+      scope:    where(:active => true).order(:id)
+  serializers:
+    - attributes: [id, name, email]
+

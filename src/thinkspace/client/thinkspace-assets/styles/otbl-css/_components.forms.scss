@@ -1,0 +1,179 @@
+///*------------------------------------*\
+//    #FORMS
+//\*------------------------------------*/
+fieldset {
+	border:  none;
+	margin:  0;
+	padding: 0;
+}
+
+.forms__section {
+	>h2 {
+		font-size: 1.15rem;
+	}
+
+  .forms__heading-summary {
+    font-size: .875rem;
+    margin-top: .5rem;
+    margin-bottom: 2rem;
+  }
+}
+
+.forms__field-wrapper {
+	margin:   0;
+	clear:    both;
+	position: relative;
+	overflow: visible;
+}
+
+
+
+
+/**
+ * Labels
+ */
+
+label {
+	font-weight: $font-weight--bold;
+	font-size:   .875rem;
+	display:     block;
+  margin-bottom: .5rem;
+}
+
+.forms__label--subtle {
+  color: $color-gray-base;
+}
+
+.forms__label-summary {
+	font-size:     .75rem;
+	margin-bottom: .75rem;
+	max-width:     42em;
+}
+
+
+
+
+/**
+ * Inputs.
+ */
+
+textarea, 
+input[type="text"], 
+input[type="password"], 
+input[type="file"], 
+input[type="datetime"], 
+input[type="datetime-local"], 
+input[type="date"], 
+input[type="month"], 
+input[type="time"], 
+input[type="week"], 
+input[type="number"], 
+input[type="email"], 
+input[type="url"], 
+input[type="search"], 
+input[type="tel"], 
+input[type="color"] {
+
+	display:          inline-block;
+	font-family:      $font-family;
+  border:           2px solid $color-gray-base;
+  border-radius:    $border-radius;
+  font-size:        .875rem;
+  color:            $color-black-base;
+  padding:          0 0.4em;
+  width:            100%;
+  margin-bottom:    2em;
+  min-height:       2rem;
+  background-color: white;
+  vertical-align:   middle;
+  max-width:        $max-width--content;
+
+  &:focus {
+    border:  2px solid $color-blue-base;
+    outline: none;
+  }
+
+  &.text-input--thick {
+    height: 3rem;
+  }
+
+  &::-webkit-input-placeholder, 
+  &::-moz-placeholder, 
+  &:-ms-input-placeholder, 
+  &:-moz-placeholder {
+    color: $color-gray-base;
+    font-weight: bold;
+  }
+
+  // if disabled
+  .is-readonly & {
+  	cursor: not-allowed;
+  }
+}
+
+textarea {
+  min-height: 4rem;
+  padding:    .4em;
+  line-height: 1.5em;
+}
+
+.forms__input--50 {
+  width: 50px;
+}
+
+
+
+
+/**
+ * Input feedback.
+ */
+
+.input-feedback__list {
+	margin:          0;
+	padding-left:    0;
+	list-style-type: none;
+
+	margin-top: -20px;
+	margin-bottom: 2rem;
+}
+
+.input-feedback__item {
+	white-space: normal;
+	word-wrap:   break-word;
+	width:       100%;
+	max-width:   $max-width--content;
+	font-size:   .75rem;
+	line-height: 1.15rem;
+	font-weight: $font-weight--bold;
+	position:    relative;
+}
+
+.input-feedback--error {
+	color: $color-red-base;
+}
+
+.input-feedback--success {
+	color: $color-green-base;
+}
+
+
+
+
+/**
+ * Inline group/
+ */
+
+.inline-group {
+  display:        flex;
+  flex-direction: row;
+  max-width:      $max-width--content;
+ }
+
+.inline-group__item {
+
+}
+
+.inline-group__item--1of3 {
+  width: 33%;
+  float: left;
+}

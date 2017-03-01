@@ -1,0 +1,69 @@
+///*------------------------------------*\
+//    #TILES
+//\*------------------------------------*/
+
+.tile__list {
+	list-style-type: none;
+	margin: 0;
+	padding-left: 0;
+}
+
+
+.tile__item {
+	display:          block;
+	border:           $border--default;
+	border-radius:    $border-radius;
+	background-color: white;
+	padding:          .5rem 1rem;
+	position:         relative;
+	margin-bottom:    1rem;
+	cursor:           pointer;
+	transition:       $transition-animation;
+	text-decoration:  none;
+
+	&:hover, &:focus {
+		border-color: $color-blue-base;
+	}
+}
+
+.tile__name {
+	font-size:  1.15rem;
+	margin:     0;
+	transition: color .29s ease-in-out 0s;
+	color:      $color-black-base;
+
+	.tile__item:hover & {
+		color: $color-blue-base;
+	}
+}
+
+.tile__sub-caption {
+	font-size:     .875rem;
+	font-weight:   $font-weight--bold;
+	color:         $color-gray-base;
+	margin-bottom: 1rem;
+}
+
+.tile__info {
+	font-size:  .875rem;
+	font-style: italic;
+	color:      $color-black-base;
+}
+
+.tile__status {
+	font-size:     .75rem;
+	font-weight:   $font-weight--bold;
+	border-radius: $border-radius/2;
+	padding:       0 .5rem;
+	text-align:    center;
+	min-width:     3rem;
+	color:         white;
+}
+
+.tile__status--live {
+	background-color: $color-green-base;
+}
+
+.tile__status--draft {
+	background-color: $color-gray-base;
+}

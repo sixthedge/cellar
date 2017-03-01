@@ -1,0 +1,3 @@
+if ready
+  .ts-ra_admin-view-messages-content
+    mount 'thinkspace-message-pubsub'

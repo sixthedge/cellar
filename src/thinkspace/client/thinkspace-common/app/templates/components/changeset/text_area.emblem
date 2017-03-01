@@ -1,0 +1,5 @@
+if label: label.ts-validated-input_label= label
+
+= textarea value=value input_attributes=input_attributes
+
+component '__changeset/errors' changeset=changeset attribute=attribute show_errors=show_errors input_id=input_id error_class=error_class

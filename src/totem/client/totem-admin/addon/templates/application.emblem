@@ -1,0 +1,4 @@
+#admin-wrapper
+  #content
+    component 'header'
+    outlet

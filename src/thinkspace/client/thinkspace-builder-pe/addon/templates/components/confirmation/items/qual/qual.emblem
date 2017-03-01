@@ -1,0 +1,5 @@
+label
+  | Question #{display_index}
+
+p.text__font-size--14.spacing__margin-top--0.spacing__margin-bottom--0 = label
+.text__font-size--12.spacing__margin-bottom--1 = display_feedback_type

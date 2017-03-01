@@ -1,0 +1,53 @@
+$table-sort-by-blue-dark:  #3194bb;
+$table-sort-by-blue-med:   #b4dbeb;
+$table-sort-by-blue-light: #f0f8fb;
+$table-sort-by-blue-base:  #63b4d6;
+
+table.table-sort-by {
+
+  // th.active {background-color: green;}
+
+  th.table-sort-by-sort-action {
+    padding: .3em;
+  }
+
+  td.left   {text-align: left;}
+  td.center {text-align: center;}
+  td.right  {text-align: right;}
+
+  td {
+    padding: .3em
+  }
+
+  td.no-wrap, th.no-wrap {white-space: nowrap;}
+
+  .table-sizing {width: 100%; visibility: hidden;}
+
+  .table-sort-by-sort-clear {
+    display: inline-block;
+    float:   right;
+    .table-sort-by-sort-clear-icon {
+      .tsi {height: 1em; width: 1em;}
+    }
+  }
+
+  .table-sort-by-sort-indicator {
+    display: inline-block;
+    float: right;
+    .tsi {height: 1em; width: 1em;}
+  }
+
+  .table-sort-by-sort-text-wrapper {
+    height:  100%;
+    width:   calc(100% - 1.5em);
+    display: inline-block;
+    &:hover {
+      cursor:           pointer;
+      background-color: $table-sort-by-blue-light !important;
+      color:            $table-sort-by-blue-dark;
+    }
+  }
+  .table-sort-by-sort-text {
+    display: inline-block;
+  }
+}

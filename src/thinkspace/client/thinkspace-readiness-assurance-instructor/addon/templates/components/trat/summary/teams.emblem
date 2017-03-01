@@ -1,0 +1,7 @@
+if ready
+  .ts-ra_admin-summary-by-teams
+    each qms_rows as |row|
+      .ts-grid_row
+        each row as |qms|
+          .ts-grid_columns.ts-grid_columns-thick class=columns_class
+            component 'trat/summary/teams/team' qms=qms

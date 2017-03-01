@@ -1,0 +1,109 @@
+require_data_files: [staging/html_samples]
+
+prereq_configs: space
+
+variables:
+  - &SPACE import[vars@space]
+  - &CASE  import[vars@case_teambased]
+
+  - &PHASE_PEER  HTML + Observation (PEER REVIEW)
+  - &PHASE_ART   Artifact (PEER REVIEW)
+  - &PHASE_COLL  HTML + Observation (TEAM COLLABORATION)
+  - &PHASE_EVAL  Evaluation (PEER ASSESSMENT)
+  - &PHASE_EVALO Evaluation Overview (PEER ASSESSMENT)
+
+  - &PT_HTML  two_column_html_observation_list_submit
+  - &PT_ART   one_column_artifact_submit
+  - &PT_EVAL  peer_assessment/assessment
+  - &PT_EVALO peer_assessment/overview
+
+  - &PS_AS   import[phase_settings@auto_score, phase_settings@validate]
+  - &PS_EVAL import[phase_settings@auto_score_unlock_next, phase_settings@validate]
+  - &PS_NOAS import[phase_settings@no_auto_score, phase_settings@validate]
+
+  - &SEC_HTML  {html: {method: staging_html_content_one_each_with_paragraph}}
+  - &SEC_ART   {artifact: {instructions: Some instructions for the artifacts}}
+  - &SEC_EVAL  import[peer_evaluation@balance]
+  - &SEC_EVALO {overview: {phase: *PHASE_EVAL}}
+
+  - &CAT_PEER peer_review
+  - &CAT_COLL collaboration
+  - &CAT_EVAL assessment
+
+  - &TEAM_SETS import[teams@all_team_sets]
+
+assignments:
+  - {title: *CASE, space: *SPACE}
+
+phases:
+  - {title: *PHASE_PEER,  assignment: *CASE, template_name: *PT_HTML,  settings: *PS_AS,   sections: *SEC_HTML,  team_category: *CAT_PEER}
+  - {title: *PHASE_ART,   assignment: *CASE, template_name: *PT_ART,   settings: *PS_NOAS, sections: *SEC_ART,   team_category: *CAT_PEER}
+  - {title: *PHASE_COLL,  assignment: *CASE, template_name: *PT_HTML,  settings: *PS_AS,   sections: *SEC_HTML,  team_category: *CAT_COLL}
+  - {title: *PHASE_EVAL,  assignment: *CASE, template_name: *PT_EVAL,  settings: *PS_EVAL, sections: *SEC_EVAL,  team_category: *CAT_EVAL}
+  - {title: *PHASE_EVALO, assignment: *CASE, template_name: *PT_EVALO, settings: *PS_AS,   sections: *SEC_EVALO, team_category: *CAT_EVAL, default_state: locked}
+
+teams:
+
+  team_sets:
+    - {space: *SPACE, merge_with: 'import[teams@team_sets]'}
+
+  team_set_teams:
+    - {space: *SPACE, merge_with: 'import[teams@team_set_teams]'}
+
+  phase:
+    - {title: *PHASE_PEER,  assignment: *CASE, team_sets: *TEAM_SETS, space: *SPACE}
+    - {title: *PHASE_ART,   assignment: *CASE, team_sets: *TEAM_SETS, space: *SPACE}
+    - {title: *PHASE_COLL,  assignment: *CASE, team_sets: *TEAM_SETS, space: *SPACE}
+    - {title: *PHASE_EVAL,  assignment: *CASE, team_sets: *TEAM_SETS, space: *SPACE}
+    - {title: *PHASE_EVALO, assignment: *CASE, team_sets: *TEAM_SETS, space: *SPACE}
+
+ai_variables:
+  - &AUTO_INPUT_USERS [read_2, read_3] 
+  - &AUTO_INPUT_TEAMS [team_1]
+  - &COMMENT_USERS    import[users@read_users]
+
+auto_input:
+
+  peer_assessment_reviews:
+    - only: *PHASE_EVAL
+      reviews: import[peer_evaluation@balance_reviews]
+
+  responses:
+    - only: *PHASE_PEER
+      users: *AUTO_INPUT_USERS
+    - only: *PHASE_COLL
+      teams: *AUTO_INPUT_TEAMS
+
+  observations: 
+    - only: *PHASE_PEER
+      users:                       *AUTO_INPUT_USERS
+      observations_per_list_lists: 4
+      max_notes_per_observation:   1
+    - only: *PHASE_COLL
+      teams:                       *AUTO_INPUT_TEAMS
+      observations_per_list_lists: 4
+      max_notes_per_observation:   1
+
+  markup_library: import[markup@library]
+
+  markup_comments:
+    - only: *PHASE_PEER
+      users:    *COMMENT_USERS
+      comments: 2
+    - only: *PHASE_PEER
+      nested:   true
+      users:    *COMMENT_USERS
+      comments: 3
+    - only: *PHASE_COLL
+      users:    *COMMENT_USERS
+      comments: 2
+
+  artifacts:
+    - only: *PHASE_ART
+      users:    *COMMENT_USERS
+      files:    file.pdf
+      rename:   true
+      comments: 2
+      comment_values: 
+        - {x: 384, y: 144, page: 1}
+        - {x: 384, y: 244, page: 1}

@@ -1,0 +1,5 @@
+- model: test/associations/one/user
+  associations:
+    - bad_association: test/associations/two/user
+  serializers:
+    - attributes: [id, name]

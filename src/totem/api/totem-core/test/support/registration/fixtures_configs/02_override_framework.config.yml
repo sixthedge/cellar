@@ -1,0 +1,12 @@
+platform_path: test/framework
+
+classes:
+  class_1: Test::Framework::Core::Class1
+  class_2: Test::Framework::Core::Controllers::Class2
+  class_3: Test::Framework::Core::Models::Class3
+
+modules:
+  module_1: Test::Framework::Core::Module1
+  module_2: Test::Framework::Core::Controllers::Module2
+  module_3: Test::Framework::Core::Models::Module3
+  module_0: Test::Framework::Core::Module0

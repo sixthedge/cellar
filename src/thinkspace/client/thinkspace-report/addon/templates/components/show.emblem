@@ -1,0 +1,24 @@
+.ts-grid_row: .small-12.ts-grid_columns.ts-grid_columns-thick
+  if all_data_loaded
+
+    .ts-grid_row: .ts-grid_columns.small-12.medium-10.large-8
+      a.btn.btn-small.btn-link.below16 click='back'
+        | Back to Reports
+        .tsi.tsi-left.tsi-size_16.tsi-left-arrow.left
+      h1 #{model.title}
+      p.text14
+        span Created on
+        span.light-emphasis #{model.created_at}
+      hr
+
+      each model.files as |file|
+        .row
+          .ts-grid_columns.small-12.medium-2.large-2
+            / img.ts-img_left-preview.below16 src='/assets/images/interactions/ts-reports_csv.svg'
+          .ts-grid_columns.small-12.medium-9.large-9.right
+            h6
+              | #{file.title}
+            p.text14.light-emphasis CSV file
+            a.btn.btn-primary.btn-small href=file.url
+              | Download File
+              .tsi.tsi-left.tsi-size_16.tsi-download_white.left

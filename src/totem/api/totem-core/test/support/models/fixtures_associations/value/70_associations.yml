@@ -1,0 +1,12 @@
+- model: test/associations/one/account_70
+  associations:
+    - has_many: test/associations/one/user_70s
+  serializers:
+    - attributes: [id, title]
+
+- model: test/associations/one/user_70
+  associations:
+    - belongs_to: test/associations/one/account_70
+  serializers:
+    - attributes: [id, name, email]
+

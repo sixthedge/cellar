@@ -1,0 +1,3 @@
+library:
+  - comments: 6
+    tags: [Tag A, Tag A, [Tag A, Tag B], Tag B, Tag C]

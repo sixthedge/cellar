@@ -1,0 +1,49 @@
+///*------------------------------------*\
+//    #DROPDOWNS
+//\*------------------------------------*/
+
+select {
+  display:          inline-block;
+  vertical-align:   middle;
+  font-family:      $font-family;
+  color:            white;
+  cursor:           pointer;
+  text-decoration:  none;
+  border:           none;
+  height:           2rem;
+  width:            auto;
+  line-height:      2rem;
+  padding:          0 1.15rem;
+  border-radius:    $border-radius;
+  text-transform:   capitalize;
+  font-size:        .75rem;
+  position:         relative;
+  max-width:        $max-width--content;
+  font-weight:      $font-weight--bold;
+  transition:       $transition-animation;
+  
+  background-color: $color-gray-base;
+
+  // Lets you add padding for some reason
+  -webkit-appearance: none;
+  -moz-appearance:    none;
+
+  &:hover, &:focus {
+    background-color: darken($color-gray-base, 10%);
+  }
+  
+  &:active {
+    background-color: darken($color-gray-base, 15%);
+  }
+
+  &:focus {
+    outline:        1px dotted white;
+    outline-offset: -4px;
+  }
+
+}
+
+.dropdown__container {
+  margin-bottom: 2rem;
+
+}

@@ -1,0 +1,3 @@
+.ts-ra_admin-timer-buttons
+  if interval_buttons
+    component 'shared/radio/buttons' buttons=interval_buttons selected_id=selected_id select='select'

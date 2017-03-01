@@ -1,0 +1,10 @@
+if changeset
+  = input value=changeset.score class='ts-validated-input_input'
+
+  component '__changeset/errors' changeset=changeset
+
+  if score_change
+    a.btn.btn-small.btn-primary.ts-menu_btn.ts-ownerable-bar_save click='save' Save
+  else
+    / Hide save button if they have errors to save space.
+    / a.btn.btn-small.btn-primary.btn-locked.ts-menu_btn Save

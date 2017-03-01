@@ -1,0 +1,25 @@
+/Question label
+.forms__field-wrapper
+  label Question Label
+  .forms__label-summary This is the question the student will see above the scale.
+  component '__changeset/input' value=model.changeset.label changeset=model.changeset attribute='label'
+
+/ Feedback type
+.forms__field-wrapper
+  label Feedback Type
+  .forms__label-summary This will let the system know where to place this response when it creates the results page.
+  
+  // Temp select until we get ts-dropdown working (12/20)
+  .dropdown__container
+    select onchange={action (mut model.changeset.feedback_type) value='target.value'}
+      each feedback_types as |feedback_type|
+        option value=feedback_type.id
+          = feedback_type.label
+
+
+hr
+.btn-group
+  button.btn.btn--primary click='update'
+    | Update Question
+  button.btn click='edit'
+    | Cancel

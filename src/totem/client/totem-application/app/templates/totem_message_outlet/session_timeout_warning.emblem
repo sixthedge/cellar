@@ -1,0 +1,15 @@
+.totem_message_outlet-container
+
+  .totem_session-timeout
+
+    each totem_outlet_messages as |message|
+      .totem_session-timeout-message= message.message
+
+    .totem_session-timeout-time-remaining
+      if seconds_remaining_before_sign_out
+        .totem_session-timeout-remaining-text Seconds remaining:
+        .totem_session-timeout-remaining-time= seconds_remaining_before_sign_out
+
+    .totem_session-timeout-footer
+      .btn.btn-default.btn-small.sign-out click='sign_out' Sign out
+      .btn.btn-primary.btn-small.continue click='continue' Continue.......

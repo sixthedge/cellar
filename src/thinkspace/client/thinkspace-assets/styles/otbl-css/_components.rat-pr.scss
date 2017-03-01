@@ -1,0 +1,77 @@
+///*------------------------------------*\
+//    #RAT-PR
+//\*------------------------------------*/
+
+.rat-report__overview-container {
+  display: flex; 
+  border: $border--default;
+  margin-bottom: 4px;
+  min-width: 300px;
+  height: 70px;
+  cursor: pointer;
+  background-color: white;
+
+  &:hover, &:focus {
+    border-color: $color-blue-base;
+  }
+}
+
+.rat-report__overview-number {
+  width:          25px;
+  height:         100%;
+  float:          right;
+  flex-grow:      0;
+  line-height:    66px;
+  vertical-align: middle;
+  text-align:     center;
+  font-weight:    $font-weight--bold;
+  color:          $color-gray-base;
+  font-size:      .875rem;
+
+  .rat-report__overview-container:hover & {
+    background-color: $color-blue-base;
+    color: white;
+  }
+}
+
+.rat-report__bar-graph {
+  flex-grow: 2;
+  padding: 0 .5rem;
+}
+
+.rat-report__overview-avg {
+  width: 66px;
+  float: right;
+  flex-grow: 0;
+  border-left: $border--default;
+  text-align: center;
+  padding-top: 10px;
+
+  .rat-report__overview-container:hover & {
+    border-left-color: $color-blue-base;
+  }
+}
+
+.rat-report__overview-avg-number {
+  font-size: 24px;
+  margin-top: 2px;
+  font-weight: 700;
+  line-height: 24px;
+}
+
+.rat-report__overview-avg-label {
+  color: $color-gray-base;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+
+.rat-report__question-container {
+  border: $border--default;
+  margin-left: 4px;
+  margin-bottom: 4px;
+  background-color: white;
+  padding: 1rem;
+}
+
+

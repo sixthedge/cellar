@@ -1,0 +1,18 @@
+platform_path: test/framework
+
+authentication:
+  session:
+    timeout_time:      30.minutes
+    expire_after_time: 6.hours
+    sample_key:        framework
+  # oauth:
+  #   providers:
+  #     test_oauth_1:
+  #       site:   http://framework_site1
+  #     test_oauth_2:
+  #       site: http://framework_site2
+  #     test_oauth_3:
+  #       site: http://framework_site3
+
+paths:               
+  - path: test/framework/core
