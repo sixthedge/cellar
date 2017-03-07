@@ -110,6 +110,14 @@ module Thinkspace
 
           def activate
             @assignment.activate
+            phase_ids         = @assignment.thinkspace_casespace_phases.pluck(:id)
+            componentable_ids = @phase_component_class.accessible_by(current_ability).where(phase_id: phase_ids).pluck(:componentable_id)
+            componentables    = Thinkspace::PeerAssessment::Assessment.accessible_by(current_ability).where(id: componentable_ids)
+            componentables.each do |componentable|
+              if componentable.respond_to? :activate
+                componentable.activate!
+              end
+            end
             controller_save_record(@assignment)
           end
 

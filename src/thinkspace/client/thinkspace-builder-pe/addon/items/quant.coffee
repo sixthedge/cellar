@@ -64,9 +64,11 @@ export default ember.Object.extend
       label: [vpresence]
     )
 
-    points_changeset = totem_changeset.create(model.settings.points,
-      max: [vComparison({val: 'min', message: 'Maximum must be greater than the Minimum', type: 'gt'})]
-    )
+    # points_changeset = totem_changeset.create(model.settings.points,
+    #   max: [vComparison({val: 'min', message: 'Maximum must be greater than the Minimum', type: 'gt'})]
+    # )
+
+    points_changeset = totem_changeset.create(model.settings.points)
 
     changeset.set('show_errors', true)
     points_changeset.set('show_errors', true)

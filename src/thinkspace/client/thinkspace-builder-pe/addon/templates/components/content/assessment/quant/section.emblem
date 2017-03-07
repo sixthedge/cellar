@@ -1,9 +1,10 @@
 fieldset.forms__section.spacing__margin-bottom--4
   h2.text--inline-block Quantitative Section
-  .btn.is-right click='create'
-    | New Scale
+  if is_not_balance
+    .btn.is-right click='create'
+      | New Scale
 
   each model as |item|
-    component 'content/assessment/quant/item' model=item
+    component 'content/assessment/quant/item' model=item is_balance=is_balance
   else
     h1 empty

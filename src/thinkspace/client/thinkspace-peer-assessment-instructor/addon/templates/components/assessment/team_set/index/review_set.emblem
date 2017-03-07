@@ -1,3 +1,5 @@
-div style='border: 2px solid blue;'
-
-  h4 review set for #{ownerable.full_name}
+a.avatar__container{action 'select' bubbles=false}
+  .avatar.avatar--32.spacing__margin-right--half
+  .avatar__username #{model.name}
+  .is-right
+    component 'assessment/team_set/index/review_set/status' model=model.status

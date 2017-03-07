@@ -27,27 +27,27 @@
 	display:        block;
 	font-size:      .875rem;
 	color:          $color-black-base;
-	font-weight:    $font-weight--bold;
+	font-weight:    $font-weight--regular;
 	border-bottom:  2px solid $color-gray-med;
-	padding:        .875rem 1rem;
+	padding:        .75rem 1rem;
 	text-transform: capitalize;
 	cursor:         pointer;
 	transition:     $transition-animation;
 
 	.builder-progress__item--is-currrent & {
-		color: $color-blue-base;
+		color:       $color-blue-base;
+		font-weight: $font-weight--bold;
 	}
 
 	&:hover {
 		background-color: $color-gray-med;
 	}
+
+	>.icon {
+		margin-bottom: 2px;
+	}
 }
 
-.builder-progress__current-icon {
-	position: absolute;
-	color:    $color-blue-base;
-	top:      11px;
-}
 
 /**
  * Mobile progress

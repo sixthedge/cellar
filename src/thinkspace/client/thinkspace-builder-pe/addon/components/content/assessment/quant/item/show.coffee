@@ -22,6 +22,9 @@ export default base.extend
     'red':    '#fb6b6b'
   slider_background_template: "<div class='ts-rangeslider_background' />"
 
+  is_balance:     null
+  is_not_balance: ember.computed.not 'is_balance'
+
   # ### Observers
   fill_color_change: ember.observer 'fill_color', ->
     fill_color     = @get 'fill_color'
@@ -29,7 +32,6 @@ export default base.extend
     fill_class_hex = @get 'fill_class_hex'
     color          = fill_class_hex[fill_color]
     @$(".#{fill_class}").css('background-color', color)
-
 
   didInsertElement: ->
     @$('input[type="range"]').rangeslider

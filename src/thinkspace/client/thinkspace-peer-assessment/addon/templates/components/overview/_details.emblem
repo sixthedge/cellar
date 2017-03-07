@@ -1,8 +1,13 @@
-h4 Release date
-= model.friendly_release_at
-h4 Due date
-= model.friendly_due_at
-h4 Exercise Type
-= assignment_type.title
-h4 Team set
-= team_set.title
+label Release date
+.text__font-size--14.spacing__margin-bottom--1 = model.friendly_release_at
+label Due date
+.text__font-size--14.spacing__margin-bottom--1 = model.friendly_due_at
+label Exercise Type
+.text__font-size--14.spacing__margin-bottom--1 = model.assignment_type.title
+
+if model.can.update
+  label Team set
+  .text__font-size--14.spacing__margin-bottom--1 = team_set.title
+else
+  label Team
+  .text__font-size--14.spacing__margin-bottom--1 = team.title

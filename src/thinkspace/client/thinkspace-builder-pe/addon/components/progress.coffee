@@ -12,3 +12,6 @@ export default base.extend
 
   steps: ember.computed.reads 'builder.steps'
   model: ember.computed.reads 'builder.model'
+
+  actions:
+    exit: -> @get('builder').transition_to_cases_show()

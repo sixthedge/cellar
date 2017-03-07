@@ -31,15 +31,26 @@
   margin-right: auto;
 }
 
+.grid__col--primary {
+  padding-right: 1rem;
+
+  @media only screen and (max-width: 40rem) {
+    padding-right: 0;
+  }
+}
+
 .grid__col--1of4 {
+  display: inline-block;
 	width: 25%;
 }
 
 .grid__col--2of4 {
+  display: inline-block;
 	width: 50%;
 }
 
 .grid__col--3of4 {
+  display: inline-block;
 	width: 75%;
 }
 
@@ -48,10 +59,12 @@
 }
 
 .grid__col--1of3 {
+  display: inline-block;
   width: 33%;
 }
 
 .grid__col--2of3 {
+  display: inline-block;
   width: 66%;
 }
 
@@ -66,7 +79,7 @@
 
 .grid__mobile--hidden {
   @media only screen and (max-width: 40rem) {
-    display: none;
+    display: none !important;
   }
 }
 
@@ -85,5 +98,11 @@
     height:           100vh;
     width:            100%;
     padding-top:      $top-bar-height;
+  }
+}
+
+.grid__mobile-col--1of2 {
+  @media only screen and (max-width: 40rem) {
+    width: 50% !important;
   }
 }

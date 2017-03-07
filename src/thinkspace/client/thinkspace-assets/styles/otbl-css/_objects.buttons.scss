@@ -52,6 +52,11 @@ button,
   }
 }
 
+.btn--disabled {
+  opacity:        .5;
+  pointer-events: none;
+}
+
 ///*------------------------------------*\
 //    #ACTION-LINKS
 //\*------------------------------------*/
@@ -68,11 +73,16 @@ button,
 
 .btn-group {
 
-	>.btn {
+	.btn {
 		margin-left: 1rem;
 
-		&:first-of-type {
+		&:first-child {
 			margin-left: 0;
 		}
 	}
+
+  >.btn__component {
+    display: inline-block;
+    margin-left: 1rem;
+  }
 }

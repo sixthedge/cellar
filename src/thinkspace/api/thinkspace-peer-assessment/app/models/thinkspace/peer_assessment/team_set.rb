@@ -11,44 +11,45 @@ module Thinkspace
         state :approved
         state :sent
 
+        # event :approve do
+        #   transitions from: [:neutral], to: :approved
+        # end
+
+        # event :unapprove do
+        #   transitions from: [:neutral, :approved], to: :neutral
+        # end
+
         event :approve do
-          transitions from: [:neutral], to: :approved
+          transitions from: [:neutral], to: :approved, after: :ignore_review_sets
         end
 
         event :unapprove do
-          transitions from: [:neutral, :approved], to: :neutral
-        end
-
-        event :approve_all do
-          transitions from: [:neutral, :approved], to: :approved, after: :approve_all_review_sets
-        end
-
-        event :unapprove_all do
-          transitions from: [:neutral, :approved], to: :neutral, after: :unapprove_all_review_sets
+          transitions from: [:approved], to: :neutral, after: :unignore_review_sets
         end
 
         event :mark_as_sent do
-          transitions from: [:approved], to: :sent, after: :mark_as_sent_review_sets
+          transitions from: [:approved], to: :sent
         end
       end
 
-      def approve_all_review_sets
-        thinkspace_peer_assessment_review_sets.each { |review_set| review_set.approve_all! if review_set.may_approve? }
+      def ignore_review_sets
+        thinkspace_peer_assessment_review_sets.scope_neutral.each { |review_set| review_set.ignore! if review_set.may_ignore? }
       end
 
-      def unapprove_all_review_sets
-        thinkspace_peer_assessment_review_sets.each { |review_set| review_set.unapprove_all! if review_set.may_unapprove? }
+      def unignore_review_sets
+        thinkspace_peer_assessment_review_sets.scope_ignored.each { |review_set| review_set.unignore! if review_set.may_unignore? }
       end
 
-      def mark_as_sent_review_sets
-        thinkspace_peer_assessment_review_sets.scope_approved.each { |review_set| review_set.mark_as_sent! if review_set.may_mark_as_sent? }
-      end
+      # def mark_as_sent_review_sets
+      #   thinkspace_peer_assessment_review_sets.scope_approved.each { |review_set| review_set.mark_as_sent! if review_set.may_mark_as_sent? }
+      # end
 
       # ### Helpers
       def get_assessment; thinkspace_peer_assessment_assessment; end
 
       # ### Scopes
-      def self.scope_approved; approved; end # aasm auto-generated scope
+      def self.scope_neutral; neutral; end
+      def self.scope_approved; approved; end
 
       class ScopeError < StandardError; end
 

@@ -13,3 +13,4 @@ export default base.extend
 
   actions:
     next_step: -> @get('builder').transition_to_next_step(save: true)
+    exit: -> @get('builder').transition_to_cases_show()

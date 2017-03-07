@@ -11,13 +11,8 @@
 
   ENV.environment            = environment;
   ENV.EmberENV.PLATFORM_NAME = ENV.modulePrefix;
-
-  ENV.APP = {
-    "customEvents": {
-        "sortable_dragend": "sortable_dragend",
-        "sortable_consume": "sortable_consume"
-    }
-  }
+  ENV.APP                    = {};
+  deploy_target              = process.env['DEPLOY_TARGET']
 
   ENV.i18n = {
     "defaultLocale": "en"
@@ -58,17 +53,13 @@
         "loading_template": "totem_message_outlet/loading",
         "i18n_path_prefix": "casespace.api.success."
     },
-    "pdfjs": {
-        "worker_src": "/assets/pdfjs/pdf.worker.js"
-    },
-    "stylized_platform_name": "ThinkSpace",
+    "stylized_platform_name": "OpenTBL",
     "grid": {
         "classes": {
             "columns": "ts-grid_columns",
             "sticky": "ts-grid_sticky"
         }
     },
-    "pusher_app_key": "7fa6139809cd49331925",
     "pub_sub": {
         "namespace": "<%=pubsub.namespace%>"
     },
@@ -113,6 +104,16 @@
   }
 
   if (environment === 'production') {
-    ENV.totem.api_host         = 'PRODUCTION-API-HOST';
-    ENV.totem.asset_path       = 'PRODUCTION-ASSET-PATH';
+    if (deploy_target === 'production') {
+      ENV.totem.api_host                    = 'PRODUCTION-API-HOST';
+      ENV.totem.asset_path                  = 'PRODUCTION-ASSET-PATH';
+      ENV.totem.pub_sub.socketio_url        = 'PRODUCTION-SIO-URL';
+      ENV.totem.pub_sub.socketio_client_cdn = 'PRODUCTION-SIO-CDN';
+    }
+    if (deploy_target === 'staging') {
+      ENV.totem.api_host                    = 'STAGING-API-HOST';
+      ENV.totem.asset_path                  = 'STAGING-ASSET-PATH';
+      ENV.totem.pub_sub.socketio_url        = 'STAGING-SIO-URL';
+      ENV.totem.pub_sub.socketio_client_cdn = 'STAGING-SIO-CDN';
+    }
   }

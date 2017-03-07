@@ -9,6 +9,7 @@ module Thinkspace
             def unapprove(serializer_options); state_change(serializer_options); end
             def approve_all(serializer_options); state_change(serializer_options); end
             def unapprove_all(serializer_options); state_change(serializer_options); end
+            def show(serializer_options); state_change(serializer_options); end
 
             def state_change(serializer_options)
               serializer_options.include_association :thinkspace_peer_assessment_review_sets

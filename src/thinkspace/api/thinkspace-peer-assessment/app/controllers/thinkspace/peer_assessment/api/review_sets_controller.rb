@@ -11,7 +11,12 @@ module Thinkspace
           @review_set.submit! if @review_set.may_submit?
           phase_state = @review_set.complete_phase_for_ownerable
           json = controller_as_json(@review_set)
-          json['thinkspace/casespace/phase_states'] = [phase_state]
+          json[:included] = []
+          json[:included][0] = {
+            attributes: phase_state.attributes,
+            id: phase_state.id,
+            type: 'thinkspace/casespace/phase_state'
+          }
           controller_render_json(json)
         end 
 
@@ -19,7 +24,7 @@ module Thinkspace
 
         def authorize_review_set
           access_denied "Cannot submit a review set you do not own." unless current_user == @review_set.ownerable
-          access_denied "Cannot submit a review_set that is already in an approved-type state.", user_message: "You cannot submit assessments that have been already submitted or approved by an instructor." if @review_set.approved? or @review_set.submitted?
+          access_denied "Cannot submit a review_set that is already in an approved-type state.", user_message: "You cannot submit assessments that have been already submitted or ignored by an instructor." unless @review_set.may_submit?
         end
 
         def access_denied(message, options={})

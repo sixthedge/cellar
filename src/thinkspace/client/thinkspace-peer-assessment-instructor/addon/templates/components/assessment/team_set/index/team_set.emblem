@@ -1,5 +1,26 @@
-div style='border: 2px solid red;'
-  h1 Team Set: #{model.team.title}
-
-  each review_sets as |review_set|
-    component 'assessment/team_set/index/review_set' model=review_set team_members=team_members assignment=assignment assessment=assessment
+.bordered-panel
+  a.is-left click='select'
+    .is-left.spacing__margin-right--1 
+      if model.color
+        div style="height: 32px; width: 32px; border-radius: 3px; background: #{model.color}"
+      else
+        div style="height: 32px; width: 32px; border-radius: 3px; background: #edeef0"
+    .text--inline-block 
+      .text--bold.text__font-size--18 #{model.title}
+      .text__font-size--14.text__color--gray 
+        | <strong>#{model.num_complete}</strong> out of <strong>#{model.num_total} complete</strong>
+  .is-right
+    if is_sent
+      .icon.icon--16.icon__checkmark--green.spacing__margin-right--half
+      span.text__font-size--14.text--bold.text__color--green Sent
+    else
+      if is_approved
+        button.btn{action 'toggle_approve' bubbles=false}
+          | Unapprove Team
+      else
+        component '__confirmation/modal' modal_partial='components/assessment/team_set/index/modals/approve/modal' modal_reveal_partial='components/assessment/team_set/index/modals/approve/action' model=incomplete_review_sets team_set=model confirm='toggle_approve'
+  hr
+  ul.basic-list
+    each model.review_sets as |review_set|
+      li.basic-list__item
+        component 'assessment/team_set/index/review_set' model=review_set assignment=assignment assessment=assessment progress_report=progress_report select='select_review_set'

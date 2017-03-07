@@ -4,7 +4,8 @@ module Thinkspace
       class TeamsController < ::Totem::Settings.class.thinkspace.authorization_api_controller
         load_and_authorize_resource class: totem_controller_model_class
         totem_action_authorize! except: [:teams_view, :team_users_view], module: :action_authorize_teams, params_ownerable: false
-        totem_action_authorize! only:   [:teams_view, :team_users_view], read: [:teams_view, :team_users_view]
+        totem_action_authorize! only:   [:team_users_view], read: [:team_users_view]
+        totem_action_authorize! only:   [:teams_view], read: [:teams_view], module: :action_authorize_teams_bulk
         totem_action_serializer_options
 
         def select
@@ -16,10 +17,18 @@ module Thinkspace
         end
 
         def teams_view
-          teamable = totem_action_authorize.params_authable
-          raise_team_exception("Teamable [id: #{teamable.id} class: #{teamable.class.name}] does not have collboration teams.")  unless teamable.collaboration?
+          teamable   = totem_action_authorize.params_authable
           sub_action = totem_action_authorize.sub_action
           case sub_action
+          when :teams
+            # TODO: This sub_action is temporary.  Figure out how to refactor.
+            phases  = teamable.thinkspace_casespace_phases
+            p_teams = []
+            phases.each do |phase|
+              p_teams.push(phase.get_teams(current_user))
+            end
+            a_teams = teamable.get_teams(current_user)
+            teams   = (p_teams + a_teams).uniq.flatten
           when :collaboration_teams
             teams = can_update_teamable?(teamable) ? teamable.get_teams : teamable.get_teams(current_user)
           when :peer_review_teams

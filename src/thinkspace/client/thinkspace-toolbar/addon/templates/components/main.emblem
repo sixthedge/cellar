@@ -1,60 +1,38 @@
-/ #navbar
-/   nav class='navigation-left'
-/     .nav-link.ts-logo
-/       link-to-external 'home'
-/         .ts-branding.ts-branding-color
-/           __t 'thinkspace.branding'
-/     .nav-link
-/       link-to-external 'home'
-/         __t 'casespace.space' plural=true
-
-/     .nav-link click='toggle_support'
-/       a Help
-
-/   nav class='navigation-right'
-/     .nav-link click='toggle_users'
-/       a.navbar_user-account
-/         .navbar_user-avatar
-/           .tsi.tsi-spaceman-outline.icon-large
-/         .navbar_user-info
-/           span.navbar_user-name = session.user.full_name
-/           br
-/           span.navbar_user-meta = session.user.email
-/         i.im.im-open-down.toolbar_breadcrumb-arrow
-/     #user-expansion class={user_expansion_visible:is-visible:is-hidden}
-/       ul.navbar_account-menu
-/         li.toolbar_breadcrumb-flyout-link
-/           a Profile (coming soon)
-/         li.toolbar_breadcrumb-flyout-link click='sign_out'
-/           a Sign Out
-/         if show_switch_user
-/           li.toolbar_breadcrumb-flyout-link
-/             component 'switch_user'
-
-
-
-
 .top-bar.top-bar--main
   nav.top-bar__nav.is-left
     ul.nav-list 
       li.nav-list__logo
-        img src='/assets/images/branding/otbl-logo_builder.svg' alt="Builder" title="Builder"
+        img src='/assets/images/branding/otbl-logo_default.svg' alt="Builder" title="Builder"
       li.nav-list__item
-        a.nav-list__link
+        link-to-external 'home' class='nav-list__link'
           | Spaces
       li.nav-list__item
         a.nav-list__link click='toggle_support'
           | Support
    
-  nav.top-bar__nav.is-right
+  nav.top-bar__nav.is-right click='toggle_users'
     ul.nav-list
       li.nav-list__item
         a.nav-list__link
-          .nav-list__account-info
+          .nav-list__account-info.grid__mobile--hidden
             span = session.user.full_name
             br
             span.text--regular = session.user.email
-          .nav-list__avatar
+          .avatar.avatar--32.spacing__margin-right--half
+          .icon.icon--16.icon__chevron--white
 
   if show_support
     mount 'thinkspace-support-intercom'
+
+if user_expansion_visible
+  .account-panel__container
+    nav.account-panel role='navigation'
+      ul.clear-list
+        li.account-panel__item.account-panel__mobile-close
+          a.account-panel__link.text__align--right click='toggle_users'
+            .icon.icon--16.spacing__margin-right--half.icon__cross--black
+            | Close Menu
+        li.account-panel__item
+          a.account-panel__link Account 
+        li.account-panel__item
+          a.account-panel__link click='sign_out' Log Out

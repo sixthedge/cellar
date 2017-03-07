@@ -23,15 +23,14 @@ import base  from 'thinkspace-base/components/base'
 
 
 export default base.extend
-  tagName: ''
-  modal_id: ember.computed -> "ts-confirmation-modal-#{@get('elementId')}"
+  modal_id: ember.computed 'elementId', -> "ts-confirmation-modal-#{@get('elementId')}"
 
   title:        'Are you sure?'
   confirm_text: 'Yes'
   deny_text:    'Cancel'
 
   modal_class_names:         ''
-  default_modal_class_names: 'ts-confirmation-modal reveal-modal'
+  default_modal_class_names: 'ts-confirmation-modal reveal'
   all_modal_class_names:     ember.computed 'modal_class_names', -> 
     class_names = @get('default_modal_class_names')
     unless ember.isEmpty @get('modal_class_names')
@@ -40,11 +39,17 @@ export default base.extend
 
   get_$modal: -> $("##{@get('modal_id')}")
 
-  didInsertElement: ->
-    $(document).foundation 'reveal'
+  set_modal: (modal) -> @set 'modal', modal
+  get_modal: -> @get 'modal'
+
+  didInsertElement: -> @set_modal new Foundation.Reveal(@get_$modal())
+
+  willDestroyElement: -> 
+    $modal = @get_$modal()
+    $modal.foundation('destroy')
+    $modal.remove() # TODO: Not sure why 'destroy' doesn't remove it.
 
   actions:
-
     confirm: ->
       @send 'close'
       @sendAction 'confirm'
@@ -54,4 +59,4 @@ export default base.extend
       @sendAction 'deny'
 
     close: ->
-      @get_$modal().foundation 'reveal', 'close'
+      @get_modal().close()

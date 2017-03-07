@@ -16,6 +16,7 @@ export default ta.Model.extend ta.add(
 
   is_approved:     ember.computed.equal 'state', 'approved'
   is_sent:         ember.computed.equal 'state', 'sent'
+  is_neutral:      ember.computed.equal 'state', 'neutral'
   is_not_approved: ember.computed.not   'is_approved'
   is_not_sent:     ember.computed.not   'is_sent'
   is_approvable:   ember.computed.and   'is_not_approved', 'is_not_sent'

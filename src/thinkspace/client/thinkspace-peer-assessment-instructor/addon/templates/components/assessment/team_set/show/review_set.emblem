@@ -1,0 +1,27 @@
+.bordered-panel{action 'toggle_expand'}
+  .avatar.avatar--64.spacing__margin-right--1
+  .text--inline-block
+    .text__font-size--18.text--bold #{ownerable.full_name}
+    component 'assessment/team_set/index/review_set/status' model=model.status
+  .is-right
+    if team_set.is_sent
+      .icon.icon--16.icon__checkmark--green.spacing__margin-right--half
+      span.text__font-size--14.text--bold.text__color--green Sent
+    else
+      if model.is_submitted
+        button.btn click='unlock'
+          | Unlock Evaluations
+      else
+        .btn-group
+          button.btn.btn--primary click='notify'
+            | Send reminder
+          if model.is_ignored
+            button.btn click='unignore'
+              | Unignore evaluations
+          else
+            button.btn click='ignore'
+              | Ignore evaluations
+  ul.basic-list
+    each sorted_reviews as |review|
+      li.basic-list__item
+        component 'assessment/team_set/show/review' model=review team_members=team_members assignment=assignment assessment=assessment

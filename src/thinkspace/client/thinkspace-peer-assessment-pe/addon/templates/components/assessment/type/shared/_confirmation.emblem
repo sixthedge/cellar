@@ -17,13 +17,13 @@ if has_errors
         component '__changeset/errors' changeset=manager.changeset attribute='points_different' errors_visible=true
       component '__changeset/errors' changeset=manager.changeset attribute='valid_qual_sections' errors_visible=true
 
-  ul.clear-list.grid__container--flex.flex__justify--between.spacing__margin-bottom--4
-    each reviews as |review|
-      component 'assessment/review/summary' manager=manager model=review assessment=model class='grid__col--49 grid__mobile--full-width'
+ul.clear-list.grid__container--flex.flex__justify--between.spacing__margin-bottom--4
+  each reviews as |review|
+    component 'assessment/review/summary' manager=manager model=review assessment=model class='grid__col--49 grid__mobile--full-width'
 
 .grid__container.spacing__margin-bottom--4.text__align--center 
   hr 
   if is_disabled
     a.btn.btn--primary.is-disabled Submit Assessment
   else
-    a.btn.btn--primary click='submit' class={is_disabled:is-disabled} Submit Assessment
+    component '__confirmation/modal' modal_partial='components/assessment/type/shared/submit/modal' modal_reveal_partial='components/assessment/type/shared/submit/action' confirm='submit'

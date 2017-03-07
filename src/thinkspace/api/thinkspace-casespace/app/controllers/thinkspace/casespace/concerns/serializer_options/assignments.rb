@@ -42,21 +42,19 @@ module Thinkspace; module Casespace; module Concerns; module SerializerOptions; 
     #   instance_var:     :assignment,
     #   query_key_method: :query_key_for_timetables,
     #   model_query_key:  true
-    # common_cache_serializer_options(serializer_options)
+    common_cache_serializer_options(serializer_options)
   end
 
   def common_serializer_options(serializer_options)
     serializer_options.include_metadata
     serializer_options.ability_actions :gradebook, :manage_resources, scope: :root
     serializer_options.remove_all_except(
-      :thinkspace_casespace_phases,
       :thinkspace_common_space,
       :thinkspace_resource_files,
       :thinkspace_resource_tags,
       :thinkspace_resource_links,
       :thinkspace_casespace_assignment_type
     )
-    serializer_options.blank_association :thinkspace_casespace_phases
   end
 
   def common_cache_serializer_options(serializer_options)

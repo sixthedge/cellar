@@ -10,10 +10,16 @@
 }
 
 .exercise-type__item {
-	display: inline-block;
-	width: 35%;
-	max-width: 300px;
+	display:      inline-block;
+	width:        35%;
+	max-width:    300px;
 	margin-right: 2rem;
+
+	@media only screen and (max-width: 40rem) {
+		display:      block;
+	  width:        100%;
+	  margin-right: 0;
+	}
 
 	>h2 {
 		font-size: 1rem;
@@ -23,4 +29,6 @@
 	>p {
 		font-size: .875rem;
 	}
+
+
 }

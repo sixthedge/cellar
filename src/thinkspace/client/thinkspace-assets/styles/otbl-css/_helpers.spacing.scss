@@ -68,6 +68,10 @@
   padding-left: 2rem;
 }
 
+.spacing__pad-left--3 {
+  padding-left: 3rem;
+}
+
 
 
 
@@ -88,6 +92,10 @@
 
 .spacing__margin-top--0 {
   margin-top: 0;
+}
+
+.spacing__margin-top--half {
+  margin-top: .5rem;
 }
 
 .spacing__margin-top--1 {
@@ -130,11 +138,21 @@
 }
 
 
+.mobile-spacing__margin-bottom--1 {
+   @media only screen and (max-width: 40rem) {
+    margin-bottom: 1rem !important;  
+  }
+}
+
 
 
 /**
  * Margin right. 
  */
+
+.spacing__margin-right--half {
+  margin-right: .5rem;
+}
 
 .spacing__margin-right--1 {
   margin-right: 1rem;
@@ -142,6 +160,10 @@
 
 .spacing__margin-right--2 {
   margin-right: 2rem;
+}
+
+.spacing__margin-right--3 {
+  margin-right: 3rem;
 }
 
 

@@ -18,6 +18,7 @@ export default base_component.extend
   # Events
   init: ->
     @_super()
+    console.log('CALLING ASSESSMENT INIT')
     @set_manager().then => @set_all_data_loaded()
 
   # Helpers

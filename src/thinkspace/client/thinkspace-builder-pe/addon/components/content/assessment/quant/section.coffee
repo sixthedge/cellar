@@ -13,9 +13,8 @@ export default base.extend
   tests: [1, 2, 3, 4, 5]
 
   selected_value: null
-
-  selected_value_obs: ember.observer 'selected_value', ->
-    console.log('selected_value changed to ', @get('selected_value'))
+  is_balance:     null
+  is_not_balance: ember.computed.not 'is_balance'
 
   actions: 
     create: -> @get('manager').add_quant_item()

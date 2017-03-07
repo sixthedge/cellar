@@ -1,8 +1,8 @@
-if is_selected
-  i.im.im-open-right
 .avatar__container.is-left
+  if is_selected
+    .icon.icon--16.icon__arrow--blue.icon__arrow--right.spacing__margin-right--half.is-left
   .avatar.avatar--32.is-left.spacing__margin-right--1
   .avatar__username = model.full_name
 if is_balance
-  .is-right 
-    span = points_expended
+  .is-right.text__lh--2
+    .text--bold = points_expended

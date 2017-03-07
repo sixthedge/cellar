@@ -9,7 +9,6 @@ class Standard < Base
   # TODO: Determine if using `answers` here is too overzealous for streaming.
   def query_json
     joined_response_ids = response_ids.join(',')
-    puts "\n #{joined_response_ids} \n"
     query = "SELECT t1.id, REPLACE(t1.value::text, '\"', '') AS choice, COUNT(t1.value) AS total FROM (SELECT key AS id, value->0 AS value FROM thinkspace_readiness_assurance_responses t, jsonb_each((t.answers)::jsonb) WHERE t.id IN (#{joined_response_ids})) t1 GROUP BY t1.id, t1.value;"
     @assessment.class.connection.select_all(query)
   end

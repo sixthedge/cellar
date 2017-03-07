@@ -4,14 +4,13 @@ import base_component from 'thinkspace-base/components/base'
 
 export default base_component.extend
 
-  init_base: -> 
-    @init_ownerable()
-    @set_all_data_loaded()
+  init_base: ->
+    model = @get('model')
+    split = model.name.split(' ')
+    initials = split[0].charAt(0).capitalize() + split[split.length - 1].charAt(0).capitalize()
+    ember.set model, 'html_title', model.name
+    ember.set model, 'initials', initials
 
-  init_ownerable: ->
-    ownerable = @get('team_members').findBy 'id', @get('model.ownerable_id').toString()
-    @set 'ownerable', ownerable
+  actions:
 
-
-
-
+    select: -> @sendAction 'select', @get('model')

@@ -100,12 +100,13 @@ class Ifat < Base
     total         = choice['total'].to_f
     total_choices = choice['total_choices'].to_f
     choice['attempts'].each do |data|
-      attempt            = data['attempt']
-      count              = data['count']
-      decimal            = count.to_f / total
+      attempt = data['attempt']
+      count   = data['count']
+      total   == 0 ? decimal = 0.0 : decimal = count.to_f / total
       data['percentages'] = percentages_from_decimal(decimal)
     end
-    choice['average']  = (total_choices / total).round(2).to_f
+    total             == 0 ? average = 0.0 : average = (total_choices / total).round(2).to_f
+    choice['average'] = average
   end
 
   def add_all_attempts_to_choice(id, choice)

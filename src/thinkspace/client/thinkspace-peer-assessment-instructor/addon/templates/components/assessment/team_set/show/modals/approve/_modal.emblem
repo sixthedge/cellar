@@ -1,0 +1,24 @@
+.dialogue.dialogue--blue.grid__container--centered.dialogue--shadow
+
+  h1 Incomplete Evaluations
+  p You have <strong>#{model.length} student(s)</strong> who have not completed their evaluations. You must acknowledge that you want to ignore their evaluations to approve the team.
+  
+  p.text__font-style--italic Students who are ignored will not be used to calculate the total score for other members.
+  hr
+
+  ul.basic-list.spacing__margin-bottom--2
+    =each model as |user|
+      li.basic-list__item
+        .checkbox__item
+          label.checkbox__label
+            div role='presentation' class='checkbox__icon checkbox__icon--is-checked'
+              input type="checkbox" onclick="return false;" checked='checked'
+            .avatar.avatar--32.spacing__margin-right--3
+            .avatar__username = user.full_name
+
+  .btn-group
+    if model.length
+      button.btn.btn--primary click='confirm'
+        | Ignore evaluations
+    button.btn click='deny'
+      | Cancel

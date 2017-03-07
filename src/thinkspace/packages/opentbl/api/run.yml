@@ -22,7 +22,7 @@
 #     ability_paths:       Array (or String) of paths containing ability files
 # ```
 app_run_options:
-  app_path:              ../../apps-rails/orchid-otbl
+  app_path:              ../apps-rails/orchid-otbl
   db_name_prefix:        otbl
   db_user:               postgres
   new:                   true
@@ -42,7 +42,7 @@ app_run_options:
     template_paths: src/thinkspace/templates/api
 
 deploy_run_options:
-  app_path: ../../apps-rails/deployorchid-otbl
+  app_path: ../apps-rails/deployorchid-otbl
   deploy:   true
   new:      false
   framework_run_options:

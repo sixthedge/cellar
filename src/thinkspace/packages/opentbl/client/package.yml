@@ -4,12 +4,14 @@ commands:
   - run: foundation
   - run: app_clean_up
   - run: ember-deploy
+  - run: pickadate
+  - run: rangeslider
 
 variables:
   rootURL: '/'
   pubsub:
     namespace: thinkspace
-  index_html_title: OpenTBL Index
+  index_html_title: OpenTBL - Online Team-Based Learning
   dev:
     api_host:     http://localhost:3000
     asset_path:   http://localhost:4200/assets
@@ -25,9 +27,6 @@ ember_cli_build:
       comment: compile runtime templates
 
   import:
-    # - tree: node_modules/thinkspace-assets/fonts
-    #   options: {srcDir: 'icomoon', include: ['**/*.*'], destDir: 'assets/fonts'}
-    #   comment: ['', thinkspace-assets fonts]
     - tree: node_modules/thinkspace-assets/images
       options: {srcDir: '/', include: ['**/*.*'], destDir: 'assets/images'}
       comment: thinkspace-assets images

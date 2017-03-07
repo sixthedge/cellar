@@ -1,20 +1,20 @@
 if has_comments
-  .phase-content_section-heading
-    h5 Team Comments
-    p The following comments were compile dfrom your team member's qualitative assessment of you.
+  .bordered-panel.forms__section
+    h2.spacing__margin-bottom--0.spacing__margin-top--0 Team Comments
+    .forms__heading-summary The following comments were compiled from your team member's qualitative assessment of you.
 
-  if has_qualitative_positive_comments
-    .phase-content_section
-      h6 What you are doing well
-      .ts-tblpa-overview_qualitative-comments
-        each calculated_overview.qualitative.positive as |value|
-          .ts-tblpa-overview_qualitative-comment.ts-tblpa-overview_qualitative-positive
-            p #{value}
+    if has_qualitative_positive_comments
+      .forms__field-wrapper
+        label What you are doing well
+        ul
+          each calculated_overview.qualitative.positive as |value|
+            li
+              p.text__font-size--14 #{value}
 
-  if has_qualitative_constructive_comments
-    .phase-content_section.ts-tblpa-overview_qualitative-constructive-section
-      h6 Suggestions for improvement
-      .ts-tblpa-overview_qualitative-comments
-        each calculated_overview.qualitative.constructive as |value|
-          .ts-tblpa-overview_qualitative-comment.ts-tblpa-overview_qualitative-constructive
-            p #{value}
+    if has_qualitative_constructive_comments
+      .forms__field-wrapper
+        label Suggestions for improvement
+        ul
+          each calculated_overview.qualitative.constructive as |value|
+            li
+              p.text__font-size--14 #{value}

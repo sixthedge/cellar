@@ -1,5 +1,5 @@
 .grid__container--flex
-  .grid__col--3of4.grid__mobile--full-width
+  .grid__col--3of4.grid__mobile--full-width.grid__col--primary
     partial 'components/assessment/actions'
 
     / Quantitative
@@ -29,7 +29,7 @@
         | Next Member
         .tsi.tsi-right.icon-small.tsi-right-arrow-inverse
 
-  .grid__col--1of4 
+  .grid__col--1of4.grid__mobile--full-width
     if is_balance
       if has_negative_points_remaining
         .counter-box.counter-box--red.spacing__margin-bottom--1

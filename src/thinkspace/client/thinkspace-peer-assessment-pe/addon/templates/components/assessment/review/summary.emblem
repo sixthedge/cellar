@@ -27,6 +27,6 @@ log this
       label.spacing__margin-bottom--0 #{response.label}
       p.text__font-size--14.spacing__margin-top--0
         if response.value
-          | {response.value}
+          | #{response.value}
         else
           | --

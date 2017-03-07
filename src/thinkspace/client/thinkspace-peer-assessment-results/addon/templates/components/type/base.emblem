@@ -1,23 +1,44 @@
-.ts-grid_columns.ts-grid_columns-thick.small-8
-  .phase-content_heading 
-    h4 Your Peer Evaluation Summary
-    p Below is a compilation of your evaluation done by your peers.
+.grid__container--flex
+  .grid__col--4of4
+    .main-content__header
+      .breadcrumbs
+        / link-to-external 'spaces.show' model.space class='breadcrumbs__link' = assignment.space.title
+        a class='breadcrumbs__link' = assignment.space.title
+      h1.text--inline-block = assignment.title
+      / .btn-group.is-right
+      /   a class='btn btn--primary'
+      /     | Start Exercise
+      .text__font-size--14.text--bold.text__color--gray = assignment.friendly_due_at
+    .menu-bar
+      ul.menu-bar__list
+        li.menu-bar__item
+          a class='menu-bar__link'
+            | Overview
+        li.menu-bar__item
+          a class='menu-bar__link active'
+            | Results
 
-  if assessment.is_balance
-    .phase-content_section-heading
-      h5 Overall Score:
-      p Lowest possible score is #{calculated_overview.options.points.min} and the highest is a #{calculated_overview.options.points.max}
-      span.ts-tblpa-overview_overall-score #{overview_score}
-      span points
-  else
-    .phase-content_section-heading
-      h5 Assessment Category Scores:
-      p Points below are the average of each category. Lowest possible score is #{calculated_overview.options.points.min} and the highest is a #{calculated_overview.options.points.max}
-      ul.ts-tblpa-overview_category-list
-        each categories as |category|
-          li.ts-tblpa-overview_category
-            span.ts-tblpa-overview_category-label #{category.label}:
-            span.ts-tblpa-overview_overall-score #{category.value}
-            span points
+.grid__container--flex
+  .grid__col--4of4
+    .main-content__sub-header
+      h2 Peer Evaluation Results
+      p Below is a compilation of your evaluation done by your peers.
 
-  partial 'components/type/shared/qualitative'
+    .bordered-panel.forms__section
+      if assessment.is_balance
+        h2.spacing__margin-bottom--0.spacing__margin-top--0 Overall Score:
+        .forms__heading-summary Lowest possible score is <strong>#{calculated_overview.options.points.min} </strong> and the highest is a <strong>#{calculated_overview.options.points.max}</strong>.
+        span.text__font-size--24.text--bold.spacing__margin-right--half #{overview_score}
+        span.text__font-size--14.text--regular points
+      else
+        .phase-content_section-heading
+          h2.spacing__margin-bottom--0.spacing__margin-top--0 Assessment Category Scores:
+          .forms__heading-summary Points below are the average of each category. Lowest possible score is <strong>#{calculated_overview.options.points.min}</strong> and the highest is a <strong>#{calculated_overview.options.points.max}</strong>.
+          ul.basic-list
+            each categories as |category|
+              li.basic-list__item
+                label #{category.label}:
+                .text__font-size--14 
+                  | #{category.value} points
+
+    partial 'components/type/shared/qualitative'  

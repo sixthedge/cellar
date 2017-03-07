@@ -26,3 +26,4 @@ export default base.extend
     select:  (template) -> @get('step').select_template(template) if ember.isPresent(template)
     cancel:  -> @get('step').reset_is_editing_template()
     confirm: -> @get('step').confirm_template()
+    exit: -> @get('builder').transition_to_cases_show()

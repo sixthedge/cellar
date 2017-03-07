@@ -1,0 +1,3 @@
+if is_complete
+  .icon.icon--16.icon__checkmark--green.spacing__margin-right--half
+= model

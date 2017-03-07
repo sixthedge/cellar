@@ -14,3 +14,9 @@ component '__changeset/input' value=step.changeset.instructions changeset=step.c
     | This will use team distribution
 
   component '__dropdown' collection=team_sets display_property='title' text=selected_team_set.title selected=selected_team_set select_action='select_team_set' action_receiver=this
+
+  / .dropdown__container
+  /   select 
+  /     option Testing
+  /     option testing again
+  /     option teseting yes

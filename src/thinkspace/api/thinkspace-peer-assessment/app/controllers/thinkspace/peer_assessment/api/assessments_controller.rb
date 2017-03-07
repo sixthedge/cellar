@@ -12,9 +12,9 @@ module Thinkspace
 
         def view
           # A student cannot view an assessment that is not active or approved.
-          access_denied "Assessment is already approved.", user_message: 'This assessment has already been sent by your instructor.' if @assessment.approved?
+          # access_denied "Assessment is already approved.", user_message: 'This assessment has already been sent by your instructor.' if @assessment.approved?
           
-          if !@assessment.active? && current_ability.cannot?(:update, @assessment.authable)
+          if !(@assessment.active? || @assessment.approved?) && current_ability.cannot?(:update, @assessment.authable)
             access_denied "Assessment is not activated yet.", user_message: 'You cannot access this assessment yet, it has not been activated by your instructor.'
           end
 
@@ -80,7 +80,7 @@ module Thinkspace
           team_set =  Thinkspace::PeerAssessment::TeamSet.find_by(team_id: team.id, assessment_id: @assessment.id)
           access_denied "No team set found for team_id [#{team.id}] and assessment_id [#{@assessment.id}]" unless team_set.present?
           # Ownerable_type and ID needed because of: https://github.com/rails/rails/issues/16983
-          review_sets = Thinkspace::PeerAssessment::ReviewSet.where(team_set_id: team_set.id, ownerable_type: ownerable.class.name).scope_where_not_ownerable_ids(ownerable).scope_sent
+          review_sets = Thinkspace::PeerAssessment::ReviewSet.where(team_set_id: team_set.id, ownerable_type: ownerable.class.name).scope_where_not_ownerable_ids(ownerable).scope_submitted
           access_denied "No review sets found for team_set_id [#{team_set.id}]" unless review_sets.present?
           review_set_ids = review_sets.pluck(:id)
           reviews        = Thinkspace::PeerAssessment::Review.where(review_set_id: review_set_ids, reviewable: ownerable)

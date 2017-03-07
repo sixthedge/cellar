@@ -39,7 +39,7 @@
     - has_many: thinkspace/peer_assessment/reviews
     - belongs_to: thinkspace/peer_assessment/team_set
   serializers:
-    - attributes: [id, ownerable_id, ownerable_type, state]
+    - attributes: [id, ownerable_id, ownerable_type, state, status]
 
 - model: thinkspace/peer_assessment/team_set
   delegate:

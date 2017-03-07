@@ -9,12 +9,24 @@
  * Font size. 
  */
 
+.text__font-size--10 {
+  font-size: 10px;
+}
+
 .text__font-size--12 {
   font-size: .75rem;
 }
 
 .text__font-size--14 {
   font-size: .875rem;
+}
+
+.text__font-size--18 {
+  font-size: 1.15rem;
+}
+
+.text__font-size--24 {
+  font-size: 24px;
 }
 
 
@@ -53,6 +65,20 @@
   text-align: center;
 }
 
+.text__align--right {
+  text-align: right;
+}
+
+
+
+/**
+ * Line height. 
+ */
+
+.text__lh--2 {
+  line-height: 2rem;
+}
+
 
 
 /**
@@ -84,3 +110,11 @@
  .text__font-style--italic {
   font-style: italic;
  }
+
+ /**
+  * Transforms
+  */
+
+.text__transform--capitalize {
+  text-transform: capitalize;
+}

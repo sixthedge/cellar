@@ -14,9 +14,8 @@ export default base.extend
     transition.abort()  unless assignment
     @current_models().set_current_models(assignment: assignment).then =>
       pm = @get('phase_manager')
-      pm.set_all_phase_states()
-
-      assignment.get('assignment_type').then (assignment_type) =>
-        return unless ember.isPresent(assignment_type)
-        if assignment_type.get('is_pe')
-          @transitionToExternal('thinkspace-peer-assessment.overview', assignment)
+      pm.set_all_phase_states().then =>
+        assignment.get('assignment_type').then (assignment_type) =>
+          return unless ember.isPresent(assignment_type)
+          if assignment_type.get('is_pe')
+            @transitionToExternal('thinkspace-peer-assessment.overview', assignment)

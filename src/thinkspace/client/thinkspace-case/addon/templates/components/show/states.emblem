@@ -1,8 +1,7 @@
-if is_draft
-  partial 'components/show/states/draft'
-
-if is_archived
-  partial 'components/show/states/archived'
-
-if is_active
-  partial 'components/show/states/active'
+if model.can.update
+  if is_draft
+    partial 'components/show/states/draft'
+  if is_archived
+    partial 'components/show/states/archived'
+  if is_active
+    partial 'components/show/states/active'

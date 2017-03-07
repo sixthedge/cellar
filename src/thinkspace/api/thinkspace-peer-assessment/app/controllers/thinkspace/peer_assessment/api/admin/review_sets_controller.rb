@@ -9,16 +9,22 @@ module Thinkspace
 
           include Thinkspace::PeerAssessment::Concerns::StateErrors
 
-          def approve
-            access_denied_state_error :approve unless @review_set.may_approve?
-            @review_set.approve_all!
+          def ignore
+            access_denied_state_error :ignore unless @review_set.may_ignore?
+            @review_set.ignore!
             controller_render(@review_set)
           end
 
-          def unapprove
-            access_denied_state_error :unapprove unless @review_set.may_unapprove?
+          def unlock
+            access_denied_state_error :unlock unless @review_set.may_unlock?
+            @review_set.unlock!
+            controller_render(@review_set)
+          end
+
+          def unignore
+            access_denied_state_error :unignore unless @review_set.may_unignore?
             @review_set.transaction do
-              @review_set.unapprove_all!
+              @review_set.unignore!
             end
             controller_render(@review_set)
           end

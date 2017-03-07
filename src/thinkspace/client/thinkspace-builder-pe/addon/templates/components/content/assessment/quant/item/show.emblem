@@ -23,8 +23,10 @@ hr
 .btn-group
   .btn.btn--primary click='edit'
     | Edit question
-  .btn.btn-small click='duplicate'
-    | Duplicate
+
+  if is_not_balance
+    .btn.btn-small click='duplicate'
+      | Duplicate
   / .btn.btn-small click='reorder_up'
   /   | Up
   / .btn.btn-small click='reorder_down'

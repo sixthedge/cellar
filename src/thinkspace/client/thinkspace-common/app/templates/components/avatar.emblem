@@ -1,0 +1,2 @@
+div click='select' class={clickable:is-clickable is_small:is-small is_medium:is-medium is_large:is-large is_selected:is-selected :ts-avatar :has-tip} style=css_style title=model.html_title
+  span.ts-avatar_initials #{model.initials}

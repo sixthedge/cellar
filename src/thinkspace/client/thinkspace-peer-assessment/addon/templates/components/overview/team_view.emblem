@@ -1,0 +1,2 @@
+each model.users as |user|
+  p = user.full_name

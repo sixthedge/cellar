@@ -1,0 +1,34 @@
+hr
+.avatar.avatar--32.is-left.spacing__margin-right--1
+.text--inline-block.spacing__margin-bottom--1
+  .text__font-size--12.text__font-style--italic Evaluation for:
+  .text__font-size--14.text--bold = model.reviewable.full_name
+
+.is-right
+  if is_editing
+    .btn-group
+      button.btn.btn--primary click='save'
+        | Save
+      button.btn click='cancel'
+        | Cancel
+  else
+    button.btn click='toggle_edit'
+      | Edit Evaluation
+
+.spacing__pad-left--3
+  if assessment.quantitative_items
+    each assessment.quantitative_items as |item|
+      component 'assessment/team_set/show/review/quant' model=item assessment=assessment review_component=this review=model
+
+
+  if assessment.positive_qualitative_items
+    .text__font-size--12.text__color--gray.text--bold Positive comment(s)
+    each assessment.positive_qualitative_items as |item|
+      component 'assessment/team_set/show/review/qual' model=item assessment=assessment review=model type='positive' register='register_component' unregister='unregister_component' edit=is_editing
+
+
+  if assessment.constructive_qualitative_items
+    .text__font-size--12.text__color--gray.text--bold Constructive comment(s)
+    each assessment.constructive_qualitative_items as |item|
+      component 'assessment/team_set/show/review/qual' model=item assessment=assessment review=model type='constructive' register='register_component' unregister='unregister_component' edit=is_editing
+

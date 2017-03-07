@@ -166,24 +166,9 @@ module Thinkspace
       end
 
       def process_assessment
-        phase = overview_phase
-        return unless phase.present?
-        team_sets   = thinkspace_peer_assessment_team_sets.scope_approved
-        review_sets = Thinkspace::PeerAssessment::ReviewSet.scope_by_team_sets(team_sets).scope_approved
-        # TODO: How can we use scopes here to improve this?
-        ownerables  = review_sets.map(&:ownerable).uniq
-
-        ownerables.each do |ownerable|
-          phase_state = phase.find_or_create_state_for_ownerable(ownerable)
-          if phase_state.may_unlock_phase?
-            phase_state.unlock_phase!
-            notify_overview_unlocked_for_user(ownerable)
-          end
-        end
-
-        team_sets.each { |team_set| team_set.mark_as_sent! }
+        # TODO: Re-add notify
+        thinkspace_peer_assessment_team_sets.scope_approved.each { |team_set| team_set.mark_as_sent! }
       end
-      handle_asynchronously :process_assessment
 
       def overview_phase
         phase      = authable

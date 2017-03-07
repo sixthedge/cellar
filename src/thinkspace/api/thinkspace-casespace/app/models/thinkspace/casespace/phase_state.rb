@@ -26,6 +26,7 @@ module Thinkspace
       # ### Scopes.
       # ###
 
+      def self.scope_by_ownerable_type(type); where(ownerable_type: type); end
       def self.scope_by_ownerable_type_and_ids(type, ids); where(ownerable_type: type, ownerable_id: ids); end
       def self.scope_by_team_ownerable_ids(ids); scope_by_ownerable_type_and_ids('Thinkspace::Team::Team', ids); end
       def self.scope_by_user_ownerable_ids(ids); scope_by_ownerable_type_and_ids('Thinkspace::Common::User', ids); end
@@ -35,6 +36,7 @@ module Thinkspace
       def self.scope_by_not_user_ownerable_ids(ids); scope_by_not_ownerable_type_and_ids('Thinkspace::Common::User', ids); end
 
       def self.scope_locked; scope_by_state('locked'); end
+      def self.scope_completed; scope_by_state('completed'); end
       def self.scope_by_state(state); where(current_state: state); end
 
       # ###

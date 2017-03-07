@@ -65,3 +65,7 @@
     border-bottom: none;
   }
 }
+
+.secondary-panel__item--clickable {
+  &:hover { cursor: pointer; }
+}

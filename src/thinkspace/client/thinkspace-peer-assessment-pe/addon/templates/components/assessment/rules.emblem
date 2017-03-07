@@ -8,11 +8,11 @@ if manager.is_balance
           if has_points_remaining_rule
             span.tsi
           else
-            span.tsi
+            .icon.icon--16.icon__checkmark--green.spacing__margin-right--half
           span Spend EXACTLY #{manager.points_total} points.
         li.secondary-panel__item class={has_points_different_rule:text__color--gray:text__color--green}
           if has_points_different_rule  
             span.tsi
           else
-            span.tsi
+            .icon.icon--16.icon__checkmark--green.spacing__margin-right--half
           span Can not give same score to all members
