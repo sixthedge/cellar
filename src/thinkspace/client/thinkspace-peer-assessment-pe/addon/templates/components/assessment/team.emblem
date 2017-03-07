@@ -6,6 +6,6 @@
   .secondary-panel__content
     ul.secondary-panel__list
       each reviewables as |member|
-        component 'assessment/team/member' manager=manager model=member reviewable=reviewable class="secondary-panel__item"
+        component 'assessment/team/member' manager=manager model=member reviewable=reviewable class="secondary-panel__item secondary-panel__item--clickable"
 
 

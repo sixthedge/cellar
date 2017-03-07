@@ -14,7 +14,7 @@
 
   >h1 {
     font-size: 1.125rem;
-    margin:    0 0 .25rem;
+    margin:    0 0 .5rem;
   }
 
   >p {
@@ -33,4 +33,12 @@
 
 .dialogue--red {
   border-color: $color-red-base;
+}
+
+.dialogue--blue {
+  border-color: $color-blue-base;
+}
+
+.dialogue--shadow {
+  box-shadow: $box-shadow--dialogue;
 }

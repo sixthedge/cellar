@@ -9,6 +9,7 @@ modules:
   action_authorize:             Thinkspace::Casespace::Concerns::Authorize::Phases
   action_authorize_teams:       Thinkspace::Casespace::Concerns::Authorize::Teams
   action_authorize_markup:      Thinkspace::Casespace::Concerns::Authorize::Markup
+  action_authorize_teams_bulk:  Thinkspace::Casespace::Concerns::Authorize::TeamsBulk
   scope_by_ownerables:          Thinkspace::Authorization::ScopeByOwnerables
   deep_clone_helper:            Thinkspace::Common::DeepCloneHelper
   delete_ownerable_data_helper: Thinkspace::Common::DeleteOwnerableDataHelper

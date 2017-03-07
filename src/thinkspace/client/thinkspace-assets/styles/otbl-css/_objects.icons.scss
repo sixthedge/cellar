@@ -3,7 +3,8 @@
 //\*------------------------------------*/
 
 .icon {
-
+ display: inline-block;
+ vertical-align: middle;
 }
 
 .icon--16 {
@@ -11,6 +12,31 @@
   height: 16px;
 }
 
+.icon--24 {
+  width: 24px;
+  height: 24px;
+}
+
+.icon__cross--black {
+  background-image: url('images/icons/otbl-icons_cross--black.svg');
+}
+
 .icon__cross--white {
   background-image: url('images/icons/otbl-icons_cross_white.svg');
+}
+
+.icon__checkmark--green {
+  background-image:  url('images/icons/otbl-icons_checkmark.svg');
+}
+
+.icon__chevron--white {
+  background-image: url('images/icons/otbl-icons_chevron-down--white.svg');
+}
+
+.icon__arrow--blue {
+  background-image: url('images/icons/otbl-icons_arrow--blue.svg');
+
+  &.icon__arrow--right {
+    transform: rotate(-90deg);
+  }
 }

@@ -3,3 +3,13 @@ component 'header' model=model
 
 each model.space_types as |space_type|
   component space_type.component model=model
+
+.grid__container--flex
+  .grid__col--4of4
+    .footnote
+      if model.can.update
+        p.spacing__margin-top--0.spacing__margin-bottom--0 Use the <strong>progress report</strong> to keep up with your students.
+        a Learn about exercise
+      else
+        p.spacing__margin-top--0.spacing__margin-bottom--0 Use the <strong>team chat</strong> to discuss questions with your team members.
+        a Learn about team chat

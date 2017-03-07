@@ -3,9 +3,14 @@
     li.menu-bar__item
       link-to 'show' model class='menu-bar__link'
         | Overview
-    li.menu-bar__item
-       link-to-external 'readiness_assurance.progress_report' model class='menu-bar__link'
-        | Progress Report
-    li.menu-bar__item
-      link-to 'scores' model class='menu-bar__link'
-        | Scores
+    if model.can.update
+      li.menu-bar__item
+         link-to-external 'readiness_assurance.progress_report' model class='menu-bar__link'
+          | Progress Report
+      li.menu-bar__item
+        link-to 'scores' model class='menu-bar__link'
+          | Scores
+    else
+      li.menu-bar__item
+        link-to 'scores' model class='menu-bar__link'
+          | Results

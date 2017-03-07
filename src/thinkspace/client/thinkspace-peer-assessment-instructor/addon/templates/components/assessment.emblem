@@ -1,5 +1,5 @@
 if all_data_loaded
   if selected_team_set
-    component 'assessment/team_set/show' model=selected_team_set assignment=assignment assessment=model
+    component 'assessment/team_set/show' progress_report=progress_report team_set_data=selected_team_set anchor_review_set=selected_review_set assignment=assignment assessment=model select_team_set='select_team_set'
   else
-    component 'assessment/team_set/index' model=team_sets assignment=assignment assessment=model
+    component 'assessment/team_set/index' progress_report=progress_report model=team_sets assignment=assignment assessment=model select_team_set='select_team_set'

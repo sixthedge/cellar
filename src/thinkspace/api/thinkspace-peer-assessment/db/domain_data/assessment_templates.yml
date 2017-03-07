@@ -10,20 +10,7 @@
         different: true
     quantitative:
     - id: 1
-      label: Michaelsen's Quant 1
-      type: range
-      settings:
-        comments:
-          enabled: true
-        labels:
-          scale:
-            min: Low
-            max: High
-        points:
-          min: 0
-          max: 15
-    - id: 2
-      label: Michaelsen's Quant 2
+      label: What was the effectiveness of this team member?
       type: range
       settings:
         comments:
@@ -37,12 +24,12 @@
           max: 15
     qualitative:
     - id: 1
-      label: "[Michaelsen's] Indicate specifically how this person contributes to
+      label: "Indicate specifically how this person contributes to
         group success."
       type: textarea
       feedback_type: positive
     - id: 2
-      label: "[Michaelsen's] Make constructive suggestions about how this person could
+      label: "Make constructive suggestions about how this person could
         better contribute to group success."
       type: textarea
       feedback_type: constructive

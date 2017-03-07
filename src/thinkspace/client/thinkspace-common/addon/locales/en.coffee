@@ -307,6 +307,15 @@ export default {
             tag:
               save: 'Tag saved successfully.'
               destroy: 'Tag removed successfully.'
+          peer_assessment:
+            review:
+              save: 'Review saved successfully.'
+            review_set:
+              save: 'Reviews saved successfully.'
+              ignore: 'Review set ignored successfully.'
+              unignore: 'Review set unignored successfully.'
+              unlock: 'Review set unlocked successfully.'
+
           team:
             team:
               save: 'Team saved successfully.'

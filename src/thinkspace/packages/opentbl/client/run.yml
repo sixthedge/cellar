@@ -1,7 +1,7 @@
 # # Ember Run Options
 
 ember_run_options:
-  app_path:             ../../apps-ember/orchid
+  app_path:             ../apps-ember/orchid
   # ember_cli_version: 2.9.1
   # node_version:      6.9.1
   command_paths:        src/totem/ember

@@ -1,0 +1,21 @@
+///*------------------------------------*\
+//    #BASIC-LIST
+//\*------------------------------------*/
+
+.basic-list {
+  list-style-type: none;
+  margin:          0;
+  padding:         0;
+}
+
+.basic-list__item {
+  margin-bottom: 1rem;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.basic-list__item--clickable {
+  &:hover { cursor: pointer; }
+}

@@ -10,4 +10,4 @@
   label Instructions/Overview
   p.text__font-size--14.spacing__margin-top--0 = model.instructions
 
-  label Team Set
+  // label Team Set

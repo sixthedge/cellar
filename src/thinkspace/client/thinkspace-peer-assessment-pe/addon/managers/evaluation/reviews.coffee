@@ -27,6 +27,7 @@ export default ember.Mixin.create
     new_reviewable  = reviewables.objectAt(new_index)
     @set_reviewable(new_reviewable) if ember.isPresent(new_reviewable)
     @set_confirmation() if !ember.isPresent(new_reviewable) and offset == 1
+    ember.run.scheduleOnce 'afterRender', => $('body').animate({scrollTop: 0}, 500)
 
   set_confirmation: ->
     @set_reviewable('confirmation')

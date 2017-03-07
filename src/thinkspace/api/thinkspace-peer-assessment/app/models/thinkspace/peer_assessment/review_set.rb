@@ -8,53 +8,65 @@ module Thinkspace
 
       aasm column: :state do
         state :neutral, initial: true
-        state :approved
         state :submitted
-        state :sent
+        state :ignored
 
-        event :approve_all do
-          transitions from: [:neutral, :submitted], to: :approved, after: :approve_reviews
+        # event :approve_all do
+        #   transitions from: [:neutral, :submitted], to: :approved, after: :approve_reviews
+        # end
+
+        event :ignore do
+          transitions from: [:neutral], to: :ignored
         end
 
-        event :approve do
-          transitions from: [:neutral, :submitted], to: :approved
-        end
+        # event :unapprove_all do
+        #   transitions from: [:neutral, :submitted, :approved], to: :neutral, after: :unapprove_reviews
+        # end
 
-        event :unapprove_all do
-          transitions from: [:neutral, :submitted, :approved], to: :neutral, after: :unapprove_reviews
-        end
-
-        event :unapprove do
-          transitions from: [:neutral, :submitted, :approved], to: :neutral
+        event :unignore do
+          transitions from: [:ignored], to: :neutral, after: :unlock_phase_for_ownerable
         end
 
         event :submit do
-          transitions from: [:neutral], to: :submitted, after: :submit_reviews
+          transitions from: [:neutral], to: :submitted
         end
 
-        event :mark_as_sent do
-          transitions from: [:approved], to: :sent, after: :mark_as_sent_reviews
+        event :unlock do
+          transitions from: [:submitted], to: :neutral, after: :unlock_phase_for_ownerable
         end
+
+        # event :mark_as_sent do
+        #   transitions from: [:approved], to: :sent, after: :mark_as_sent_reviews
+        # end
       end
 
-      def approve_reviews
-        thinkspace_peer_assessment_reviews.each { |review| review.approve! if review.may_approve? }
+      def status
+        return 'complete' if submitted?
+        return 'ignored' if ignored?
+        return 'in-progress' if in_progress?
+        return 'not started'
       end
 
-      def unapprove_reviews
-        self.transaction do
-          thinkspace_peer_assessment_reviews.each { |review| review.unapprove! if review.may_unapprove? }
-          unlock_phase_for_ownerable
-        end
-      end
+      def in_progress?; thinkspace_peer_assessment_reviews.where.not(value: nil).count > 0; end
 
-      def mark_as_sent_reviews
-        thinkspace_peer_assessment_reviews.each { |review| review.mark_as_sent! if review.may_mark_as_sent? }
-      end
+      # def approve_reviews
+      #   thinkspace_peer_assessment_reviews.each { |review| review.approve! if review.may_approve? }
+      # end
 
-      def submit_reviews
-        thinkspace_peer_assessment_reviews.each { |review| review.submit! if review.may_submit? }
-      end
+      # def unapprove_reviews
+      #   self.transaction do
+      #     thinkspace_peer_assessment_reviews.each { |review| review.unapprove! if review.may_unapprove? }
+      #     unlock_phase_for_ownerable
+      #   end
+      # end
+
+      # def mark_as_sent_reviews
+      #   thinkspace_peer_assessment_reviews.each { |review| review.mark_as_sent! if review.may_mark_as_sent? }
+      # end
+
+      # def submit_reviews
+      #   thinkspace_peer_assessment_reviews.each { |review| review.submit! if review.may_submit? }
+      # end
 
       def unlock_phase_for_ownerable
         ownerable = self.ownerable
@@ -103,9 +115,9 @@ module Thinkspace
         where(thinkspace_peer_assessment_team_set: team_sets)
       end
 
-      def self.scope_approved; approved; end # aasm auto-generated scope
-      def self.scope_submitted; submitted; end # aasm auto-generated scope
-      def self.scope_sent; sent; end # aasm auto-generated scope
+      def self.scope_ignored; ignored; end
+      def self.scope_submitted; submitted; end
+      def self.scope_neutral; neutral; end
 
       class ScopeError < StandardError; end
 

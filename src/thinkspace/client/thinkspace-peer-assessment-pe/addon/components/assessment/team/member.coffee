@@ -21,9 +21,6 @@ export default base_component.extend
     review = @get 'review'
     review.get_expended_points()
 
-  # ### Components
-  c_user_avatar: ns.to_p 'user', 'avatar'
-
   # ### Events
   init: ->
     @_super()

@@ -2,5 +2,5 @@ partial 'components/header'
 
 .ts-grid_row: .small-12.ts-grid_columns.ts-grid_columns-thick
   partial 'components/overview/tabs'
-
-  h1 SCORES HERE!!!
+  h1 Scores
+  

@@ -1,4 +1,45 @@
-.btn.btn-primary.btn-small click='goto_index'
-  | Back
+if all_data_loaded
+  .grid__container--flex
+    .grid__col--4of4
+      .grid__container
+        h1.spacing__margin-top--0.text--inline-block #{team.title}
+        .btn-group.is-right
+          if model.is_sent
+            button.btn.btn--primary.btn--disabled title='Evaluations are already sent.'
+              | Approve Evaluations
+          else
+            if model.is_approved
+              button.btn.btn--primary click='toggle_approve'
+                | Reset Approvals
+            else
+              component '__confirmation/modal' modal_partial='components/assessment/team_set/show/modals/approve/modal' modal_reveal_partial='components/assessment/team_set/show/modals/approve/action' model=ignored_ownerables modal_reveal_anchor_class_names='btn btn--primary' confirm='toggle_approve' class='btn__component'
 
-h1 showing team_set #{model.id}
+          button.btn click='select_team_set'
+            | Go Back
+          / p Incomplete evaluations must be ignored to approve.
+          / a Read more about approving evaluations
+      .grid__container
+        .text__font-size--14.text--inline-block.spacing__margin-right--1
+          | <strong>#{team_set_data.num_complete}</strong> out of <strong>#{team_set_data.num_total} complete</strong>
+        .text__font-size--14.text--inline-block.text__font-style--italic 
+          if model.is_sent
+            .icon.icon--16.icon__checkmark--green.spacing__margin-right--half
+            span.text__font-size--14.text--bold.text__color--green Sent
+          else
+            if model.is_approved
+              .text__color--green Evaluations approved!
+            else
+              | Evaluations not yet approved
+      hr
+  .grid__container--flex.spacing__margin-bottom--4
+    .grid__col--3of4.grid__mobile--full-width.grid__col--primary
+      ul.basic-list
+        each review_sets as |review_set|
+          li.basic-list__item
+            component 'assessment/team_set/show/review_set' model=review_set team_set=model team_members=team_members assignment=assignment assessment=assessment
+    .grid__col--1of4.grid__mobile--hidden
+      .text__font-size--18.text--bold.spacing__margin-bottom--1 Team Members
+      ul.basic-list
+        each review_sets as |review_set|
+          li.basic-list__item.basic-list__item--clickable
+            component 'assessment/team_set/show/team_member' model=review_set team_members=team_members assignment=assignment assessment=assessment scroll_to='scroll_to_review_set'

@@ -1,0 +1,33 @@
+.dialogue.dialogue--blue.grid__container--centered.dialogue--shadow 
+  h1 Sending Results
+
+  if model.length
+    p Results will be sent to the following <strong>#{model.length} team(s) </strong>. Teams who have not yet been approved or have already received their results will not be sent results.
+
+    table.basic-table.basic-table--borderless.spacing__margin-bottom--2
+      thead
+        tr
+          th Color
+          th Team
+          th No. Students
+      tbody
+        = each model as |team|
+          tr
+            td 
+              if team.color
+                div style="height: 32px; width: 32px; background: ##{team.color}; border-radius: 4px;"
+              else
+                div style="height: 32px; width: 32px; border: 2px solid #a9aeb8; border-radius: 4px;"
+            td #{team.title}
+            td 
+              | #{team.num_complete} student(s) 
+              span.text__font-style--italic (#{team.num_ignored} ignored)
+  else
+    p You need to approve a team in order to send the results.
+
+  .btn-group
+    if model.length
+      button.btn.btn--primary click='confirm'
+        | Send results
+    button.btn click='deny'
+      | Cancel

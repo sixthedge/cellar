@@ -18,8 +18,13 @@ module Thinkspace
             end
 
             def team_sets(serializer_options); end
+            def progress_report(serializer_options); end
+            def approve_team_sets(serializer_options); end
 
-            def approve(serializer_options); end
+            def approve(serializer_options)
+              serializer_options.include_association :thinkspace_peer_assessment_team_sets
+            end
+
             def activate(serializer_options)
               serializer_options.include_association :authable, scope: :root
             end

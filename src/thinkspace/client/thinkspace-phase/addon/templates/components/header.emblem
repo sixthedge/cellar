@@ -52,4 +52,4 @@
       h1.text--inline-block = model.title
       .btn-group.is-right
         link-to-external 'spaces.show' model.assignment.space class='btn btn--primary'
-          | Submit Exercise
+          | Back to Case

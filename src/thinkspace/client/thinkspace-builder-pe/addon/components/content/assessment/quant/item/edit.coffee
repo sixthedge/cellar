@@ -25,14 +25,20 @@ export default base.extend
 
   min: ember.computed 'points_per_member', ->
     min = new Array
-    for i in [1..@get('points_per_member')]
-      min.pushObject(i)
+    for i in [1..(@get('points_per_member')*1.5-1)]
+      obj = {}
+      obj.value = i
+      obj.is_selected = parseInt(@get('model.points_changeset.min')) == i
+      min.pushObject(obj)
     min
 
   max: ember.computed 'points_per_member', ->
     max = new Array
-    for i in [1..@get('points_per_member')]
-      max.pushObject(i)
+    for i in [1..(@get('points_per_member')*1.5)]
+      obj = {}
+      obj.value = i
+      obj.is_selected = parseInt(@get('model.points_changeset.max')) == i
+      max.pushObject(obj)
     max
 
   ## Temp methods until nested properties are supported by ember-changeset
@@ -46,6 +52,8 @@ export default base.extend
         if validity
           changesets.forEach (changeset) =>
             changeset.save()
+
+          #@get('model').create_changeset()
         
         resolve(validity)
 

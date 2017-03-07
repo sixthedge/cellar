@@ -1,36 +1,43 @@
 partial 'components/header'
 
-if model.is_pubsub
-  mount 'thinkspace-message-pubsub'
+/ if model.is_pubsub
+/   mount 'thinkspace-message-pubsub'
 
 .grid__container--flex.spacing__margin-bottom--4
-  .grid__col--3of4.grid__mobile--full-width
+  .grid__col--3of4.grid__mobile--full-width.grid__col--primary
     / Component for state display and transitions
-    component 'show/states' model=model
+    if model.can.update
+      component 'show/states' model=model
 
-    .dialogue.dialogue--yellow
+    .dialogue.dialogue--yellow.spacing__margin-bottom--2
       h1 About this case
       if model.instructions
         p== model.instructions
       else
         p No instructions given.
+
+    if model.can.update
+      h2 Exercises
+      ul.clear-list
+        each phase_states as |ps_array|
+          each ps_array as |phase_state|
+            component 'phase' model=phase_state.phase assignment=model
+    else
+      h2 Your progress
+      ul.clear-list
+        each phase_states as |ps_array|
+          each ps_array as |phase_state|
+            component 'phase' model=phase_state.phase assignment=model
+
   .grid__col--1of4.grid__mobile--full-width
-    if phase_states_loaded
-      partial 'components/show/details'
-
-      h5 Phase List
-      p.casespace-assignment_phase-tagline A list of the total phases that make up this case.  Click on one to jump in.
-
-      .casespace-assignment_phase-list
-        table
-          thead
-          tbody
-            each model.active_phases as |phase|
-              component 'phase' model=phase assignment=model
+    partial 'components/show/details'
 
 .grid__container--flex
   .grid__col--4of4
     .footnote
-      / .text__font-size--12.text--bold.text__color--gray.spacing__margin-top--0.spacing__margin-bottom--0 Footnote
-      p.spacing__margin-top--0.spacing__margin-bottom--0 Use the <strong>progress report</strong> to keep up with your students.
-      a Learn about exercise
+      if model.can.update
+        p.spacing__margin-top--0.spacing__margin-bottom--0 Use the <strong>progress report</strong> to keep up with your students.
+        a Learn about exercise
+      else
+        p.spacing__margin-top--0.spacing__margin-bottom--0 Use the <strong>team chat</strong> to discuss questions with your team members.
+        a Learn about team chat

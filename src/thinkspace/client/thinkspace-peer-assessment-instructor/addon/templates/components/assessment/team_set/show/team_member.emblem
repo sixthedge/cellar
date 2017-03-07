@@ -1,0 +1,7 @@
+.avatar.avatar--32.spacing__margin-right--half
+.text__font-size--14.text--inline-block
+  = ownerable.full_name
+if model.is_complete
+  .icon.icon--16.icon__checkmark--green.is-right
+else
+  / .icon.icon--16.icon__checkmark--green.is-right

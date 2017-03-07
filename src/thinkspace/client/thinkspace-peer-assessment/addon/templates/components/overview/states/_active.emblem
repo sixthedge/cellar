@@ -1,6 +1,6 @@
-.dialogue.dialogue-success
-  h2 Case is live
-  h5 This case is available to all your students.
+.dialogue.dialogue--green
+  h1 Case is live
+  p This case is available to all your students.
 
-  .btn.btn-small.btn-blue{action 'set_drafting'}
+  button.btn{action 'set_drafting'}
     | Set to draft

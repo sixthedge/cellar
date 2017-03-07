@@ -22,15 +22,15 @@ secrets:
   development:
     secret_key_base: d01f9aa6064531cbcff49802c38bbfd8e9635643ac8b4c079cc63568d5898c536fa91004af21ad8e09d84562e6bb91fb3d0a990ae56b0aacd0b1e4d1a275b453
     totem_database:
-      name:     ts_development
-      username: ts_user
+      name:     otbl_development
+      username: postgres
       password: password
     totem_oauth_providers:
       totem_oauth_1:
         _config:
           site:   <%=oauth_site%>
           active: true
-        opentbl:
+        thinkspace:
           client_id:     <%=oauth_client_id%>
           client_secret: <%=oauth_client_secret%>
           active:        true
@@ -65,15 +65,15 @@ secrets:
   test:
     secret_key_base: 665b6cfe0ab56f2f2a57e8d15d1ec0c28dfe25a2a5b460bec0d53d23ee8bc06eeaec2ccc531d5642a4dcb9f473cd34d443c5b7b103ad400766848517eacc994c
     totem_database:
-      name:     ts_test
-      username: ts_user
+      name:     otbl_test
+      username: postgres
       password: password
     totem_oauth_providers:
       totem_oauth_1:
         _config:
           site:   <%=oauth_site%>
           active: true
-        opentbl:
+        thinkspace:
           client_id:     <%=oauth_client_id%>
           client_secret: <%=oauth_client_secret%>
           active:        true

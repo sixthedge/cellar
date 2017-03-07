@@ -5,8 +5,9 @@ module Thinkspace
         module Admin
           module ReviewSets
 
-            def approve(serializer_options); state_change(serializer_options); end
-            def unapprove(serializer_options); state_change(serializer_options); end
+            def ignore(serializer_options); state_change(serializer_options); end
+            def unignore(serializer_options); state_change(serializer_options); end
+            def unlock(serializer_options); end
             def notify(serializer_options); end
 
             def state_change(serializer_options)

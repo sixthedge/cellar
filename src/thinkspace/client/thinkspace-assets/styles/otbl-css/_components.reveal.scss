@@ -1,0 +1,19 @@
+///*------------------------------------*\
+//    #REVEAL
+//\*------------------------------------*/
+
+.reveal-overlay {
+  z-index: 99999;
+  background-color: rgba(251, 251, 255, 0.75);
+}
+
+.reveal {
+  background-color: transparent;
+  border:           none;
+  // height:           100%;
+  // width:            100%;
+
+  &:focus {
+    outline: none;
+  }
+}

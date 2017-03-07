@@ -17,7 +17,7 @@ module Totem; module Cli; module HelpersEmber; module BuildFile
     else
       content += ''
       content += "\n#{indent}// **Trees**\n"
-      content += "#{indent}var pick_files = require('broccoli-funnel');\n"
+      content += "#{indent}var pick_files = require('ember-cli/node_modules/broccoli-funnel');\n"
       trees.each {|t| content += "#{indent}#{t}\n"}
     end
     content

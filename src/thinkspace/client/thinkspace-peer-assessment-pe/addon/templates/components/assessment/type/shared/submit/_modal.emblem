@@ -1,0 +1,10 @@
+.dialogue.dialogue--blue.grid__container--centered.dialogue--shadow 
+  h1 You sure?
+
+  p Once you submit you'll have to ask your instructor to make changes. Are you sure you're ready?
+
+  .btn-group
+    button.btn.btn--primary click='confirm'
+      | Submit evaluations
+    button.btn click='deny'
+      | Cancel

@@ -11,6 +11,7 @@ export default {
       assessment:          'peer_assessment'
       assessment_template: 'peer_assessment'
       review:              'peer_assessment'
+      progress_report:     'peer_assessment'
 
   query_params:
     review: ownerable: true, authable: false

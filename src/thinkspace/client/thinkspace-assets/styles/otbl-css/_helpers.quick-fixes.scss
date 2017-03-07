@@ -1,0 +1,85 @@
+///*------------------------------------*\
+//    #QUICK-FIXES
+//\*------------------------------------*/
+
+.thinkspace-dropdown {
+  border-radius:    $border-radius;
+
+
+}
+
+.thinkspace-dropdown_anchor {
+  display:          inline-block;
+  vertical-align:   middle;
+  font-family:      $font-family;
+  color:            white;
+  cursor:           pointer;
+  text-decoration:  none;
+  border:           none;
+  height:           2rem;
+  width:            auto;
+  line-height:      2rem;
+  padding:          0 1.15rem;
+  border-radius:    $border-radius;
+  text-transform:   capitalize;
+  font-size:        .75rem;
+  position:         relative;
+  max-width:        $max-width--content;
+  font-weight:      $font-weight--bold;
+  transition:       $transition-animation--background-color;
+  
+  background-color: $color-gray-base;
+
+  &:hover, &:focus {
+    background-color: darken($color-gray-base, 10%);
+    color: white;
+  }
+  
+  &:active {
+    background-color: darken($color-gray-base, 15%);
+    color: white;
+  }
+
+  &:focus {
+    outline:        1px dotted white;
+    outline-offset: -4px;
+  }
+
+
+}
+
+.thinkspace-dropdown_list {
+  top: 94px !important;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  background-color: white;
+  border:            2px solid $color-blue-base;
+  box-shadow:        $box-shadow--dialogue;
+  border-left-width: 6px;
+}
+
+.thinkspace-dropdown_list-item {
+  width:         100%;
+  border-bottom: $border--thin;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+}
+
+.thinkspace-dropdown_link {
+  display:          block;
+  padding:          1rem;
+  line-height:      1rem;
+  height:           inherit;
+  width:            inherit;
+  font-size:        .875rem;
+  color:            $color-black-base;
+  background-color: white;
+  transition:       $transition-animation--background-color;
+
+  &:hover {
+    background-color: $color-gray-med;
+  }
+}

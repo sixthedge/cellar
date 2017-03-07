@@ -1,9 +1,12 @@
-div class={:reveal} id='change-date' data-reveal='' data-overlay='false'
-  h1 Change Release Date
-  h5 This will update when students will be able to view the evaluation. 
-  component '__datetime_picker' value=date select='select_release_at'
+div class={:reveal} id='change-date' data-reveal='' data-overlay='true'
+  .dialogue.dialogue--blue.grid__container--centered.dialogue--shadow
+    h1 Change Release Date
+    p This will update when students will be able to view the evaluation. 
+    .forms__field-wrapper
+      component '__datetime_picker' value=date select='select_release_at'
 
-  .btn.btn-small{action 'close'}
-    | Close
-  .btn.btn-small{action 'confirm'}
-    | Set Date
+    .btn-group
+      button.btn.btn--primary{action 'confirm'}
+        | Set Date
+      button.btn{action 'close'}
+        | Cancel

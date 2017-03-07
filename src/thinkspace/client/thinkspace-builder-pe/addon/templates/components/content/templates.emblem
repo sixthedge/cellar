@@ -28,7 +28,7 @@ fieldset.forms__section
             = assessment_template_blank_canvas.title
             .radio__label-summary = assessment_template_blank_canvas.description
 
-        .radio__item{ action 'select_user_templates' assessment_template_user_templates}
+        .radio__item{ action 'toggle_user_templates' assessment_template_user_templates}
           label.radio__label 
             .radio__icon role='presentation' class={:radio__icon user_template_selected:radio__icon--is-checked}
               input type='radio' role='radio' checked=user_template_selected

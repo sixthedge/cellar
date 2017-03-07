@@ -12,13 +12,13 @@
   .dropdown__container
     select onchange={action (mut model.points_changeset.min) value='target.value'}
       each min as |num|
-        option value=num
-          = num
+        option value=num.value selected=num.is_selected
+          = num.value
     span.text--bold.text__font-size--12.spacing__pad-left--1.spacing__pad-right--1 to
     select onchange={action (mut model.points_changeset.max) value='target.value'}
       each max as |num|
-        option value=num
-          = num
+        option value=num.value selected=num.is_selected
+          = num.value
   if model.points_changeset.errors.firstObject
     ul.input-feedback__list
       li.input-feedback__item.input-feedback--error

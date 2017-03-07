@@ -3,14 +3,15 @@
 //\*------------------------------------*/
 
 .avatar {
-  border-radius:    $border-radius;
-  position:         relative;
-  background-color: $color-gray-med;
-  display:          inline-block;
-  background-image: url('images/icons/otbl-icons_default-avatar.svg');
-  background-repeat: no-repeat;
+  border-radius:       $border-radius;
+  position:            relative;
+  background-color:    $color-gray-med;
+  display:             inline-block;
+  background-image:    url('images/icons/otbl-icons_default-avatar.svg');
+  background-repeat:   no-repeat;
   background-position: center;
-  border: $border--thin;
+  border:              $border--thin;
+  vertical-align:      middle;
 
   .avatar--offline & {
     opacity: .5;
@@ -22,7 +23,7 @@
   height:     4rem;
   min-width:  4rem;
   min-height: 4rem;
-  background-size: 4rem 4rem;
+  // background-size: 4rem 4rem;
 
 }
 
@@ -31,7 +32,7 @@
   height:     2rem;
   min-width:  2rem;
   min-height: 2rem;
-  background-size: 2rem 2rem;
+  // background-size: 2rem 2rem;
 
 }
 

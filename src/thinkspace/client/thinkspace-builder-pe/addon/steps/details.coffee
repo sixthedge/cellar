@@ -1,7 +1,9 @@
 import ember           from 'ember'
 import tc              from 'totem/cache'
+import ns              from 'totem/ns'
 import totem_changeset from 'totem/changeset'
 import step            from './step'
+import ta              from 'totem/ds/associations'
 
 ###
 # # details.coffee
@@ -53,27 +55,27 @@ export default step.extend
         id: @get('model.id')
       options =
         action: 'load'
-        model:  ns.to_p('assignment')
-      tc.query_action(ns.to_p('assignment'), params, options).then (assignment) =>
+        model:  ta.to_p('assignment')
+      tc.query_action(ta.to_p('assignment'), params, options).then (assignment) =>
         resolve assignment
 
   query_team_sets: ->
     new ember.RSVP.Promise (resolve, reject) =>
-      @get('model').get(ns.to_p('space')).then (space) =>
+      @get('model').get(ta.to_p('space')).then (space) =>
         space.get_team_sets().then (team_sets) =>
           @set 'team_sets', team_sets
           resolve()
 
   select_team_set: (team_set) -> 
     @set 'selected_team_set', team_set
-    @get('model').get(ns.to_p('phases')).then (phases) =>
+    @get('model').get(ta.to_p('phases')).then (phases) =>
       phase = phases.get('firstObject')
       phase.set 'team_set_id', team_set.get('id')
       phase.save()
 
   initialize_team_set: ->
     new ember.RSVP.Promise (resolve, reject) =>
-      @get('model').get(ns.to_p('phases')).then (phases) =>
+      @get('model').get(ta.to_p('phases')).then (phases) =>
         team_sets   = @get('team_sets')
         phase       = phases.get('firstObject')
         if ember.isPresent(phase.get('team_set_id')) 

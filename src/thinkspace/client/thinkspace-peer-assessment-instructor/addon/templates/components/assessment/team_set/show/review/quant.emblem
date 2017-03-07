@@ -1,0 +1,7 @@
+.forms__field-wrapper.spacing__margin-bottom--half
+  label.spacing__margin-bottom--0 #{label}
+  .text__font-size--14
+    if has_value
+      | #{value}
+    else
+      | --

@@ -1,0 +1,36 @@
+.dialogue.dialogue--blue.grid__container--centered.dialogue--shadow 
+  h1 Approve all teams
+  if model.length
+    p
+      | You have <strong>#{model.length} team(s)</strong> who have not yet completed their evaluations. You must acknowledge that you want to ignore their evaluations to approve these teams.
+    p.text__font-style--italic Students who are ignored will not be used to calculate the total score for other members.
+    hr
+
+    table.basic-table.basic-table--borderless.spacing__margin-bottom--2
+      thead
+        tr
+          th Color
+          th Team
+          th Complete Evaluations
+      tbody
+        = each model as |team|
+          tr
+            td 
+              if team.color
+                div style="height: 32px; width: 32px; background: ##{team.color}; border-radius: 4px;"
+              else
+                div style="height: 32px; width: 32px; border: 2px solid #a9aeb8; border-radius: 4px;"
+            td #{team.title}
+            td 
+              | #{team.num_complete} student(s) 
+              span.text__font-style--italic (#{team.num_ignored} ignored)
+  else
+    p All team sets have been approved.
+
+
+  .btn-group
+    if model.length
+      button.btn.btn--primary click='confirm'
+        | Approve teams
+    button.btn click='deny'
+      | Cancel

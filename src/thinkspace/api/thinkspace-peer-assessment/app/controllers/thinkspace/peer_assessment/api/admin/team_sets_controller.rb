@@ -10,6 +10,7 @@ module Thinkspace
           include Thinkspace::PeerAssessment::Concerns::StateErrors
 
           def approve
+            create_review_sets
             access_denied_state_error :approve unless @team_set.may_approve?
             @team_set.transaction do
               @team_set.approve!
@@ -18,6 +19,7 @@ module Thinkspace
           end
 
           def unapprove
+            create_review_sets
             access_denied_state_error :approve unless @team_set.may_unapprove?
             @team_set.transaction do
               @team_set.unapprove!
@@ -25,23 +27,37 @@ module Thinkspace
             controller_render(@team_set)
           end
 
-          def approve_all
-            access_denied_state_error :approve unless @team_set.may_approve_all?
-            @team_set.transaction do
-              @team_set.approve_all!
-            end
-            controller_render(@team_set)
-          end
+          # def approve_all
+          #   create_review_sets
+          #   access_denied_state_error :approve unless @team_set.may_approve_all?
+          #   @team_set.transaction do
+          #     @team_set.approve!
+          #   end
+          #   controller_render(@team_set)
+          # end
 
-          def unapprove_all
-            access_denied_state_error :approve unless @team_set.may_unapprove_all?
-            @team_set.transaction do
-              @team_set.unapprove_all!
-            end
+          # def unapprove_all
+          #   create_review_sets
+          #   access_denied_state_error :approve unless @team_set.may_unapprove_all?
+          #   @team_set.transaction do
+          #     @team_set.unapprove!
+          #   end
+          #   controller_render(@team_set)
+          # end
+
+          def show
+            create_review_sets
             controller_render(@team_set)
           end
 
           private
+
+          def create_review_sets
+            @team_set.thinkspace_team_team.thinkspace_common_users.each do |user|
+              review_set = Thinkspace::PeerAssessment::ReviewSet.find_or_create_by(ownerable: user, team_set_id: @team_set.id)
+              review_set.create_reviews
+            end
+          end
 
           def authorize_authable
             authorize! :update, @team_set.authable

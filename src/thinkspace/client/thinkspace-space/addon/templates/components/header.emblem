@@ -1,29 +1,3 @@
-/ .title-region
-/   .ts-grid_row: .small-12.ts-grid_columns.ts-grid_columns-thick
-/     .ts-grid_row
-/       h3.title-region_title.left= model.title
-/       / if can.update
-/       /   .space-content_actions
-/       /     link-to 'show' model
-/       /       a.btn.btn-default.btn-small
-/       /         | Edit Space
-/       /         .tsi.tsi-left.icon-tiny.tsi-edit-inverse.left
-/     .ts-grid_row
-/       ul.ts-action-bar
-/         li.ts-action-bar_action
-/           link-to 'show' model
-/             | Cases
-/         / if can.update
-/         /   / li.ts-action-bar_action
-/         /   /   link-to r_spaces_scores model
-/         /   /     | Scores
-/         /   li.ts-action-bar_action
-/         /     link-to r_spaces_roster model
-/         /      | Space Roster
-/         /   li.ts-action-bar_action
-/         /     link-to 'thinkspace/casespace/case_manager/team_sets' model
-/         /       | Team Manager
-
 .grid__container--flex
   .grid__col--4of4
     .main-content__header
