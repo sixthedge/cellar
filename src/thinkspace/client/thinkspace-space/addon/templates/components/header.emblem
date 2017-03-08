@@ -16,7 +16,7 @@
           a.menu-bar__link
             | Exercise List
         li.menu-bar__item
-          a.menu-bar__link
+          link-to-external 'thinkspace-team-builder.roster' model class="menu-bar__link"
             | People
         li.menu-bar__item
           a.menu-bar__link

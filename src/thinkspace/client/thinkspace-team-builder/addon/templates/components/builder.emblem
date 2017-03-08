@@ -1,0 +1,10 @@
+h1 THIS IS THE BUILDER ROUTE
+
+link-to 'edit' model
+  | edit
+
+link-to 'manage' model
+  | manage
+
+link-to 'roster' model
+  | roster

@@ -13,6 +13,8 @@ export default ta.Model.extend ta.add(
   state:       ta.attr('string')
   settings:    ta.attr()
   metadata:    ta.attr()
+  scaffold:    ta.attr()
+  transform:   ta.attr()
   
   # ### State management
   is_locked:       ember.computed.equal 'state', 'locked'

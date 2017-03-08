@@ -1,0 +1,10 @@
+h1 THIS IS THE EDIT ROUTE
+
+link-to 'builder' model
+  | builder
+
+link-to 'manage' model
+  | manage
+
+link-to 'roster' model
+  | roster
