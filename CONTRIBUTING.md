@@ -1,4 +1,4 @@
-# Contributing
+# Contributing Guide
 
 ## Before you get started
 
@@ -19,16 +19,50 @@ Keep up to date with the coding styles we employ across our repositories as well
 **Before you submit** an issue, browse existing issues to see if it has already been posted and add new or relevant discussion. 
 
 Any **Non-Security** related issues are tracked via their projects corresponding **Github Issues** list.
+
 - [OpenTBL Issues](https://github.com/sixthedge/opentbl-com/issues)
 
-- Submitting a new issue
-  - Include a clear **title** and **description** are required
-    - The description should outlay the use case of the bug and steps for reproducing it if possible
-  - Add the most relevant tag (see [labels](https://github.com/sixthedge/opentbl/labels))
-  - If possible have a code sample, error log or unit test demonstrating the issue
+### Submitting a new issue
+- Include a clear **title** and **description** are required
+  - The description should outlay the use case of the bug and steps for reproducing it if possible
+- Add the most relevant labels
+- If possible have a code sample, error log or unit test demonstrating the issue
 
 ### Commiting Changes
 **Before** you start cloning repositories make sure you have read the [Setup](http://totem-docs.herokuapp.com/1.0.0/setup/environment) process. When you get to the part of [cloning](http://totem-docs.herokuapp.com/1.0.0/setup/environment#clone-repos) replace the url with the your own cloned versions from the steps below.
+
+#### Commit Messages
+*See [Commit Guide](http://totem-docs.herokuapp.com/1.0.0/git/commiting) for a more in-depth overview*
+
+- **Prefix** your commit with most prevalent tag
+  - [FIX] If a commit is fixing a bug/functionality
+  - [MOD] If a commit is updating functionality
+  - [ADD] If a commit is adding functionality
+  - [RM] If a commit is removing functionality
+  - [WIP] If a commit is in progress for new functionality
+- **Subject**
+  - **~50** characters for the subject to keep the commit subject concise. Use the body if further explanation is required.
+  - **Imperative** not _indicative_
+  -**Capitalize** the first letter in the subject
+  -**No period** at the end of the subject
+  - **Newline** between subject and body
+- **Body**
+  - **Wrap** at 72 characters
+  - **What & Why** not _How_
+  - **Bullet points** are also allowed in place of or with paragraphs
+  - **Tag** any closing or references to issues on github
+
+```
+  # Example Commit
+  [ADD] Foo to the test function
+
+  This function was not correctly calculating due to the missing foo. Adding this back allows for the system to properly function with some added benefits.
+
+  - Foo added to method
+  - No longer requires Bar as internal variable
+
+  Closes #42
+```
 
 #### Forking
 To best contribute changes to the source fork the main repo by going to github a click `Fork` in the upper right. By doing this you are essentially creating the current state of the repository into your own personal copy.
