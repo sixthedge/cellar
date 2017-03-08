@@ -14,6 +14,7 @@ Thinkspace::Common::Engine.routes.draw do
             put  :invite
             post :import
             post :clone
+            get  :search
           end
         end
 

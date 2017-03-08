@@ -6,9 +6,10 @@ Thinkspace::Team::Engine.routes.draw do
         resources :team_sets, only: [:create, :show, :update, :destroy] do
           get :select, on: :collection
           get :teams, on: :member
+          get :abstract, on: :member
         end 
 
-        resources :teams, only: [:create, :update, :destroy]
+        resources :teams,           only: [:create, :update, :destroy]
         resources :team_users,      only: [:create, :destroy]
         resources :team_viewers,    only: [:create, :destroy]
         resources :team_teamables,  only: [:create, :destroy]

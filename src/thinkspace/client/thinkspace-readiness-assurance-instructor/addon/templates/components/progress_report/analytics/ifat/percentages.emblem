@@ -4,4 +4,3 @@ each attempts as |attempt|
       .bar-graph__bar style="height: #{attempt.percentages.rounded}%; background-color: #{attempt.background_color}; display: inline-block;"
         .bar-graph__bar-value #{attempt.percentages.rounded}%
     .bar-graph__item-label #{attempt.attempt}
-/ span #{correct.percentages.rounded}%

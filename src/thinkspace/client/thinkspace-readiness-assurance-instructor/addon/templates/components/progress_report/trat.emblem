@@ -1,21 +1,3 @@
-/ h1 TRAT #{is_ifat}
-
-/ p tRATs Completed: #{progress_report.completed}
-/ p tRAT Average: #{progress_report.average}
-/ p Questions <50%: #{progress_report.concerns.length}
-/ if progress_report.concerns
-/   ul
-/     each progress_report.concerns as |concern|
-/       li #{concern}
-
-/ if ready
-/   if is_ifat
-/     h1 IFAT
-/     component 'progress_report/analytics/ifat' model=assessment
-/   else
-/     h2 Standard
-/     component 'progress_report/analytics/standard' model=assessment
-
 mount 'thinkspace-toolbar'
 .main-content
   .grid__container--flex
@@ -24,6 +6,9 @@ mount 'thinkspace-toolbar'
         .breadcrumbs
           link-to-external 'spaces.show' model.space class='breadcrumbs__link'
             = model.space.title
+          '  |
+          link-to 'progress_report' model class='breadcrumbs__link'
+            | Progress Report
         h1.text--inline-block Team RAT
         .btn-group.is-right
           button.btn.btn--primary
@@ -44,11 +29,6 @@ mount 'thinkspace-toolbar'
         .analytics-panel__item
           label Questions <50%: 
           .analytics-panel__data #{progress_report.concerns.length}
-
-      / if progress_report.concerns
-      /   ul
-      /     each progress_report.concerns as |concern|
-      /       li #{concern}
       hr
   .grid__container--flex.spacing__margin-bottom--4
     .grid__col--4of4

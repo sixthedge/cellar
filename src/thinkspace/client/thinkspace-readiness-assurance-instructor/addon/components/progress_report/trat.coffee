@@ -1,6 +1,7 @@
 import ember       from 'ember'
 import base        from 'thinkspace-readiness-assurance-instructor/components/base'
 import m_data_rows from 'thinkspace-readiness-assurance/mixins/data_rows'
+import ns          from 'totem/ns'
 
 export default base.extend m_data_rows,
   # ### Services
@@ -23,4 +24,4 @@ export default base.extend m_data_rows,
       @set('assessment', assessment)
       @am.set_trat_progress_report().then =>
         @am.join_rat_progress_report_room()
-        @set_ready_on() # TODO: Refactor this to not rely on data_rows mixin.
+        @set_ready_on()

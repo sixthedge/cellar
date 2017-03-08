@@ -43,6 +43,10 @@ module Thinkspace
             controller_destroy_record(@team_set)
           end
 
+          def abstract
+            controller_render_json(@team_set.abstract(:users, :teams))
+          end
+
           private
 
           def authorize_authable

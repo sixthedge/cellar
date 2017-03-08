@@ -6,6 +6,9 @@ mount 'thinkspace-toolbar'
         .breadcrumbs
           link-to-external 'spaces.show' model.space class='breadcrumbs__link'
             = model.space.title
+          '  |
+          link-to 'progress_report' model class='breadcrumbs__link'
+            | Progress Report
         h1.text--inline-block Individual RAT
         .btn-group.is-right
           button.btn.btn--primary
