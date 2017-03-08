@@ -37,7 +37,7 @@ export default ember.Mixin.create
     new ember.RSVP.Promise (resolve, reject) =>
       @query_ajax_object(model_name, query, options).then (payload) =>
         model   = @get_model_name(model_name, options)
-        records = @push_payload_and_return_records_for_type(payload, model)
+        records = @push_payload_and_return_records_for_type(payload, model, options)
         resolve(records)
       , (error) => @warn("Error in 'query_action' when querying for [#{model_name}] with: ", query, options)
     , (error) => @warn("2: Error in 'query_record' when querying for [#{model_name}] with: ", query, options)
@@ -65,16 +65,15 @@ export default ember.Mixin.create
   query_ajax_object: (model_name, query, options={}) ->
     new ember.RSVP.Promise (resolve, reject) =>
       # Extract relevant keys, then remove from payload so they are not sent.
-      action = options.action or ''
-      verb   = options.verb or 'GET'
-      id     = query.id or null
-      ajax_object_options =
-        model:  model_name
-        data:   query
-        action: action
-        verb:   verb
-        id:     id
-      @ajax.object(ajax_object_options).then (payload) =>
+      action              = options.action or ''
+      verb                = options.verb   or 'GET'
+      url                 = options.url    or null
+      id                  = query.id       or null
+      if ember.isPresent(url)
+        ao_options = {url: url, data: query, verb: verb}
+      else
+        ao_options = {model: model_name, data: query, action: action, verb: verb, id: id}
+      @ajax.object(ao_options).then (payload) =>
         resolve(payload)
       , (error) => 
         @warn("Error in 'query_ajax_object' when querying with: ", query, options)
@@ -94,11 +93,12 @@ export default ember.Mixin.create
       return null
     @peek_record(type, id)
 
-  push_payload_and_return_records_for_type: (payload, type) ->
+  push_payload_and_return_records_for_type: (payload, type, options={}) ->
     @push_payload(payload)
     payload_by_type = @get_payload_by_record_type(payload)
     ids             = @get_payload_record_ids(payload_by_type[type])
     records         = @get_data_records_for_ids(type, ids)
+    records         = records.get('firstObject') if options.single
     records
 
   get_payload_by_record_type: (payload) ->

@@ -3,6 +3,17 @@ import ns          from 'totem/ns'
 import ajax        from 'totem/ajax'
 
 export default ember.Mixin.create
+
+  set_progress_report_overview: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      options = 
+        action: 'progress_report'
+        verb:   'POST'
+        model:  ns.to_p('ra:assessment')
+      @tc.query_data(ns.to_p('ra:assessment'), {}, options).then (payload) =>
+        @set_data_value('progress_report_overview', payload)
+        resolve()
+
   set_trat_progress_report: ->
     new ember.RSVP.Promise (resolve, reject) =>
       url = @get_trat_url('progress_report')
@@ -17,8 +28,8 @@ export default ember.Mixin.create
 
   set_progress_report: (url) ->
     new ember.RSVP.Promise (resolve, reject) =>
-      query = @get_auth_query(url)
-      ajax.object(query).then (payload) =>
+      options = @get_auth_query(url)
+      @tc.query_data(ns.to_p('ra:assessment'), options.data, options).then (payload) =>
         @set_data_value('progress_report', payload)
         resolve(payload)
 
