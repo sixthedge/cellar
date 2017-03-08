@@ -16,7 +16,6 @@ module Thinkspace
             
             def destroy(serializer_options); end
 
-
           end
         end
       end

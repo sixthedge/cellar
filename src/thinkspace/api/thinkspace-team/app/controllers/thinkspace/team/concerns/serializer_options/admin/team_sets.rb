@@ -19,6 +19,9 @@ module Thinkspace
               serializer_options.include_association :thinkspace_team_team_users, scope: :thinkspace_team_teams
             end
 
+            def abstract(serializer_options); end
+
+
           end
         end
       end

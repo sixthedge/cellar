@@ -63,6 +63,7 @@ module Thinkspace
 
             def invite; end
             def import; end
+            def search; end
 
           end
         end

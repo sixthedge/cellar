@@ -100,7 +100,28 @@ module Thinkspace
             controller_render(@space)
           end
 
+          def search
+            type = params[:type] || 'roster'
+            case type
+            when 'roster'
+              results = search_roster
+            end
+            controller_render(results.limit(10))
+          end
+
           private
+
+          def search_roster
+            terms = params[:terms] || ''
+            sanitized = @space.class.send(:sanitize_sql_array, ["to_tsquery('english', ?)", terms.gsub(/\s/,"+")])
+            @space.thinkspace_common_users.where(%{
+              (
+                to_tsvector('english', thinkspace_common_users.first_name) ||
+                to_tsvector('english', thinkspace_common_users.last_name) ||
+                to_tsvector('english', thinkspace_common_users.email)
+              ) @@ #{sanitized}
+            })
+          end
 
           def add_user_to_space_as_owner_and_render
             @space.add_user_as_owner(current_user)
