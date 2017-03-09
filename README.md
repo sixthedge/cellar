@@ -1,6 +1,6 @@
 # The Cellar
 The monolithic repository that houses the code for a number of educational projects, such as:
-  * **OpenTBL** - [Site](http://www.opentbl.com) - [Repo](ttps://github.com/sixthedge/opentbl/)
+  * **OpenTBL** - [Site](http://www.opentbl.com) - [Repo](https://github.com/sixthedge/opentbl/)
 
 ## Platforms
 Inside the main `src` folder contains the platforms required for these projects. Each platform has a corresponding number of folders for building and the source code itself.
