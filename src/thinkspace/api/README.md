@@ -5,4 +5,4 @@ Collection of all available Rails engines that can be used on the server.
 Setting up your development environment is covered in-depth on [Totem Docs](http://totem-docs.herokuapp.com/1.0.0/setup/environment).
 
 ## Contributing
-See the related CONTRIBUTING.md file in this folder.
+See  [CONTRIBUTING.md](https://github.com/sixthedge/cellar/blob/master/CONTRIBUTING.md).
