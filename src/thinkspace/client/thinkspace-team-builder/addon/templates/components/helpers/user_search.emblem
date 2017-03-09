@@ -1,0 +1,6 @@
+= input value=value
+
+ul
+  each results as |user|
+    li{action 'select' user}
+      = user.first_name

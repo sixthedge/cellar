@@ -1,10 +1,33 @@
-h1 THIS IS THE MANAGE ROUTE
+if all_data_loaded
 
-link-to 'builder' model
-  | builder
+  h1 THIS IS THE MANAGE ROUTE
 
-link-to 'edit' model
-  | edit
+  each teams as |team|
+    component 'manage/team' model=team space=model abstract=abstract
 
-link-to 'roster' model
-  | roster
+  component 'helpers/user_search' value=search_field search_results='search_results' select='select_user' space=model
+
+
+  / = input value=search_field
+
+  / ul
+  /   each user_results as |user|
+  /     li = user.first_name
+
+  br
+  br
+  br
+  br
+
+  ul
+    each selected_users as |user|
+      li = user.first_name
+
+  link-to 'builder' model
+    | builder
+
+  link-to 'edit' model
+    | edit
+
+  link-to 'roster' model
+    | roster

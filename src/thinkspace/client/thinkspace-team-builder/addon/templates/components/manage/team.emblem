@@ -1,0 +1,7 @@
+link-to 'edit' space model.id
+  = model.title
+
+ul
+  each user_ids as |user_id|
+    li
+      component 'manage/member' user_id=user_id abstract=abstract
