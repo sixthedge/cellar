@@ -20,7 +20,11 @@ module Thinkspace
             end
 
             def abstract(serializer_options); end
-
+            def update_transform(serializer_options); end
+            def explode(serializer_options)
+              serializer_options.include_association :thinkspace_team_teams, scope: :root
+              serializer_options.include_association :thinkspace_team_team_users, scope: :thinkspace_team_teams
+            end
 
           end
         end

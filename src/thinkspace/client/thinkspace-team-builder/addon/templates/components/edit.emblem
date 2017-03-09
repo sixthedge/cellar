@@ -1,5 +1,35 @@
 h1 THIS IS THE EDIT ROUTE
 
+h3 Edit Team
+= team.title
+
+h6 Team name
+= input value=team.title
+
+h5 Team color
+h6 Helps distinguish the teams
+| TODO
+
+= manager.is_transform
+
+br
+br
+
+component 'edit/team_users' model=team_users remove='remove_user'
+
+br
+br
+br
+
+component 'edit/unassigned_users' model=unassigned_users add='add_user'
+
+
+.btn.btn-small{action 'save'}
+  | Save
+
+.btn.btn-small{action 'explode'}
+  | Explode
+
 link-to 'builder' model
   | builder
 

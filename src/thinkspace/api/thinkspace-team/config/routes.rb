@@ -7,6 +7,8 @@ Thinkspace::Team::Engine.routes.draw do
           get :select, on: :collection
           get :teams, on: :member
           get :abstract, on: :member
+          put :update_transform, on: :member
+          put :explode, on: :member
         end 
 
         resources :teams,           only: [:create, :update, :destroy]

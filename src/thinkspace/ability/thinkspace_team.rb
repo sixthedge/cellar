@@ -18,7 +18,7 @@ class ThinkspaceTeam < ::Totem::Settings.authorization.platforms.thinkspace.canc
     can [:read, :teams_view, :team_users_view, :read_commenterable], team
     return unless admin?
     can [:create, :update, :destroy, :gradebook], team
-    can [:crud, :teams, :abstract], team_set
+    can [:crud, :teams, :abstract, :update_transform, :explode], team_set
     can [:read, :create, :destroy], [team_teamable, team_user, team_viewer]
   end
 

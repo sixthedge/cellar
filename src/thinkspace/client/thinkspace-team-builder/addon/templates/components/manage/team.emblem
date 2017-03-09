@@ -1,4 +1,4 @@
-link-to 'edit' space model.id
+link-to 'edit' space (query-params team_id=model.id)
   = model.title
 
 ul

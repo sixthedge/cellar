@@ -10,4 +10,5 @@ export default base.extend
 
   afterModel: (model) ->
     manager = @get('manager')
-    manager.set_current_space(model)
+    manager.set_space(model)
+    manager.initialize()
