@@ -7,3 +7,9 @@ The Totem platform contains source code that interfaces and extensions for our f
 - `ember`    - Build time ember modification YAML's
 - `packages` - Build time application configuration YAML's
 - `sio`      - NPM module and javascript for Web Sockets
+
+## Contributing
+Please make sure to read the [Contributing Guidelines](https://github.com/sixthedge/cellar/blob/master/CONTRIBUTING.md) before making an issue, pull request or commit.
+
+## License
+This repository is under the [MIT License](https://github.com/sixthedge/cellar/blob/master/LICENSE.md).
