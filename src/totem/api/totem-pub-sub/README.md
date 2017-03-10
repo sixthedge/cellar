@@ -1,5 +1,4 @@
 # totem-pub-sub
-## Overview
 The description of `totem-pub-sub` is...
 
 ## Contributing

@@ -1,5 +1,4 @@
 # totem-core
-## Overview
 The description of `totem-core` is...
 
 ## Contributing

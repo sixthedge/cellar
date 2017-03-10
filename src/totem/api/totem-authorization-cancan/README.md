@@ -1,5 +1,4 @@
 # totem-authorization-cancan
-## Overview
 The description of `totem-authorization-cancan` is...
 
 ## Contributing

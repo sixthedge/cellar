@@ -1,5 +1,4 @@
 # totem-authentication-session
-## Overview
 The description of `totem-authentication-session` is...
 
 ## Contributing

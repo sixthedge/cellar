@@ -1,5 +1,4 @@
 # thinkspace-common
-## Overview
 The description of `thinkspace-common` is...
 
 ## Contributing

@@ -1,5 +1,4 @@
 # thinkspace-team
-## Overview
 The description of `thinkspace-team` is...
 
 ## Contributing

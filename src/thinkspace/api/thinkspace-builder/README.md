@@ -1,5 +1,4 @@
 # thinkspace-builder
-## Overview
 The description of `thinkspace-builder` is...
 
 ## Contributing

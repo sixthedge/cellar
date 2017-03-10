@@ -1,5 +1,4 @@
 # totem-cli
-## Overview
 The description of `totem-cli` is...
 
 ## Contributing
