@@ -26,6 +26,7 @@ export default base_component.extend arr_helpers,
 
   init_team: ->
     teams   = @get('teams')
+    console.log "TEAMS ARE: ", teams, @
     team_id = @get_query_param('team_id')
     team    = teams.findBy('id', parseInt(team_id))
     @set('team', team)

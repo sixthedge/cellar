@@ -55,3 +55,8 @@ export default ta.Model.extend ta.add(
     count = @get 'metadata.total_teams'
     if count.then? then count.get('length') else count
 
+  # # Builder Additions
+  has_transform: ember.computed 'transform', ->
+    transform = @get('transform')
+    !ember.isEmpty(ember.keys(transform))
+

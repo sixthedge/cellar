@@ -89,10 +89,11 @@ module Thinkspace
         thinkspace_team_teams.where.not(state: Thinkspace::Team::Team.state_locked)
       end
 
-      # ###
+      # 
       # ### Abstract
-      # ###
+      # 
       def abstract(*keys); Thinkspace::Team::Abstracts::TeamSet.new(self, *keys).process; end
+      def has_transform?; !transform.empty?; end
 
       totem_associations
     end

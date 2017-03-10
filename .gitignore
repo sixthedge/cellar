@@ -10,3 +10,4 @@ test/dummy/.sass-cache
 *.pdf
 .DS_Store
 thinkspace-common/lib/tasks/files/*
+node_modules/
