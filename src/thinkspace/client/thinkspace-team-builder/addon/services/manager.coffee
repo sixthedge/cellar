@@ -96,3 +96,46 @@ export default base.extend
     teams = @get('teams')
     team  = teams.findBy 'id', id
     team
+
+  get_user_ids: (users) -> users.map (user) -> parseInt(user.id)
+
+  generate_new_team_id: ->
+    ms = new Date().getTime()
+
+    ms_string = ms.toString()
+    ms_string = ms_string.slice(4)
+    console.log('ms_string ', ms_string)
+    ms_string
+
+  create_team: (options) ->
+    @generate_transform()
+    title    = options.title                if ember.isPresent(options.title)
+    color    = options.color                if ember.isPresent(options.color)
+    if ember.isPresent(options.user_ids)
+      user_ids = options.user_ids
+    else if ember.isPresent(options.users)
+      console.log('options.users are ', options.users)
+      user_ids = @get_user_ids(options.users)
+      console.log('user_ids are ', user_ids)
+
+    team          = {}
+    team.id       = @generate_new_team_id()
+    team.title    = title || 'New Team'
+    team.color    = color || 'eeeeee'
+    team.user_ids = ember.makeArray(user_ids) || [] if ember.isPresent(user_ids)
+    team.new      = true
+
+    @add_team_to_transform(team)
+    team
+
+  add_team_to_transform: (team) ->
+    team_set = @get('team_set')
+    transform = team_set.get('transform')
+
+    teams = transform.teams
+    teams.pushObject(team)
+
+    console.log('team_set is ', team_set)
+
+    @save_transform().then (saved) =>
+      console.log('[add_team_to_transform] POST SAVE ', saved)

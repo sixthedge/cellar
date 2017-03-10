@@ -19,7 +19,7 @@ export default base.extend
       ember.run.debounce(@, @search, 250)
 
   set_results: (val) ->
-    @set('results', val)
+    # @set('results', val)
     @sendAction('search_results', val)
 
   search: -> @send('search')
@@ -40,6 +40,4 @@ export default base.extend
       @tc.query_action(ns.to_p('space'), params, options).then (users) =>
         @set_results(users)
 
-    select: (user) ->
-      console.log('[select] calling select with user ', user)
-      @sendAction('select', user)
+    select: (user) -> @sendAction('select', user)
