@@ -1,4 +1,26 @@
-h1 THIS IS THE BUILDER ROUTE
+h1 Team Builder
+
+h5 Quickly build a team by typing in your student's name. You can add multiple by separating with a comma.
+
+if has_selected_users
+  | Selected Users!
+
+  .btn.btn-small{action 'create_team'}
+    | Create team with selected
+
+  .btn.btn-small
+    | Add to existing team
+
+component 'helpers/user_search' value=search_field results=results search_results='search_results' select='select_user' space=model
+
+br
+br
+br
+br
+br
+ul
+  each selected_users as |user|
+    li = user.first_name
 
 link-to 'edit' model
   | edit

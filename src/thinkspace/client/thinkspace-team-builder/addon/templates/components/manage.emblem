@@ -5,7 +5,7 @@ if all_data_loaded
   each teams as |team|
     component 'manage/team' model=team space=model abstract=abstract
 
-  component 'helpers/user_search' value=search_field search_results='search_results' select='select_user' space=model
+  component 'helpers/user_search' value=search_field results=results search_results='search_results' select='select_user' space=model
 
 
   / = input value=search_field
