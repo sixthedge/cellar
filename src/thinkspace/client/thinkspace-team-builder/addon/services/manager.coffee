@@ -16,7 +16,7 @@ export default base.extend
     else
       return 'SCAFFOLD'
 
-  has_transform: ember.computed.notEmpty 'team_set.transform'
+  has_transform: ember.computed.reads 'team_set.has_transform'
 
   teams: ember.computed 'has_transform', ->
     if @get('has_transform')

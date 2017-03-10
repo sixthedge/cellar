@@ -44,13 +44,7 @@ module Thinkspace; module Team; module Abstracts
     end
 
     def get_assigned
-      # TODO: Switch to proper model and determine column based on presence of `transform` or not.
-      column = 'metadata'
-      key    = 'teams'
-      table  = 'thinkspace_readiness_assurance_responses'
-
-      query = "SELECT q3.id, q3.team_id, thinkspace_common_users.first_name, thinkspace_common_users.last_name FROM (SELECT q2.team_id AS team_id, (q2.users->>'id')::INTEGER AS id FROM (SELECT (q1.json1->>'id')::INTEGER AS team_id, jsonb_array_elements(q1.json1->'users') AS users FROM (SELECT json1 FROM #{table} t, jsonb_array_elements((t.#{column}->'#{key}')::jsonb) json1) q1) q2) q3 INNER JOIN thinkspace_common_users ON thinkspace_common_users.id = q3.id;"
-      @team_set.class.connection.select_all(query).to_hash
+      @team_set.class.connection.select_all(json_query).to_hash
     end
 
     def get_unassigned
@@ -65,9 +59,38 @@ module Thinkspace; module Team; module Abstracts
       pluck_to_hash(values, to_pluck)
     end
 
+    def json_query
+      column = json_column
+      key    = 'teams'
+      table  = 'thinkspace_team_team_sets'
+      ids    = joined_team_set_ids
+
+      %{
+        SELECT     q3.id,
+                   q3.team_id,
+                   thinkspace_common_users.first_name,
+                   thinkspace_common_users.last_name
+        FROM       (
+                          SELECT q2.team_id                 AS team_id,
+                                 (q2.users->>'id')::integer AS id
+                          FROM   (
+                                        SELECT (q1.eles->>'id')::integer              AS team_id,
+                                               jsonb_array_elements(q1.eles->'users') AS users
+                                        FROM   (
+                                                      SELECT eles
+                                                      FROM   #{table} AS t,
+                                                             jsonb_array_elements((t.#{column}->'#{key}')::jsonb) AS eles
+                                                      WHERE  t.id IN (#{ids})) q1) q2) q3
+        INNER JOIN thinkspace_common_users
+        ON         thinkspace_common_users.id = q3.id;
+      }
+    end
+
     # # Helpers
     def abstract_keys; ['id', 'first_name', 'last_name', 'team_id']; end
     def assigned_ids; @assigned.map { |u| u['id'] }.uniq; end
+    def joined_team_set_ids; [@team_set.id].join(','); end
+    def json_column; @team_set.has_transform? ? 'transform' : 'scaffold'; end
 
   end
 end; end; end

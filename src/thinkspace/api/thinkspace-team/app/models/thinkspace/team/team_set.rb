@@ -92,9 +92,11 @@ module Thinkspace
       def explode(options={}); Thinkspace::Team::Exploders::TeamSet.new(self, options).process; end
 
       # ###
+      # 
       # ### Abstract
-      # ###
+      # 
       def abstract(*keys); Thinkspace::Team::Abstracts::TeamSet.new(self, *keys).process; end
+      def has_transform?; !transform.empty?; end
 
       totem_associations
     end

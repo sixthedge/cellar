@@ -104,9 +104,9 @@ module Thinkspace
             type = params[:type] || 'roster'
             case type
             when 'roster'
-              results = search_roster
+              results = search_roster.limit(10).to_a
             end
-            controller_render(results.limit(10))
+            controller_render(results)
           end
 
           private
