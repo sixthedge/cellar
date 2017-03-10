@@ -90,7 +90,7 @@ export default base.extend
     @generate_transform()
     team = @get_team_by_id(team_id)
     team.user_ids.pushObject(user.id)
-    user.team_id = team.id
+    ember.set user, 'team_id', team.id
 
   get_team_by_id: (id) ->
     teams = @get('teams')
