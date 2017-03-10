@@ -35,44 +35,13 @@ module Thinkspace
           end
 
           def update_transform
-            @team_set.transform = params[:transform]
-            controller_render(@team_set)
+            @team_set.transform = params[:transform].deep_dup
+            controller_save_record(@team_set)
           end
 
           def explode
-            ActiveRecord::Base.transaction do 
-              transform      = @team_set.transform
-              trans_team_ids = transform['teams'].map { |t| t['id'] }
-              cur_team_ids   = @team_set.thinkspace_team_teams.pluck(:id)
-
-              ## Delete excluded teams
-              deleted_team_ids = cur_team_ids - trans_team_ids
-              Thinkspace::Team::Team.where(id: deleted_team_ids).destroy_all
-
-              new_teams = transform['teams'].select { |t| t.has_key?('new') }
-              existing_teams = transform['teams'].select { |t| !t.has_key?('new') }
-
-              new_teams.each do |team|
-                new_team = Thinkspace::Team::Team.create(title: team['title'], color: team['color'], team_set_id: @team_set.id, authable: @team_set.thinkspace_common_space)
-                new_team.thinkspace_common_users << Thinkspace::Common::User.where(id: team['user_ids'])
-                team['id']  = new_team.id
-                team.delete('new')
-              end
-
-              existing_teams.each do |team|
-                record = Thinkspace::Team::Team.find(team['id'])
-                record.title = team['title']
-                record.thinkspace_team_team_users.destroy_all
-                record.thinkspace_common_users << Thinkspace::Common::User.where(id: team['user_ids'])
-                record.save
-              end
-
-              @team_set.scaffold  = @team_set.transform.deep_dup
-              @team_set.transform = nil
-
-              controller_save_record(@team_set)
-            end
-
+            @team_set.explode
+            controller_render(@team_set)
           end
 
           def teams

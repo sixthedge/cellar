@@ -89,6 +89,9 @@ module Thinkspace
         thinkspace_team_teams.where.not(state: Thinkspace::Team::Team.state_locked)
       end
 
+      def explode(options={}); Thinkspace::Team::Exploders::TeamSet.new(self, options).process; end
+
+      # ###
       # 
       # ### Abstract
       # 
