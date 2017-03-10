@@ -2,7 +2,7 @@ module Thinkspace; module Team; module Abstracts
   class TeamSet < Base
 
     attr_reader :team_set, :keys, :teams, :space, :results
-    attr_writer :assigned, :unassigned
+    attr_writer :assigned, :unassigned, :type_map
 
     def initialize(team_set, *keys)
       @team_set = team_set
@@ -22,7 +22,7 @@ module Thinkspace; module Team; module Abstracts
     def process_users
       # Writing `assigned` since the `id` value is needed for unassigned the way it is currently written.
       @assigned         = get_assigned
-      @unassigned       = get_unassigned
+      @unassigned       = get_relational_unassigned
       @results['users'] = @assigned + @unassigned
     end
 
@@ -43,23 +43,48 @@ module Thinkspace; module Team; module Abstracts
       pluck_to_hash(values, abstract_keys)
     end
 
-    def get_assigned
-      @team_set.class.connection.select_all(json_query).to_hash
-    end
-
-    def get_unassigned
+    def get_relational_unassigned
       to_pluck = ['id', 'first_name', 'last_name']
       values   = @space.thinkspace_common_users.where.not(id: assigned_ids).distinct.pluck(*to_pluck)
       pluck_to_hash(values, abstract_keys)
     end
 
-    def get_teams
+    def get_relational_teams
       to_pluck = ['id', 'title']
       values   = @teams.pluck(*to_pluck)
       pluck_to_hash(values, to_pluck)
     end
 
-    def json_query
+    def get_assigned; json_query(assigned_json_query); end
+    def get_teams; json_query(teams_json_query); end
+
+    def json_query(query)
+      # http://stackoverflow.com/questions/25331778/getting-typed-results-from-activerecord-raw-sql
+      pg               = ActiveRecord::Base.connection
+      results          = pg.execute(query)
+      @type_map        ||= PG::BasicTypeMapForResults.new(pg.raw_connection)
+      results.type_map = @type_map
+      results.to_a
+    end
+
+    def teams_json_query
+      column = json_column
+      key    = 'teams'
+      table  = 'thinkspace_team_team_sets'
+      ids    = joined_team_set_ids
+      %{
+        SELECT (eles ->> 'id')::integer       AS id,
+               eles ->> 'color'    AS color,
+               eles ->> 'title'    AS title,
+               eles ->  'user_ids' AS user_ids
+        FROM   (SELECT eles
+                FROM   #{table} AS t,
+                       jsonb_array_elements((t.#{column}->'#{key}')::jsonb) AS eles
+                WHERE  t.id IN (#{ids})) q1;
+      }
+    end
+
+    def assigned_json_query
       column = json_column
       key    = 'teams'
       table  = 'thinkspace_team_team_sets'
