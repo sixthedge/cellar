@@ -13,11 +13,29 @@ export default base_component.extend arr_helpers,
   abstract: ember.computed.reads 'manager.abstract'
 
   has_selected_users: ember.computed.notEmpty 'selected_users'
+  has_team_id:        ember.computed.notEmpty 'team_id'
 
-  selected_users: []
+  selected_users: null
 
   search_field: ''
   results: null
+
+  init_base: ->
+    @init_selected_users()
+    @set_query_param()
+    @init_team()
+
+  init_selected_users: ->
+    @set('selected_users', ember.makeArray())
+
+  init_team: ->
+    # if @get('has_team_id')
+    #   team_id = @get('team_id')
+
+    #   teams = @get('teams')
+    #   team = teams.findBy 'id', team_id
+    #   console.log('[INIT] team found as ', team)
+    true
 
   find_unassigned: (users) ->
     unless ember.isPresent(users)
@@ -45,7 +63,11 @@ export default base_component.extend arr_helpers,
     options = {}
     options.users = selected_users
 
-    manager.create_team(options)
+    manager.create_team(options).then (team) =>
+      @get_app_route().transitionTo({queryParams: {team_id: team.id}}).then =>
+        @set_query_param()
+
+  set_query_param: -> @set('team_id', @get_query_param('team_id'))
 
   actions:
     search_results: (users) ->

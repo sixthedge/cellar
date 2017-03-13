@@ -1,6 +1,8 @@
 h1 Team Builder
+| Has query param #{has_team_id}
 
 h5 Quickly build a team by typing in your student's name. You can add multiple by separating with a comma.
+
 
 if has_selected_users
   | Selected Users!

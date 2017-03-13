@@ -23,7 +23,7 @@ if all_data_loaded
     each selected_users as |user|
       li = user.first_name
 
-  link-to 'builder' model
+  link-to 'builder' model (query-params team_id=null)
     | builder
 
   link-to 'edit' model
