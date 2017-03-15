@@ -25,7 +25,7 @@ module Thinkspace
               element_class.where(componentable: contents, name: names)
             end
 
-            def get_carry_forward_element_map_and_responses(names)            
+            def get_carry_forward_element_map_and_responses(names)
               # TODO: Ensure that params_ownerable is authorized correctly.
               phase = params_authable
               case
@@ -35,7 +35,7 @@ module Thinkspace
                 has_common = !Thinkspace::Team::Team.users_common_teams(phase, [params_ownerable, current_user]).empty?
                 ownerable  = has_common ? params_ownerable : current_user
               else
-                ownerable = current_user                
+                ownerable = current_user
               end
 
               elements      = get_carry_forward_elements(names)
@@ -129,8 +129,8 @@ module Thinkspace
             def team_class;  Thinkspace::Team::Team; end
             def phase_class; Thinkspace::Casespace::Phase; end
             def assignment_class; Thinkspace::Casespace::Assignment; end
-            def observation_list_class; Thinkspace::ObservationList::List; end
-            def observation_note_class; Thinkspace::ObservationList::ObservationNote; end
+            def observation_list_class; @_obs_list_class ||= 'Thinkspace::ObservationList::List'.safe_constantize; end
+            def observation_note_class; @_obs_list_note_class ||= 'Thinkspace::ObservationList::ObservationNote'.safe_constantize; end
 
             def content_class;  Thinkspace::Html::Content; end
             def response_class; Thinkspace::InputElement::Response; end
@@ -155,7 +155,8 @@ module Thinkspace
             # In the future this could be changed to match different criteria
             # (e.g. only on certain phase states, read only on 'locked' phases, etc.).
             def skip_phase_date_check?
-              model_class == observation_list_class || model_class == observation_note_class 
+              return false if observation_list_class.blank?
+              model_class == observation_list_class || model_class == observation_note_class
             end
 
             def skip_phase_state_check?
@@ -189,7 +190,7 @@ module Thinkspace
               valid_states ||= (is_read? ? read_phase_states_allowed : modify_phase_states_allowed)
               state = phase.find_or_create_state_for_ownerable(ownerable, current_user)
               # Allow peer review to see locked phases/carry forward of a team member.
-              access_denied(phase, "Invalid phase state #{state.inspect}.") if !valid_states.include?(state.current_state) && !is_view? && (action != :carry_forward) 
+              access_denied(phase, "Invalid phase state #{state.inspect}.") if !valid_states.include?(state.current_state) && !is_view? && (action != :carry_forward)
               debug_message('phase states', "authorized phase state [current_state: #{state.current_state.inspect} id=#{state.id}].")  if debug?
             end
 

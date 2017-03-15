@@ -1,0 +1,4 @@
+---
+:classes:
+- :path: "/src/platform/ability"
+  :source: "/src/platform/packages/opentbl/api/docker_run.yml"

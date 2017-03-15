@@ -1,0 +1,12 @@
+
+# Totem Gemfile
+
+# totem-core
+# Using a local version to freeze code that works with totem.
+gem 'active_model_serializers', path: '/src/totem/api/vendor/active_model_serializers-0.10.2'
+
+gem 'totem', '0.5.0', path: '/src/totem/api'
+gem 'totem-authentication-session', '0.5.0', path: '/src/totem/api/totem-authentication-session'
+gem 'totem-authorization-cancan', '0.5.0', path: '/src/totem/api/totem-authorization-cancan'
+gem 'totem-core', '0.5.0', path: '/src/totem/api/totem-core'
+gem 'totem-pub-sub', '0.5.0', path: '/src/totem/api/totem-pub-sub'

@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+
+  rails:
+    image: dev/rails:5.0.1
+    env_file: .env-rails
+    ports:
+      - '3000:80'
+    links:
+      - db
+      - redis
+      - oauth
+    volumes:
+      - "${RAILS_GEMFILE_SRC}:/src/gemfiles:ro"
+      - "${RAILS_CONFIG_SRC}:/src/config:ro"
+      - "${RAILS_PLATFORM_SRC}:/src/platform:ro"
+      - "${RAILS_TOTEM_SRC}:/src/totem:ro"
+    environment:
+      # ### Seed
+      # if APP_DB_RESET = 'true' then does 'totem:db:reset[$APP_DB_SEED_DIR] CONFIG=$APP_DB_SEED_CONFIG AI=$APP_DB_SEED_AI'
+      APP_DB_RESET:       "${APP_DB_RESET}"
+      APP_DB_SEED_DIR:    ra
+      APP_DB_SEED_CONFIG: all
+      APP_DB_SEED_AI:     'false'

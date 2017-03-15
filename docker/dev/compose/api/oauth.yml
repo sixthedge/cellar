@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+
+  oauth:
+    image: dev/oauth:5.0.1
+    env_file: .env-oauth
+    links:
+      - db
+    environment:
+      # ### Seed
+      # if APP_DB_RESET = 'true' then does 'db:reset')
+      APP_DB_RESET: "${APP_DB_RESET}"
