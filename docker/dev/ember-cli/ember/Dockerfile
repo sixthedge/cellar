@@ -2,6 +2,9 @@
 
 FROM ember-cli/base/app:2.8LTS
 
+RUN \
+  npm install package-merge --quiet
+
 COPY init .
 
 RUN \

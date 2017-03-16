@@ -17,8 +17,12 @@ if ! [ -d "$EMBER_SRC" ] ; then
 fi
 
 if  [ -f "$PACKAGE_JSON" ] ; then
-  tput -Tscreen setaf 5; tput -Tscreen bold; echo "+++ COPYING EMBER ($PACKAGE_JSON) TO ($APP_ROOT)"; tput -Tscreen sgr0
-  cp $PACKAGE_JSON $APP_ROOT
+  tput -Tscreen setaf 5; tput -Tscreen bold; echo "+++ MERGING EMBER ($PACKAGE_JSON) TO ($APP_ROOT)"; tput -Tscreen sgr0
+  node pkg-merge.js $PACKAGE_JSON
+  if ! [ "$?" = '0' ]; then
+    tput -Tscreen setaf 1; tput -Tscreen bold; echo "[ERROR] FAILURE MERGING EMBER ($PACKAGE_JSON) WITH IMAGE (package.json)"; tput -Tscreen sgr0
+    exit 1
+  fi
 else
   tput -Tscreen setaf 1; tput -Tscreen bold; echo "[ERROR] EMBER ($PACKAGE_JSON) DOES NOT EXIST"; tput -Tscreen sgr0
   exit 1

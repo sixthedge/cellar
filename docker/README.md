@@ -3,11 +3,19 @@
   * docker-compose
 
 # Create Images
+> Assumes have git clones of *cellar* and *totem-oauth*
+
+> Note: totem-oauth must be in the same parent directory as 'cellar'
 
 ```
 cd my/path/to/cellar/docker/dev
 ./build.sh
 
+```
+
+```
+cd my/path/to/totem-oauth
+docker build -t dev/oauth:5.0.1 -f Dockerfile.dev .
 ```
 
 # API Docker Compose
