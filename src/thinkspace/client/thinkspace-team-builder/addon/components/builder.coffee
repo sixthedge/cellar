@@ -3,14 +3,17 @@ import ns             from 'totem/ns'
 import base_component from 'thinkspace-base/components/base'
 import arr_helpers    from 'thinkspace-common/mixins/helpers/common/array'
 
+import student_row from 'thinkspace-team-builder/mixins/rows/student'
 
-export default base_component.extend arr_helpers,
+export default base_component.extend arr_helpers, roster_table,
   
   manager: ember.inject.service()
 
   teams:    ember.computed.reads 'manager.teams'
   team_set: ember.computed.reads 'manager.team_set'
   abstract: ember.computed.reads 'manager.abstract'
+
+  team_title: ''
 
   has_selected_users: ember.computed.notEmpty 'selected_users'
   has_team_id:        ember.computed.notEmpty 'team_id'
@@ -20,22 +23,66 @@ export default base_component.extend arr_helpers,
   search_field: ''
   results: null
 
+  table_config: [
+    {
+      display:   'Last name'
+      property: 'last_name'
+    },
+    {
+      display:   'First name'
+      property: 'first_name'
+    },
+    {
+      display: 'Team'
+      property: 'computed_title'
+    }
+  ]
+
   init_base: ->
-    @init_selected_users()
     @set_query_param()
     @init_team()
+    @init_selected_users()
+    @set_all_data_loaded()
+    @init_table_data()
+
+  ## Now used to init row/student Ember Objects
+  init_table_data: ->
+    selected_users = @get('selected_users')
+    manager = @get('manager')
+    rows = ember.makeArray()
+    selected_users.forEach (user) =>
+      row = student_row.create(model: user, manager: manager)
+
+      rows.pushObject(row)
+
+    console.log('rows are ', rows)
+
+    @set('rows', rows)
+
+
 
   init_selected_users: ->
-    @set('selected_users', ember.makeArray())
+    if ember.isPresent(@get('team'))
+      @set('selected_users', @init_team_users())
+    else
+      @set('selected_users', ember.makeArray())
+
+  init_team_users: ->
+    team     = @get('team')
+    abstract = @get('abstract')
+    users    = @where_in(abstract.users, 'id', team.user_ids)
+    users
 
   init_team: ->
-    # if @get('has_team_id')
-    #   team_id = @get('team_id')
+    if @get('has_team_id')
+      teams   = @get('teams')
+      team_id = @get('team_id')
+      console.log('teams are ', teams)
+      console.log('team_id is ', team_id)
 
-    #   teams = @get('teams')
-    #   team = teams.findBy 'id', team_id
-    #   console.log('[INIT] team found as ', team)
-    true
+      team    = teams.findBy('id', parseInt(team_id))
+      console.log('team is ', team)
+      @set('team', team)
 
   find_unassigned: (users) ->
     unless ember.isPresent(users)
@@ -58,16 +105,23 @@ export default base_component.extend arr_helpers,
     selected_users = @get('selected_users')
     manager        = @get('manager')
 
-    console.log('selected_users are ', selected_users)
-
     options = {}
     options.users = selected_users
+    options.title = @get('team_title')
 
     manager.create_team(options).then (team) =>
       @get_app_route().transitionTo({queryParams: {team_id: team.id}}).then =>
         @set_query_param()
+        @init_team()
+        @init_table_data()
 
   set_query_param: -> @set('team_id', @get_query_param('team_id'))
+
+  refresh: -> 
+    @init_team_users()
+
+  update_sorted: (sorted_users) ->
+    @set('selected_users', sorted_users)
 
   actions:
     search_results: (users) ->
@@ -88,3 +142,12 @@ export default base_component.extend arr_helpers,
 
     create_team: ->
       @process_create_team()
+
+    cancel: ->
+      @get('manager').remove_team_from_selected
+
+    remove_user: (user) ->
+      team    = @get('team')
+      manager = @get('manager')
+      manager.remove_from_team(team.id, user)
+      @refresh()

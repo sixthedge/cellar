@@ -10,12 +10,6 @@ export default base.extend
   abstract: null
   team_set: null
 
-  is_transform: ember.computed 'has_transform', ->
-    if @get('has_transform')
-      return 'TRANSFORM'
-    else
-      return 'SCAFFOLD'
-
   has_transform: ember.computed.reads 'team_set.has_transform'
 
   teams: ember.computed 'has_transform', ->
@@ -56,7 +50,6 @@ export default base.extend
       @tc.query_data(ns.to_p('team_set'), params, options).then (json) =>
         @set('abstract', json)
         resolve(json)
-
 
   save_transform: ->
     new ember.RSVP.Promise (resolve, reject) =>
@@ -105,7 +98,7 @@ export default base.extend
     ms_str = ms.toString()
     ms_str = ms_str.slice(4)
     console.log('ms_string ', ms_str)
-    ms_str
+    parseInt(ms_str)
 
   create_team: (options) ->
     new ember.RSVP.Promise (resolve, reject) =>
@@ -132,8 +125,13 @@ export default base.extend
   add_team_to_transform: (team) ->
     new ember.RSVP.Promise (resolve, reject) =>
       team_set = @get('team_set')
+
+      console.log('team_set is ', team_set)
+
       transform = team_set.get('transform')
 
+
+      console.log('transform is currently ', transform)
       teams = transform.teams
       teams.pushObject(team)
 
@@ -142,3 +140,13 @@ export default base.extend
       @save_transform().then (saved) =>
         console.log('[add_team_to_transform] POST SAVE ', saved)
         resolve(team)
+
+  remove_team_from_transform: (team) ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      team_set = @get('team_set')
+      transform = team_set.get('transform')
+
+      teams = transform.teams
+      teams.removeObject(team)
+      @save_transform().then (saved) =>
+        console.log('[remove_team_from_transform] POST SAVE ', saved)
