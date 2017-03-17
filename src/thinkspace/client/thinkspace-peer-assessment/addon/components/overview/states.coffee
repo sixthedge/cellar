@@ -2,21 +2,29 @@ import ember from 'ember'
 import ns    from 'totem/ns'
 import base  from 'thinkspace-base/components/base'
 
+###
+# # overview/states.coffee
+- Type: **Component**
+- Package: **thinkspace-peer-assessment**
+###
 export default base.extend
-
+  # ## Properties
+  # ### Internal Properties
   model: null ## Assignment
+  is_editing_release_date: false
 
+  # ### Computed Properties
   is_archived: ember.computed.equal 'model.state', 'archived'
   is_draft:    ember.computed.equal 'model.state', 'inactive'
   is_active:   ember.computed.equal 'model.state', 'active'
 
-  is_editing_release_date: false
 
+  # ## Helpers
   set_is_editing_release_date: ->   @set('is_editing_release_date', true)
   reset_is_editing_release_date: -> @set('is_editing_release_date', false)
 
+  # ## Actions
   actions:
-
     edit_release_at: -> @set_is_editing_release_date()
 
     set_drafting: ->
