@@ -1,0 +1,26 @@
+component 'header' model=model
+h1 roster
+if all_data_loaded
+  h1 #{students}
+  if students.has_next_page
+    h3 click="'next' 'students'" NEXT
+  if students.has_prev_page
+    h3 click="'prev' 'students'" PREV
+  h2 #{students.content.length}
+
+  if students.is_loading
+    h4 Loading...
+  else
+    component '__table' rows=students columns=columns server=true
+
+  hr
+  if admins.has_next_page
+    h3 click="'next' 'admins'" NEXT
+  if admins.has_prev_page
+    h3 click="'prev' 'admins'" PREV
+  if admins.is_loading
+    h4 Loading...
+  else
+    component '__table' rows=admins columns=columns server=true
+else
+  h1 Loading...

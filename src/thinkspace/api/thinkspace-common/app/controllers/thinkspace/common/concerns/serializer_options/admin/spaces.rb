@@ -36,11 +36,7 @@ module Thinkspace
 
             def roster(serializer_options)
               serializer_options.include_association :thinkspace_common_space_users, scope: :root
-              serializer_options.include_association :thinkspace_common_user, scope: :thinkspace_common_space_users
-              serializer_options.remove_all_except(
-                :thinkspace_common_space_users,
-                scope: :thinkspace_common_users
-              )
+              serializer_options.include_association :thinkspace_common_disciplines, scope: :root
             end
 
             def invitations(serializer_options)

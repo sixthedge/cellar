@@ -1,11 +1,4 @@
-import ember from 'ember'
-import base  from 'thinkspace-base/components/base'
+import ember  from 'ember'
+import header from 'thinkspace-common/components/table/header'
 
-export default base.extend
-  tagName: ''
-
-  value: ember.computed.reads 'column.display'
-
-  actions:
-    click: ->
-      @sendAction('click', @)
+export default header.extend()

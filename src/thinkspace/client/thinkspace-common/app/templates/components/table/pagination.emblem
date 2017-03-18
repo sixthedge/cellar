@@ -1,0 +1,7 @@
+hr 
+h1 Pagination: #{rows.current_page} :: #{rows.total_pages}
+ul
+  li click='first' first
+  li click='next' next
+  li click='prev' prev
+  li click='last' last

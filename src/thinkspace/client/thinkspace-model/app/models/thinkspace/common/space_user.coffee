@@ -28,6 +28,16 @@ export default ta.Model.extend ta.add(
     console.error "Could not find friendly for [#{current_role}] in config.roles_map [#{roles_map}]." unless ember.isPresent(name)
     name
 
+  friendly_state: ember.computed 'state', ->
+    state = @get('state')
+    switch state
+      when 'active'
+        'Active'
+      when 'inactive'
+        'Dropped'
+      else
+        'N/A'
+
   is_active:   ember.computed.equal 'state', 'active'
   is_inactive: ember.computed.equal 'state', 'inactive'
 

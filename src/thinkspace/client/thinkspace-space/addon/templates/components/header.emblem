@@ -19,5 +19,8 @@
           link-to-external 'thinkspace-team-builder.roster' model class="menu-bar__link"
             | People
         li.menu-bar__item
+          link-to 'roster' model class="menu-bar__link"
+            | Roster
+        li.menu-bar__item
           a.menu-bar__link
             | Scores

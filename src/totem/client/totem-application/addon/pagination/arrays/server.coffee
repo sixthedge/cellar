@@ -43,8 +43,7 @@ export default ember.ArrayProxy.extend
             resolve(@)
           , (error) => console.error "[pagination:array] Error in resolving the next page for type [#{type}].", @
         else
-          # End of pages, set to empty array and resolve immediately.
-          @set_content([])
+          #@set_content([])
           resolve(@)
     , (error) => console.error "[pagination:array] Error in `get_page_for_link`: ", @
 

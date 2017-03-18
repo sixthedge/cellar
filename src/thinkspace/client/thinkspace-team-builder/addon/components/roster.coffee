@@ -1,8 +1,7 @@
-import ember from 'ember'
-import ns    from 'totem/ns'
-import base_component from 'thinkspace-base/components/base'
-
-import student_row from 'thinkspace-team-builder/mixins/rows/student'
+import ember            from 'ember'
+import ns               from 'totem/ns'
+import base_component   from 'thinkspace-base/components/base'
+import student_row      from 'thinkspace-team-builder/mixins/rows/student'
 
 export default base_component.extend
 
@@ -42,20 +41,28 @@ export default base_component.extend
     obj.team_id    = 1
     obj
 
-  init_table_data: ->
+  get_test_students: ->
+    rows    = []
+    manager = @get('manager')
+    for i in [0..1000]
+      row = student_row.create(model: @generate_dummy_model(), manager: manager)
+      rows.pushObject(row)
+    rows
+
+  get_students: ->
+    rows    = []
     users   = @get('users')
     manager = @get('manager')
-    rows = ember.makeArray()
-
-    ## BULK TEST CASE
-    # for i in [0..1000]
-    #   row = student_row.create(model: @generate_dummy_model(), manager: manager)
-
-    #   rows.pushObject(row)
     users.forEach (user) =>
       row = student_row.create(model: user, manager: manager)
       rows.pushObject(row)
+    rows
 
+  init_table_data: ->
+    users   = @get('users')
+    manager = @get('manager')
+    rows    = @get_test_students()
+    # rows = @get_students()
     @set('rows', rows)
 
   actions:

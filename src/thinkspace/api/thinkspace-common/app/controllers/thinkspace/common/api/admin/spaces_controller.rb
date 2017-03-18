@@ -6,6 +6,8 @@ module Thinkspace
           include Thinkspace::Common::SmarterCSV
           load_and_authorize_resource class: totem_controller_model_class
           totem_action_serializer_options
+          before_action :set_scope, only: [:roster]
+          totem_filter only: [:roster]
 
           def update
             @space.title = params_root[:title]
@@ -84,7 +86,7 @@ module Thinkspace
           end
 
           def roster
-            controller_render(@space)
+            controller_render(@space.group(:id))
           end
 
           def invitations
@@ -110,6 +112,11 @@ module Thinkspace
           end
 
           private
+
+          def set_scope
+            # TODO: Workaround to set the scope for TotemFilter, since we are not scoping the actual space.
+            @space = @space.thinkspace_common_users
+          end
 
           def search_roster
             terms = params[:terms] || ''
