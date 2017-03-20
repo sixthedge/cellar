@@ -117,7 +117,13 @@ export default ember.Mixin.create
 
   get_data_records_for_ids: (type, ids) ->
     return [] if ember.isBlank(ids) or ember.isBlank(type)
-    @store.peekAll(type).filter (record) -> ids.includes(record.get 'id')
+    store_records = @store.peekAll(type)
+    records       = []
+    # Doing this rather than a store filter to retain order for server-sdie sorts.
+    ids.forEach (id) =>
+      record = store_records.findBy('id', id)
+      records.pushObject(record)
+    records
 
   get_payload_record_ids: (records) ->
     return [] if ember.isBlank(records)

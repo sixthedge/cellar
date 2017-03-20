@@ -2,6 +2,7 @@ import ember            from 'ember'
 import ns               from 'totem/ns'
 import base_component   from 'thinkspace-base/components/base'
 import student_row      from 'thinkspace-team-builder/mixins/rows/student'
+import column           from 'thinkspace-common/table/column'
 
 export default base_component.extend
 
@@ -16,20 +17,12 @@ export default base_component.extend
 
   selected_users: ember.makeArray()
 
-  table_config: [
-    {
-      display:   'Last name'
-      property: 'last_name'
-    },
-    {
-      display:   'First name'
-      property: 'first_name'
-    },
-    {
-      display: 'Team'
-      property: 'computed_title'
-    }
-  ]
+  columns: 
+    [
+      column.create({display: 'Last Name',  property: 'last_name'})
+      column.create({display: 'First Name', property: 'first_name'}),
+      column.create({display: 'Team',       property: 'computed_title'}),
+    ]
 
   init_base: ->
     @init_table_data()

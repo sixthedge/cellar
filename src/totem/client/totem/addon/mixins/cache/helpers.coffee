@@ -28,8 +28,8 @@ export default ember.Mixin.create
     query.filter = @stringify(filter)
     query
 
-  add_order_to_query: (query, order) ->
-    query.order = @stringify(order)
+  add_sort_to_query: (query, sort) ->
+    query.sort = @stringify(sort)
     query
 
   get_filter_array: (method, values) ->

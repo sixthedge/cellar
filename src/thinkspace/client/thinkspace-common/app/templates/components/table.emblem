@@ -1,4 +1,4 @@
 if server
-  component '__table/types/server' rows=rows columns=columns
+  component '__table/types/server' rows=rows columns=columns data=data
 else
-  component '__table/types/client' rows=rows columns=columns
+  component '__table/types/client' rows=rows columns=columns data=data

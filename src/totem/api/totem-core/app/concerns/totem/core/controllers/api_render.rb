@@ -39,7 +39,7 @@ module Totem; module Core; module Controllers; module ApiRender
   def controller_render_view(record, options={}); controller_render(record, options.merge(view: true)); end
 
   def controller_render(records, options={})
-    records = controller_order_records(records, options) if controller_ordered?
+    records = controller_sort_records(records, options) if controller_sorted?
     json    = controller_json(records, options)
     controller_after_json(json, options)  if controller_after_json?
     controller_render_json(json, options)
@@ -197,7 +197,7 @@ module Totem; module Core; module Controllers; module ApiRender
   include ApiRender::Metadata
   include ApiRender::AfterJson
   include ApiRender::Message
-  include ApiRender::Order
+  include ApiRender::Sort
 
   def controller_raise_error(message)
     raise ControllerRenderError, message

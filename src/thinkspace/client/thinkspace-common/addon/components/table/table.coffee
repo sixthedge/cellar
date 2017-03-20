@@ -7,10 +7,9 @@ export default base.extend
   rows:    null
   columns: null
 
-  # ## Default properties
-  defaults:
-    direction: 'asc'
-    selected:  false
+  # ## Action handlers
+  handle_click_header: 'handle_click_header'
+  handle_click_cell:   'handle_click_cell'
 
   # # Clicks
   # ## Events
@@ -29,43 +28,17 @@ export default base.extend
   get_rows: -> @get('rows')
   set_rows: -> @warn('set_rows')
 
-  get_component_from_click_options: (options, property) -> options.components[property]
-  get_data_from_click_options:      (options, property) -> options.data[property]
-
   # ## Logging
-  warn: (fn) -> console.warn("[table/table] #{fn} needs to be implemented in the table type.")
+  warn: (fn) -> console.warn("[table/table] #{fn} needs to be implemented in the table type: #{@get('table_type')}.")
 
-
-
-
-
-
-  # TODO: REFACTOR EVERYTHING BELOW THIS
-  # => Everything should be a Promise just to ensure it is async-safe.
+  # # Events
   init_base: ->
-    @init_rows()
-    @init_column_defaults()
-    @_super()
+    @init_rows().then =>
+      @set_all_data_loaded()
+      @_super()
 
   init_rows: ->
-    rows = @get('rows')
-    @set_rows(rows)
-
-  init_column_defaults: ->
-    defaults = @get('defaults')
-    columns  = @get('columns')
-    for i in [0..columns.get('length')-1]
-      column = columns[i]
-      for key, value of defaults
-        column["#{key}"] = value unless ember.isPresent(column["#{key}"])
-      column['order'] = i
-
-  # # Column helpers
-  update_col_selected: (col) ->
-    columns = @get('columns')
-    columns.forEach (column) =>
-      column['selected'] = false
-      if column.order == col.order
-        column['selected'] = true
-    console.log('config_col now ', columns)
-    columns
+    new ember.RSVP.Promise (resolve, reject) =>
+      rows = @get('rows')
+      @set_rows(rows)
+      resolve()

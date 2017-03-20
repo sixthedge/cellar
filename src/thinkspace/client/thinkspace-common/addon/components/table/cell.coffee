@@ -1,5 +1,6 @@
 import ember from 'ember'
 import base  from 'thinkspace-common/components/table/base'
+import opt   from 'thinkspace-common/table/options'
 
 export default base.extend
   # # Properties
@@ -15,7 +16,7 @@ export default base.extend
 
   # # Event handlers
   click: ->
-    options = 
+    options = opt.create
       components:
         cell: @
         row:  @get('c_row')
