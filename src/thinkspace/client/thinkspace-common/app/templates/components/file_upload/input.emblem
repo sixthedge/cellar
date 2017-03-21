@@ -1,0 +1,2 @@
+input id=input_id type='file' onchange={action 'change'}
+label for=input_id Click to Upload

@@ -7,3 +7,5 @@ if all_data_loaded
   component '__table' rows=admins columns=admin_columns data=admin_data server=true
 else
   h1 Loading...
+
+component '__file_upload'
