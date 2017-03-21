@@ -2,9 +2,14 @@ import ember from 'ember'
 import ns    from 'totem/ns'
 import base_component from 'thinkspace-base/components/base'
 
+###
+# # status.coffee
+- Type: **Component**
+- Package: **thinkspace-peer-assessment-instructor**
+###
 export default base_component.extend
-
-  # ### Properties
+  # ## Properties
+  # ### View Properties
   tagName:           'span'
   classNames:        ['text__font-size--12', 'text--bold', 'text__transform--capitalize']
   classNameBindings: ['status_class_name']

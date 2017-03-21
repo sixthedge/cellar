@@ -4,11 +4,12 @@ import tc          from 'totem/cache'
 import ta          from 'totem/ds/associations'
 import tm          from 'totem-messages/messages'
 
-# ###
-# ### Review helpers
-# ###
+###
+# # reviews.coffee
+- Type: **Mixin**
+- Package: **thinkspace-peer-assessment-pe**
 # Helpers for the main evaluation manager to handle gets/sets/saves on a review.
-
+###
 export default ember.Mixin.create
   set_reviewable: (reviewable) ->
     new ember.RSVP.Promise (resolve, reject) =>

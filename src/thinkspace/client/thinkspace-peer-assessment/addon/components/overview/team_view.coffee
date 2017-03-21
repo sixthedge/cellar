@@ -3,7 +3,7 @@ import ns    from 'totem/ns'
 import base  from 'thinkspace-base/components/base'
 
 ###
-# # overview/team_view.coffee
+# # team_view.coffee
 - Type: **Component**
 - Package: **thinkspace-peer-assessment**
 ###

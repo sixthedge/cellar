@@ -2,10 +2,17 @@ import ember from 'ember'
 import ns    from 'totem/ns'
 import base_component from 'thinkspace-base/components/base'
 
+###
+# # review_set.coffee
+- Type: **Component**
+- Package: **thinkspace-peer-assessment-instructor**
+###
 export default base_component.extend
+  # ## Properties
+  # ### View Properties
   attributeBindings: ['anchor_name:name']
 
-  # ### Properties
+  # ### Internal Properties
   is_expanded: true
 
   # ### Computed Properties
@@ -13,16 +20,16 @@ export default base_component.extend
   sorted_reviews:  ember.computed.sort 'model.reviews', 'reviews_sort_by'
   anchor_name:     ember.computed 'model.id', -> "review-set-#{@get('model.id')}"
 
-  # ### Intialization
+  # ## Events
   init_base: -> 
     @init_ownerable()
     @set_all_data_loaded()
 
+  # ## Helpers
   init_ownerable: ->
     ownerable = @get('team_members').findBy 'id', @get('model.ownerable_id').toString()
     @set 'ownerable', ownerable
 
-  # ### Helpers
   state_change: (state) ->
     model = @get 'model'
 
@@ -37,7 +44,7 @@ export default base_component.extend
     , (error) =>
       @totem_messages.api_failure error, source: @, model: model, action: state     
 
-  # ### Actions
+  # ## Actions
   actions:
     unlock: -> @state_change('unlock')
     ignore: -> @state_change('ignore')

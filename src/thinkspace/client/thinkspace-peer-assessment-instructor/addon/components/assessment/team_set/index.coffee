@@ -2,14 +2,17 @@ import ember from 'ember'
 import ns    from 'totem/ns'
 import base_component from 'thinkspace-base/components/base'
 
+###
+# # index.coffee
+- Type: **Component**
+- Package: **thinkspace-peer-assessment-instructor**
+###
 export default base_component.extend
-
-  # ### Intialization
+  # ## Events
   init_base: -> @set_all_data_loaded()
 
-  # ### Actions
+  # ## Actions
   actions:
-
     select_team_set: (team_set, review_set) -> @sendAction 'select_team_set', team_set, review_set
 
     send: ->

@@ -3,20 +3,27 @@ import ns    from 'totem/ns'
 import ajax  from 'totem/ajax'
 import base_component from 'thinkspace-base/components/base'
 
+###
+# # results.coffee
+- Type: **Component**
+- Package: **thinkspace-peer-assessment-results**
+###
 export default base_component.extend
-  # ### Properties
+  # ## Properties
+  # ### Internal Properties
   calculated_overview: null # Anonymized result from the server.
   assessment:          null
 
-  # ### Components
+  # ### Component paths
   c_overview_type: ns.to_p 'tbl:overview', 'type', 'base'
 
-  # ### Events
+  # ## Events
   init_base: ->
     @init_assessment().then =>
       @init_overview().then =>
         @set_all_data_loaded()
 
+  # ## Helpers
   init_assessment: ->
     new ember.RSVP.Promise (resolve, reject) =>
       assignment = @get('assignment')

@@ -1,8 +1,14 @@
 import ember from 'ember'
 import base_component from 'thinkspace-base/components/base'
 
+###
+# # quantitative.coffee
+- Type: **Component**
+- Package: **thinkspace-peer-assessment-pe**
+###
 export default base_component.extend
-  # Properties
+  # ## Properties
+  # ### Internal Properties
   manager: null # peer_assessment/evaluation
   model:   null # item
   comment: null
@@ -31,7 +37,7 @@ export default base_component.extend
   is_read_only:     ember.computed.or 'manager.is_read_only', 'manager.is_review_read_only'
 
   # #### Model computed properties
-  # => These come from the `model` which is a portion of the assessment's value JSON.
+  # These come from the `model` which is a portion of the assessment's value JSON.
   points_min: ember.computed 'assessment.points_min', 'model', ->
     value = @get_model_property('settings.points.min')
     return value if ember.isPresent(value)  # To catch the value of 0
@@ -53,7 +59,7 @@ export default base_component.extend
 
   can_comment:      ember.computed 'model', -> @get_model_property('settings.comments.enabled')
 
-  # Observers
+  # ### Observers
   review_change: ember.observer 'review', -> @initialize_review()
 
   fill_color_change: ember.observer 'fill_color', ->
@@ -63,7 +69,7 @@ export default base_component.extend
     color          = @get_slider_color fill_color
     @$(".#{fill_class}").css('background-color', color)
 
-  # Events
+  # ## Events
   init: ->
     @_super()
     model_id      = @get('model.id')
@@ -91,7 +97,7 @@ export default base_component.extend
   willDestroyElement: ->
     @$('input[type="range"]').rangeslider('destroy')
 
-  # Helpers
+  # ## Helpers
   initialize_review: ->
     value    = @get('slider_value')
     model_id = @get('model.id')
@@ -145,8 +151,8 @@ export default base_component.extend
     $background = $(template)
     $ruler.html(ruler)
     $ticks.html(ticks)
-    # TODO: Come up with a more scalable way of handling the ruler, first, middle, last probably.
-    # @$(".#{range_class}").prepend($ruler) unless @get('points_descriptive_enabled')
+    # @TODO Come up with a more scalable way of handling the ruler, first, middle, last probably.
+    #} @$(".#{range_class}").prepend($ruler) unless @get('points_descriptive_enabled')
     @$(".#{range_class}").prepend($background)
     @$(".#{range_class}").prepend($ticks)
     
@@ -163,6 +169,7 @@ export default base_component.extend
       when percentage >= 0 and percentage < 0.33
         @set 'fill_color', 'red'
 
+  # ## Actions
   actions:
     save_comment: -> 
       manager = @get 'manager'

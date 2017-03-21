@@ -1,8 +1,14 @@
 import ember from 'ember'
 import base_component from 'thinkspace-base/components/base'
 
+###
+# # qualitative.coffee
+- Type: **Component**
+- Package: **thinkspace-peer-assessment-pe**
+###
 export default base_component.extend
-  # Properties
+  # ## Properties
+  # ### Internal Properties
   manager: null
   comment: null
 
@@ -12,11 +18,11 @@ export default base_component.extend
   points_different: ember.computed.reads 'assessment.points_different'
   is_read_only:     ember.computed.or 'manager.is_read_only', 'manager.is_review_read_only'
 
-  # Observers
-  # TODO: Why won't just `review` work for the binding as it does in quantitative?
+  # ### Observers
+  # @TODO Why won't just `review` work for the binding as it does in quantitative?
   review_change: ember.observer 'manager.review', -> @initialize_review()
 
-  # Events
+  # ## Events
   init: ->
     @_super()
     model_id = @get('model.id')
@@ -26,12 +32,13 @@ export default base_component.extend
       value = review.get_qualitative_value_for_id(model_id)
       if ember.isPresent(value) then return value else return '' 
 
-  # Helpers
+  # ## Helpers
   initialize_review: ->
     model_id = @get('model.id')
     comment  = @get('review').get_qualitative_value_for_id(model_id)
     @set('comment', comment)
 
+  # ## Actions
   actions: 
     set_qualitative_value: (value) -> 
       @get('manager').set_qualitative_value @get('model.id'), @get('model.feedback_type'),  value

@@ -4,10 +4,11 @@ import tc          from 'totem/cache'
 import ta          from 'totem/ds/associations'
 import tm          from 'totem-messages/messages'
 
-# ###
-# ### Balance points helpers
-# ###
-
+###
+# # balance.coffee
+- Type: **Mixin**
+- Package: **thinkspace-peer-assessment-pe**
+###
 export default ember.Mixin.create
   # ### Computed properties
   is_balance:        ember.computed.reads 'model.is_balance'
@@ -58,14 +59,6 @@ export default ember.Mixin.create
     points_diff = errors.findBy 'key', 'points_different'
     return ember.isPresent(points_diff)
 
-  set_changeset_points_remaining: ->
-    if ember.isPresent(@get('changeset'))
-      @get('changeset').set('points_remaining', @get('points_remaining'))
-
-  set_changeset_points_different: ->
-    if ember.isPresent(@get('changeset'))
-      @get('changeset').set('points_different', @get('points_different'))
-
   changeset_points_remaining: ember.observer 'points_remaining', ->
     if ember.isPresent(@get('changeset'))
       @set_changeset_points_remaining()
@@ -73,3 +66,12 @@ export default ember.Mixin.create
   changeset_points_different: ember.observer 'points_different', ->
     if ember.isPresent(@get('changeset'))
       @set_changeset_points_different()
+
+  # ## Helpers
+  set_changeset_points_remaining: ->
+    if ember.isPresent(@get('changeset'))
+      @get('changeset').set('points_remaining', @get('points_remaining'))
+
+  set_changeset_points_different: ->
+    if ember.isPresent(@get('changeset'))
+      @get('changeset').set('points_different', @get('points_different'))

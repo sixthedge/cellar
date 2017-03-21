@@ -2,8 +2,14 @@ import ember          from 'ember'
 import ta             from 'totem/ds/associations'
 import base_component from 'thinkspace-base/components/base'
 
+###
+# # base.coffee
+- Type: **Component**
+- Package: **thinkspace-peer-assessment-pe**
+###
 export default base_component.extend
-  # ### Properties
+  # ## Properties
+  # ### Internal Properties
   manager:          null # managers/evaluation
   
   # ### Computed properties
@@ -30,12 +36,13 @@ export default base_component.extend
 
   errors: ember.computed.reads 'manager.errors'
 
-  # ### Components
+  # ### Component Paths
   c_item_quantitative: ta.to_p 'tbl:assessment', 'item', 'quantitative'
   c_item_qualitative:  ta.to_p 'tbl:assessment', 'item', 'qualitative'
   c_team:              ta.to_p 'tbl:assessment', 'team'
   c_review_summary:    ta.to_p 'tbl:assessment', 'review', 'summary'
 
+  # ## Actions
   actions:
     next:         -> @get('manager').set_reviewable_from_offset(1)
     previous:     -> @get('manager').set_reviewable_from_offset(-1)

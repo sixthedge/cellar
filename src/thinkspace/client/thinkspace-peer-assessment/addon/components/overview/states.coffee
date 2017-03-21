@@ -3,7 +3,7 @@ import ns    from 'totem/ns'
 import base  from 'thinkspace-base/components/base'
 
 ###
-# # overview/states.coffee
+# # states.coffee
 - Type: **Component**
 - Package: **thinkspace-peer-assessment**
 ###
