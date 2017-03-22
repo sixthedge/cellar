@@ -26,6 +26,7 @@ export default base_component.extend
 
   init_base: ->
     @init_table_data()
+    @set_all_data_loaded()
 
   generate_dummy_model: ->
     obj            = {}
