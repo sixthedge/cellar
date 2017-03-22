@@ -9,5 +9,5 @@ services:
       - db
     environment:
       # ### Seed
-      # if APP_DB_RESET = 'true' then does 'db:reset')
-      APP_DB_RESET: "${APP_DB_RESET}"
+      APP_DB_RESET: 'false'
+      # APP_DB_RESET: 'true' # 'db:reset'

@@ -1,0 +1,15 @@
+
+# Thinkspace Gemfile
+
+gem 'thinkspace', '0.2.0', path: '/src/platform'
+gem 'thinkspace-authorization', '0.2.0', path: '/src/platform/thinkspace-authorization'
+gem 'thinkspace-builder', '0.2.0', path: '/src/platform/thinkspace-builder'
+gem 'thinkspace-casespace', '0.2.0', path: '/src/platform/thinkspace-casespace'
+gem 'thinkspace-common', '0.2.0', path: '/src/platform/thinkspace-common'
+gem 'thinkspace-importer', '0.2.0', path: '/src/platform/thinkspace-importer'
+gem 'thinkspace-peer-assessment', '0.2.0', path: '/src/platform/thinkspace-peer-assessment'
+gem 'thinkspace-pub-sub', '0.2.0', path: '/src/platform/thinkspace-pub-sub'
+gem 'thinkspace-readiness-assurance', '0.2.0', path: '/src/platform/thinkspace-readiness-assurance'
+gem 'thinkspace-report', '0.2.0', path: '/src/platform/thinkspace-report'
+gem 'thinkspace-resource', '0.2.0', path: '/src/platform/thinkspace-resource'
+gem 'thinkspace-team', '0.2.0', path: '/src/platform/thinkspace-team'

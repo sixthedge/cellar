@@ -1,0 +1,4 @@
+CREATE ROLE rails_user WITH LOGIN ENCRYPTED PASSWORD 'prod-password' CREATEDB;
+CREATE ROLE oauth_user WITH LOGIN ENCRYPTED PASSWORD 'prod-password' CREATEDB;
+CREATE DATABASE rails_production  WITH OWNER rails_user ENCODING 'UTF8';
+CREATE DATABASE oauth_production  WITH OWNER oauth_user ENCODING 'UTF8';

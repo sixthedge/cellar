@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+
+  oauth:
+    image: prod/oauth:5.0.1
+    env_file: .env-oauth
+    links:
+      - db
+    environment:
+      # ### Seed
+      APP_DB_RESET: 'false'
+      # APP_DB_RESET: 'true' # 'db:reset'

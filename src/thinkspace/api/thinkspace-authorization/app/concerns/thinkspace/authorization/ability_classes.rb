@@ -33,6 +33,8 @@ module Thinkspace; module Authorization; module AbilityClasses
           unless Rails.env.production?
             rc = require_dependency file
             raise_ability_error "Require failed for file #{file.inspect}."  if rc.blank?
+          else
+            require file
           end
           class_name = 'Thinkspace::Authorization::' + filename.camelize
           klass      = class_name.safe_constantize
@@ -83,4 +85,3 @@ module Thinkspace; module Authorization; module AbilityClasses
   end # included
 
 end; end; end
-

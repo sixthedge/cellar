@@ -3,16 +3,16 @@ version: "3"
 services:
 
   sio:
-    image: dev/socketio:1.7.3
-    env_file: "${SIO_NODE_SRC}/.env-dev"
+    image: dev/sio:1.7.3
+    env_file: .env-sio
     links:
       - redis
       - rails
     ports:
       - '5555:5555'
     volumes:
-      - "${SIO_TOTEM_SRC}:/src/totem:ro"
-      - "${SIO_PLATFORM_SRC}:/src/platform:ro"
-      - "${SIO_NODE_SRC}:/src/node:ro"
+      - "${S_BASE}/totem/sio:/src/totem:ro"
+      - "${S_BASE}/thinkspace/sio:/src/platform:ro"
+      - "${S_BASE}/thinkspace/sio:/src/node:ro"
     environment:
       NODE_ENVIRONMENT: development

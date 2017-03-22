@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+
+  rails:
+    image: prod/rails:5.0.1
+    env_file: .env-rails
+    ports:
+      - '3000:80'
+    links:
+      - db
+      - redis
+      - oauth
+    environment:
+      APP_DB_RESET:       'false'
+      # APP_DB_RESET:       'true' # 'totem:db:reset[$APP_DB_SEED_DIR] CONFIG=$APP_DB_SEED_CONFIG AI=$APP_DB_SEED_AI'
+      APP_DB_SEED_DIR:    ra
+      APP_DB_SEED_CONFIG: all
+      APP_DB_SEED_AI:     'false'
+      DISABLE_DATABASE_ENVIRONMENT_CHECK: 1

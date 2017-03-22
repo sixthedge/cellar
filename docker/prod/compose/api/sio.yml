@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+
+  sio:
+    image: prod/sio:1.7.3
+    env_file: .env-sio
+    links:
+      - redis
+      - rails
+    ports:
+      - '5555:5555'
+    environment:
+      NODE_ENVIRONMENT: production

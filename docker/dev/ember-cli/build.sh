@@ -3,7 +3,7 @@ set -e
 
 BUILD_DIR=$(pwd -P)
 
-echo "  <EMBER-CLI> images in $BUILD_DIR"
+echo "  <ember-cli> images in $BUILD_DIR"
 
 # add: watchman; ember-cli; bower
 cd $BUILD_DIR/base; ./build.sh

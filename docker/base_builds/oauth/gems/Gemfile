@@ -1,0 +1,16 @@
+source 'http://rubygems.org'
+
+# Base Server framework
+gem 'rails', '5.0.1'
+gem 'pg', '0.19.0'
+gem 'passenger', '5.1.2', require: "phusion_passenger/rack_handler"
+
+# Assets
+gem 'slim', '3.0.7'
+
+# Totem Oauth Provider
+gem 'devise', '4.2.0'
+gem 'doorkeeper', '4.2.0'
+
+# 3rd Party Oauth Providers
+gem 'omniauth-github', '1.1.2'
