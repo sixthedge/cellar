@@ -1,4 +1,7 @@
 module Thinkspace; module PeerAssessment; module Creators 
+  # # assignment
+  # - Type: **Class**
+  # - Engine: **thinkspace-peer-assessment**
   class Assignment < ::Thinkspace::Casespace::Creators::Base
 
     attr_accessor :assessment
