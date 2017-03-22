@@ -120,6 +120,7 @@ export default ember.Mixin.create
     store_records = @store.peekAll(type)
     records       = []
     # Doing this rather than a store filter to retain order for server-sdie sorts.
+    # TODO: Use peek_record instead of peek_all then finding.
     ids.forEach (id) =>
       record = store_records.findBy('id', id)
       records.pushObject(record)

@@ -1,0 +1,11 @@
+if Aws
+  secrets           = Rails.application.secrets.aws
+  access_key        = secrets.dig('s3', 'paperclip', 'access_key')
+  secret_access_key = secrets.dig('s3', 'paperclip', 'secret_access_key')
+  region            = secrets.dig('s3', 'paperclip', 'region')
+
+  Aws.config.update({
+    region: region,
+    credentials: Aws::Credentials.new(access_key, secret_access_key)
+  })
+end

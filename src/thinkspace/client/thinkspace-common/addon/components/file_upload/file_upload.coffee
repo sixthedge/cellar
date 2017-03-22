@@ -1,12 +1,22 @@
-import ember    from 'ember'
-import base     from 'thinkspace-base/components/base'
-import uploader from 'ember-uploader'
+import ember      from 'ember'
+import e_uploader from 'ember-uploader'
+import ns         from 'totem/ns'
+import ajax       from 'totem/ajax'
+import config     from 'totem-config/config'
+import base       from 'thinkspace-base/components/base'
 
 export default base.extend
   # # Properties
   classNames:        ['test-upload']
   classNameBindings: ['is_dragging:is-dragging']
-  url:               null
+  s3:                false
+  authable:          null
+  type:              null
+
+  # ## Ember-Uploader properties
+  url:         config.api_host + '/api/thinkspace/common/uploads/upload'
+  signing_url: config.api_host + '/api/thinkspace/common/uploads/sign'
+  param_name:  'files'
 
   # ## Drag properties
   is_dragging: false
@@ -21,15 +31,8 @@ export default base.extend
   dragOver: (event) ->  event.preventDefault()
   drop:     (event) ->
     event.preventDefault()
-    # TODO: Implement the S3 signing endpoint and ability to upload here.
-    # uploader = uploader.S3Uploader.create({signingUrl: '/test'})
     @reset_drag_counter()
-    # event.dataTransfer.files has the files in an object with 0..n as the key.
-    length = event.dataTransfer.files.length
-    files  = new Array
-    for i in [0..(length - 1)]
-      file = event.dataTransfer.files[i]
-      files.pushObject(file)
+    files = event.dataTransfer.files
     @send('files_changed', files)
 
   # # Drag helpers
@@ -48,7 +51,94 @@ export default base.extend
   reset_drag_counter: -> @set_drag_counter(0)
   set_drag_counter:   (count) -> @set('drag_counter', count); @update_is_dragging()
 
+  # # Upload
+  upload: (files) ->
+    s3 = @get('s3')
+    if s3 then @upload_s3(files) else @upload_api(files)
+
+  upload_api: (files) ->
+    uploader = e_uploader.Uploader.create
+      url:          @get('url')
+      paramName:    @get('param_name')
+      ajaxSettings: @get_ajax_settings()
+    @add_uploader_callbacks(uploader)
+    options = @get_uploader_options()
+    uploader.upload(files, options).then (e) =>
+      @uploader_complete_direct(e, options)
+
+  upload_s3: (files) ->
+    # Currently, for S3 with ember-uploader, you must upload/sign each file individually.
+    # Files will look like:  FileList {0: File, length: 1}, it is *not* an array.
+    length = files.length
+    for i in [0..(length - 1)]
+      file = files[i]
+      uploader = e_uploader.S3Uploader.create
+        signingUrl:          @get('signing_url')
+        signingAjaxSettings: @get_ajax_settings()
+      @add_uploader_callbacks(uploader)
+      options = @get_uploader_options()
+      uploader.upload(file, options).then (e) =>
+        @uploader_complete_s3(e, options)
+
+  get_uploader_options: ->
+    type          = @get('type')
+    authable      = @get('authable')
+    authable_type = @totem_scope.standard_record_path(authable)
+    authable_id   = authable.get('id')
+    options       = 
+      uploader_type: type
+      authable_type: authable_type
+      authable_id:   authable_id
+
+  add_uploader_callbacks: (uploader) ->
+    uploader.on 'progress', (e)                                => @uploader_progress(e)
+    uploader.on 'didError', (jqXHR, text_status, error_thrown) => @uploader_error(jqXHR, text_status, error_thrown)
+
+  uploader_complete_direct: (payload, options) ->
+    # TODO: Send the response upstream with @sendAction
+    console.log "[file_upload] `upload_complete_direct`: ", payload, options
+    if payload.raw
+      response = payload
+    else
+      type     = options.uploader_type
+      response = @tc.push_payload_and_return_records_for_type(payload, type)
+
+  uploader_complete_s3: (e, options) ->
+    console.log "[file_upload] `upload_complete_s3`: ", e, options
+    $e     = $(e)
+    url    = $e.find('Location')[0].textContent
+    bucket = $e.find('Bucket')[0].textContent
+    key    = $e.find('Key')[0].textContent
+    query = 
+      aws:
+        url:     url
+        bucket:  bucket
+        key:     key
+      options: options
+    query_options = 
+      verb:   'POST'
+      url:    '/api/thinkspace/common/uploads/confirm'
+
+    # TODO: Need to add the model type.
+    # TODO: This might need to be an ajax.object to allow for `raw` checking like the direct upload.
+    @tc.query_data(ns.to_p('upload'), query, query_options).then (test) =>
+      # TODO: Send the response upstream with @sendAction
+      return
+
+  uploader_progress: (e) ->
+    console.log "[file_upload] `upload_progress`: ", e
+
+  uploader_error: (jqXHR, text_status, error_thrown) ->
+    console.log "[file_upload] `upload_error`: ", jqXHR, text_status, error_thrown
+
+  # # Misc. helpers
+  # ## Getters/setters
+  # Need to add the authorization headers to the Ember.$.ajax called by ember-upload.
+  get_ajax_settings: ->
+    settings = {}
+    ajax.add_auth_headers(settings)
+    settings
+
   actions:
     # `files_changed` is called by the input when the browser selects a file OR via this component's drop.
-    files_changed: (files) ->
-      console.log "files changed callback: ", files
+    files_changed: (files) -> @upload(files)

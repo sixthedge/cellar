@@ -41,6 +41,14 @@ Thinkspace::Common::Engine.routes.draw do
       end
 
       # Non-admin
+      resources :uploads, only: [] do
+        collection do
+          post :upload
+          get  :sign
+          post :confirm
+        end
+      end
+
 			resources :spaces, only: [:index, :show]
 
       resources :users, only: [:show, :create, :update] do

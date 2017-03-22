@@ -8,4 +8,4 @@ if all_data_loaded
 else
   h1 Loading...
 
-component '__file_upload'
+component '__file_upload' s3=true authable=model type='thinkspace/importer/file'

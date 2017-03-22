@@ -7,6 +7,7 @@ module Thinkspace
       validates_attachment_content_type :attachment, content_type: %w(text/csv text/plain application/octet-stream application/vnd.ms-excel)
       before_save                       :set_settings_will_change
 
+      # # Helpers
       def title
         attachment_file_name
       end
