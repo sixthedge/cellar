@@ -85,9 +85,13 @@ export default base.extend
         signingUrl:          @get('signing_url')
         signingAjaxSettings: @get_ajax_settings()
       @add_uploader_callbacks(uploader)
-      options = @get_uploader_options()
-      uploader.upload(file, options).then (e) =>
-        @uploader_complete_s3(e, options)
+      # Make a promise here to not overwrite `options` for multiple file upload.
+      # => If not wrapped, the `confirm` API call will have the same name for all files.
+      new ember.RSVP.Promise (resolve, reject) =>
+        options = @get_uploader_options()
+        uploader.upload(file, options).then (e) =>
+          @uploader_complete_s3(e, options)
+        resolve()
 
   get_uploader_options: ->
     type             = @get('type')

@@ -1,7 +1,6 @@
 module Thinkspace; module Importer; module Uploaders;
   class Roster < Thinkspace::Common::Uploaders::Base
     include Thinkspace::Common::SmarterCSV
-    include Adapters::Roster::S3
 
     # # Authorization
     def authorize!
@@ -45,6 +44,10 @@ module Thinkspace; module Importer; module Uploaders;
       end
       authable.delay.mass_invite(processed, current_user)
     end
+
+    # # Adapters
+    # TODO: This could be driven by a configuration or env.
+    def adapter_class; Thinkspace::Importer::Uploaders::Adapters::Roster::S3; end
 
     # # Helpers
     def user_class; Thinkspace::Common::User; end

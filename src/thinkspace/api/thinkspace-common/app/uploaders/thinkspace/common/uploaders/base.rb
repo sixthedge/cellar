@@ -3,8 +3,6 @@ module Thinkspace; module Common; module Uploaders;
     attr_reader :params, :files, :uploader_type, :authable, :ownerable, :params_uploader
     attr_reader :context, :user, :single, :current_ability, :current_user
 
-    include Adapters::S3
-
     # # Constructor
     def initialize(params, user, context=nil)
       @params  = params
@@ -15,15 +13,6 @@ module Thinkspace; module Common; module Uploaders;
 
     # # Processing
     def upload; raise_method_error('The `upload` method has not been defined for this class.'); end
-    def confirm
-      case adapter
-      when 's3'
-        raise_method_error('The `s3_confirm` method has not been defined for this class.') unless self.respond_to?(:s3_confirm)
-        s3_confirm
-      else
-        raise_method_error("Adapter [#{adapter}] did not have a confirm method specified.")
-      end
-    end
 
     # # Authorization
     def authorize!; raise_method_error('The `authorize!` method has not been defined for this class.'); end
@@ -53,20 +42,15 @@ module Thinkspace; module Common; module Uploaders;
     def params_uploader_ownerable; params_uploader_record('ownerable'); end
     def params_uploader;  @params_uploader ||= JSON.parse(params[:uploader]).with_indifferent_access; end
 
-    # # Signing
+    # # Signing / confirming
     # Used for server to server POST (e.g. client -> AWS).
     # => http://docs.aws.amazon.com/AmazonS3/latest/dev/UsingHTTPPOST.html
-    def adapter; 's3'; end
+    def adapter_class; raise_method_error("[#{self.class.name}] does not have `adapter_class` defined."); end
 
     # Allow for multiple signing types (e.g. Google Developer Storage)
     # => Only supporting AWS out of the box.
-    def sign
-      case adapter
-      when 's3'
-        raise_method_error('The `s3_sign` method has not been defined for this class.') unless self.respond_to?(:s3_sign)
-        s3_sign 
-      end
-    end
+    def sign;    adapter_class.new(self).sign;    end
+    def confirm; adapter_class.new(self).confirm; end
 
     # # Rendering
     def render_success; {success: true}; end
