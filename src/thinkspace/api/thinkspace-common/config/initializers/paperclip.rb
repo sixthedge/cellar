@@ -1,27 +1,26 @@
 # Interpolation additions
-Paperclip.interpolates :resourceable_path do |attachment, style|
-  "#{attachment.instance.resourceable_type.split('::').last.downcase}/#{attachment.instance.resourceable_id}"
-end
-
-Paperclip.interpolates :ownerable_path do |attachment, style|
-  "#{attachment.instance.ownerable_type.split('::').last.downcase}/#{attachment.instance.ownerable_id}"
-end
-
-Paperclip.interpolates :numeric_timestamp do |attachment, style|
-  "#{attachment.instance.created_at.to_i}"
-end
-
-Paperclip.interpolates :artifact_path do |attachment, style|
-  phase      = attachment.instance.thinkspace_artifact_bucket.authable
-  ownerable  = attachment.instance.ownerable
-  assignment = phase.thinkspace_casespace_assignment
-  space      = assignment.thinkspace_common_space
-  if ownerable.respond_to?(:email)
-    ownerable_name = ownerable.email.parameterize
-  else
-    ownerable_name = "#{ownerable.class.name}-#{ownerable.id}".parameterize
+Paperclip.interpolates :paperclip_path do |attachment, style|
+  path   = attachment.instance.paperclip_path.sub(/\/$/, '')
+  result = path.dup
+  path.scan(/:[a-zA-Z]*/).each do |i|
+    method = i.sub(':', '')
+    return unless self.respond_to?(method)
+    value  = send(method, attachment, style) || ''
+    result.gsub!(/#{i}/, value)
   end
-  "space/#{space.id}/assignment/#{assignment.id}/phase/#{phase.id}/#{ownerable_name}"
+  result
+end
+
+# For localstore, add in the public paths to the paperclip path.
+Paperclip.interpolates :dev_paperclip_path do |attachment, style|
+  path = paperclip_path(attachment, style).sub(/\/$/, '')
+  "public/paperclip/#{path}"
+end
+
+Paperclip.interpolates :dev_url_path do |attachment, style|
+  result = dev_paperclip_path(attachment, style).sub(/^public\//,'')
+  host   = Rails.application.secrets.host || 'localhost'
+  "http://#{host}:3000/#{result}"
 end
 
 # Override type detection temporarily until a better work around can be implemented.

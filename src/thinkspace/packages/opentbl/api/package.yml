@@ -20,8 +20,9 @@ application_rb:
 secrets:
 
   development:
+    host:            localhost
     secret_key_base: d01f9aa6064531cbcff49802c38bbfd8e9635643ac8b4c079cc63568d5898c536fa91004af21ad8e09d84562e6bb91fb3d0a990ae56b0aacd0b1e4d1a275b453
-    totem_database:
+    totem_database:  
       name:     otbl_development
       username: postgres
       password: password
@@ -37,15 +38,15 @@ secrets:
     aws:
       s3:
         paperclip:
-          access_key:        VALUE-HERE
-          secret_access_key: VALUE-HERE
-          bucket_name:       VALUE-HERE
-          region:            VALUE-HERE
+          access_key:       
+          secret_access_key: 
+          bucket_name:
+          region:
     smtp:
       postmark:
-        username: USERNAME-HERE
-        password: PASSWORD-HERE
-        domain:   DOMAIN-HERE
+        username:
+        password:
+        domain:
     pub_sub:
       url: <%=redis_url%>
 

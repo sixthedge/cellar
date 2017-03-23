@@ -3,6 +3,7 @@ class CreateThinkspaceImporter < ActiveRecord::Migration
 
     create_table :thinkspace_importer_files, force: true do |t|
       t.references  :user
+      t.references  :importable, polymorphic: true
       t.string      :custom_url
       t.string      :generated_model
       t.string      :attachment_file_name

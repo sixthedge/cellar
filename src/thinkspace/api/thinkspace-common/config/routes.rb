@@ -8,10 +8,9 @@ Thinkspace::Common::Engine.routes.draw do
         resources :spaces, only: [:update, :create] do
           member do
             get  :roster
-            get  :invitations
             get  :teams
             get  :team_sets
-            put  :invite
+            post :invite
             post :import
             post :clone
             get  :search
@@ -31,12 +30,6 @@ Thinkspace::Common::Engine.routes.draw do
           put :resend, on: :member
           put :activate, on: :member
           put :inactivate, on: :member
-        end
-
-        resources :invitations, only: [:create, :destroy] do
-          put :refresh, on: :member
-          put :resend, on: :member
-          get :fetch_state, on: :member
         end
       end
 

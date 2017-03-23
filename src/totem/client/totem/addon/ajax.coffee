@@ -54,6 +54,11 @@ class Ajax
   adapter_host: ->
     @adapter.get('host')
 
+  build_url: (type_key, id, verb, action) ->
+    url = @adapter.buildURL(type_key, id, verb)
+    url += '/' + action if action
+    url
+
   build_query: (options) ->
     verb       = options.verb or 'GET'
     action     = options.action
@@ -87,20 +92,21 @@ class Ajax
     else
       switch typeof(model)
         when 'string' # string model class name.
-          model_class = @totem_scope.model_class_from_string(model)
-          @error "Model class for [#{model}] not found.", options  unless model_class
-          type_key = @totem_scope.model_class_type_key(model_class)
-          @totem_scope.add_auth_to_query(model_class, data)
+          try
+            model_class = @totem_scope.model_class_from_string(model)
+            @error "Model class for [#{model}] not found.", options  unless model_class
+            type_key = @totem_scope.model_class_type_key(model_class)
+            @totem_scope.add_auth_to_query(model_class, data)
+          catch
+            type_key = model
         when 'object' # model instance.
           type_key = @totem_scope.record_type_key(model)
           @totem_scope.add_auth_to_query(model, data)
         else
           @error "Unknown model object (not a string or object).", options
-
+          
       @error "Model typeKey is blank.", options  unless type_key
-
-      url  = @adapter.buildURL type_key, id, verb
-      url += '/' + action if action
+      url = @build_url(type_key, id, verb, action)
 
     query.data = data
     query.data = @stringify query.data unless @query_is_get(query) # GET either needs processData: false or to not be stringified.

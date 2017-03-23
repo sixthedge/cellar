@@ -8,6 +8,10 @@ export default base.extend
   students: null
   admins:   null
 
+  # ## Direct invitation properties
+  email:   null
+  role:    'read'
+
   # # Computed properties
   student_columns: ember.computed -> @get_columns()
   student_data:    ember.computed -> { source: @, sort: 'student_sort' }
@@ -85,7 +89,7 @@ export default base.extend
     query = 
       page:
         number: 1
-        size:   5
+        size:   10
       id: id
 
   get_query_options: ->
@@ -112,3 +116,18 @@ export default base.extend
     direction = options.direction || 'ASC'
     sorts     = [{last_name: direction}]
     @tc.add_sort_to_query(query, sorts)
+
+
+  actions: 
+    invite: ->
+      email = @get('email')
+      role  = @get('role')
+      query = 
+        email: email
+        role:  role
+        id:    @get('model.id')
+      options = 
+        action: 'invite'
+        verb:   'POST'
+      @tc.query_action(ns.to_p('space'), query, options).then =>
+        console.log "[roster] invitation sent."

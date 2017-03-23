@@ -8,4 +8,9 @@ if all_data_loaded
 else
   h1 Loading...
 
-component '__file_upload' s3=true authable=model type='thinkspace/importer/file'
+/ TEMPORARY
+= input value=email placeholder='example@sixthedge.com'
+h1 click='invite' Invite
+/ /TEMPORARY
+
+component '__file_upload' s3=true authable=model type='thinkspace/importer/roster'

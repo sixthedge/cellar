@@ -248,6 +248,16 @@ module Thinkspace
         get_settings_value(:nested_attributes)
       end
 
+      # ### Paperclip
+      def paperclip_path
+        case importable
+        when Thinkspace::Common::Space
+          "spaces/#{importable.id}/importer/:filename"
+        else
+          "spaces/system/importer/:filename"
+        end
+      end
+
       # At bottom because it will throw a WARNING otherwise because they above methods haven't been added yet.
       totem_associations
 

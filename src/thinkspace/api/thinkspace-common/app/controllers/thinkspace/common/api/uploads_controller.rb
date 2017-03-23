@@ -1,18 +1,10 @@
 module Thinkspace; module Common; module Api;
   class UploadsController < ::Totem::Settings.class.thinkspace.authorization_api_controller
-    # before_action :set_presigned_post, only: [:sign]
-
     # # API Proxy to S3
     def upload
       begin
         uploader = type_uploader.new(params, current_user, self)
-        response = uploader.upload
-        if response.is_a?(Hash)
-          response['raw'] = true
-          controller_render_json(response)
-        else
-          controller_render(response)
-        end
+        render_response(uploader.upload)
       rescue Thinkspace::Common::Uploaders::Exceptions::UploaderError => e
         permission_denied(e)
       end
@@ -30,13 +22,30 @@ module Thinkspace; module Common; module Api;
     end
 
     def confirm
-      controller_render_no_content
+      begin
+        uploader = type_uploader.new(params, current_user, self)
+        uploader.authorize!
+        render_response(uploader.confirm)
+      rescue Thinkspace::Common::Uploaders::Exceptions::UploaderError => e
+        permission_denied(e)
+      end
     end
 
     private
 
+    def render_response(response)
+      if response.is_a?(Hash)
+        response['raw'] = true
+        controller_render_json(response)
+      else
+        controller_render(response)
+      end
+    end
+
+    def params_uploader; @params_uploader ||= JSON.parse(params[:uploader] || '{}').with_indifferent_access; end 
+
     def type_uploader
-      type = params[:uploader_type]
+      type = params_uploader[:type]
       permission_denied('Params did not contain :uploader_type') unless type.present?
       type  = type.split('/')
       index = type.length - 1 # One from the end

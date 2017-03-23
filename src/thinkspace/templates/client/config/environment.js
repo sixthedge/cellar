@@ -81,7 +81,7 @@
     ENV.totem.asset_path                  = '<%=dev.asset_path%>';
     ENV.totem.pub_sub.socketio_url        = '<%=dev.sio_url%>';
     ENV.totem.pub_sub.socketio_client_cdn = '<%=dev.sio_cdn%>';
-
+    ENV.totem.uploader                    = {s3: false};
     ENV.contentSecurityPolicy = {
       "default-src": "* localhost:* 0.0.0.0:* 'unsafe-eval' 'unsafe-inline' data:",
       "script-src": "* localhost:* 0.0.0.0:* 'unsafe-eval' 'unsafe-inline' data:",
@@ -104,7 +104,8 @@
   }
 
   if (environment === 'production') {
-    if (deploy_target === 'production') {
+    ENV.totem.uploader = {s3: true};
+    if (deploy_target  === 'production') {
       ENV.totem.api_host                    = 'PRODUCTION-API-HOST';
       ENV.totem.asset_path                  = 'PRODUCTION-ASSET-PATH';
       ENV.totem.pub_sub.socketio_url        = 'PRODUCTION-SIO-URL';

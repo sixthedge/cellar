@@ -11,11 +11,20 @@ export default base.extend
   classNameBindings: ['is_dragging:is-dragging']
   s3:                false
   authable:          null
-  type:              null
+  type:              null # Type of uploader to use on the server.
+  model:             null # Model to use for pushing into the sotre.
+
+  # # Computed properties
+  # Override the `s3` property based on config (primarily for development).
+  use_s3: ember.computed 's3', ->
+    s3 = @get('s3')
+    return false if s3 == false
+    override = ember.get(config, 'uploader.s3')
+    if ember.isPresent(override) then override else s3
 
   # ## Ember-Uploader properties
-  url:         config.api_host + '/api/thinkspace/common/uploads/upload'
-  signing_url: config.api_host + '/api/thinkspace/common/uploads/sign'
+  url:         ajax.build_url(ns.to_p('upload'), null, null, 'upload')
+  signing_url: ajax.build_url(ns.to_p('upload'), null, null, 'sign')
   param_name:  'files'
 
   # ## Drag properties
@@ -53,8 +62,8 @@ export default base.extend
 
   # # Upload
   upload: (files) ->
-    s3 = @get('s3')
-    if s3 then @upload_s3(files) else @upload_api(files)
+    use_s3 = @get('use_s3')
+    if use_s3 then @upload_s3(files) else @upload_api(files)
 
   upload_api: (files) ->
     uploader = e_uploader.Uploader.create
@@ -81,27 +90,20 @@ export default base.extend
         @uploader_complete_s3(e, options)
 
   get_uploader_options: ->
-    type          = @get('type')
-    authable      = @get('authable')
-    authable_type = @totem_scope.standard_record_path(authable)
-    authable_id   = authable.get('id')
-    options       = 
-      uploader_type: type
-      authable_type: authable_type
-      authable_id:   authable_id
+    type             = @get('type')
+    authable         = @get('authable')
+    authable_type    = @totem_scope.standard_record_path(authable)
+    authable_id      = authable.get('id')
+    uploader_options = {type: type, authable: {id: authable_id, type: authable_type}}
+    {uploader: JSON.stringify(uploader_options)}
 
   add_uploader_callbacks: (uploader) ->
     uploader.on 'progress', (e)                                => @uploader_progress(e)
     uploader.on 'didError', (jqXHR, text_status, error_thrown) => @uploader_error(jqXHR, text_status, error_thrown)
 
   uploader_complete_direct: (payload, options) ->
-    # TODO: Send the response upstream with @sendAction
     console.log "[file_upload] `upload_complete_direct`: ", payload, options
-    if payload.raw
-      response = payload
-    else
-      type     = options.uploader_type
-      response = @tc.push_payload_and_return_records_for_type(payload, type)
+    @process_payload(payload, options)
 
   uploader_complete_s3: (e, options) ->
     console.log "[file_upload] `upload_complete_s3`: ", e, options
@@ -109,21 +111,26 @@ export default base.extend
     url    = $e.find('Location')[0].textContent
     bucket = $e.find('Bucket')[0].textContent
     key    = $e.find('Key')[0].textContent
-    query = 
-      aws:
-        url:     url
-        bucket:  bucket
-        key:     key
-      options: options
+    query = options
+    query.aws = 
+      url:     url
+      bucket:  bucket
+      key:     key
     query_options = 
       verb:   'POST'
-      url:    '/api/thinkspace/common/uploads/confirm'
+      action: 'confirm'
+    @tc.query_data(ns.to_p('upload'), query, query_options).then (payload) =>
+      @process_payload(payload, options)
 
-    # TODO: Need to add the model type.
-    # TODO: This might need to be an ajax.object to allow for `raw` checking like the direct upload.
-    @tc.query_data(ns.to_p('upload'), query, query_options).then (test) =>
-      # TODO: Send the response upstream with @sendAction
-      return
+  process_payload: (payload, options={}) ->
+    console.log "[file_upload] `process_payload` called: ", payload, options
+    if payload.raw
+      response = payload
+    else
+      type     = @get('model')
+      response = @tc.push_payload_and_return_records_for_type(payload, type)
+    @reset_input()
+    @sendAction('response', response)
 
   uploader_progress: (e) ->
     console.log "[file_upload] `upload_progress`: ", e
@@ -138,6 +145,9 @@ export default base.extend
     settings = {}
     ajax.add_auth_headers(settings)
     settings
+
+  # ## Input helpers
+  reset_input: -> @$('input[type="file"]').val(null)
 
   actions:
     # `files_changed` is called by the input when the browser selects a file OR via this component's drop.
