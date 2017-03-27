@@ -6,7 +6,6 @@ class ThinkspacePeerAssessment < ::Totem::Settings.authorization.platforms.think
   private
 
   def peer_assessment
-    return unless ns_exists?('Thinkspace::PeerAssessment')
     assessment          = Thinkspace::PeerAssessment::Assessment
     review_set          = Thinkspace::PeerAssessment::ReviewSet
     team_set            = Thinkspace::PeerAssessment::TeamSet
@@ -19,10 +18,10 @@ class ThinkspacePeerAssessment < ::Totem::Settings.authorization.platforms.think
     can [:crud], review
     can [:read], overview
     return unless admin?
-    can [:approve, :teams, :review_sets, :team_sets, :update, :activate], assessment
+    can [:approve, :teams, :review_sets, :team_sets, :update, :activate, :progress_report, :approve_team_sets], assessment 
     can [:approve, :unapprove], review
-    can [:approve, :unapprove, :notify], review_set
-    can [:approve, :unapprove, :approve_all, :unapprove_all], team_set
+    can [:ignore, :unignore, :unlock, :notify], review_set
+    can [:approve, :unapprove, :approve_all, :unapprove_all, :read], team_set
     can [:update], overview
   end
 

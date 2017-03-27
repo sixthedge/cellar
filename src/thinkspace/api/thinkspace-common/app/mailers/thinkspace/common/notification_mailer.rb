@@ -1,9 +1,8 @@
 module Thinkspace
   module Common
-    class NotificationMailer < ActionMailer::Base
-      include Thinkspace::Common::BaseMailer
+    class NotificationMailer < Thinkspace::Common::BaseMailer
       layout 'thinkspace/common/layouts/invitation'
-      default from: 'ThinkBot <thinkbot@thinkspace.org>'
+      skip_after_action :prevent_delivery, only: [:added_to_space, :invited_to_space, :roster_imported, :space_clone_completed, :space_clone_failed]
 
       def added_to_space(space_user, inviter)
 

@@ -36,6 +36,14 @@ module Thinkspace
         review_set.unlock_phase_for_ownerable
       end
 
+      def reset_quantitative_data
+        return unless self.value.present?
+        val = self.value.deep_dup
+        val['quantitative'] = {}
+        self.value = val
+        self.save
+      end
+
       def self.generate_anonymized_review_json(assessment, reviews)
         results             = {}
         json                = {}

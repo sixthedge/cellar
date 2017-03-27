@@ -5,12 +5,13 @@ module Thinkspace
       include AASM
 
       aasm column: :state do
-        state :neutral, initial: true
-        state :locked
-        event :lock do
-          transitions to: :locked
-        end
+        state :inactive, initial: true
+        state :active
+        event :activate do transitions to: :active end
+        event :deactivate do transitions to: :inactive end
       end
+
+      validates_uniqueness_of :state, scope: :space_id, if: :active? # only 1 activate team_set per space
 
       # ### Serialized Attributes
       def metadata(scope); get_metadata(scope); end
@@ -90,6 +91,40 @@ module Thinkspace
       end
 
       def explode(options={}); Thinkspace::Team::Exploders::TeamSet.new(self, options).process; end
+
+      def reconcile(delta)
+        space            = get_space
+        assignment_ids   = space.thinkspace_casespace_assignments.scope_upcoming.pluck(:id)
+        phase_ids        = Thinkspace::Casespace::Phase.where(assignment_id: assignment_ids).pluck(:id)
+        phase_components = Thinkspace::Casespace::PhaseComponent.where(phase_id: phase_ids)
+        reconcilers      = Array.new
+
+        phase_components.each do |phase_component|
+          path = phase_component.componentable_type.split('::')
+          path.pop
+          path << 'Reconcilers' << 'TeamSet'
+          path  = path.join('::')
+          klass = path.safe_constantize
+          if klass.present?
+            reconciler = klass.new(self, delta: delta, phase: phase_component.thinkspace_casespace_phase, componentable: phase_component.componentable)
+            reconciler.process
+            reconcilers << reconciler 
+          end
+        end
+
+        if reconcilers.size == 1
+          reconcilers.first.notify
+        else
+          notify_team_set_modified
+        end
+
+      end
+
+      def notify_team_set_modified
+        delta = Thinkspace::Team::Deltas::TeamSet.new(self).process
+        ids   = delta.get_changed_delta_teams.map(&:id)
+        Thinkspace::Team::TeamMailer.delay.notify_team_has_changed
+      end
 
       # ###
       # 

@@ -9,6 +9,7 @@ Thinkspace::PeerAssessment::Engine.routes.draw do
           get  :team_sets,   on: :member
           put  :approve,     on: :member
           put  :activate,    on: :member
+          get  :progress_report, on: :member
         end
 
         resources :overviews, only: [:update]
@@ -28,7 +29,7 @@ Thinkspace::PeerAssessment::Engine.routes.draw do
           end
         end
 
-        resources :team_sets, only: [] do
+        resources :team_sets, only: [:show] do
           member do
             put :approve
             put :unapprove
