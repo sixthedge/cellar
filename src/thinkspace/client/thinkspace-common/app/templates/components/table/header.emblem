@@ -1,0 +1,2 @@
+th click='click'
+  = value

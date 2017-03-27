@@ -1,0 +1,3 @@
+tr
+  each columns as |column|
+    component '__table/cell' row=row column=column click='cell_click'

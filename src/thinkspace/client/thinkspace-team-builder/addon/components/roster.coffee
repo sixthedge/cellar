@@ -2,6 +2,8 @@ import ember from 'ember'
 import ns    from 'totem/ns'
 import base_component from 'thinkspace-base/components/base'
 
+import student_row from 'thinkspace-team-builder/mixins/rows/student'
+
 export default base_component.extend
 
   # ### Computed Properties
@@ -16,7 +18,49 @@ export default base_component.extend
 
   selected_users: ember.makeArray()
 
+  table_config: [
+    {
+      display:   'Last name'
+      property: 'last_name'
+    },
+    {
+      display:   'First name'
+      property: 'first_name'
+    },
+    {
+      display: 'Team'
+      property: 'computed_title'
+    }
+  ]
+
   # ### Helpers
+  init_base: ->
+    @init_table_data()
+
+
+  generate_dummy_model: ->
+    obj            = {}
+    obj.first_name = Math.random().toString(36).substring(7)
+    obj.last_name  = Math.random().toString(36).substring(7)
+    obj.team_id    = 1
+    obj
+
+  init_table_data: ->
+    users   = @get('users')
+    manager = @get('manager')
+    rows = ember.makeArray()
+
+    ## BULK TEST CASE
+    # for i in [0..1000]
+    #   row = student_row.create(model: @generate_dummy_model(), manager: manager)
+
+    #   rows.pushObject(row)
+    users.forEach (user) =>
+      row = student_row.create(model: user, manager: manager)
+      rows.pushObject(row)
+
+    @set('rows', rows)
+
   goto_teams_edit: (team) ->
     space = @get('manager.space')
     @get_app_route().transitionTo 'edit', space, {queryParams: {team_id: team.id }}

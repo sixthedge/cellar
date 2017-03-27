@@ -1,0 +1,6 @@
+table
+  tr
+    each columns as |column|
+      component '__table/header' column=column click='header_click'
+  each rows as |row|
+    component '__table/row' row=row columns=columns

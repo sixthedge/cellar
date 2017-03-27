@@ -10,12 +10,6 @@ export default base.extend
   abstract: null
   team_set: null
 
-  is_transform: ember.computed 'has_transform', ->
-    if @get('has_transform')
-      return 'TRANSFORM'
-    else
-      return 'SCAFFOLD'
-
   has_transform: ember.computed.reads 'team_set.has_transform'
 
   teams: ember.computed 'has_transform', ->
@@ -56,7 +50,6 @@ export default base.extend
       @tc.query_data(ns.to_p('team_set'), params, options).then (json) =>
         @set('abstract', json)
         resolve(json)
-
 
   save_transform: ->
     new ember.RSVP.Promise (resolve, reject) =>
@@ -102,40 +95,58 @@ export default base.extend
   generate_new_team_id: ->
     ms = new Date().getTime()
 
-    ms_string = ms.toString()
-    ms_string = ms_string.slice(4)
-    console.log('ms_string ', ms_string)
-    ms_string
+    ms_str = ms.toString()
+    ms_str = ms_str.slice(4)
+    console.log('ms_string ', ms_str)
+    parseInt(ms_str)
 
   create_team: (options) ->
-    @generate_transform()
-    title    = options.title                if ember.isPresent(options.title)
-    color    = options.color                if ember.isPresent(options.color)
-    if ember.isPresent(options.user_ids)
-      user_ids = options.user_ids
-    else if ember.isPresent(options.users)
-      console.log('options.users are ', options.users)
-      user_ids = @get_user_ids(options.users)
-      console.log('user_ids are ', user_ids)
+    new ember.RSVP.Promise (resolve, reject) =>
+      @generate_transform()
+      title    = options.title                if ember.isPresent(options.title)
+      color    = options.color                if ember.isPresent(options.color)
+      if ember.isPresent(options.user_ids)
+        user_ids = options.user_ids
+      else if ember.isPresent(options.users)
+        console.log('options.users are ', options.users)
+        user_ids = @get_user_ids(options.users)
+        console.log('user_ids are ', user_ids)
 
-    team          = {}
-    team.id       = @generate_new_team_id()
-    team.title    = title || 'New Team'
-    team.color    = color || 'eeeeee'
-    team.user_ids = ember.makeArray(user_ids) || [] if ember.isPresent(user_ids)
-    team.new      = true
+      team          = {}
+      team.id       = @generate_new_team_id()
+      team.title    = title || 'New Team'
+      team.color    = color || 'eeeeee'
+      team.user_ids = ember.makeArray(user_ids) || [] if ember.isPresent(user_ids)
+      team.new      = true
 
-    @add_team_to_transform(team)
-    team
+      @add_team_to_transform(team).then (saved_team) =>
+        resolve(saved_team)
 
   add_team_to_transform: (team) ->
-    team_set = @get('team_set')
-    transform = team_set.get('transform')
+    new ember.RSVP.Promise (resolve, reject) =>
+      team_set = @get('team_set')
 
-    teams = transform.teams
-    teams.pushObject(team)
+      console.log('team_set is ', team_set)
 
-    console.log('team_set is ', team_set)
+      transform = team_set.get('transform')
 
-    @save_transform().then (saved) =>
-      console.log('[add_team_to_transform] POST SAVE ', saved)
+
+      console.log('transform is currently ', transform)
+      teams = transform.teams
+      teams.pushObject(team)
+
+      console.log('team_set is ', team_set)
+
+      @save_transform().then (saved) =>
+        console.log('[add_team_to_transform] POST SAVE ', saved)
+        resolve(team)
+
+  remove_team_from_transform: (team) ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      team_set = @get('team_set')
+      transform = team_set.get('transform')
+
+      teams = transform.teams
+      teams.removeObject(team)
+      @save_transform().then (saved) =>
+        console.log('[remove_team_from_transform] POST SAVE ', saved)
