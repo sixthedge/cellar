@@ -6,7 +6,7 @@ module Test::Serializer::Controller
     @spaces_controller      = Thinkspace::Common::Api::SpacesController
     @assignments_controller = Thinkspace::Casespace::Api::AssignmentsController
     @phases_controller      = Thinkspace::Casespace::Api::PhasesController
-    @contents_controller    = Thinkspace::Html::Api::ContentsController
+    # @contents_controller    = Thinkspace::Html::Api::ContentsController
 
     def serializer_options; @controller.send :serializer_options; end
     def current_user(user); @controller.instance_variable_set(:@current_user, user); end
