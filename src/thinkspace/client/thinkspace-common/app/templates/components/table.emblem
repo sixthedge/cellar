@@ -1,6 +1,4 @@
-table
-  tr
-    each columns as |column|
-      component '__table/header' column=column click='header_click'
-  each rows as |row|
-    component '__table/row' row=row columns=columns
+if server
+  component '__table/types/server' rows=rows columns=columns data=data
+else
+  component '__table/types/client' rows=rows columns=columns data=data

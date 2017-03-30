@@ -1,2 +1,1 @@
-th click='click'
-  = value
+= value

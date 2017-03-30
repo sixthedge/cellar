@@ -36,16 +36,7 @@ module Thinkspace
 
             def roster(serializer_options)
               serializer_options.include_association :thinkspace_common_space_users, scope: :root
-              serializer_options.include_association :thinkspace_common_user, scope: :thinkspace_common_space_users
-              serializer_options.remove_all_except(
-                :thinkspace_common_space_users,
-                scope: :thinkspace_common_users
-              )
-            end
-
-            def invitations(serializer_options)
-              serializer_options.include_association :thinkspace_common_invitations
-              serializer_options.scope_association :thinkspace_common_invitations, where: {accepted_at: nil}
+              serializer_options.include_association :thinkspace_common_disciplines, scope: :root
             end
 
             def teams(serializer_options)
@@ -61,7 +52,10 @@ module Thinkspace
               #serializer_options.include_association :thinkspace_common_users, scope: :root
             end
 
-            def invite; end
+            def invite(serializer_options)
+              serializer_options.include_association :thinkspace_common_space_users, scope: :root
+            end
+
             def import; end
             def search; end
 

@@ -19,7 +19,7 @@ each teams as |team|
 /       each users as |user|
 /         component 'roster/student' model=user select='select_user' deselect='deselect_user' selected_users=selected_users
 
-component '__table' rows=rows columns=table_config
+component '__table' rows=rows columns=columns
 
 
 link-to 'builder' model

@@ -1,5 +1,5 @@
 import ember            from 'ember'
-import pagination_array from 'totem-application/pagination/array'
+import pagination_array from 'totem-application/pagination/arrays/server'
 
 export default ember.Mixin.create
 

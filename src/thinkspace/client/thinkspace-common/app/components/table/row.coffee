@@ -1,11 +1,4 @@
 import ember from 'ember'
-import base  from 'thinkspace-base/components/base'
+import row   from 'thinkspace-common/components/table/row'
 
-export default base.extend
-  tagName: ''
-
-  row: null
-
-  actions:
-    cell_click: (cell) ->
-      console.log('cell_click fired with cell ', cell)
+export default row.extend()

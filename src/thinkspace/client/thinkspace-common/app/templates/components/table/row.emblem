@@ -1,3 +1,6 @@
-tr
-  each columns as |column|
-    component '__table/cell' row=row column=column click='cell_click'
+each columns as |column|
+  if column.component
+    component column.component row=row column=column c_table=c_table c_row=this
+  else
+    component '__table/cell' row=row column=column c_table=c_table c_row=this
+    

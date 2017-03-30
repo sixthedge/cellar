@@ -5,13 +5,13 @@ module Thinkspace
       include AASM
 
       aasm column: :state do
-        state :inactive, initial: true
-        state :active
-        event :activate do transitions to: :active end
-        event :deactivate do transitions to: :inactive end
+        state :neutral, initial: true
+        state :default
+        event :make_default do transitions to: :default end
+        event :undefault do transitions to: :neutral end
       end
 
-      validates_uniqueness_of :state, scope: :space_id, if: :active? # only 1 activate team_set per space
+      validates_uniqueness_of :state, scope: :space_id, if: :default? # only 1 default team_set per space
 
       # ### Serialized Attributes
       def metadata(scope); get_metadata(scope); end
@@ -121,9 +121,10 @@ module Thinkspace
       end
 
       def notify_team_set_modified
-        delta = Thinkspace::Team::Deltas::TeamSet.new(self).process
-        ids   = delta.get_changed_delta_teams.map(&:id)
-        Thinkspace::Team::TeamMailer.delay.notify_team_has_changed
+        # TODO: Implement
+        # delta = Thinkspace::Team::Deltas::TeamSet.new(self).process
+        # ids   = delta.get_changed_delta_teams.map(&:id)
+        # Thinkspace::Team::TeamMailer.delay.notify_team_has_changed
       end
 
       # ###

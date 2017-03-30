@@ -32,8 +32,8 @@ export default base.extend
     new ember.RSVP.Promise (resolve, reject) =>
       space = @get('space')
       resolve() unless ember.isPresent(space)
-      space.get_team_sets().then (team_sets) =>
-        team_set = team_sets.get('firstObject')
+      space.get_default_team_set().then (team_set) =>
+        console.log "TS IS:", team_set
         resolve() unless ember.isPresent(team_set)
         @set('team_set', team_set)
         resolve(team_set)

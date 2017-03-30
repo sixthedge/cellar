@@ -1,6 +1,16 @@
 module Thinkspace; module PeerAssessment; module Reconcilers
   class TeamSet
 
+    # ### Thinkspace::PeerAssessment::Reconcilers::TeamSet
+    # ----------------------------------------
+    #
+    # The primary function of this object is to:
+    # - generate a new team_set and associated teams based on the transform of the provided team_set
+    # - make the new team_set the default team_set
+    # - re-assign any current or upcoming assignments to use the new default team_set
+    # - reconcile the new team_set with the current and upcoming assignments
+
+
     attr_reader :team_set, :options, :assessment, :assignment, :delta, :team_sets, :team_sets_by_team_id, :review_sets_by_team_set_id
 
     # ### Initialization
@@ -29,6 +39,7 @@ module Thinkspace; module PeerAssessment; module Reconcilers
       process_moves
       reassign_team_sets
       reset_quantitative_data
+      raise 'IF WE GOT TO HERE ITS ALL GOOD m8'
     end
 
     # We implement notify as a public method to be called by the creator of the reconciler in order to avoid potentially multiple
@@ -57,7 +68,7 @@ module Thinkspace; module PeerAssessment; module Reconcilers
     # Processes the changes being made, and modifies the peer assessment team_sets, review_sets, and reviews accordingly
     # => 3*t*m queries, where t is the number of users per team and m is the number of moves
     def process_moves
-      @moves.each do |move| process_move(move) end
+      @delta[:moves].each do |move| process_move(move) end
     end
 
     def process_move(move)
@@ -72,8 +83,9 @@ module Thinkspace; module PeerAssessment; module Reconcilers
       to_team_set   = get_team_set_by_team_id(move[:to])
       to_team       = get_delta_team_by_id(move[:to])
       review_set    = get_review_set_for_ownerable(from_team_set.id, move[:id])
-      review_set    = review_set_class.create(ownerable_id: move[:id], ownerable_type: user_class.name, team_set_id: to_team_set.id) unless review_set.present?
-      if move[:to].present?
+      review_set    = review_set_class.create(ownerable_id: move[:id], ownerable_type: user_class.name, team_set_id: to_team_set.id) unless (review_set.present? && to_team_set.present?)
+      return unless review_set.present?
+      if move[:to].present? && to_team_set.present?
         review_set.team_set_id = to_team_set.id
         review_set.save
         review_set.thinkspace_peer_assessment_reviews.destroy_all
@@ -91,10 +103,11 @@ module Thinkspace; module PeerAssessment; module Reconcilers
       team_id  = move[:from]
       team     = get_delta_team_by_id(team_id)
       team_set = get_team_set_by_team_id(team_id)
-      team[:total].each do |id|
+      return unless team_set.present?
+      team[:original].each do |id|
         review_set = get_review_set_for_ownerable(team_set.id, id)
-        review     = review_class.find_by(reviewable_id: move[:id], reviewable_type: user_class.name, review_set_id: review_set.id)
-        review.destroy
+        review     = review_class.find_by(reviewable_id: move[:id], reviewable_type: user_class.name, review_set_id: review_set.id) if review_set.present?
+        review.destroy if review.present?
       end
     end
 
@@ -103,11 +116,12 @@ module Thinkspace; module PeerAssessment; module Reconcilers
       return unless move[:to]
       team_id  = move[:to]
       team     = get_delta_team_by_id(team_id)
+      return if team[:new] # new teams will be setup by create_reviews
       team_set = get_team_set_by_team_id(team_id)
-
+      return unless team_set.present?
       team[:total].each do |id|
         review_set = get_review_set_for_ownerable(team_set.id, id)
-        review_class.create(reviewable_id: move[:id], reviewable_type: user_class.name, review_set_id: review_set.id)
+        review_class.create(reviewable_id: move[:id], reviewable_type: user_class.name, review_set_id: review_set.id) if review_set.present?
       end
     end
 
@@ -128,8 +142,8 @@ module Thinkspace; module PeerAssessment; module Reconcilers
 
     # ### Helpers
     def get_team_set_by_team_id(id); @team_sets_by_team_id[id]; end
-    def get_review_set_for_ownerable(team_set_id, ownerable_id); @review_sets_by_team_set_id[team_set_id].select { |rs| rs.ownerable_id == ownerable_id }; end
-    def get_delta_team_by_id(id); @delta[:teams].select { |t| t['id'] == id }; end
+    def get_review_set_for_ownerable(team_set_id, ownerable_id); @review_sets_by_team_set_id[team_set_id].find { |rs| rs.ownerable_id == ownerable_id }; end
+    def get_delta_team_by_id(id); @delta[:teams].find { |t| t[:id] == id }; end
 
 
   end
