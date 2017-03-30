@@ -90,7 +90,10 @@ module Thinkspace
         thinkspace_team_teams.where.not(state: Thinkspace::Team::Team.state_locked)
       end
 
-      def explode(options={}); Thinkspace::Team::Exploders::TeamSet.new(self, options).process; end
+      def explode(options={}); 
+        return self unless self.transform.present?
+        Thinkspace::Team::Exploders::TeamSet.new(self, options).process
+      end
 
       def reconcile(delta)
         space            = get_space
@@ -125,6 +128,20 @@ module Thinkspace
         # delta = Thinkspace::Team::Deltas::TeamSet.new(self).process
         # ids   = delta.get_changed_delta_teams.map(&:id)
         # Thinkspace::Team::TeamMailer.delay.notify_team_has_changed
+      end
+
+      def generate_scaffold
+        data = { teams: Array.new }
+        thinkspace_team_teams.each do |team|
+          data[:teams] << {
+            id:    team.id,
+            title: team.title,
+            color: team.color,
+            user_ids: team.thinkspace_common_users.pluck(:id)
+          }
+        end
+        self.scaffold = data
+        self.save
       end
 
       # ###

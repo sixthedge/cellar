@@ -24,6 +24,7 @@ module Thinkspace; module Team; module Exploders
 
     # ### Process
     def process
+      return unless @transform.present?
       ActiveRecord::Base.transaction do
         create_team_set
         create_teams

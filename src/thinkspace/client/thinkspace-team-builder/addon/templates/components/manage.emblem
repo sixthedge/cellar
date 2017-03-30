@@ -1,7 +1,5 @@
 if all_data_loaded
 
-  h1 THIS IS THE MANAGE ROUTE
-
   each teams as |team|
     component 'manage/team' model=team space=model abstract=abstract
 
@@ -18,6 +16,8 @@ if all_data_loaded
   br
   br
   br
+
+  component '__confirmation/modal' modal_partial='components/manage/modals/save/modal' modal_reveal_partial='components/manage/modals/save/action' assignments=manager.space.active_assignments modal_reveal_anchor_class_names='btn btn--primary' confirm='save' class='btn__component'
 
   ul
     each selected_users as |user|

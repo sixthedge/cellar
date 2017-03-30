@@ -1,0 +1,9 @@
+| Unassigned Students
+
+div{action 'add_selected'} class={:btn :btn--primary has_selected::btn--disabled}
+  | Add selected
+
+.btn.btn-small{action 'cancel'}
+  | Cancel
+
+component '__table' columns=columns rows=students
