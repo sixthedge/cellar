@@ -1,9 +1,10 @@
-table
-  tr
+table.basic-table
+  thead
     each columns as |column|
       component '__table/header' column=column c_table=this
-  each rows as |row|
-    component '__table/row' row=row columns=columns c_table=this
+  tbody
+    each rows as |row|
+      component '__table/row' row=row columns=columns c_table=this
 
 if rows.is_paginated
   component '__table/pagination' rows=rows c_table=this
