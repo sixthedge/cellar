@@ -23,6 +23,7 @@ class ThinkspaceCommon < ::Totem::Settings.authorization.platforms.thinkspace.ca
     can [:read], Thinkspace::Common::SpaceType
     can [:read], Thinkspace::Common::Configuration
     can [:read], Thinkspace::Common::Component
+    can [:read], Thinkspace::Common::Color
   end
 
   def spaces

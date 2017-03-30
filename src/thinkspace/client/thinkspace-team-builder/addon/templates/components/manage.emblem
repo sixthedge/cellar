@@ -1,7 +1,5 @@
 if all_data_loaded
 
-  h1 THIS IS THE MANAGE ROUTE
-
   each teams as |team|
     component 'manage/team' model=team space=model abstract=abstract
 

@@ -1,0 +1,8 @@
+div{action 'add_members'} class={:btn :btn-default adding_members:btn--disabled}
+  | Add Members
+
+if has_selected
+  .btn.btn-default{action 'remove_members'}
+    | Remove selected
+
+component '__table' columns=columns rows=students

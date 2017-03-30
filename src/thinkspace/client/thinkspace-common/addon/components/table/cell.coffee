@@ -24,4 +24,3 @@ export default base.extend
         row:    @get('row')
         column: @get('column')
     @get_table().click_cell(options)
-    

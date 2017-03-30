@@ -11,20 +11,28 @@ if has_team_id
   h5 Team color
   h6 Helps distinguish the teams
   // Dropdown with color selections here
+  component '__color_picker' edit=false model=team select='select_color'
 
-  component '__table' columns=table_config rows=rows
+  h5 Team members
+  //component '__table' columns=columns rows=rows
+
+  component '__table' columns=columns rows=rows delete_row='delete_row'
+
+  .btn.btn-small.btn-default{action 'finalize_team'}
+    | Create Team
+  .btn.btn-small{action 'cancel'}
+    | Cancel
 
 else
-  if has_selected_users
-    | Selected Users!
 
+  component 'helpers/user_search' value=search_field results=results search_results='search_results' select='select_user' space=model
+
+  if has_selected_users
     .btn.btn-small{action 'create_team'}
       | Create team with selected
 
     .btn.btn-small
       | Add to existing team
-
-  component 'helpers/user_search' value=search_field results=results search_results='search_results' select='select_user' space=model
 
   br
   br
@@ -34,11 +42,6 @@ else
   ul
     each selected_users as |user|
       li = user.first_name
-
-.btn.btn-small.btn-default{action 'create_team'}
-  | Create Team
-.btn.btn-small{action 'cancel'}
-  | Cancel
 
 link-to 'edit' model
   | edit

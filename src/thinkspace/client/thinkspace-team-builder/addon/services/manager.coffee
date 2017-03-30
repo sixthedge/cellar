@@ -3,8 +3,9 @@ import base           from 'thinkspace-base/services/base'
 import totem_messages from 'totem-messages/messages'
 import ns             from 'totem/ns'
 import util           from 'totem/util'
+import arr_helpers    from 'thinkspace-common/mixins/helpers/common/array'
 
-export default base.extend
+export default base.extend arr_helpers,
 
   space:    null
   abstract: null
@@ -26,7 +27,21 @@ export default base.extend
       resolve() unless ember.isPresent(space)
       @init_team_set().then (team_set) =>
         @init_abstract().then (abstract) =>
+          @reconcile_assigned_users()
           resolve()
+
+  reconcile_assigned_users: ->
+    abstract = @get('abstract')
+    users    = abstract.users
+    teams    = abstract.teams
+
+    teams.forEach (team) =>
+      user_ids   = team.user_ids
+      unless ember.isEmpty(user_ids)
+        team_users = users.filter (user) -> user_ids.contains(parseInt(user.id))
+        unless ember.isEmpty(team_users)
+          team_users.forEach (user) =>
+            user.team_id = team.id
 
   init_team_set: ->
     new ember.RSVP.Promise (resolve, reject) =>
@@ -93,8 +108,7 @@ export default base.extend
   get_user_ids: (users) -> users.map (user) -> parseInt(user.id)
 
   generate_new_team_id: ->
-    ms = new Date().getTime()
-
+    ms     = new Date().getTime()
     ms_str = ms.toString()
     ms_str = ms_str.slice(4)
     console.log('ms_string ', ms_str)
@@ -120,33 +134,41 @@ export default base.extend
       team.new      = true
 
       @add_team_to_transform(team).then (saved_team) =>
+        #@add_users_to_transform(team).then =>
         resolve(saved_team)
+
+  add_users_to_transform: (team) ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      abstract  = @get('abstract')
+      team_set  = @get('team_set')
+      transform = team_set.get('transform')
+      transform.users = [] unless ember.isPresent(transform.users)
+
+      users = @where_in(abstract.users, 'id', team.user_ids)
+
+      users.forEach (user) =>
+        user.team_id = team.id
+        transform.users.pushObject(user)
+
+      @save_transform().then (saved) =>
+        console.log('[ADD USERS TO TRANSFORM] ', saved)
+        resolve()
 
   add_team_to_transform: (team) ->
     new ember.RSVP.Promise (resolve, reject) =>
-      team_set = @get('team_set')
-
-      console.log('team_set is ', team_set)
-
+      team_set  = @get('team_set')
       transform = team_set.get('transform')
-
-
-      console.log('transform is currently ', transform)
-      teams = transform.teams
+      teams     = transform.teams
       teams.pushObject(team)
-
-      console.log('team_set is ', team_set)
-
       @save_transform().then (saved) =>
         console.log('[add_team_to_transform] POST SAVE ', saved)
         resolve(team)
 
   remove_team_from_transform: (team) ->
     new ember.RSVP.Promise (resolve, reject) =>
-      team_set = @get('team_set')
-      transform = team_set.get('transform')
-
-      teams = transform.teams
-      teams.removeObject(team)
+      teams = @get('teams')
+      teams.removeObject(team) if teams.contains(team)
       @save_transform().then (saved) =>
+        @reconcile_assigned_users()
+        resolve()
         console.log('[remove_team_from_transform] POST SAVE ', saved)
