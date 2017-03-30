@@ -24,11 +24,16 @@ def path_to_module(path)
   mod
 end
 
-def require_test_helper_files(dir)
+def require_test_helper_files(dir, opts={})
   path_to_module("test/#{dir.to_s.gsub('../','')}")
-  helper_files = Dir.glob(File.expand_path("../#{dir}/**/*.rb", __FILE__))
+  if opts[:engine]
+    helper_files = Dir.glob(File.expand_path("../../../../#{opts[:engine]}/test/helpers/#{dir}/**/*.rb", __FILE__))
+  else
+    helper_files = Dir.glob(File.expand_path("../#{dir}/**/*.rb", __FILE__))
+  end
+  
   helper_files.each do |file|
-     require file
+    require file
   end
 end
 
