@@ -1,4 +1,4 @@
-table.basic-table
+table.basic-table.spacing__margin-bottom--1
   thead
     each columns as |column|
       component '__table/header' column=column c_table=this
