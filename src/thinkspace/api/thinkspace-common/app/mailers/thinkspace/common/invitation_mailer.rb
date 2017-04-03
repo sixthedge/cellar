@@ -1,7 +1,7 @@
 module Thinkspace
   module Common
 
-    class InvitationMailer < ActionMailer::Base
+    class InvitationMailer < Thinkspace::Common::BaseMailer
       include Thinkspace::Common::BaseMailer
       layout 'thinkspace/common/layouts/invitation'
       default from: 'ThinkBot <thinkbot@thinkspace.org>'

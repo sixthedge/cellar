@@ -30,6 +30,11 @@ export default base.extend arr_helpers,
           @reconcile_assigned_users()
           resolve()
 
+  reinitialize: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      @initialize().then =>
+        resolve()
+
   reconcile_assigned_users: ->
     abstract = @get('abstract')
     users    = abstract.users
@@ -47,8 +52,8 @@ export default base.extend arr_helpers,
     new ember.RSVP.Promise (resolve, reject) =>
       space = @get('space')
       resolve() unless ember.isPresent(space)
-      space.get_team_sets().then (team_sets) =>
-        team_set = team_sets.get('firstObject')
+      space.get_default_team_set().then (team_set) =>
+        console.log "TS IS:", team_set
         resolve() unless ember.isPresent(team_set)
         @set('team_set', team_set)
         resolve(team_set)
@@ -79,6 +84,20 @@ export default base.extend arr_helpers,
 
       @tc.query_action(ns.to_p('team_set'), params, options).then (team_set) =>
         resolve(team_set)
+
+  explode: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      team_set = @get('team_set')
+      params =
+        id: team_set.get('id')
+
+      options =
+        action: 'explode'
+        verb: 'PUT'
+
+      @tc.query_action(ns.to_p('team_set'), params, options).then (team_set) =>
+        @reinitialize().then =>
+          resolve(team_set)
 
   generate_transform: ->
     return if @get('has_transform')

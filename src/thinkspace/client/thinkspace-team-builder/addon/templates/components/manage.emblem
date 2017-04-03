@@ -25,6 +25,8 @@ if all_data_loaded
   br
   br
 
+  component '__confirmation/modal' modal_partial='components/manage/modals/save/modal' modal_reveal_partial='components/manage/modals/save/action' assignments=manager.space.active_assignments modal_reveal_anchor_class_names='btn btn--primary' confirm='save' class='btn__component'
+
   ul
     each selected_users as |user|
       li = user.first_name

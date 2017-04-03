@@ -7,6 +7,7 @@ import selectable_mixin from 'thinkspace-common/mixins/table/cells/selectable'
 
 export default base_component.extend selectable_mixin,
 
+  # ### Computed Properties
   manager: ember.inject.service()
 
   teams:     ember.computed.reads 'manager.teams'
@@ -26,9 +27,11 @@ export default base_component.extend selectable_mixin,
       column.create({display: 'Team',       property: 'computed_title'}),
     ]
 
+  # ### Helpers
   init_base: ->
     @init_table_data()
     @set_all_data_loaded()
+
 
   generate_dummy_model: ->
     obj            = {}
@@ -65,6 +68,10 @@ export default base_component.extend selectable_mixin,
   refresh: ->
     @init_table_data()
 
+  goto_teams_edit: (team) ->
+    space = @get('manager.space')
+    @get_app_route().transitionTo 'edit', space, {queryParams: {team_id: team.id }}
+
   actions:
 
     add_to_team: (team) ->
@@ -76,4 +83,10 @@ export default base_component.extend selectable_mixin,
       manager.save_transform().then =>
         #manager.reconcile_assigned_users()
         @refresh()
+
+    create_team: ->
+      manager = @get('manager')
+      ids     = @get('selected_users').mapBy 'id'
+      team    = manager.create_team(user_ids: ids)
+      @goto_teams_edit(team)
 

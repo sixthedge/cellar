@@ -79,38 +79,21 @@ module Thinkspace
       def process_imported_user(user, sender, role='read')
         persisted_user = user_class.find_by(email: user.email)
         if persisted_user.present?
+          persisted_user.refresh_activation unless persisted_user.is_activated?
           space_user = space_user_class.find_by(space_id: self.id, user_id: persisted_user.id)
           unless space_user.present?
             space_user = space_user_class.create(space_id: self.id, user_id: persisted_user.id, role: role)
             space_user.activate!
             if persisted_user.active? then space_user.notify_added_to_space(sender) else space_user.notify_invited_to_space(sender) end
           end
+          persisted_user
         else
           if user.save
             space_user = space_user_class.create(space_id: self.id, user_id: user.id, role: role)
             space_user.activate!
             space_user.notify_invited_to_space(sender)
           end
-        end
-      end
-
-      def process_invitation(invitation, auto=false)
-        user        = invitation.thinkspace_common_user
-        raise "Cannot process an invitation without a valid user. [#{invitation.inspect}]" unless user.present?
-        space_users = self.thinkspace_common_space_users
-        user_ids    = space_users.pluck(:user_id)
-        if user_ids.include?(user.id)
-          return true
-        else
-          role = invitation.role
-          raise "Cannot process an invitation without a role. [#{invitation.inspect}]" unless role.present?
-          space_user = Thinkspace::Common::SpaceUser.create(user_id: user.id, role: role, space_id: self.id)
-          if space_user.present?
-            space_user.notify_added_to_space(Thinkspace::Common::User.find(invitation.sender_id)) if auto
-            true
-          else
-            false
-          end
+          user
         end
       end
 

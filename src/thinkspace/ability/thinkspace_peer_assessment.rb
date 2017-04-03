@@ -6,7 +6,6 @@ class ThinkspacePeerAssessment < ::Totem::Settings.authorization.platforms.think
   private
 
   def peer_assessment
-    return unless ns_exists?('Thinkspace::PeerAssessment')
     assessment          = Thinkspace::PeerAssessment::Assessment
     review_set          = Thinkspace::PeerAssessment::ReviewSet
     team_set            = Thinkspace::PeerAssessment::TeamSet

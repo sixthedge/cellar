@@ -49,6 +49,11 @@ module Thinkspace
 
       def in_progress?; thinkspace_peer_assessment_reviews.where.not(value: nil).count > 0; end
 
+      def reset_quantitative_data
+        thinkspace_peer_assessment_reviews.each { |review| review.reset_quantitative_data }
+        unlock_phase_for_ownerable
+      end
+
       # def approve_reviews
       #   thinkspace_peer_assessment_reviews.each { |review| review.approve! if review.may_approve? }
       # end

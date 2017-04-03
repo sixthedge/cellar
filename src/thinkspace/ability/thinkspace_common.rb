@@ -27,16 +27,12 @@ class ThinkspaceCommon < ::Totem::Settings.authorization.platforms.thinkspace.ca
   end
 
   def spaces
-    space      = Thinkspace::Common::Space
-    invitation = Thinkspace::Common::Invitation
+    space = Thinkspace::Common::Space
     can :read, space, read_space
     can [:create], space
-    can [:fetch_status], invitation, {invitable_type: space.name, invitable_id: read_space_ids}
     return unless admin?
     can :read, space, admin_space
     can [:update, :clone, :import, :invite, :roster, :invitations, :teams, :team_sets, :search], space, admin_space
-    can [:read, :update, :destroy, :refresh, :resend], invitation, {invitable_type: space.name, invitable_id: admin_space_ids}
-    can [:create], invitation
   end
 
   def space_users

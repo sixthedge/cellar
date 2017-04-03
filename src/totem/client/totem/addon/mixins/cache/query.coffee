@@ -117,11 +117,10 @@ export default ember.Mixin.create
 
   get_data_records_for_ids: (type, ids) ->
     return [] if ember.isBlank(ids) or ember.isBlank(type)
-    store_records = @store.peekAll(type)
-    records       = []
-    # Doing this rather than a store filter to retain order for server-sdie sorts.
+    records = []
+    # Doing this rather than a store filter to retain order for server-side sorts.
     ids.forEach (id) =>
-      record = store_records.findBy('id', id)
+      record = @peek_record(type, id)
       records.pushObject(record)
     records
 
