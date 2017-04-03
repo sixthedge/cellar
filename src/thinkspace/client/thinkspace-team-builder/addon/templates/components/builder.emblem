@@ -18,7 +18,7 @@ if has_team_id
 
   component '__table' columns=columns rows=rows delete_row='delete_row'
 
-  .btn.btn-small.btn-default{action 'finalize_team'}
+  .btn.btn-small.btn--primary{action 'finalize_team'}
     | Create Team
   .btn.btn-small{action 'cancel'}
     | Cancel
@@ -31,7 +31,7 @@ else
     .btn.btn-small{action 'create_team'}
       | Create team with selected
 
-    .btn.btn-small
+    .btn.btn-small.btn--disabled
       | Add to existing team
 
   br

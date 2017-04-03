@@ -1,5 +1,13 @@
 if all_data_loaded
 
+  = link-to 'builder' model (query-params team_id=null)
+    .btn.btn-small.btn--primary
+      | Team Builder
+
+  .btn.btn-small
+    | Import file
+
+
   each teams as |team|
     component 'manage/team' model=team space=model abstract=abstract
 
@@ -20,12 +28,6 @@ if all_data_loaded
   ul
     each selected_users as |user|
       li = user.first_name
-
-  link-to 'builder' model (query-params team_id=null)
-    | builder
-
-  link-to 'edit' model
-    | edit
 
   link-to 'roster' model
     | roster

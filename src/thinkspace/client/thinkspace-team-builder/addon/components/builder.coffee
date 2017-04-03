@@ -185,7 +185,7 @@ export default base_component.extend arr_helpers,
 
     cancel: ->
       @get('manager').remove_team_from_transform(@get('team')).then =>
-        @get_app_route().transitionTo('manager')
+        @get_app_route().transitionTo(ns.to_r('team_builder', 'manage'))
 
     remove_user: (user) ->
       team    = @get('team')

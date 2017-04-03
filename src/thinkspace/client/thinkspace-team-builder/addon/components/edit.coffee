@@ -16,7 +16,7 @@ export default base_component.extend arr_helpers,
   abstract:  ember.computed.reads 'manager.abstract'
   transform: ember.computed.reads 'team_set.transform'
 
-  adding_members:            false
+  adding_members: false
 
   ## Arrays of user rows that 
   selected_unassigned_user_rows: null
@@ -24,6 +24,7 @@ export default base_component.extend arr_helpers,
 
   init_base: ->
     @init_team()
+    @init_team_image()
     @init_team_users()
     @init_unassigned_users()
     @init_table_data()
@@ -53,6 +54,12 @@ export default base_component.extend arr_helpers,
     team    = teams.findBy('id', parseInt(team_id))
     @set('team', team)
 
+  ## Used to allow us to revert to the team's original state if user cancels edit
+  init_team_image: ->
+    team       = @get('team')
+    team_image = JSON.parse(JSON.stringify(team))
+    @set('team_state', team_image)
+
   init_team_users: ->
     team     = @get('team')
     abstract = @get('abstract')
@@ -70,6 +77,13 @@ export default base_component.extend arr_helpers,
     @init_unassigned_users()
     @init_table_data()
 
+  refresh_table_data: ->
+    assigned   = @get('assigned_table')
+    unassigned = @get('unassigned_table')
+    assigned.set_rows(@get('team_rows'))
+    if ember.isPresent(unassigned)
+      unassigned.set_rows(@get('unassigned_rows'))
+
   process_add_selected_users: ->
     manager   = @get('manager')
     team      = @get('team')
@@ -83,6 +97,7 @@ export default base_component.extend arr_helpers,
     manager.save_transform().then =>
       @reset_selected_rows('unassigned')
       @refresh()
+      @refresh_table_data()
 
   process_remove_selected_users: ->
     manager   = @get('manager')
@@ -97,6 +112,7 @@ export default base_component.extend arr_helpers,
     manager.save_transform().then =>
       @reset_selected_rows('assigned')
       @refresh()
+      @refresh_table_data()
 
   set_adding_members: -> @set('adding_members', true)
 
@@ -105,6 +121,13 @@ export default base_component.extend arr_helpers,
     @set('adding_members', false)
 
   reset_selected_rows: (type) -> @set("selected_#{type}_user_rows", ember.makeArray())
+
+  revert_team: -> 
+    new ember.RSVP.Promise (resolve, reject) =>
+      manager = @get('manager')
+      manager.revert_team(@get('team.id'), @get('team_state'))
+      manager.save_transform().then =>
+        resolve()
 
   actions:
     add_user: (user) ->
@@ -122,17 +145,6 @@ export default base_component.extend arr_helpers,
     save: ->
       @get('manager').save_transform().then =>
         @get_app_route().transitionTo(ns.to_r('team_builder', 'manage'))
-
-    # explode: ->
-    #   params =
-    #     id: @get('team_set.id')
-
-    #   options =
-    #     action: 'explode'
-    #     verb:   'PUT'
-
-    #   @tc.query_action(ns.to_p('team_set'), params, options).then (new_dawn) =>
-    #     console.log('A NEW DAY DAWNS ', new_dawn)
 
     select_color: (color) ->
       team = @get('team')
@@ -156,6 +168,12 @@ export default base_component.extend arr_helpers,
         selected.pushObject(row)
       @set('selected_unassigned_user_rows', selected)
 
+    register_assigned: (c_table) ->
+      @set('assigned_table', c_table)
+
+    register_unassigned: (c_table) ->
+      @set('unassigned_table', c_table)
+
     set_add_members: ->
       @set_adding_members()
       false
@@ -170,4 +188,5 @@ export default base_component.extend arr_helpers,
       @process_remove_selected_users()
 
     cancel: ->
-      console.log('calling cancel!!!')
+      @revert_team().then =>
+        @get_app_route().transitionTo(ns.to_r('team_builder', 'manage'))

@@ -96,6 +96,7 @@ export default base.extend arr_helpers,
 
   add_to_team: (team_id, user) ->
     @generate_transform()
+    @remove_from_team(user.team_id, user) if user.team_id != team_id and ember.isPresent(user.team_id)
     team = @get_team_by_id(team_id)
     team.user_ids.pushObject(user.id)
     ember.set user, 'team_id', team.id
@@ -105,13 +106,21 @@ export default base.extend arr_helpers,
     team  = teams.findBy 'id', id
     team
 
+  revert_team: (team_id, image) ->
+    teams = @get('teams')
+    team  = teams.findBy 'id', team_id
+
+    ember.set(team, 'title', image.title)
+    ember.set(team, 'color', image.color) 
+    ember.set(team, 'user_ids', image.user_ids)
+    team
+
   get_user_ids: (users) -> users.map (user) -> parseInt(user.id)
 
   generate_new_team_id: ->
     ms     = new Date().getTime()
     ms_str = ms.toString()
     ms_str = ms_str.slice(4)
-    console.log('ms_string ', ms_str)
     parseInt(ms_str)
 
   create_team: (options) ->
@@ -122,9 +131,7 @@ export default base.extend arr_helpers,
       if ember.isPresent(options.user_ids)
         user_ids = options.user_ids
       else if ember.isPresent(options.users)
-        console.log('options.users are ', options.users)
         user_ids = @get_user_ids(options.users)
-        console.log('user_ids are ', user_ids)
 
       team          = {}
       team.id       = @generate_new_team_id()
@@ -151,7 +158,6 @@ export default base.extend arr_helpers,
         transform.users.pushObject(user)
 
       @save_transform().then (saved) =>
-        console.log('[ADD USERS TO TRANSFORM] ', saved)
         resolve()
 
   add_team_to_transform: (team) ->
@@ -161,7 +167,6 @@ export default base.extend arr_helpers,
       teams     = transform.teams
       teams.pushObject(team)
       @save_transform().then (saved) =>
-        console.log('[add_team_to_transform] POST SAVE ', saved)
         resolve(team)
 
   remove_team_from_transform: (team) ->
@@ -171,4 +176,3 @@ export default base.extend arr_helpers,
       @save_transform().then (saved) =>
         @reconcile_assigned_users()
         resolve()
-        console.log('[remove_team_from_transform] POST SAVE ', saved)

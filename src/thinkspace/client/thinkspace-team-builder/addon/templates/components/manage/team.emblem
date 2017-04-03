@@ -1,5 +1,12 @@
-link-to 'edit' space (query-params team_id=model.id)
-  = model.title
+div
+
+  link-to 'edit' space (query-params team_id=model.id)
+    = model.title
+
+  | #{count} team members
+
+div.right{action 'delete'}
+  | Delete Team
 
 ul
   each user_ids as |user_id|

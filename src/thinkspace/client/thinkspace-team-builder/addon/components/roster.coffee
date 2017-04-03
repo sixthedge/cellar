@@ -17,12 +17,7 @@ export default base_component.extend selectable_mixin,
   empty: ember.computed.empty 'teams'
 
   selected_team: null
-
-  selected_users: ember.makeArray()
-
-  selected_rows_obs: ember.observer 'selected_rows', 'selected_rows.length', ->
-    console.log('selected_rows just changed to ', @get('selected_rows'))
-
+  
   columns: ember.computed 'manager', 'model', ->
     [
       column.create({display: 'Select', component: '__table/cells/selectable', data: {calling: @}}),
@@ -66,22 +61,19 @@ export default base_component.extend selectable_mixin,
     rows = @get_students()
     @set('rows', rows)
 
-  ## Function called by 
-  # select_row: (opts) ->
-
+  ## Needs to be called to ensure that changes to the transform are reflected
+  refresh: ->
+    @init_table_data()
 
   actions:
-
-    select_user: (user) -> 
-      @get('selected_users').pushObject(user) unless @get('selected_users').contains(user)
-
-    deselect_user: (user) -> 
-      @get('selected_users').removeObject(user)
 
     add_to_team: (team) ->
       @set('selected_team', team)
       manager = @get('manager')
-      @get('selected_users').forEach (user) =>
+      @get('selected_rows').forEach (row) =>
+        user = row.get('model')
         manager.add_to_team(team.id, user)
-      manager.save_transform()
+      manager.save_transform().then =>
+        #manager.reconcile_assigned_users()
+        @refresh()
 
