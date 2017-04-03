@@ -1,8 +1,16 @@
-h1 THIS IS THE ROSTER ROUTE
 
-each teams as |team|
-  .btn.btn-primary.btn-small{action 'add_to_team' team}
-    | Add to #{team.title}
+.grid__container.spacing__margin-bottom--4
+  .main-content__section-header
+    h1.text--inline-block Teams
+    .btn-group.is-right
+      button.btn.btn--primary Team Builder
+      button.btn Import File
+
+  each teams as |team|
+    .btn.btn-primary.btn-small{action 'add_to_team' team}
+      | Add to #{team.title}
+
+  component '__table' rows=rows columns=columns
 
 / if empty
 /   h3 aint nobody on your roster
@@ -19,7 +27,7 @@ each teams as |team|
 /       each users as |user|
 /         component 'roster/student' model=user select='select_user' deselect='deselect_user' selected_users=selected_users
 
-component '__table' rows=rows columns=columns
+  
 
 
 link-to 'builder' model
