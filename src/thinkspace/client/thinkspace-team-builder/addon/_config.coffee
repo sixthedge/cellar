@@ -8,6 +8,9 @@ export default {
     mount:           {as: 'thinkspace-team-builder', path: '/spaces/:space_id/people/teams'}
     external_routes: [{login: 'users.sign_in'}, 'spaces.show']
 
+  ns:
+    namespaces: {team_builder: 'thinkspace-team-builder'}
+
   add_engines: [
     'thinkspace-message'
     'thinkspace-message-pubsub'

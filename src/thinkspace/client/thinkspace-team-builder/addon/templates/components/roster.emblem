@@ -1,4 +1,3 @@
-
 .grid__container.spacing__margin-bottom--4
   .main-content__section-header
     h1.text--inline-block Teams
@@ -6,35 +5,16 @@
       button.btn.btn--primary Team Builder
       button.btn Import File
 
-  each teams as |team|
-    .btn.btn-primary.btn-small{action 'add_to_team' team}
-      | Add to #{team.title}
-
+if all_data_loaded
+  component '__dropdown' collection=teams display_property='title' text='Add to existing team' selected=selected_team select_action='add_to_team' action_receiver=this
   component '__table' rows=rows columns=columns
 
-/ if empty
-/   h3 aint nobody on your roster
-/ else
-/   table
-/     thead
-/       tr
-/         th
-/         th Avatar
-/         th Last Name
-/         th First Name
-/         th Team
-/     tbody
-/       each users as |user|
-/         component 'roster/student' model=user select='select_user' deselect='deselect_user' selected_users=selected_users
+  link-to 'builder' model
+    | builder
 
-  
+  link-to 'edit' model
+    | edit
 
+  link-to 'manage' model
+    | manage
 
-link-to 'builder' model
-  | builder
-
-link-to 'edit' model
-  | edit
-
-link-to 'manage' model
-  | manage

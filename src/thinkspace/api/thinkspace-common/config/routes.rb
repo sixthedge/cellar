@@ -69,6 +69,12 @@ Thinkspace::Common::Engine.routes.draw do
           get :latest_for
         end
       end
+
+      resources :colors, only: [:index, :show] do
+        collection do
+          get :select
+        end
+      end
       
       resources :discourse, only: [] do
         post :support, on: :collection

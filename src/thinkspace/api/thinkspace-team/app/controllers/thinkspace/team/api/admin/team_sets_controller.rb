@@ -40,8 +40,8 @@ module Thinkspace
           end
 
           def explode
-            @team_set.explode
-            controller_render(@team_set)
+            title = params[:title] || "Team Set - #{Date.today.to_s}"
+            controller_render @team_set.explode(title: title)
           end
 
           def teams

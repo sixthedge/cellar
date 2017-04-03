@@ -33,6 +33,10 @@ export default base.extend
     sorted = sorted.reverse() if column.get('is_descending')
     @set_rows(sorted)
 
+  delete_row: (row) ->
+    @sendAction('delete_row', row)
+    console.log("maybe this stupid shit will work")
+
   # # Helpers
   # ## Getters/setters
   # Note: This needs to be overriden here because it needs to create a paginated array.
@@ -41,4 +45,7 @@ export default base.extend
       all_content: rows
     @set('rows', array)
 
-  get_rows_all_content: -> @get('rows.all_content')
+  get_rows_all_content: -> 
+    console.log('[get_rows_all_content] rows are ', @get('rows'))
+
+    @get('rows.all_content')

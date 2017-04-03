@@ -1,9 +1,8 @@
 module Thinkspace
   module Common
-    class PasswordResetMailer < ActionMailer::Base
-      include Thinkspace::Common::BaseMailer
+    class PasswordResetMailer < Thinkspace::Common::BaseMailer
       layout 'thinkspace/common/layouts/password'
-      default from: 'ThinkBot <thinkbot@thinkspace.org>'
+      skip_after_action :prevent_delivery, only: [:instructions, :user_not_found]
 
       def instructions(password_reset)
         token      = password_reset.token

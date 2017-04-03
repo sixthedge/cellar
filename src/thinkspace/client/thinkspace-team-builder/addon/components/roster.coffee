@@ -3,9 +3,11 @@ import ns               from 'totem/ns'
 import base_component   from 'thinkspace-base/components/base'
 import student_row      from 'thinkspace-team-builder/mixins/rows/student'
 import column           from 'thinkspace-common/table/column'
+import selectable_mixin from 'thinkspace-common/mixins/table/cells/selectable'
 
-export default base_component.extend
+export default base_component.extend selectable_mixin,
 
+  # ### Computed Properties
   manager: ember.inject.service()
 
   teams:     ember.computed.reads 'manager.teams'
@@ -15,17 +17,21 @@ export default base_component.extend
 
   empty: ember.computed.empty 'teams'
 
-  selected_users: ember.makeArray()
-
-  columns: 
+  selected_team: null
+  
+  columns: ember.computed 'manager', 'model', ->
     [
+      column.create({display: 'Select', component: '__table/cells/selectable', data: {calling: @}}),
       column.create({display: 'Last Name',  property: 'last_name'})
       column.create({display: 'First Name', property: 'first_name'}),
       column.create({display: 'Team',       property: 'computed_title'}),
     ]
 
+  # ### Helpers
   init_base: ->
     @init_table_data()
+    @set_all_data_loaded()
+
 
   generate_dummy_model: ->
     obj            = {}
@@ -54,21 +60,33 @@ export default base_component.extend
   init_table_data: ->
     users   = @get('users')
     manager = @get('manager')
-    rows    = @get_test_students()
-    # rows = @get_students()
+    #rows    = @get_test_students()
+    rows = @get_students()
     @set('rows', rows)
+
+  ## Needs to be called to ensure that changes to the transform are reflected
+  refresh: ->
+    @init_table_data()
+
+  goto_teams_edit: (team) ->
+    space = @get('manager.space')
+    @get_app_route().transitionTo 'edit', space, {queryParams: {team_id: team.id }}
 
   actions:
 
-    select_user: (user) -> 
-      @get('selected_users').pushObject(user) unless @get('selected_users').contains(user)
-
-    deselect_user: (user) -> 
-      @get('selected_users').removeObject(user)
-
     add_to_team: (team) ->
+      @set('selected_team', team)
       manager = @get('manager')
-      @get('selected_users').forEach (user) =>
+      @get('selected_rows').forEach (row) =>
+        user = row.get('model')
         manager.add_to_team(team.id, user)
-      manager.save_transform()
+      manager.save_transform().then =>
+        #manager.reconcile_assigned_users()
+        @refresh()
+
+    create_team: ->
+      manager = @get('manager')
+      ids     = @get('selected_users').mapBy 'id'
+      team    = manager.create_team(user_ids: ids)
+      @goto_teams_edit(team)
 

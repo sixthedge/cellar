@@ -40,6 +40,10 @@ module Thinkspace
         thinkspace_peer_assessment_review_sets.scope_ignored.each { |review_set| review_set.unignore! if review_set.may_unignore? }
       end
 
+      def reset_quantitative_data
+        thinkspace_peer_assessment_review_sets.each { |review_set| review_set.reset_quantitative_data }
+      end
+
       # def mark_as_sent_review_sets
       #   thinkspace_peer_assessment_review_sets.scope_approved.each { |review_set| review_set.mark_as_sent! if review_set.may_mark_as_sent? }
       # end

@@ -1,6 +1,13 @@
 h1 THIS IS THE EDIT ROUTE
 
 h3 Edit Team
+.btn.btn-small.btn--primary{action 'save'}
+  | Update Team
+
+.btn.btn-small{action 'cancel'}
+  | Cancel
+
+br
 = team.title
 
 h6 Team name
@@ -8,25 +15,13 @@ h6 Team name
 
 h5 Team color
 h6 Helps distinguish the teams
-| TODO
-
+component '__color_picker' color=team.color edit=true select='select_color'
 br
 br
 
-component 'edit/team_users' model=team_users remove='remove_user'
-
-br
-br
-br
-
-component 'edit/unassigned_users' model=unassigned_users add='add_user'
-
-
-.btn.btn-small{action 'save'}
-  | Save
-
-.btn.btn-small{action 'explode'}
-  | Explode
+component 'edit/tables/assigned' register='register_assigned' remove_members='remove_selected_users' selected=selected_assigned_user_rows students=team_rows select='select_assigned' add_members='set_add_members' adding_members=adding_members
+if adding_members
+  component 'edit/tables/unassigned' register='register_unassigned' cancel='cancel_adding_members' selected=selected_unassigned_user_rows add_selected='add_selected_users' students=unassigned_rows select='select_unassigned'
 
 link-to 'builder' model
   | builder

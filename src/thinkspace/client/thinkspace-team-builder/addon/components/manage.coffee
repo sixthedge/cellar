@@ -27,3 +27,7 @@ export default base_component.extend
         @get('selected_users').removeObject(user)
       else
         @get('selected_users').pushObject(user)
+
+    save: ->
+      @get('manager').explode().then =>
+        console.log "explosion complete."

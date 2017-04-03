@@ -32,6 +32,8 @@ module Thinkspace
         end
       end
 
+      def get_user_ids; thinkspace_common_users.pluck(:id); end
+
       # ###
       # ### Helper for scopes to allow ids or records to be passed as parameters.
       # ###
