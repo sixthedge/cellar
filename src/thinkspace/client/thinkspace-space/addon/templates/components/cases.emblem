@@ -3,7 +3,7 @@ if all_data_loaded
     .grid__col--3of4.grid__mobile--full-width
       if model.assignments
         if model.active_assignments
-          h2 Recent Exercises
+          h2.spacing__margin-top--0 Recent Exercises
           ul.tile__list.spacing__margin-bottom--4
             each model.active_assignments as |case|
               component 'case' model=case
