@@ -1,12 +1,5 @@
 if all_data_loaded
+  partial 'components/helpers/builder_header'
+
   component '__dropdown' collection=teams display_property='title' text='Add to existing team' selected=selected_team select_action='add_to_team' action_receiver=this
   component '__table' rows=rows columns=columns
-
-  link-to 'builder' model
-    | builder
-
-  link-to 'edit' model
-    | edit
-
-  link-to 'manage' model
-    | manage
