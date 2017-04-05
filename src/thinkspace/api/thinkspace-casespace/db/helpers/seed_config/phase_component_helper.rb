@@ -5,7 +5,6 @@ def add_casespace_phase_components
       phase_template = @seed.get_association(phase, :casespace, :phase_template)
       @seed.error "Phase id #{phase.id} does not have a phase template."  if phase_template.blank?
       component_hash = get_ordered_phase_template_section_hash(phase_template)
-      p "\n\n COMP HASH: #{component_hash.inspect} \n\n"
       component_hash.each do |section, attrs|
         title            = attrs['title'] || ''
         common_component = find_common_component(title: title)
