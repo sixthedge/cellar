@@ -1,8 +1,7 @@
 module Thinkspace; module PeerAssessment
-  # # review
-  # - Type: **Model**
-  # - Engine: **thinkspace-peer-assessment**
   class Review < ActiveRecord::Base
+    # Thinkspace::PeerAssessment::Review
+    # ---
     totem_associations
     validates :review_set_id, uniqueness: { scope: [:reviewable_type, :reviewable_id] }
 

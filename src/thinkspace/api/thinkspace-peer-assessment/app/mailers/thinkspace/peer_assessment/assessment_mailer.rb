@@ -1,8 +1,7 @@
 module Thinkspace; module PeerAssessment
-  # # assessment
-  # - Type: **Mailer**
-  # - Engine: **thinkspace-peer-assessment**
   class AssessmentMailer < ActionMailer::Base
+    # Thinkspace::PeerAssessment::AssessmentMailer
+    # ---
     default from: 'ThinkBot <thinkbot@thinkspace.org>'
 
     def notify_overview_unlocked(assessment, user)

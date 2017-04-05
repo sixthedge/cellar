@@ -1,8 +1,7 @@
 module Thinkspace; module PeerAssessment; module Api;
-  # # assessment_templates
-  # - Type: **Controller**
-  # - Engine: **thinkspace-peer-assessment**
   class AssessmentTemplatesController < ::Totem::Settings.class.thinkspace.authorization_api_controller
+    # Thinkspace::PeerAssessment::Api::AssessmentTemplatesController
+    # ---
     load_and_authorize_resource class: totem_controller_model_class
     totem_action_serializer_options
 

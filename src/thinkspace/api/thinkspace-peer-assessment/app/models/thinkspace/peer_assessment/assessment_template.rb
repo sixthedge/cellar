@@ -1,8 +1,7 @@
 module Thinkspace; module PeerAssessment
-  # # assessment_template
-  # - Type: **Model**
-  # - Engine: **thinkspace-peer-assessment**
   class AssessmentTemplate < ActiveRecord::Base
+    # Thinkspace::PeerAssessment::AssessmentTemplate
+    # ---
     totem_associations
 
     include AASM

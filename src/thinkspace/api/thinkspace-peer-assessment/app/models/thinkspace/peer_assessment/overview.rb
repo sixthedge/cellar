@@ -1,8 +1,7 @@
 module Thinkspace; module PeerAssessment
-  # # overview
-  # - Type: **Model**
-  # - Engine: **thinkspace-peer-assessment**
   class Overview < ActiveRecord::Base
+    # Thinkspace::PeerAssessment::Overview
+    # ---
     totem_associations
 
     include ::Totem::Settings.module.thinkspace.deep_clone_helper

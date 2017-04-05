@@ -1,8 +1,7 @@
 module Thinkspace; module PeerAssessment; module Concerns; module SerializerOptions; module Admin;
-  # # admin/team_sets
-  # - Type: **Concerns** - **Serializer Options**
-  # - Engine: **thinkspace-peer-assessment**  
   module TeamSets
+    # Thinkspace::PeerAssessment::Concerns::SerializerOptions::Admin::TeamSets
+    # ---
     def approve(serializer_options); state_change(serializer_options); end
     def unapprove(serializer_options); state_change(serializer_options); end
     def approve_all(serializer_options); state_change(serializer_options); end

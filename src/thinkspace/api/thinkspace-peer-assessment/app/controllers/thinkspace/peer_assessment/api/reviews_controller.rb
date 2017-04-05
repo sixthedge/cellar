@@ -1,8 +1,7 @@
 module Thinkspace; module PeerAssessment; module Api;
-  # # reviews
-  # - Type: **Controller**
-  # - Engine: **thinkspace-peer-assessment**
   class ReviewsController < ::Totem::Settings.class.thinkspace.authorization_api_controller
+    # Thinkspace::PeerAssessment::Api::ReviewsController
+    # ---
     load_and_authorize_resource class: totem_controller_model_class
     totem_action_authorize! allow_blank_associations: { create: [:review_set_id] }
     totem_action_serializer_options

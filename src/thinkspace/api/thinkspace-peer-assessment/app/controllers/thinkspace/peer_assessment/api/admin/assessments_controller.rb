@@ -1,8 +1,7 @@
 module Thinkspace; module PeerAssessmentl; module Api; module Admin;
-  # # admin/assessments
-  # - Type: **Controller**
-  # - Engine: **thinkspace-peer-assessment**
   class AssessmentsController < ::Totem::Settings.class.thinkspace.authorization_api_controller
+    # Thinkspace::PeerAssessment::Api::Admin::AssessmentsController
+    # ---
     load_and_authorize_resource class: totem_controller_model_class
     totem_action_serializer_options
     before_action :authorize_authable

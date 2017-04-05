@@ -1,8 +1,7 @@
 module Thinkspace; module PeerAssessment; module Concerns; module SerializerOptions; module Admin
-  # # admin/overviews
-  # - Type: **Concerns** - **Serializer Options**
-  # - Engine: **thinkspace-peer-assessment**
   module Overviews
+    # Thinkspace::PeerAssessment::Concerns::SerializerOptions::Admin::Overviews
+    # ---
     def update(serializer_options); end
   end
 end; end; end; end; end

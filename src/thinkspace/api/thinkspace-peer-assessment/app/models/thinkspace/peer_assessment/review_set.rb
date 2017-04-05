@@ -1,8 +1,7 @@
 module Thinkspace; module PeerAssessment
-  # # review_set
-  # - Type: **Model**
-  # - Engine: **thinkspace-peer-assessment**
   class ReviewSet < ActiveRecord::Base
+    # Thinkspace::PeerAssessment::ReviewSet
+    # --
     totem_associations
     
     # ### States

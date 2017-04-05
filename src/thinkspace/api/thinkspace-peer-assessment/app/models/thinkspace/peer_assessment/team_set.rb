@@ -1,8 +1,7 @@
 module Thinkspace; module PeerAssessment
-  # # team_set
-  # - Type: **Model**
-  # - Engine: **thinkspace-peer-assessment**
   class TeamSet < ActiveRecord::Base
+    # Thinkspace::PeerAssessment::TeamSet
+    # --
     totem_associations
 
     # ### States

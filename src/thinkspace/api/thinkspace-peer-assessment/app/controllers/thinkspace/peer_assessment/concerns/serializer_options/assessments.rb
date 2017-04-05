@@ -1,8 +1,7 @@
 module Thinkspace; module PeerAssessment; module Concerns; module SerializerOptions;
-  # # assessments
-  # - Type: **Concerns** - **Serializer Options**
-  # - Engine: **thinkspace-peer-assessment**
   module Assessments
+    # Thinkspace::PeerAssessment::Concerns::SerializerOptions::Assessments
+    # ---
     def show(serializer_options)
       serializer_options.blank_association :thinkspace_peer_assessment_review_sets
     end

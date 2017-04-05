@@ -1,8 +1,7 @@
 module Thinkspace; module PeerAssessment; module Concerns; module SerializerOptions; 
-  # # assessment_templates
-  # - Type: **Concerns** - **Serializer Options**
-  # - Engine: **thinkspace-peer-assessment**
   module AssessmentTemplates
+    # Thinkspace::PeerAssessment::Concerns::SerializerOptions::AsessmentTemplates
+    # ---
     def create(so); end
     def index(so); end
     def show(so); end

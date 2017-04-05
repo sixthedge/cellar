@@ -1,8 +1,7 @@
 module Thinkspace; module PeerAssessment; module Concerns; module SerializerOptions; module Admin;
-  # # admin/reviews
-  # - Type: **Concerns** - **Serializer Options**
-  # - Engine: **thinkspace-peer-assessment**
   module Reviews
+    # Thinkspace::PeerAssessment::Concerns::SerializerOptions::Admin::Reviews
+    # ---
     def approve(serializer_options); state_change(serializer_options); end
     def unapprove(serializer_options); state_change(serializer_options); end
 
