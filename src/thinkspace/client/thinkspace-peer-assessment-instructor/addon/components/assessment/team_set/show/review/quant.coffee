@@ -2,10 +2,17 @@ import ember from 'ember'
 import ns from 'totem/ns'
 import base_component from 'thinkspace-base/components/base'
 
+###
+# # quant.coffee
+- Type: **Component**
+- Package: **thinkspace-peer-assessment-instructor**
+###
 export default base_component.extend
-
-  # ### Properties
+  # ## Properties
+  # ### View Properties
   tagName:    ''
+
+  # ### Internal Properties
   model:      null # JSON item from assessment
   review:     null
   assessment: null
@@ -18,7 +25,7 @@ export default base_component.extend
   has_value:   ember.computed.notEmpty 'value'
   is_not_sent: ember.computed.reads 'review.is_not_sent'
 
-  # ### Initialization
+  # ## Events
   init_base: ->
     review = @get 'review'
     model  = @get 'model'

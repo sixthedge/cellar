@@ -1,6 +1,7 @@
 module Thinkspace; module PeerAssessment; module Creators 
   class Assignment < ::Thinkspace::Casespace::Creators::Base
-
+    # Thinkspace::PeerAssessment::Creators::Assignment
+    # ---
     attr_accessor :assessment
 
     def initialize(params)

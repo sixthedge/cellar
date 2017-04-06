@@ -2,24 +2,27 @@ import ember from 'ember'
 import ns    from 'totem/ns'
 import base_component from 'thinkspace-base/components/base'
 
+###
+# # review.coffee
+- Type: **Component**
+- Package: **thinkspace-peer-assessment-instructor**
+###
 export default base_component.extend
-
-  # ### Initialization
+  # ## Events
   init_base: -> 
     @set 'edit_components', ember.makeArray()
     @init_reviewable()
     @set_all_data_loaded()
 
+  # ## Helpers
   init_reviewable: ->
     reviewable = @get('team_members').findBy 'id', @get('model.reviewable_id').toString()
     @set 'reviewable', reviewable
 
-  # ### Helpers
   get_edit_component_for_id: (id) -> @get('edit_components').findBy 'model_id', id
 
-  # ### Actions
+  # ## Actions
   actions:
-
     register_component: (component) -> @get('edit_components').pushObject(component)
     unregister_component: (component) -> @get('edit_components').removeObject(component)
 

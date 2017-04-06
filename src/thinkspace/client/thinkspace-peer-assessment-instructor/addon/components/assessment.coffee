@@ -2,16 +2,22 @@ import ember from 'ember'
 import ns    from 'totem/ns'
 import base_component from 'thinkspace-base/components/base'
 
+###
+# # assessment.coffee
+- Type: **Component**
+- Package: **thinkspace-peer-assessment-instructor**
+###
 export default base_component.extend
-
-  # ### Properties
+  # ## Properties
+  # ### Internal Properties
   selected_team_set: null
 
-  # ### Intialization
+  # ## Events
   init: ->
     @_super()
     @init_assessment().then => @init_teams().then => @init_team_sets().then => @init_progress_report().then => @set_all_data_loaded()
         
+  # ## Helpers
   init_assessment: ->
     new ember.RSVP.Promise (resolve, reject) =>
       assignment = @get('assignment')
@@ -64,7 +70,6 @@ export default base_component.extend
         @set 'progress_report', progress_report
         resolve()
 
-  # ### Helpers
   get_assessment_query: ->
     query =
       id: @get('model.id')
@@ -81,7 +86,7 @@ export default base_component.extend
   show_approve_modal:  -> @get_approve_modal().foundation('reveal', 'open')
   close_approve_modal: -> @get_approve_modal().foundation('reveal', 'close')
 
-  # ### Actions
+  # ## Actions
   actions:
     show_approve_modal:  -> @show_approve_modal()
     close_approve_modal: -> @close_approve_modal()

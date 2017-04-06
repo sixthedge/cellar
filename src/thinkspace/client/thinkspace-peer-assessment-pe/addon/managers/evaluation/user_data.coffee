@@ -4,13 +4,14 @@ import tc          from 'totem/cache'
 import ta          from 'totem/ds/associations'
 import tm          from 'totem-messages/messages'
 
-
-# ###
-# ### User data helpers
-# ###
+###
+# # user_data.coffee
+- Type: **Mixin*
+- Package: **thinkspace-peer-assessment-pe**
 # Used to initially set the data for the evaluation manager.
-
+###
 export default ember.Mixin.create
+  # ## Helpers
   set_user_data: ->
     @set_team().then => 
       @set_reviewables().then => 

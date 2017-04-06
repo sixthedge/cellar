@@ -5,17 +5,24 @@ import ta          from 'totem/ds/associations'
 import tm          from 'totem-messages/messages'
 import totem_changeset from 'totem/changeset'
 
-# ### Parts
 import reviews     from 'thinkspace-peer-assessment-pe/managers/evaluation/reviews'
 import user_data   from 'thinkspace-peer-assessment-pe/managers/evaluation/user_data'
 import balance     from 'thinkspace-peer-assessment-pe/managers/evaluation/balance'
 import qualitative from 'thinkspace-peer-assessment-pe/managers/evaluation/qualitative'
 
+###
+# # evaluation.coffee
+- Type: **Object**
+- Package: **thinkspace-peer-assessment-pe**
+###
 export default ember.Object.extend reviews, user_data, balance, qualitative,
+  # ## Properties
   # ### Services
+  # - **thinkspace-common** 
+  #   - [thinkspace](http://totem-docs.herokuapp.com/api/cellar/thinkspace/client/thinkspace-common/app/services/thinkspace.html)
   thinkspace: ember.inject.service()
 
-  # ### Properties
+  # ### Internal Properties
   component: null # PhaseComponent that is rendered
   model:     null # peer_assessment/assessment model
 
@@ -36,7 +43,6 @@ export default ember.Object.extend reviews, user_data, balance, qualitative,
 
   confirmation_obs: ember.observer 'is_confirmation', -> @validate()
 
-  # #### Misc computed properties
   phase_settings: ember.computed -> @get('thinkspace').get_phase_settings()
 
   # ### Observers
@@ -44,7 +50,7 @@ export default ember.Object.extend reviews, user_data, balance, qualitative,
     reviewable = @get 'reviewable'
     @set_reviewable_phase_settings() if ember.isPresent(reviewable)
 
-  # ### Events
+  # ## Events
   init: ->
     @_super()
     @totem_scope    = totem_scope
@@ -53,6 +59,7 @@ export default ember.Object.extend reviews, user_data, balance, qualitative,
     @is_debug       = true
     @create_changeset()
 
+  # ## Helpers
   create_changeset: ->
     validations = @init_validations()
     changeset   = totem_changeset.create(@, validations)
@@ -80,7 +87,6 @@ export default ember.Object.extend reviews, user_data, balance, qualitative,
 
     return validations
 
-  # ### Submission
   submit: ->
     @validate().then (valid) =>
       return unless valid
@@ -105,6 +111,5 @@ export default ember.Object.extend reviews, user_data, balance, qualitative,
       changeset.validate().then =>
         resolve(changeset.get('isValid'))
 
-  # ### Helpers
   debug: (message, args...) ->
     console.log "[tbl:evaluation_manager] #{message}", args if @is_debug

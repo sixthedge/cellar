@@ -2,8 +2,13 @@ import ember from 'ember'
 import ns    from 'totem/ns'
 import base_component from 'thinkspace-base/components/base'
 
+###
+# # team_set.coffee
+- Type: **Component**
+- Package: **thinkspace-peer-assessment-instructor**
+###
 export default base_component.extend
-
+  # ## Properties
   # ### Computed Properties
   is_approved:     ember.computed.equal 'model.state', 'approved'
   is_sent:         ember.computed.equal 'model.state', 'sent'
@@ -12,9 +17,8 @@ export default base_component.extend
 
   incomplete_review_sets: ember.computed 'model.review_sets.@each.status', -> @get('progress_report').get_incomplete_review_sets_for_team_set(@get('model'))
 
-  # ### Helpers
+  # ## Helpers
   state_change: (state) ->
-
     model           = @get 'model'
     progress_report = @get 'progress_report'
 
@@ -30,7 +34,7 @@ export default base_component.extend
         progress_report.process_team_sets(team_set)
         progress_report.process_review_sets(team_set, review_sets)
 
-  # ### Actions
+  # ## Actions
   actions:
     toggle_approve: -> if @get('is_approved') then @state_change('unapprove') else @state_change('approve')
     select:         -> @sendAction 'select', @get('model')

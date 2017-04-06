@@ -4,10 +4,11 @@ import tc          from 'totem/cache'
 import ta          from 'totem/ds/associations'
 import tm          from 'totem-messages/messages'
 
-# ###
-# ### Qualitative helpers
-# ###
-
+###
+# # qualitative.coffee
+- Type: **Mixin*
+- Package: **thinkspace-peer-assessment-pe**
+###
 export default ember.Mixin.create
   # ### Properties
   valid_qual_sections: null

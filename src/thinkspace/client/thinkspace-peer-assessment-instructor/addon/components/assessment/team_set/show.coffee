@@ -2,11 +2,17 @@ import ember from 'ember'
 import ns    from 'totem/ns'
 import base_component from 'thinkspace-base/components/base'
 
+###
+# # show.coffee
+- Type: **Component**
+- Package: **thinkspace-peer-assessment-instructor**
+###
 export default base_component.extend
-
+  # ## Properties
+  # ### Computed
   anchor_review_set_id: ember.computed.reads 'anchor_review_set.id'
 
-  # ### Intialization
+  # ## Events
   init_base: ->
     @init_team_set().then =>
       @init_team().then =>
@@ -15,6 +21,7 @@ export default base_component.extend
           @set_all_data_loaded()
           ember.run.scheduleOnce 'afterRender', => @scroll_to_anchor()
 
+  # ## Helpers
   init_team_set: ->
     new ember.RSVP.Promise (resolve, reject) =>
       @tc.find_record(ns.to_p('tbl:team_set'), @get('team_set_data.id')).then (team_set) =>
@@ -42,7 +49,6 @@ export default base_component.extend
     ignored_ownerables = @get('team_members').filter (ownerable) => ownerable_ids.contains(parseInt(ownerable.get('id')))
     @set 'ignored_ownerables', ignored_ownerables
 
-  # ### Helpers
   get_ownerable_for_review_set: (review_set) ->
     @get('team_members').findBy 'id', review_set.get('ownerable_id').toString()
 
@@ -83,7 +89,7 @@ export default base_component.extend
     $('html, body').animate({scrollTop: $anchor.offset().top - top_bar_offset}, scroll_time)
 
 
-  # ### Actions
+  # ## Actions
   actions:
     toggle_approve: -> if @get('model.is_approved') then @state_change('unapprove') else @state_change('approve')
 
