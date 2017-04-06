@@ -33,7 +33,7 @@ select {
   }
   
   &:active {
-    background-color: darken($color-gray-base, 15%);
+    background-color: darken($color-gray-base, 50%);
   }
 
   &:focus {
@@ -46,4 +46,45 @@ select {
 .dropdown__container {
   margin-bottom: 2rem;
 
+}
+
+
+.dropdown__list {
+  list-style-type: none;
+  margin-left:     0;
+  padding:         0;
+  max-width:       $max-width--content;
+  margin:          0;
+}
+
+.dropdown__item {
+  border-bottom:    $border--thin;
+  background-color: white;
+  padding:          0 0.4em;
+  min-height:       2rem;
+  vertical-align:   middle;
+  line-height:      2rem;
+  font-size:        .875rem;
+  cursor:           pointer;
+  border-left:      $border--default;
+  border-right:     $border--default;
+  border-bottom:    $border--thin;
+  transition:       $transition-animation;
+
+  &:first-of-type {
+    border-top: $border--default;
+  }
+  &:last-of-type {
+    border-bottom: $border--default;
+  }
+
+  &:hover, &:focus {
+    background-color: $color-gray-med;
+    color: $color-blue-dark;
+  }
+
+  &.dropdown__item--thick {
+    height: 3rem;
+    line-height: 3rem;
+  }
 }

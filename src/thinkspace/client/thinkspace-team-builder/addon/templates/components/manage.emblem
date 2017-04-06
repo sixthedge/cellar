@@ -1,24 +1,11 @@
 if all_data_loaded
-
-  = link-to 'builder' model (query-params team_id=null)
-    .btn.btn-small.btn--primary
-      | Team Builder
-
-  .btn.btn-small
-    | Import file
-
+  partial 'components/helpers/builder_header'
 
   each teams as |team|
     component 'manage/team' model=team space=model abstract=abstract
 
   component 'helpers/user_search' value=search_field results=results search_results='search_results' select='select_user' space=model
 
-
-  / = input value=search_field
-
-  / ul
-  /   each user_results as |user|
-  /     li = user.first_name
 
   br
   br

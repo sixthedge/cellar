@@ -2,12 +2,12 @@ if edit
   if is_editing
     component '__dropdown' collection=colors display_property='title' text=selected_color.title selected=selected_color select_action='select' action_receiver=this
   else
-    div style="margin-right: 0.5em; display: inline-block; height: 32px; width: 32px; background-color: ##{color}; border-radius: 3px;"
+    .is-left style="margin-right: 0.5em; display: inline-block; height: 32px; width: 32px; background-color: ##{color}; border-radius: 3px;"
 
-    div style='display: inline-block;'
-      div style="color: ##{selected_color.color}"
+    .text__lh--1.text--inline-block
+      .text__font-size--14.text--bold.spacing__margin-bottom--0 style="color: ##{selected_color.color}"
         = selected_color.title
-      a{action 'edit_color'}
+      a.text__font-size--12{action 'edit_color'}
         | Choose different color
 else
   component '__dropdown' collection=colors display_property='title' text=selected_color.title selected=selected_color select_action='select' action_receiver=this

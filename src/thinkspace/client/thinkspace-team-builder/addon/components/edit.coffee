@@ -16,6 +16,8 @@ export default base_component.extend arr_helpers,
   abstract:  ember.computed.reads 'manager.abstract'
   transform: ember.computed.reads 'team_set.transform'
 
+  teams_count: ember.computed.reads 'teams.length'
+
   adding_members: false
 
   ## Arrays of user rows that 

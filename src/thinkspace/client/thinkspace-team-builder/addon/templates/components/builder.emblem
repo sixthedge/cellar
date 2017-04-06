@@ -1,53 +1,56 @@
-h1 Team Builder
+.main-content
+  .main-content__section-header.spacing__margin-bottom--2
+    h1 Team Builder
+    p.text__font-size--14 Quickly build a team by typing in your student's name. You can add multiple by separating with a comma.
 
-h5 Quickly build a team by typing in your student's name. You can add multiple by separating with a comma.
+  if has_team_id
+    .forms__section.spacing__margin-bottom--2
+      h2 New Team
+      .forms__field-wrapper
+        label Team name
+        = input value=team_title placeholder='Name your new team' 
+      .forms__field-wrapper
+        label.spacing__margin-bottom--0 Team color
+        .forms__label-summary Helps distinguish the teams
+        // Dropdown with color selections here
+        component '__color_picker' edit=false model=team select='select_color'
 
-if has_team_id
-  h3 New Team
-  
-  h5 Team name
-  = input value=team_title placeholder='Name your new team'
+    h3 Team members
+    //component '__table' columns=columns rows=rows
 
-  h5 Team color
-  h6 Helps distinguish the teams
-  // Dropdown with color selections here
-  component '__color_picker' edit=false model=team select='select_color'
+    component '__table' columns=columns rows=rows delete_row='delete_row'
 
-  h5 Team members
-  //component '__table' columns=columns rows=rows
+    .btn-group
+      .btn.btn-small.btn--primary{action 'finalize_team'}
+        | Create Team
+      .btn.btn-small{action 'cancel'}
+        | Cancel
 
-  component '__table' columns=columns rows=rows delete_row='delete_row'
+  else
 
-  .btn.btn-small.btn--primary{action 'finalize_team'}
-    | Create Team
-  .btn.btn-small{action 'cancel'}
-    | Cancel
+    component 'helpers/user_search' value=search_field results=results search_results='search_results' select='select_user' space=model 
 
-else
+    if has_selected_users
+      .btn.btn-small{action 'create_team'}
+        | Create team with selected
 
-  component 'helpers/user_search' value=search_field results=results search_results='search_results' select='select_user' space=model
+      .btn.btn-small.btn--disabled
+        | Add to existing team
 
-  if has_selected_users
-    .btn.btn-small{action 'create_team'}
-      | Create team with selected
+    br
+    br
+    br
+    br
+    br
+    ul
+      each selected_users as |user|
+        li = user.first_name
 
-    .btn.btn-small.btn--disabled
-      | Add to existing team
+  link-to 'edit' model
+    | edit
 
-  br
-  br
-  br
-  br
-  br
-  ul
-    each selected_users as |user|
-      li = user.first_name
+  link-to 'manage' model
+    | manage
 
-link-to 'edit' model
-  | edit
-
-link-to 'manage' model
-  | manage
-
-link-to 'roster' model
-  | roster
+  link-to 'roster' model
+    | roster

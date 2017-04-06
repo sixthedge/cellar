@@ -95,6 +95,7 @@
 - Panel-table..........Tile panels with a table header up top.
 - Reveal...............Styles for reveal modals. Mostly foundation overrides.
 - Pagination...........Styles for pagination row under tables.
+- Team-panel...........Panels for team view. 
 */
 
 @import "otbl-css/components.top-bar";
@@ -120,6 +121,7 @@
 @import "otbl-css/components.panel-table";
 @import "otbl-css/_components.reveal";
 @import "otbl-css/_components.pagination";
+@import "otbl-css/_components.team-panel";
 
 /*
 ## HELPERS
