@@ -59,7 +59,7 @@ The main helpers should include at least:
   require_test_helper_files(main-helper-helpers-folder) 
 ```
 
-Example of ability_helper.rb:
+Example of `../test/helpers/ability_helper.rb`:
 
 ```ruby
   require 'casespace_helper'
@@ -68,7 +68,7 @@ Example of ability_helper.rb:
 
 Each test file related to this main helper must include the main helper.
 
-Example of an ability test file:
+Example of an `../test/helpers/ability/*.rb` file:
 
 ```ruby
   require 'ability_helper'

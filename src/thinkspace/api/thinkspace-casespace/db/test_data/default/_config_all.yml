@@ -1,7 +1,7 @@
 include_configs:
   - artifacts
   - gradebook
-  - html
+  # - html
   - indented_lists
   - labs_more
   - path_viewers
