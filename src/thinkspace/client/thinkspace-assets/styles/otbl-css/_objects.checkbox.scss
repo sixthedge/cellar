@@ -1,5 +1,5 @@
 ///*------------------------------------*\
-//    #RADIO-BUTTONS
+//    #Checkbox
 //\*------------------------------------*/
 
 .checkbox__item {
@@ -36,6 +36,10 @@
 
   -moz-appearance:    none;
   -webkit-appearance: none;
+
+  >input {
+    display: none;
+  }
 
   &:hover {
     background-position: 0 -132px;
