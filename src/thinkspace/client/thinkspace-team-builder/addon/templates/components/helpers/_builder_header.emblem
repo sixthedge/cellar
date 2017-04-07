@@ -20,3 +20,10 @@ nav.menu-bar
     li.menu-bar__item
       link-to 'manage' model class="menu-bar__link"
         | Teams view
+
+
+.switch.is-left.spacing__margin-right--2
+  input name='team_view' type='checkbox' 
+  span.switch__label.switch__label--on Students
+  .switch__slider
+  span.switch__label.switch__label--off Teams

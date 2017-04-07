@@ -96,6 +96,7 @@
 - Reveal...............Styles for reveal modals. Mostly foundation overrides.
 - Pagination...........Styles for pagination row under tables.
 - Team-panel...........Panels for team view. 
+- Switch...............Styles for on/off switch. 
 */
 
 @import "otbl-css/components.top-bar";
@@ -122,6 +123,7 @@
 @import "otbl-css/_components.reveal";
 @import "otbl-css/_components.pagination";
 @import "otbl-css/_components.team-panel";
+@import "otbl-css/_components.switch";
 
 /*
 ## HELPERS

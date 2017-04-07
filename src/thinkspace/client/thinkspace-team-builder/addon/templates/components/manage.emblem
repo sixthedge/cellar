@@ -1,22 +1,14 @@
 if all_data_loaded
   partial 'components/helpers/builder_header'
-
-  each teams as |team|
-    component 'manage/team' model=team space=model abstract=abstract
-
   component 'helpers/user_search' value=search_field results=results search_results='search_results' select='select_user' space=model
+  .grid__container--flex.flex__justify--between
+    each teams as |team|
+      component 'manage/team' model=team space=model abstract=abstract class=' grid__col--49 grid__mobile--full-width spacing__margin-bottom--1'
 
-
-  br
-  br
-  br
-  br
+ 
 
   component '__confirmation/modal' modal_partial='components/manage/modals/save/modal' modal_reveal_partial='components/manage/modals/save/action' assignments=manager.space.active_assignments modal_reveal_anchor_class_names='btn btn--primary' confirm='save' class='btn__component'
 
   ul
     each selected_users as |user|
       li = user.first_name
-
-  link-to 'roster' model
-    | roster

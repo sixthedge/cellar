@@ -1,4 +1,4 @@
-.team-panel.grid__col--49.spacing__margin-bottom--1
+.team-panel
   .team-panel__header
     link-to 'edit' space (query-params team_id=model.id) class='team-panel__link'
       .team-panel__name = model.title 
