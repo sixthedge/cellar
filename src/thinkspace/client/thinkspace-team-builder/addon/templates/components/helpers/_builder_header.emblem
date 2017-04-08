@@ -1,9 +1,6 @@
 .main-content__header
-  .breadcrumbs
-    link-to-external 'spaces.show' model class='breadcrumbs__link'
-      | #{model.title} | Manage Teams
   h1.text--inline-block
-    | #{model.title} Default Teams
+    | #{model.title}
 
   .btn-group.is-right
     = link-to 'builder' model (query-params team_id=null)
@@ -12,11 +9,8 @@
     .btn.btn-small
       | Import file
 
-nav.menu-bar
-  ul.menu-bar__list
-    li.menu-bar__item
-      link-to 'roster' model class="menu-bar__link"
-        | Roster view
-    li.menu-bar__item
-      link-to 'manage' model class="menu-bar__link"
-        | Teams view
+  div{action 'toggle_view'}
+    p class={is_roster:text--bold}
+      | Students
+    p class={is_teams:text--bold}
+      | Teams

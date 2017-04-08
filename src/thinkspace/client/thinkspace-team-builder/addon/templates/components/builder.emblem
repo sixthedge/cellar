@@ -42,12 +42,4 @@ else
   ul
     each selected_users as |user|
       li = user.first_name
-
-link-to 'edit' model
-  | edit
-
-link-to 'manage' model
-  | manage
-
-link-to 'roster' model
-  | roster
+      

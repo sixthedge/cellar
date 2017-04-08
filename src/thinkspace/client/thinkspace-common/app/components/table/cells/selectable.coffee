@@ -7,8 +7,6 @@ export default cell.extend
   is_selected: false
 
   click: ->
-    console.log('calling click!!!!!!!!!')
-
     options = opt.create
       components:
         cell: @

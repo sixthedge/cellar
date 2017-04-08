@@ -15,10 +15,13 @@ export default base.extend
       @init_selected_color()
 
   init_selected_color: ->
-    colors = @get('colors')
-    color  = @get('color')
-    selected_color = colors.findBy 'color', color
-    #console.log('setting selected_color ', selected_color)
+    colors         = @get('colors')
+    color          = @get('color')
+    if ember.isPresent(color)
+      selected_color = colors.findBy 'color', color
+    else
+      selected_color = colors.get('firstObject')
+
     @set('selected_color', selected_color)
 
   init_colors: ->

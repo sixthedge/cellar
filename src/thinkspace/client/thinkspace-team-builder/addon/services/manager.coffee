@@ -53,7 +53,6 @@ export default base.extend arr_helpers,
       space = @get('space')
       resolve() unless ember.isPresent(space)
       space.get_default_team_set().then (team_set) =>
-        console.log "TS IS:", team_set
         resolve() unless ember.isPresent(team_set)
         @set('team_set', team_set)
         resolve(team_set)
@@ -158,7 +157,7 @@ export default base.extend arr_helpers,
       team.color    = color || 'eeeeee'
       team.user_ids = ember.makeArray(user_ids) || [] if ember.isPresent(user_ids)
       team.new      = true
-
+ 
       @add_team_to_transform(team).then (saved_team) =>
         #@add_users_to_transform(team).then =>
         resolve(saved_team)

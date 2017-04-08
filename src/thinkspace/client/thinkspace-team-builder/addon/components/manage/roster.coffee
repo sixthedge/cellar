@@ -8,14 +8,16 @@ import selectable_mixin from 'thinkspace-common/mixins/table/cells/selectable'
 export default base_component.extend selectable_mixin,
 
   # ### Computed Properties
-  manager: ember.inject.service()
+  manager:  ember.inject.service()
 
-  teams:     ember.computed.reads 'manager.teams'
-  team_set:  ember.computed.reads 'manager.team_set'
-  abstract:  ember.computed.reads 'manager.abstract'
-  users:     ember.computed.reads 'abstract.users'
+  teams:    ember.computed.reads 'manager.teams'
+  team_set: ember.computed.reads 'manager.team_set'
+  abstract: ember.computed.reads 'manager.abstract'
+  users:    ember.computed.reads 'abstract.users'
 
-  empty: ember.computed.empty 'teams'
+  empty:    ember.computed.empty 'teams'
+
+  has_selected_users: ember.computed.notEmpty 'selected_rows'
 
   selected_team: null
   
@@ -31,7 +33,6 @@ export default base_component.extend selectable_mixin,
   init_base: ->
     @init_table_data()
     @set_all_data_loaded()
-
 
   generate_dummy_model: ->
     obj            = {}
@@ -61,19 +62,28 @@ export default base_component.extend selectable_mixin,
     users   = @get('users')
     manager = @get('manager')
     #rows    = @get_test_students()
-    rows = @get_students()
+    rows    = @get_students()
     @set('rows', rows)
 
   ## Needs to be called to ensure that changes to the transform are reflected
-  refresh: ->
-    @init_table_data()
+  refresh: -> @init_table_data()
 
   goto_teams_edit: (team) ->
     space = @get('manager.space')
     @get_app_route().transitionTo 'edit', space, {queryParams: {team_id: team.id }}
 
-  actions:
+  process_create_team: ->
+    selected_users = @get('selected_rows')
+    manager        = @get('manager')
+    space          = manager.get('space')
 
+    options = {}
+    options.users = selected_users.mapBy 'model'
+
+    manager.create_team(options).then (team) =>
+      @get_app_route().transitionTo(ns.to_r('team_builder', 'builder'), space, {queryParams: {team_id: team.id}})
+
+  actions:
     add_to_team: (team) ->
       @set('selected_team', team)
       manager = @get('manager')
@@ -85,8 +95,10 @@ export default base_component.extend selectable_mixin,
         @refresh()
 
     create_team: ->
-      manager = @get('manager')
-      ids     = @get('selected_users').mapBy 'id'
-      team    = manager.create_team(user_ids: ids)
-      @goto_teams_edit(team)
+      @process_create_team()
+
+      # manager = @get('manager')
+      # ids     = @get('selected_users').mapBy 'id'
+      # team    = manager.create_team(user_ids: ids)
+      # @goto_teams_edit(team)
 

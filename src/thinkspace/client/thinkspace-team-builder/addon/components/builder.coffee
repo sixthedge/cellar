@@ -157,8 +157,8 @@ export default base_component.extend arr_helpers,
       team_title = @get('team_title')
       team_title = "New Team #{new Date()}" if ember.isEmpty(team_title)
 
-      team.title = team_title
-      team.color = @get('selected_color.color')
+      ember.set(team, 'title', team_title)
+      ember.set(team, 'color', @get('selected_color.color'))
 
       manager.save_transform().then =>
         resolve()
