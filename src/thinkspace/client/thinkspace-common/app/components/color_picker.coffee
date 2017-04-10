@@ -22,7 +22,7 @@ export default base.extend
     else
       selected_color = colors.get('firstObject')
 
-    @set('selected_color', selected_color)
+    @send('select', selected_color)
 
   init_colors: ->
     new ember.RSVP.Promise (resolve, reject) =>

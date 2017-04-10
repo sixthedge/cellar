@@ -30,12 +30,3 @@ br
 component 'edit/tables/assigned' register='register_assigned' remove_members='remove_selected_users' selected=selected_assigned_user_rows students=team_rows select='select_assigned' add_members='set_add_members' adding_members=adding_members
 if adding_members
   component 'edit/tables/unassigned' register='register_unassigned' cancel='cancel_adding_members' selected=selected_unassigned_user_rows add_selected='add_selected_users' students=unassigned_rows select='select_unassigned'
-
-link-to 'builder' model
-  | builder
-
-link-to 'manage' model
-  | manage
-
-link-to 'roster' model
-  | roster
