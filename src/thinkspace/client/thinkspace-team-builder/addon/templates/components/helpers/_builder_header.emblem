@@ -1,6 +1,7 @@
 .main-content__section-header.spacing__margin-bottom--2
   h1.text--inline-block
-    | #{model.title}
+    | Teams
+  / p Create and manager your teams.
 
   .btn-group.is-right
     = link-to 'builder' model (query-params team_id=null)

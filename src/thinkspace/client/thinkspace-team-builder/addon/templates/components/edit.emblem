@@ -1,9 +1,9 @@
 .main-content__header
   .breadcrumbs
     link-to-external 'spaces.show' model class='breadcrumbs__link'
-      = model.title 
-    '  | 
-    link-to 'roster' model class='breadcrumbs__link'
+      = model.title
+    '  |
+    link-to 'manage' model class='breadcrumbs__link'
       | Teams
   h1.text--inline-block
     | Edit Team
