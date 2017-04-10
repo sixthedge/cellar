@@ -1,0 +1,5 @@
+if has_color
+  div style="background-color: ##{color}"
+    = title
+else
+  = title

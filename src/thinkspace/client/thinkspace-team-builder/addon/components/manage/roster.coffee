@@ -26,7 +26,7 @@ export default base_component.extend selectable_mixin,
       column.create({display: 'Select', component: '__table/cells/selectable', data: {calling: {component: @}}}),
       column.create({display: 'Last Name',  property: 'last_name'})
       column.create({display: 'First Name', property: 'first_name'}),
-      column.create({display: 'Team',       property: 'computed_title'}),
+      column.create({display: 'Team', component: 'helpers/cells/team'}),
     ]
 
   # ### Helpers
