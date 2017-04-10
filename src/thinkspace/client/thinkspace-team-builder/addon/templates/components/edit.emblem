@@ -2,7 +2,7 @@
   .breadcrumbs
     link-to-external 'spaces.show' model class='breadcrumbs__link'
       = model.title
-    link-to 'roster' model class='breadcrumbs__link'
+    link-to 'manage' model class='breadcrumbs__link'
       | People
   h1.text--inline-block
     | #{team_set.title} - #{teams_count} Teams
