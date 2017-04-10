@@ -4,6 +4,4 @@ if all_data_loaded
     .btn.btn--primary{action 'create_team'}
       | Create team with selected    
 
-
   component '__table' rows=rows columns=columns
-

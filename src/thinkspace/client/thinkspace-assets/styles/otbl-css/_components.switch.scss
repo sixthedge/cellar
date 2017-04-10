@@ -3,6 +3,8 @@
 //\*------------------------------------*/
 
 .switch {
+  @extend .group;
+  
   -webkit-user-select: none;
   -moz-user-select:    none;
   -ms-user-select:     none;
@@ -15,9 +17,11 @@
 }
 
 .switch__label {
-  font-size: .875rem;
+  font-size:   .875rem;
   font-weight: $font-weight--bold;
-  transition: $transition-animation--color;
+  color:       $color-gray-base;
+  transition:  $transition-animation--color;
+  cursor:      pointer;
 }
 
 .switch__label--on {
@@ -64,6 +68,13 @@
   &:hover, &:focus {
     &:before{
       border-color: $color-blue-base;
+    }
+  }
+
+  &.switch__slider--right {
+    &:before {
+      left:  initial;
+      right: -4px;
     }
   }
 

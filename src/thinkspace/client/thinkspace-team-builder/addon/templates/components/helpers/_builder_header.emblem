@@ -1,9 +1,6 @@
-.main-content__header
-  .breadcrumbs
-    link-to-external 'spaces.show' model class='breadcrumbs__link'
-      | #{model.title} | Manage Teams
+.main-content__section-header.spacing__margin-bottom--2
   h1.text--inline-block
-    | #{model.title} Default Teams
+    | #{model.title}
 
   .btn-group.is-right
     = link-to 'builder' model (query-params team_id=null)
@@ -12,18 +9,13 @@
     .btn.btn-small
       | Import file
 
-nav.menu-bar
-  ul.menu-bar__list
-    li.menu-bar__item
-      link-to 'roster' model class="menu-bar__link"
-        | Roster view
-    li.menu-bar__item
-      link-to 'manage' model class="menu-bar__link"
-        | Teams view
-
-
-.switch.is-left.spacing__margin-right--2
+.switch.is-left.spacing__margin-right--2{action 'toggle_view'}
   input name='team_view' type='checkbox' 
-  span.switch__label.switch__label--on Students
-  .switch__slider
-  span.switch__label.switch__label--off Teams
+  span.switch__label class={is_roster:switch__label--on}
+    | Students
+  .switch__slider class={is_teams:switch__slider--right}
+  span.switch__label class={is_teams:switch__label--on}
+    | Teams
+
+.forms__field-wrapper.forms__field-wrapper--med.forms__field-wrapper--inline
+  component 'helpers/user_search' value=search_field results=results search_results='search_results' select='select_user' space=model
