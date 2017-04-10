@@ -9,8 +9,10 @@
 .team-panel__header {
   @extend .group;
 
-  background-color: $color-rose-base;
-  position: relative;
+  background-color:        $color-rose-base;
+  position:                relative;
+  border-top-left-radius:  $border-radius;
+  border-top-right-radius: $border-radius;
 }
 
 .team-panel__link {
@@ -42,6 +44,8 @@
   margin: 0;
   padding: 0;
   list-style-type: none;
+  border-bottom-left-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
 }
 
 .team-panel__list-item {

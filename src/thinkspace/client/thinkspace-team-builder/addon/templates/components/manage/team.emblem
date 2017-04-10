@@ -1,5 +1,5 @@
 .team-panel
-  .team-panel__header
+  .team-panel__header style='background-color:##{model.color};'
     link-to 'edit' space (query-params team_id=model.id) class='team-panel__link'
       .team-panel__name = model.title 
       .text__font-size--12.text__color--white #{count} team members
@@ -8,7 +8,7 @@
       .text__font-size--12.text--bold{action 'delete'}
         | Delete Team
 
-  ul.team-panel__list
+  ul.team-panel__list style='border-color:##{model.color};'
     each user_ids as |user_id|
       li.team-panel__list-item
         component 'manage/member' user_id=user_id abstract=abstract

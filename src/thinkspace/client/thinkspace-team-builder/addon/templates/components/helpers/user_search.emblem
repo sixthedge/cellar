@@ -1,4 +1,4 @@
-= input value=value class='text-input--thick spacing__margin-bottom--1'
+= input value=value class='spacing__margin-bottom--1' placeholder='Search Students'
 
 ul.dropdown__list
   each results as |user|

@@ -1,6 +1,8 @@
 if all_data_loaded
   partial 'components/helpers/builder_header'
-  component 'helpers/user_search' value=search_field results=results search_results='search_results' select='select_user' space=model
+  .forms__field-wrapper.forms__field-wrapper--med.forms__field-wrapper--inline
+    component 'helpers/user_search' value=search_field results=results search_results='search_results' select='select_user' space=model
+
   .grid__container--flex.flex__justify--between
     each teams as |team|
       component 'manage/team' model=team space=model abstract=abstract class=' grid__col--49 grid__mobile--full-width spacing__margin-bottom--1'
