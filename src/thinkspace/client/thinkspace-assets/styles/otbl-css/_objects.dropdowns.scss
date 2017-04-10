@@ -2,7 +2,7 @@
 //    #DROPDOWNS
 //\*------------------------------------*/
 
-select {
+select, .dropdown__anchor {
   display:          inline-block;
   vertical-align:   middle;
   font-family:      $font-family;
@@ -30,10 +30,12 @@ select {
 
   &:hover, &:focus {
     background-color: darken($color-gray-base, 10%);
+    color:            white;
   }
   
   &:active {
-    background-color: darken($color-gray-base, 50%);
+    background-color: darken($color-gray-base, 15%);
+    color:            white;
   }
 
   &:focus {
@@ -50,41 +52,59 @@ select {
 
 
 .dropdown__list {
+  display: none;
   list-style-type: none;
   margin-left:     0;
   padding:         0;
   max-width:       $max-width--content;
   margin:          0;
+
+  &.is-open {
+    display: inherit;
+  }
 }
 
 .dropdown__item {
+  min-height:  2rem;
+  line-height: 2rem;
+  border-left:      $border--default;
+  border-right:     $border--default;
   border-bottom:    $border--thin;
+
+  &:first-of-type {
+    border-top: $border--default;
+    border-top-right-radius: $border-radius;
+  }
+  &:last-of-type {
+    border-bottom: $border--default;
+    border-bottom-right-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
+  }
+}
+
+.dropdown__item-link {
+  display:          block;
+  color:            $color-black-base;
   background-color: white;
   padding:          0 0.4em;
+  height:           100%;
+  width:            100%;
   min-height:       2rem;
   vertical-align:   middle;
   line-height:      2rem;
   font-size:        .875rem;
   cursor:           pointer;
-  border-left:      $border--default;
-  border-right:     $border--default;
-  border-bottom:    $border--thin;
   transition:       $transition-animation;
 
-  &:first-of-type {
-    border-top: $border--default;
-  }
-  &:last-of-type {
-    border-bottom: $border--default;
-  }
+  
 
   &:hover, &:focus {
     background-color: $color-gray-med;
-    color: $color-blue-dark;
+    color:            $color-blue-dark;
   }
 
   &.dropdown__item--thick {
-    height: 3rem;
+    height:      3rem;
     line-height: 3rem;
   }
 }

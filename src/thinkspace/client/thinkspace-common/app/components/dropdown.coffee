@@ -23,12 +23,12 @@ import base  from 'thinkspace-base/components/base'
 #   link_class
 
 export default base.extend
-  classNames: ['thinkspace-dropdown']
+  classNames: ['dropdown']
 
-  default_anchor_class:    'thinkspace-dropdown_anchor'
-  default_list_class:      'f-dropdown thinkspace-dropdown_list'
-  default_list_item_class: 'thinkspace-dropdown_list-item'
-  default_link_class:      'thinkspace-dropdown_link'
+  default_anchor_class:    'dropdown__anchor'
+  default_list_class:      'f-dropdown dropdown__list'
+  default_list_item_class: 'dropdown__item'
+  default_link_class:      'dropdown__item-link'
 
   anchor_classes:    ember.computed 'anchor_class',     -> @concat_class('anchor')
   list_classes:      ember.computed 'list_class',       -> @concat_class('list')
