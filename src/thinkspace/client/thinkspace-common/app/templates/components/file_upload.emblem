@@ -1,2 +1,3 @@
-h1 Drag and drop or click to upload
-component '__file_upload/input' changed='files_changed'
+.forms__field-wrapper
+  label Upload your file
+  component '__file_upload/input' changed='files_changed'

@@ -1,2 +1,2 @@
 input.file-upload id=input_id type='file' multiple=true onchange={action 'change'}
-label for=input_id Click to Upload
+label for=input_id Browse files
