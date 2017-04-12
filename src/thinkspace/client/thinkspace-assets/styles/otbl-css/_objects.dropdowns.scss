@@ -52,12 +52,13 @@ select, .dropdown__anchor {
 
 
 .dropdown__list {
-  display: none;
+  display:         none;
   list-style-type: none;
   margin-left:     0;
   padding:         0;
   max-width:       $max-width--content;
-  margin:          0;
+  margin:          2px 0 0;
+  box-shadow:      0 3px 12px rgba(27,31,35,0.15);
 
   &.is-open {
     display: inherit;

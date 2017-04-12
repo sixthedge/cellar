@@ -1,0 +1,34 @@
+///*------------------------------------*\
+//    #FILE-UPLOAD
+//\*------------------------------------*/
+
+.file-upload {
+  width:    0.1px;
+  height:   0.1px;
+  opacity:  0;
+  overflow: hidden;
+  position: absolute;
+  z-index:  -1;
+}
+
+.file-upload + label {
+  @extend .btn;
+
+  background-color: $color-blue-base;
+
+  &:hover, &:focus {
+    background-color: darken($color-blue-base, 10%);
+  }
+  
+  &:active {
+    background-color: darken($color-blue-base, 15%);
+  }
+
+}
+
+.file-upload:focus + label,
+.file-upload:active + label {
+  outline:        1px dotted white;
+  outline-offset: -4px;
+
+}
