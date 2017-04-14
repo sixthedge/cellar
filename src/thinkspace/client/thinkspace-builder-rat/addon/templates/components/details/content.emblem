@@ -1,5 +1,5 @@
 .main-content__header
-  h1 Peer Evaluation Details
+  h1 Readiness Assurance Details
   p Time to create a new exercise!
 
 / if step.all_data_loaded

@@ -1,0 +1,14 @@
+h1 CONFIRMATION
+
+.mobile-progress__item.is-left
+  .mobile-progress__link click='prev_step'
+    .text__font-size--12.text--bold
+      | Back
+    .text__font-size--14
+      | Settings
+.mobile-progress__item.is-right
+  .mobile-progress__link click='next_step'
+    .text__font-size--12.text--bold
+      | Complete!
+    .text__font-size--14
+      | Finish Building

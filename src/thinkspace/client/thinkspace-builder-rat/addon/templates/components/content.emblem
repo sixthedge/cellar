@@ -1,0 +1,34 @@
+partial 'components/header'
+
+.main-content
+  .grid__container--flex.spacing__margin-bottom--4
+    h1 CONTENT
+
+    if step.all_data_loaded
+      / if step.is_readonly
+      /   component 'content/assessment' model=model template=step.template value=step.template.value step=step readonly=step.is_readonly class='grid__col--3of4 grid__mobile--full-width'
+      /   component 'content/templates' model=model step=step confirm='confirm' select='select' cancel='cancel' class='menu-panel menu-panel--right grid__mobile--full-width'
+      / else
+      component 'content/assessment' model=model template=step.template value=step.assessment_changeset.value step=step readonly=step.is_readonly class='grid__col--3of4 grid__mobile--full-width'
+      component 'progress' model=model class='grid__col--1of4 grid__mobile--hidden'
+
+  .grid__container--flex.spacing__margin-bottom--4
+    .grid__col--4of4.grid__mobile--hidden
+      button.btn.is-left click='prev_step'
+        | Back
+      button.btn.btn--primary.is-right click='next_step'
+        | Next Step
+
+.mobile-progress
+  .mobile-progress__item.is-left
+    .mobile-progress__link click='prev_step'
+      .text__font-size--12.text--bold
+        | Back
+      .text__font-size--14
+        | Details
+  .mobile-progress__item.is-right
+    .mobile-progress__link click='next_step'
+      .text__font-size--12.text--bold
+        | Go to next
+      .text__font-size--14
+        | Settings
