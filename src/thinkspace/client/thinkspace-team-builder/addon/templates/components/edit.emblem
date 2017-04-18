@@ -1,4 +1,12 @@
-h1 THIS IS THE EDIT ROUTE
+.main-content__header
+  .breadcrumbs
+    link-to-external 'spaces.show' model class='breadcrumbs__link'
+      = model.title
+    link-to 'manage' model class='breadcrumbs__link'
+      | People
+  h1.text--inline-block
+    | #{team_set.title} - #{teams_count} Teams
+
 
 h3 Edit Team
 .btn.btn-small.btn--primary{action 'save'}
@@ -19,15 +27,6 @@ component '__color_picker' color=team.color edit=true select='select_color'
 br
 br
 
-component 'edit/tables/assigned' remove_members='remove_selected_users' selected=selected_assigned_user_rows students=team_rows select='select_assigned' add_members='set_add_members' adding_members=adding_members
+component 'edit/tables/assigned' register='register_assigned' remove_members='remove_selected_users' selected=selected_assigned_user_rows students=team_rows select='select_assigned' add_members='set_add_members' adding_members=adding_members
 if adding_members
-  component 'edit/tables/unassigned' cancel='cancel_adding_members' selected=selected_unassigned_user_rows add_selected='add_selected_users' students=unassigned_rows select='select_unassigned'
-
-link-to 'builder' model
-  | builder
-
-link-to 'manage' model
-  | manage
-
-link-to 'roster' model
-  | roster
+  component 'edit/tables/unassigned' register='register_unassigned' cancel='cancel_adding_members' selected=selected_unassigned_user_rows add_selected='add_selected_users' students=unassigned_rows select='select_unassigned'

@@ -45,4 +45,7 @@ export default base.extend
       all_content: rows
     @set('rows', array)
 
-  get_rows_all_content: -> @get('rows.all_content')
+  get_rows_all_content: -> 
+    console.log('[get_rows_all_content] rows are ', @get('rows'))
+
+    @get('rows.all_content')

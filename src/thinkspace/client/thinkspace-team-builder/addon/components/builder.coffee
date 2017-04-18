@@ -157,8 +157,8 @@ export default base_component.extend arr_helpers,
       team_title = @get('team_title')
       team_title = "New Team #{new Date()}" if ember.isEmpty(team_title)
 
-      team.title = team_title
-      team.color = @get('selected_color.color')
+      ember.set(team, 'title', team_title)
+      ember.set(team, 'color', @get('selected_color.color'))
 
       manager.save_transform().then =>
         resolve()
@@ -185,7 +185,7 @@ export default base_component.extend arr_helpers,
 
     cancel: ->
       @get('manager').remove_team_from_transform(@get('team')).then =>
-        @get_app_route().transitionTo('manager')
+        @get_app_route().transitionTo(ns.to_r('team_builder', 'manage'))
 
     remove_user: (user) ->
       team    = @get('team')

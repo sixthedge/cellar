@@ -14,3 +14,7 @@ export default base_component.extend selectable_mixin,
     @sendAction('select', opts)
 
   reset_selected_rows: -> @set('selected_rows', ember.makeArray())
+
+  ## Imperfect way to allow the rendering component to cause a table to re-render via init_rows
+  register_table: (table) -> 
+    @sendAction('register', table)

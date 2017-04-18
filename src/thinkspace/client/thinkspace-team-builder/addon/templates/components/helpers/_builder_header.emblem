@@ -1,0 +1,16 @@
+.main-content__header
+  h1.text--inline-block
+    | #{model.title}
+
+  .btn-group.is-right
+    = link-to 'builder' model (query-params team_id=null)
+      .btn.btn-small.btn--primary
+        | Team Builder
+    .btn.btn-small
+      | Import file
+
+  div{action 'toggle_view'}
+    p class={is_roster:text--bold}
+      | Students
+    p class={is_teams:text--bold}
+      | Teams

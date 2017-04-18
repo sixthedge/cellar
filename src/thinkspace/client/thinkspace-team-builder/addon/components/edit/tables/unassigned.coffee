@@ -7,7 +7,7 @@ export default base.extend
 
   columns: ember.computed 'students', ->
     [
-      column.create({display: 'Select', component: '__table/cells/selectable', data: {calling: @}}),
+      column.create({display: 'Select', component: '__table/cells/selectable', data: {calling: {component: @, register: true}}}),
       column.create({display: 'Last Name', property: 'last_name'}),
       column.create({display: 'First Name', property: 'first_name'})
     ]
