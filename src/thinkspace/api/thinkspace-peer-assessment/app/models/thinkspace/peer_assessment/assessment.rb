@@ -185,6 +185,17 @@ module Thinkspace
         Thinkspace::PeerAssessment::AssessmentMailer.notify_overview_unlocked(self, user).deliver_now
       end
 
+      def get_or_create_team_sets
+        team_ids          = Thinkspace::Team::Team.scope_by_teamables(self.authable).pluck(:id)
+        assessment_id     = self.id
+        team_sets         = Thinkspace::PeerAssessment::TeamSet.where(assessment_id: assessment_id, team_id: team_ids)
+        existing_team_ids = team_sets.pluck(:team_id)
+        create_team_ids   = team_ids - existing_team_ids
+        create_team_ids.each { |id| Thinkspace::PeerAssessment::TeamSet.create(assessment_id: assessment_id, team_id: id) }
+        team_sets.reload unless create_team_ids.empty?
+        team_sets
+      end
+
       ## Serialized method to determine whether the current state of the 'value' column differs from the assessment template's.
       ## Used to prompt the user to create a new assessment template if they've made changes to their existing template.
       def modified_template

@@ -8,17 +8,19 @@ module Thinkspace; module Team; module Deltas
     # relational structure and it's transform
 
 
-    attr_reader :team_set, :options, :transform, :team_set_teams, :team_set_teams_by_id, :transform_teams, :delta, :delta_teams
+    attr_reader :team_set, :options, :transform, :scaffold, :team_set_teams, :team_set_teams_by_id, :transform_teams, :scaffold_teams, :delta, :delta_teams
 
     # ### Initialization
     def initialize(team_set, options={})
       @team_set             = team_set
       @options              = options
       @transform            = options[:transform] || @team_set.transform
+      @scaffold             = options[:scaffold] || @team_set.scaffold
       raise "Could not create delta for team set with id #{@team_set.id}; no transform provided" unless @transform.present?
       @team_set_teams       = @team_set.thinkspace_team_teams
       @team_set_teams_by_id = @team_set_teams.index_by(&:id)
       @transform_teams      = @transform['teams']
+      @scaffold_teams       = @scaffold['teams']
       @delta                = Hash.new
       @delta[:teams]        = Array.new
       @delta[:moves]        = Array.new
@@ -40,11 +42,12 @@ module Thinkspace; module Team; module Deltas
     # ### Helpers
     def get_transform_team_ids;          @transform_teams.map    { |t| t['id'] };                                 end
     def get_transform_teams_by_ids(ids); @transform_teams.select { |t| ids.include?(t['id']) };                   end
+    def get_deleted_transform_teams_by_ids(ids);   @scaffold_teams.select { |t| ids.include?(t['id']) };          end
     def get_new_transform_teams;         @transform_teams.select { |t| t['new'] == true };                        end
     def get_existing_transform_teams;    @transform_teams.select { |t| !t.has_key?('new') || t['new'] == false }; end
     def get_deleted_transform_teams
       ids = get_team_set_team_ids - get_transform_team_ids
-      get_transform_teams_by_ids(ids)
+      get_deleted_transform_teams_by_ids(ids)
     end
 
     def get_team_set_team_ids; @team_set_teams_by_id.keys;      end
@@ -54,6 +57,7 @@ module Thinkspace; module Team; module Deltas
 
     def process_deleted
       get_deleted_transform_teams.each do |tobj|
+        team = get_team_set_team_by_id(tobj['id'])
         @delta_teams << {
           id:           tobj['id'],
           additions:    Array.new,

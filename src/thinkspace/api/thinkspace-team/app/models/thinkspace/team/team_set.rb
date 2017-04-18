@@ -101,7 +101,6 @@ module Thinkspace
         phase_ids        = Thinkspace::Casespace::Phase.where(assignment_id: assignment_ids).pluck(:id)
         phase_components = Thinkspace::Casespace::PhaseComponent.where(phase_id: phase_ids)
         reconcilers      = Array.new
-
         phase_components.each do |phase_component|
           path = phase_component.componentable_type.split('::')
           path.pop

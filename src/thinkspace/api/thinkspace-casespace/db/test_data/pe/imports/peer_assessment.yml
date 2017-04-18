@@ -1,0 +1,61 @@
+variables:
+  - case_settings: &CASE_SETTINGS
+      pub_sub: false
+
+  - &CASE Default PE Case
+  - &PE_PHASE_TITLE Peer Evaluation
+  - &PE_PT peer_assessment/assessment
+  - &PE_UNLOCK next
+  - &PE_STATE  complete
+
+settings:
+  - irat_settings: &PE_PS
+      actions:
+        submit:
+          state:  *PE_STATE
+          unlock: *PE_UNLOCK
+
+assignments:
+  - {title: *CASE, space: *SPACE, settings: *CASE_SETTINGS}
+
+phases:
+  - {title: *PE_PHASE_TITLE, assignment: *CASE, template_name: *PE_PT, settings: *PE_PS}
+
+
+assessments:
+  - space: *SPACE
+    assignment: *CASE
+    phases:     *PE_PHASE_TITLE
+    user:       owner_1
+    assessment:
+      value:
+        options:
+          type: balance
+          points:
+            per_member: 10
+            different: true
+        quantitative:
+        - id: 1
+          label: What was the effectiveness of this team member?
+          type: range
+          settings:
+            comments:
+              enabled: true
+            labels:
+              scale:
+                min: Low
+                max: High
+            points:
+              min: 0
+              max: 15
+        qualitative:
+        - id: 1
+          label: "Indicate specifically how this person contributes to
+            group success."
+          type: textarea
+          feedback_type: positive
+        - id: 2
+          label: "Make constructive suggestions about how this person could
+            better contribute to group success."
+          type: textarea
+          feedback_type: constructive

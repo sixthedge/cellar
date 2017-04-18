@@ -39,7 +39,6 @@ module Thinkspace; module PeerAssessment; module Reconcilers
       process_moves
       reassign_team_sets
       reset_quantitative_data
-      raise 'IF WE GOT TO HERE ITS ALL GOOD m8'
     end
 
     # We implement notify as a public method to be called by the creator of the reconciler in order to avoid potentially multiple
@@ -54,6 +53,7 @@ module Thinkspace; module PeerAssessment; module Reconcilers
     def reassign_team_sets
       @delta[:teams].each do |tobj|
         team_set = get_team_set_by_team_id(tobj[:id])
+        next if team_set.blank?
         if tobj[:deleted]
           team_set.destroy
         elsif tobj[:new]
@@ -80,10 +80,11 @@ module Thinkspace; module PeerAssessment; module Reconcilers
     # Deletes the mover's previous reviews, creates new reviews for each member of the 'to' team
     def process_mover(move)
       from_team_set = get_team_set_by_team_id(move[:from])
+      return unless from_team_set.present?
       to_team_set   = get_team_set_by_team_id(move[:to])
       to_team       = get_delta_team_by_id(move[:to])
       review_set    = get_review_set_for_ownerable(from_team_set.id, move[:id])
-      review_set    = review_set_class.create(ownerable_id: move[:id], ownerable_type: user_class.name, team_set_id: to_team_set.id) unless (review_set.present? && to_team_set.present?)
+      review_set    = review_set_class.create(ownerable_id: move[:id], ownerable_type: user_class.name, team_set_id: to_team_set.id) if (!review_set.present? && to_team_set.present?)
       return unless review_set.present?
       if move[:to].present? && to_team_set.present?
         review_set.team_set_id = to_team_set.id
@@ -129,6 +130,7 @@ module Thinkspace; module PeerAssessment; module Reconcilers
       @delta[:teams].each do |team|
         if team[:dirty]
           team_set = get_team_set_by_team_id(team[:id])
+          next if team_set.blank?
           team_set.reset_quantitative_data
         end
       end

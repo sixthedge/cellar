@@ -58,13 +58,7 @@ module Thinkspace
           end
 
           def team_sets
-            team_ids          = Thinkspace::Team::Team.scope_by_teamables(@assessment.authable).pluck(:id)
-            assessment_id     = @assessment.id
-            team_sets         = Thinkspace::PeerAssessment::TeamSet.where(assessment_id: assessment_id, team_id: team_ids)
-            existing_team_ids = team_sets.pluck(:team_id)
-            create_team_ids   = team_ids - existing_team_ids
-            create_team_ids.each { |id| Thinkspace::PeerAssessment::TeamSet.create(assessment_id: assessment_id, team_id: id) }
-            team_sets.reload unless create_team_ids.empty?
+            team_sets = @assessment.get_or_create_team_sets()
             controller_render(team_sets)
           end
 
