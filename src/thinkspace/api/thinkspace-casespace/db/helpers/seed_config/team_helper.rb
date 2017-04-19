@@ -110,6 +110,7 @@ def casespace_seed_config_add_team_set_teams(config, teams_hash)
     )
     casespace_config_models.add(config, team)
     casespace_seed_config_create_team_users(team, hash)
+    team_set.generate_scaffold
   end
 end
 

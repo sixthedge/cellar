@@ -133,9 +133,9 @@ module Thinkspace
         data = { teams: Array.new }
         thinkspace_team_teams.each do |team|
           data[:teams] << {
-            id:    team.id,
-            title: team.title,
-            color: team.color,
+            id:       team.id,
+            title:    team.title,
+            color:    team.color,
             user_ids: team.thinkspace_common_users.pluck(:id)
           }
         end
