@@ -29,4 +29,7 @@ if all_data_loaded
               component 'case' model=case
         else
           h5 No archived cases.
-
+else
+  .loader__container
+    .loader.loader--logo
+    .text__font-size--14.text--bold Loading...

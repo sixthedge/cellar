@@ -23,8 +23,9 @@
             component 'assignment_type' model=assignment_type create='create' class='exercise-type__item'
 
       else
-        / Need loading img or graphic
-        h1 Loading..
+        .loader__container
+          .loader.loader--logo
+          .text__font-size--14.text--bold Loading...
 
       .footnote
         p.spacing__margin-top--0.spacing__margin-bottom--0 Need a crash course in exercise types?
