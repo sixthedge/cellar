@@ -1,0 +1,4 @@
+ul
+  each model as |user|
+    li{action 'add_user' user}
+      = user.first_name

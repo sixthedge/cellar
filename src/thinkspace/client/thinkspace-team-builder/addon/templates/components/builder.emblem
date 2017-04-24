@@ -1,0 +1,50 @@
+h1 Team Builder
+
+h5 Quickly build a team by typing in your student's name. You can add multiple by separating with a comma.
+
+if has_team_id
+  h3 New Team
+  
+  h5 Team name
+  = input value=team_title placeholder='Name your new team'
+
+  h5 Team color
+  h6 Helps distinguish the teams
+  // Dropdown with color selections here
+
+  component '__table' columns=table_config rows=rows
+
+else
+  if has_selected_users
+    | Selected Users!
+
+    .btn.btn-small{action 'create_team'}
+      | Create team with selected
+
+    .btn.btn-small
+      | Add to existing team
+
+  component 'helpers/user_search' value=search_field results=results search_results='search_results' select='select_user' space=model
+
+  br
+  br
+  br
+  br
+  br
+  ul
+    each selected_users as |user|
+      li = user.first_name
+
+.btn.btn-small.btn-default{action 'create_team'}
+  | Create Team
+.btn.btn-small{action 'cancel'}
+  | Cancel
+
+link-to 'edit' model
+  | edit
+
+link-to 'manage' model
+  | manage
+
+link-to 'roster' model
+  | roster

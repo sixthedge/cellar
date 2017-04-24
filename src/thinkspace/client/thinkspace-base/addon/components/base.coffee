@@ -36,6 +36,8 @@ export default base.extend totem_data_mixin,
 
   is_destroyed: -> @get('isDestroyed') or @get('isDestroying')
 
+  get_store: -> @totem_scope.get_store()
+
   # Query param support
   get_query_params_controller:    -> @get('query_params_controller')
   get_query_param: (param)        -> @get_query_params_controller().get(param)

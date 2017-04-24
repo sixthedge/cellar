@@ -1,0 +1,4 @@
+if all_data_loaded
+  | #{state}
+else
+  | loading...

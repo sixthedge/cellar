@@ -35,6 +35,10 @@ export default ember.Mixin.create
       array = array.filterBy k, v
     return array.get('firstObject')
 
+  # gets array elements whose property value is contained in values
+  where_in: (array, property, values) ->
+    array.filter (element) -> values.contains(element[property])
+
   minimum_for_property: (records, property) ->
     records.sortBy(property).get('firstObject')
 

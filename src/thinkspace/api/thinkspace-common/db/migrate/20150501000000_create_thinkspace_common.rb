@@ -11,15 +11,15 @@ class CreateThinkspaceCommon < ActiveRecord::Migration
     create_table :thinkspace_common_components, force: true do |t|
       t.string      :title
       t.text        :description
-      t.json        :value
-      t.json        :preprocessors
+      t.jsonb       :value
+      t.jsonb       :preprocessors
       t.timestamps
       t.index  [:title], name: :idx_thinkspace_common_components_on_title
     end
 
     create_table :thinkspace_common_configurations, force: true do |t|
       t.references  :configurable, polymorphic: true
-      t.json        :settings, default: {}
+      t.jsonb       :settings, default: {}
       t.timestamps
       t.index  [:configurable_id, :configurable_type],  name: :idx_thinkspace_common_configurations_on_configurable
     end

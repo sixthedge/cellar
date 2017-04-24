@@ -4,7 +4,7 @@ module Thinkspace
       module Admin
         class TeamsController < ::Totem::Settings.class.thinkspace.authorization_api_controller
           load_and_authorize_resource class: totem_controller_model_class
-          totem_action_authorize! module: :action_authorize_teams, params_ownerable: false
+          totem_action_authorize! module: :action_authorize_teams, params_ownerable: false, except: [:list]
           totem_action_serializer_options
 
           def create

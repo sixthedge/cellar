@@ -1,0 +1,16 @@
+component 'header' model=model
+
+if all_data_loaded
+  component '__table/types/server' rows=students columns=student_columns data=student_data
+  hr
+  / Note: Just showing that server=true works the same as __tables/types/server
+  component '__table' rows=admins columns=admin_columns data=admin_data server=true
+else
+  h1 Loading...
+
+/ TEMPORARY
+= input value=email placeholder='example@sixthedge.com'
+h1 click='invite' Invite
+/ /TEMPORARY
+
+component '__file_upload' s3=true authable=model type='thinkspace/importer/roster'

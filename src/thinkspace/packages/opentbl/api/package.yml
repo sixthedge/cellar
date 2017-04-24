@@ -20,8 +20,9 @@ application_rb:
 secrets:
 
   development:
+    host:            localhost
     secret_key_base: d01f9aa6064531cbcff49802c38bbfd8e9635643ac8b4c079cc63568d5898c536fa91004af21ad8e09d84562e6bb91fb3d0a990ae56b0aacd0b1e4d1a275b453
-    totem_database:
+    totem_database:  
       name:     otbl_development
       username: postgres
       password: password
@@ -35,30 +36,17 @@ secrets:
           client_secret: <%=oauth_client_secret%>
           active:        true
     aws:
-      sqs:
-        access_key:        KEY-GOES-HERE
-        secret_access_key: KEY-GOES-HERE
-        queue_name:        QUEUE-GOES-HERE
       s3:
         paperclip:
-          access_key:        VALUE-HERE
-          secret_access_key: VALUE-HERE
-          bucket_name:       VALUE-HERE
-    discourse:
-      username:   USERNAME-HERE
-      key:        KEY-HERE
-      host:       HOST-HERE
-      sso_secret: SSO-SECRET-HERE
-      categories:
-        support:
-          title: testing-support-api
-          messages:
-            success: Your request has been recieved and we will get back to you as soon as we can.
+          access_key:       
+          secret_access_key: 
+          bucket_name:
+          region:
     smtp:
       postmark:
-        username: USERNAME-HERE
-        password: PASSWORD-HERE
-        domain:   DOMAIN-HERE
+        username:
+        password:
+        domain:
     pub_sub:
       url: <%=redis_url%>
 
@@ -87,16 +75,6 @@ secrets:
           access_key:        VALUE-HERE
           secret_access_key: VALUE-HERE
           bucket_name:       VALUE-HERE
-    discourse:
-      username:   USERNAME-HERE
-      key:        KEY-HERE
-      host:       HOST-HERE
-      sso_secret: SSO-SECRET-HERE
-      categories:
-        support:
-          title: testing-support-api
-          messages:
-            success: Your request has been recieved and we will get back to you as soon as we can.
     smtp:
       postmark:
         username: USERNAME-HERE
@@ -131,16 +109,6 @@ secrets:
           secret_access_key: <%%= ENV['AWS_S3_SECRET_ACCESS_KEY'] %>
           bucket_name:       <%%= ENV['AWS_S3_PAPERCLIP_BUCKET_NAME'] %>
     redis_url: <%%= ENV['THINKSPACE_REDIS_URL'] %>
-    discourse:
-      username:   <%%= ENV['DISCOURSE_USERNAME'] %>
-      key:        <%%= ENV['DISCOURSE_KEY'] %>
-      host:       <%%= ENV['DISCOURSE_HOST'] %>
-      sso_secret: <%%= ENV['DISCOURSE_SSO_SECRET'] %>
-      categories:
-        support:
-          title: <%%= ENV['DISCOURSE_CATEGORIES_SUPPORT_TITLE'] %>
-          messages:
-            success: Your request has been recieved and we will get back to you as soon as we can.
     smtp:
       postmark:
         username: <%%= ENV['SMTP_POSTMARK_USERNAME'] %>

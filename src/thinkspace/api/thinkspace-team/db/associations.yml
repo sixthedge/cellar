@@ -78,5 +78,5 @@
     - has_many:   thinkspace/team/team_set_teamables
       dependent: :destroy
   serializers:
-    - attributes: [id, title, description, default, settings, space_id, state]
+    - attributes: [id, title, description, default, settings, space_id, state, scaffold, transform]
     - scoped_attributes: [metadata]

@@ -3,6 +3,7 @@ import ta from 'totem/ds/associations'
 
 export default ta.Model.extend ta.add(
     ta.has_many 'spaces', inverse: ta.to_p('users')
+    ta.has_many 'space_users'
   ),
 
   email:        ta.attr('string')
