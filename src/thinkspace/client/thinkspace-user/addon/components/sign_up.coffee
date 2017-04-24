@@ -36,12 +36,12 @@ export default base.extend
     # Reset password values so they're not lingering.
     user.set('password', null)
     changeset.set('password', null)
-    @set_is_loading()
+    @set_loading('authenticating')
     @get('session').authenticate(@get('authenticator'), data).then =>
-      @reset_is_loading()
+      @reset_loading('authenticating')
       @totem_messages.info "Sign in successful!"
     , (error) =>
-      @reset_is_loading()
+      @reset_loading('authenticating')
       changeset.show_errors_off()
       message = error.responseText or 'Email or password incorrect'
       @totem_messages.error message
@@ -57,9 +57,9 @@ export default base.extend
             last_name:  changeset.get('last_name')
             email:      changeset.get('email')
             password:   changeset.get('password')
-          @set_is_loading()
+          @set_loading('submitting')
           user.save().then =>
-            @reset_is_loading()
+            @reset_loading('submitting')
             @authenticate(user)
         else
           changeset.show_errors_on()

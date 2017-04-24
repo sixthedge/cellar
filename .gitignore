@@ -11,3 +11,4 @@ test/dummy/.sass-cache
 .DS_Store
 thinkspace-common/lib/tasks/files/*
 node_modules/
+bower_components/

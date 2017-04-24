@@ -15,7 +15,7 @@ export default base.extend totem_data_mixin,
   tvo_path:        null
   
   all_data_loaded: false
-  is_loading:      false
+  loading:         {}
 
   init: ->
     @_super(arguments...)
@@ -29,8 +29,9 @@ export default base.extend totem_data_mixin,
 
   set_all_data_loaded:   -> @set 'all_data_loaded', true
   reset_all_data_loaded: -> @set 'all_data_loaded', false
-  set_is_loading:        -> @set('is_loading', true)
-  reset_is_loading:      -> @set('is_loading', false)
+
+  set_loading:      (type) -> @set("loading.#{type}", true)
+  reset_loading:    (type) -> @set("loading.#{type}", false)
 
   current_models: -> @get('thinkspace')
 

@@ -5,8 +5,8 @@ component '__changeset/input' changeset=changeset attribute='last_name'  label='
 component '__changeset/input' changeset=changeset attribute='email'      label='Email'    type='email'
 component '__changeset/input' changeset=changeset attribute='password'   label='Password' type='password'
 hr
-if is_loading
-  a.btn.btn--disabled Submit
+if loading.submitting
+  a.btn.btn--disabled SubmitD
 else
   a.btn click='submit' Submit
 
