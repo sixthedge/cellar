@@ -94,6 +94,7 @@
 - Chat.................Styling chat portion of the panel. 
 - Panel-table..........Tile panels with a table header up top.
 - Reveal...............Styles for reveal modals. Mostly foundation overrides.
+- Pagination...........Styles for pagination row under tables.
 */
 
 @import "otbl-css/components.top-bar";
@@ -118,6 +119,7 @@
 @import "otbl-css/components.chat";
 @import "otbl-css/components.panel-table";
 @import "otbl-css/_components.reveal";
+@import "otbl-css/_components.pagination";
 
 /*
 ## HELPERS
