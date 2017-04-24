@@ -1,19 +1,5 @@
-if label
-  label
-    | #{label}
-  .forms__label-summary #{summary}
-  if is_text_area
-    = textarea placeholder=placeholder value=value save='save' type=type focus-out='focus_out' disabled=disabled name=name tabindex=tabindex size=size
-  else
-    = input placeholder=placeholder value=value save='save' type=type focus-out='focus_out' disabled=disabled name=name tabindex=tabindex size=size
-  if display_errors
-    component '__changeset/errors' changeset=changeset attribute=attribute errors_visible=display_errors
+if label: label for=input_id #{label}
 
-else
-  if is_text_area
-    = textarea placeholder=placeholder value=value save='save' type=type focus-out='focus_out' disabled=disabled name=name tabindex=tabindex size=size
-  else
-    = input placeholder=placeholder value=value save='save' type=type focus-out='focus_out' disabled=disabled name=name tabindex=tabindex size=size
-  if display_errors
-    component '__changeset/errors' changeset=changeset attribute=attribute errors_visible=display_errors
+= input id=input_id value=value input_attributes=input_attributes
 
+component '__changeset/errors' changeset=changeset attribute=attribute show_errors=show_errors input_id=input_id error_class=error_class

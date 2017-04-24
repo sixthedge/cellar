@@ -9,8 +9,10 @@ export default ta.Model.extend ta.add(
   first_name:   ta.attr('string')
   last_name:    ta.attr('string')
   state:        ta.attr('string')
+  password:     ta.attr('string')
   activated_at: ta.attr('date')
   profile:      ta.attr()
+
 
   full_name:     ember.computed 'first_name', 'last_name', ->
     first_name = @get('first_name') or '?'

@@ -16,30 +16,22 @@ module Thinkspace
         def create
           email = get_email_from_params
           @user = user_class.new(email: email) unless @user.present?
-
           Thinkspace::Common::User.transaction do
             response = nil
             begin
-              response = ::Totem::Settings.oauth.current_create_user(self, params, root_key: 'thinkspace/common/user')
-            rescue
-              permission_denied('Authentication sever down. Please try again later')
+              response = ::Totem::Settings.oauth.current_create_user(self, params)
+            rescue => e
+              permission_denied(e.message)
             end
             permission_denied(parse_s2s_errors(response['errors'])) unless response['valid'] # Invalid creation from S2S
-
-            oauth_user_id           = response['id']
-            @user.oauth_user_id     = oauth_user_id
-            
+            set_user_values(response)
             update_terms_accepted_at
-            set_user_values
-
             if @user.save
               @user.activate!
-              @user.create_sandbox if params_root[:sandbox]
               controller_render(@user)
             else
-              permission_denied('User credentials could not be validated. Please contact us at support@thinkspace.org')
+              permission_denied('User credentials could not be validated. Please contact support.')
             end
-
           end
         end
 
@@ -101,12 +93,18 @@ module Thinkspace
           # @user.terms_accepted_at = Time.now
         end
 
-        def set_user_values
-          @user.first_name        = params_root[:first_name]
-          @user.last_name         = params_root[:last_name]
-          @user.email_optin       = params_root[:email_optin]
-          @user.profile           = params_root[:profile]
-
+        def set_user_values(s2s_params={})
+          if s2s_params.empty?
+            @user.oauth_user_id = response['id']
+            @user.first_name    = response['first_name']
+            @user.last_name     = response['last_name']
+            @user.email         = response['email']
+          else
+            @user.first_name                       = params_root[:first_name]
+            @user.last_name                        = params_root[:last_name]
+          end
+          @user.email_optin                      = params_root[:email_optin]
+          @user.profile                          = params_root[:profile]
           @user.thinkspace_common_discipline_ids = params_root['thinkspace/common/disciplines']
         end
 

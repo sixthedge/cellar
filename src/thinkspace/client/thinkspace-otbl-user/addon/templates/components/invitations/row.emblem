@@ -1,0 +1,10 @@
+td #{model.email}
+td #{model.friendly_role}
+td = format-date model.created_at 'dddd, MMMM Do YYYY, h:mm a'
+td = time-from-now model.expires_at
+td 
+  .btn.btn-small.btn-default{action 'resend'}
+    | Resend
+td
+  .btn.btn-small.btn-default{action 'destroy'}
+    | Destroy
