@@ -32,21 +32,12 @@ export default step.extend
 
 
   initialize: ->
-    console.log("[RAT] calling details initialize()")
-
-
     model = @get('builder.model')
     @set 'model', model
     @load_assignment_data().then (assignment) =>
-      console.log('[RAT] assignment is ', assignment)
       @query_team_sets().then (team_sets) =>
-        console.log('[RAT] team_sets are ', @get('team_sets'))
         @initialize_team_set().then (team_set) =>
-          console.log('[RAT] team_set is ', @get('selected_team_set'))
           @create_changeset()
-
-          console.log('[RAT] changeset initialized to ', @get('changeset'))
-
           @set_all_data_loaded()
 
   save: ->
@@ -70,7 +61,6 @@ export default step.extend
   query_team_sets: ->
     new ember.RSVP.Promise (resolve, reject) =>
       @get('model').get(ta.to_p('space')).then (space) =>
-        console.log('[RAT] space is ', space)
         space.get_team_sets().then (team_sets) =>
           @set 'team_sets', team_sets
           resolve()

@@ -1,0 +1,5 @@
+.forms__section.spacing__margin-bottom--4
+  h2.text--inline-block Content
+
+  link-to step.route_path model class='button btn is-right spacing__margin-top--half'
+    | Edit content

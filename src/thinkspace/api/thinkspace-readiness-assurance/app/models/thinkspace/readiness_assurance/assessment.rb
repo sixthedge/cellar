@@ -1,6 +1,10 @@
 module Thinkspace
   module ReadinessAssurance
     class Assessment < ActiveRecord::Base
+      ## Can get the after_save working via callbacks (http://stackoverflow.com/questions/1342761/how-to-skip-activerecord-callbacks?noredirect=1&lq=1)
+      ## but seems a little unwieldy
+      # after_save :sync_assessments
+
       def question_settings; merged_question_settings; end
       def ra_type; get_ra_type; end
       totem_associations
@@ -22,6 +26,23 @@ module Thinkspace
       # ###
       # ### Settings.
       # ###
+
+      def sync_assessments
+        ## get my partner
+        ## set my settings n questions n thangs
+        phase      = self.authable
+        assignment = Thinkspace::Casespace::Assignment.find(phase.assignment_id)
+
+        if assignment.sync_rat
+          assessments = Thinkspace::ReadinessAssurance::Assessment.where(authable: assignment.thinkspace_casespace_phases).without(self)
+          assessments.each do |assessment|
+            assessment.questions = self.questions
+            ## May need to refactor to accommodate irat/trat-only settings
+            assessment.settings  = self.settings.deep_merge(assessment.settings)
+            assessment.save
+          end
+        end
+      end
 
       def get_settings; self.settings || Hash.new; end
       def get_ra_type;  get_settings['ra_type']; end

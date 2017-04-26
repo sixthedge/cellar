@@ -1,9 +1,14 @@
 import ember from 'ember'
 import base  from 'thinkspace-base/components/base'
 
+###
+# # confirmation.coffee
+- Type: **Component**
+- Package: **thinkspace-builder-rat**
+###
 export default base.extend
   # ## Services
-  # - `thinkspace-builder-pe/builder`
+  # - `thinkspace-builder-rat/builder`
   builder: ember.inject.service()
 
   step:    ember.computed.reads 'builder.current_step'
@@ -11,5 +16,4 @@ export default base.extend
   # ## Actions
   actions:
     prev_step: -> @get('builder').transition_to_prev_step()
-    next_step: -> @get('builder').transition_to_next_step()
     exit: -> @get('builder').transition_to_cases_show()

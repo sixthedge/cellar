@@ -1,0 +1,22 @@
+.forms__field-wrapper
+  label #{model.question}
+
+each model.choice_items as |choice index|
+  component 'content/question/choice/show' model=choice index=index
+
+hr
+.btn-group
+  .btn.btn--primary click='toggle_edit'
+    | Edit question
+  .btn click='duplicate'
+    | Duplicate
+  .btn click='reorder_up'
+    | Up
+  .btn click='reorder_down'
+    | Down
+  .btn click='reorder_top'
+    | Top
+  .btn click='reorder_bottom'
+    | Bottom
+  .btn.is_right click='delete'
+    | Delete

@@ -33,6 +33,8 @@ export default ta.Model.extend resource_mixin, ta.totem_data, ta.add(
   has_due_at:     ember.computed.notEmpty 'due_at'
   has_release_at: ember.computed.notEmpty 'release_at'
 
+  # sync_rat:       ember.computed.bool 'settings.rat.sync'
+
   ttz: ember.inject.service()
 
   totem_data_config: ability: true, metadata: true
@@ -164,3 +166,10 @@ export default ta.Model.extend resource_mixin, ta.totem_data, ta.add(
   activate:   -> @model_state_change('activate')
   inactivate: -> @model_state_change('inactivate')
   archive:    -> @model_state_change('archive')
+
+  set_sync_assessment: (value) ->
+    settings = @get('settings')
+    console.log('[set_sync_assessment] ', value, settings)
+    settings.rat = {} unless ember.isPresent(settings.rat)
+    ember.set(settings.rat, 'sync', value)
+    console.log('[set_sync_assessment] ', settings)

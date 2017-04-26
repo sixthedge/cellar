@@ -4,7 +4,7 @@ import base  from 'thinkspace-base/components/base'
 ###
 # # settings.coffee
 - Type: **Component**
-- Package: **ethinkspace-builder-pe**
+- Package: **thinkspace-builder-pe**
 ###
 export default base.extend
 

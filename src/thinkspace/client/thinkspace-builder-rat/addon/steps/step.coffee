@@ -1,6 +1,6 @@
-import ember from 'ember'
-import base  from 'thinkspace-base/objects/base'
-import common_helper from 'thinkspace-common/mixins/helpers/common/all'
+import ember           from 'ember'
+import base            from 'thinkspace-base/objects/base'
+import common_helper   from 'thinkspace-common/mixins/helpers/common/all'
 
 ###
 # # step.coffee

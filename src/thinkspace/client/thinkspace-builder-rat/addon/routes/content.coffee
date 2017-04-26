@@ -3,14 +3,14 @@ import ns    from 'totem/ns'
 import base  from 'thinkspace-base/routes/base'
 
 ###
-# # confirmation.coffee
+# # content.coffee
 - Type: **Route**
-- Package: **ethinkspace-builder-pe**
+- Package: **ethinkspace-builder-rat**
 ###
 export default base.extend
 
   # ## Services
-  # - `thinkspace-builder-pe/builder`
+  # - `thinkspace-builder-rat/builder`
   builder: ember.inject.service()
 
   # ## Methods

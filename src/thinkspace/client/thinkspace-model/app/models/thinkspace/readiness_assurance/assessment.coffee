@@ -16,7 +16,9 @@ export default base.extend ta.add(
   settings: ta.attr()
   answers:  ta.attr()
 
-  questions: ember.computed.reads 'question_settings'
+  questions: ta.attr()
+
+  # questions: ember.computed.reads 'question_settings'
 
   is_irat: ember.computed.equal 'ra_type', 'irat'
   is_trat: ember.computed.equal 'ra_type', 'trat'

@@ -1,0 +1,6 @@
+| #{prefix}. 
+
+component '__changeset/input' value=model.changeset.label changeset=model.changeset attribute='label' display_errors=true
+
+.btn click='delete'
+  | Delete

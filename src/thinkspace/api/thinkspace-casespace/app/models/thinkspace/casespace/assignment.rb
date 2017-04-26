@@ -229,6 +229,12 @@ module Thinkspace
         end
       end
 
+      def sync_rat
+        return false unless settings.present?
+        return false unless settings['rat']['sync'].present?
+        return settings['rat']['sync']
+      end
+
       # ###
       # ### Query Key
       # ###

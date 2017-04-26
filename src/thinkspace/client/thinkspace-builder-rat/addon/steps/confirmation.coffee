@@ -4,7 +4,7 @@ import step  from './step'
 ###
 # # confirmation.coffee
 - Type: **Step Object**
-- Package: **ethinkspace-builder-rat**
+- Package: **thinkspace-builder-rat**
 ###
 export default step.extend
 

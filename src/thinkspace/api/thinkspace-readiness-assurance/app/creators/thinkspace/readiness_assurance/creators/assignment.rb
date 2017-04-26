@@ -20,6 +20,15 @@ module Thinkspace; module ReadinessAssurance; module Creators
       @assignment
     end
 
+    def create_assignment_from_params
+      assignment_type_id = params_association_path_id('thinkspace/casespace/assignment_type_id')
+      space_id           = params_association_path_id('thinkspace/common/space_id')
+
+      model = assignment_class.new(assignment_type_id: assignment_type_id, space_id: space_id, state: :inactive, settings: {rat: {sync: true}})
+      model.save(validate: false) # skip validations
+      model
+    end
+
     def create_assessment(phase, type)
       @assessment = assessment_class.create(
         authable: phase,

@@ -18,24 +18,25 @@ export default step.extend
   route_path: 'content'
 
   builder: ember.inject.service()
+  manager: ember.inject.service()
 
   model: ember.computed.reads 'builder.model'
 
+  sync_assessments: ember.computed.reads 'model.settings.rat.sync'
+
   initialize: ->
-    console.log('[RAT] calling content initialize ', @get('builder'), @get('builder.model'))
     @reset_all_data_loaded()
 
     promises = 
       assessments: @query_assessments()
 
     @rsvp_hash_with_set(promises, @).then (results) =>
+      @get('manager')
       @init_assessments()
-      console.log('[RAT] assessments? ', results.assessments, results.assessments.get('length'))
 
   query_assessments: ->
     new ember.RSVP.Promise (resolve, reject) =>
       model = @get('model')
-      console.log("model is ", model)
 
       query =
         id: model.get('id')
@@ -50,9 +51,22 @@ export default step.extend
 
   init_assessments: ->
     assessments = @get('assessments')
+    manager     = @get('manager')
 
     irat = assessments.findBy 'is_irat', true
     trat = assessments.findBy 'is_trat', true
 
-    console.log('irat is ', irat)
-    console.log('trat is ', trat)
+    @set('irat_assessment', irat)
+    @set('trat_assessment', trat)
+
+    manager.set_assessment('irat', irat)
+    manager.set_assessment('trat', trat)
+
+  toggle_assessment_sync: ->
+    model = @get('model')
+    value = model.set_sync_assessment(!@get('sync_assessments'))
+
+    model.save().then =>
+      @query_assessments().then (assessments) =>
+        @set('assessments', assessments)
+        @init_assessments()
