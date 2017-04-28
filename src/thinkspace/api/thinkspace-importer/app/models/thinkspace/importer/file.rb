@@ -7,6 +7,7 @@ module Thinkspace
       validates_attachment_content_type :attachment, content_type: %w(text/csv text/plain application/octet-stream application/vnd.ms-excel)
       before_save                       :set_settings_will_change
 
+      # # Helpers
       def title
         attachment_file_name
       end
@@ -245,6 +246,16 @@ module Thinkspace
 
       def get_nested_attributes
         get_settings_value(:nested_attributes)
+      end
+
+      # ### Paperclip
+      def paperclip_path
+        case importable
+        when Thinkspace::Common::Space
+          "spaces/#{importable.id}/importer/:filename"
+        else
+          "spaces/system/importer/:filename"
+        end
       end
 
       # At bottom because it will throw a WARNING otherwise because they above methods haven't been added yet.

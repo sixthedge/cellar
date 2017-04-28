@@ -13,7 +13,7 @@
           | Unlock Evaluations
       else
         .btn-group
-          button.btn.btn--primary click='notify'
+          button.btn.btn--primary click='remind'
             | Send reminder
           if model.is_ignored
             button.btn click='unignore'

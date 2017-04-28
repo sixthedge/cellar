@@ -129,12 +129,12 @@ module Thinkspace
             def team_class;  Thinkspace::Team::Team; end
             def phase_class; Thinkspace::Casespace::Phase; end
             def assignment_class; Thinkspace::Casespace::Assignment; end
-            def observation_list_class; Thinkspace::ObservationList::List; end
-            def observation_note_class; Thinkspace::ObservationList::ObservationNote; end
+            def observation_list_class; return; Thinkspace::ObservationList::List; end
+            def observation_note_class; return; Thinkspace::ObservationList::ObservationNote; end
 
-            def content_class;  Thinkspace::Html::Content; end
-            def response_class; Thinkspace::InputElement::Response; end
-            def element_class;  Thinkspace::InputElement::Element; end
+            def content_class;  return; Thinkspace::Html::Content; end
+            def response_class; return; Thinkspace::InputElement::Response; end
+            def element_class;  return; Thinkspace::InputElement::Element; end
 
             # ################################### #
             # Authable (e.g phase).

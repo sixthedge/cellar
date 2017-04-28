@@ -1,0 +1,11 @@
+.pagination__container.spacing__margin-bottom--1
+  .btn-group--conjoined.is-right
+    button.btn.btn--square click='first' title='First Page'
+      .icon.icon--16.icon__arrow-end--white.icon__arrow--left
+    button.btn.btn--square click='prev' title='Previous Page'
+      .icon.icon--16.icon__arrow--white.icon__arrow--left
+    span.pagination__text <strong>#{rows.current_page}</strong> of <strong>#{rows.total_pages}</strong> pages
+    button.btn.btn--square click='prev' title='Next Page'
+      .icon.icon--16.icon__arrow--white.icon__arrow--right 
+    button.btn.btn--square click='last' title='Last Page'
+      .icon.icon--16.icon__arrow-end--white.icon__arrow--right 

@@ -19,14 +19,28 @@
     padding:       0 1rem;
     height:        2rem;
     border-bottom: $border--default;
+    transition: $transition-animation--background-color;
+
+    &.th__sortable {
+      &:hover, &:focus {
+        cursor: pointer;
+        background-color: darken($color-gray-med, 5%);
+      }
+
+      &:active {
+        outline:        1px dotted $color-gray-base;
+        outline-offset: -4px;
+      }
+    }
   }
 
   tbody {
     border-top: $border--default;
 
     tr {
+      background-color: white;
       &:nth-child(2n) {
-        background-color: $color-gray-light;
+        background-color: #F7F7F7;
       }
     }
   }

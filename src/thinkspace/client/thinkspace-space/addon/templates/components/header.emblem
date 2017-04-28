@@ -16,8 +16,11 @@
           a.menu-bar__link
             | Exercise List
         li.menu-bar__item
-          a.menu-bar__link
-            | People
+          link-to 'roster' model class="menu-bar__link"
+            | Roster
+        li.menu-bar__item
+          link-to-external 'thinkspace-team-builder.manage' model class="menu-bar__link"
+            | Teams
         li.menu-bar__item
           a.menu-bar__link
             | Scores

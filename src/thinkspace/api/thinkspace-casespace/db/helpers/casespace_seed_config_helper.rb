@@ -73,6 +73,7 @@ def casespace_seed_config_get_config_methods
     methods           = casespace_methods.collect {|m| casespace_seed_config_get_config_method_from_key(m)}
     @seed.namespace_lookup.keys.sort.each do |key|
       method = casespace_seed_config_get_config_method_from_key(key.to_s.pluralize)
+      puts "ABOUT TO RUN METHOD: #{method}"
       if self.respond_to?(method, true)  # add engine method
         methods.push method
       end

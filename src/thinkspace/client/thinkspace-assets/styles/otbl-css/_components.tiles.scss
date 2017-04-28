@@ -8,6 +8,11 @@
 	padding-left: 0;
 }
 
+.tile__container {
+	&:focus {
+		outline: none;
+	}
+}
 
 .tile__item {
 	display:          block;
@@ -23,6 +28,11 @@
 
 	&:hover, &:focus {
 		border-color: $color-blue-base;
+		outline: none;
+	}
+
+	&:active {
+		border-color: $color-blue-base;
 	}
 }
 
@@ -32,7 +42,7 @@
 	transition: color .29s ease-in-out 0s;
 	color:      $color-black-base;
 
-	.tile__item:hover & {
+	.tile__item:hover &, .tile__item:focus & {
 		color: $color-blue-base;
 	}
 }

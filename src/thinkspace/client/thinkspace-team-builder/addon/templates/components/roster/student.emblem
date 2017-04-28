@@ -1,0 +1,7 @@
+td 
+  if is_selected
+    | X
+td
+td = model.last_name
+td = model.first_name
+td = team_title

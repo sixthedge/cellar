@@ -13,6 +13,8 @@ export default ta.Model.extend ta.add(
   state:       ta.attr('string')
   settings:    ta.attr()
   metadata:    ta.attr()
+  scaffold:    ta.attr()
+  transform:   ta.attr()
   
   # ### State management
   is_locked:       ember.computed.equal 'state', 'locked'
@@ -52,4 +54,9 @@ export default ta.Model.extend ta.add(
   total_teams_count: ember.computed 'metadata.total_teams', ->
     count = @get 'metadata.total_teams'
     if count.then? then count.get('length') else count
+
+  # # Builder Additions
+  has_transform: ember.computed 'transform', ->
+    transform = @get('transform')
+    !ember.isEmpty(ember.keys(transform))
 

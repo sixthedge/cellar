@@ -6,6 +6,7 @@ commands:
   - run: ember-deploy
   - run: pickadate
   - run: rangeslider
+  - run: ember-uploader
 
 variables:
   rootURL: '/'

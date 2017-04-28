@@ -37,6 +37,14 @@ module Thinkspace; module PeerAssessment
       review_set.unlock_phase_for_ownerable
     end
 
+    def reset_quantitative_data
+      return unless self.value.present?
+      val = self.value.deep_dup
+      val['quantitative'] = {}
+      self.value = val
+      self.save
+    end
+
     def self.generate_anonymized_review_json(assessment, reviews)
       results             = {}
       json                = {}
@@ -70,6 +78,25 @@ module Thinkspace; module PeerAssessment
           json[:quantitative][id][:label] = label
           json[:quantitative][id][:value] = results[id]
         end
+      end
+
+      values  = review.quantitative_items
+      values.each do |id, attrs|
+        results[id] ||= []
+        value = attrs['value']
+        next unless value.present?
+        results[id] << value.to_f
+      end
+
+      # Sort by category.
+      items = assessment.quantitative_items
+      items.each do |item|
+        id    = item['id']
+        label = item['label']
+        next unless id.present?
+        json[:quantitative][id] ||= {}
+        json[:quantitative][id][:label] = label
+        json[:quantitative][id][:value] = results[id]
       end
 
       # Average results

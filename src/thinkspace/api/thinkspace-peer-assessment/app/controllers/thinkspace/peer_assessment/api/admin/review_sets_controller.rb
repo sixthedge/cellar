@@ -33,13 +33,11 @@ module Thinkspace; module PeerAssessment; module Api; module Admin;
       controller_render(@review_set)
     end
 
-    def notify
-      message = params[:notification]
-      Thinkspace::PeerAssessment::AssessmentMailer.notify_review_set_ownerable(@review_set, message).deliver_now
+    def remind
+      Thinkspace::PeerAssessment::AssessmentMailer.notify_assessment_reminder(@review_set).deliver_now
       controller_render(@review_set)
     end
 
-    # ## Private
     private
 
     def authorize_authable

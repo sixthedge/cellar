@@ -21,6 +21,9 @@ module Thinkspace
         event :deactivate do; transitions to: :inactive, after: :after_deactivate end
       end
 
+      def color; 'eeeeee'; end
+      def can_email?; email_optin; end
+
       # ###
       # ### Scopes.
       # ###
@@ -91,10 +94,13 @@ module Thinkspace
       def full_name;                      "#{first_name} #{last_name}";                                               end
       def name;                           full_name;                                                                  end
       def title;                          "#{last_name}, #{first_name}";                                              end
-      
-      # TODO: implement
-      def create_sandbox
-        puts "TODO: Implement user.create_sandbox"
+
+      def color
+        i = 0
+        full_name.each_char do |c| i = c.ord + ((i << 5) - i) end
+        c = (i & 0x00FFFFFF).to_s(16)
+        return c if c.length == 6
+        return "00000"[0..(5 - c.length)] + c
       end
 
       # ### Terms

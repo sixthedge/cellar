@@ -43,3 +43,7 @@ if all_data_loaded
         each review_sets as |review_set|
           li.basic-list__item.basic-list__item--clickable
             component 'assessment/team_set/show/team_member' model=review_set team_members=team_members assignment=assignment assessment=assessment scroll_to='scroll_to_review_set'
+else
+  .loader__container
+    .loader.loader--logo
+    .text__font-size--14.text--bold Loading...

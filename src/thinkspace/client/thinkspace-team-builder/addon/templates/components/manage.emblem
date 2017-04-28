@@ -1,0 +1,7 @@
+partial 'components/helpers/space_header'
+partial 'components/helpers/builder_header'
+
+if is_teams
+  component 'manage/teams' model=model
+else
+  component 'manage/roster' model=model

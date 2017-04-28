@@ -42,18 +42,6 @@ module Thinkspace; module PeerAssessment
       phase
     end
 
-    def self.create_assessment_overview_phase(assignment, assessment)
-      phase    = assessment_overview_phase(assignment)
-      overview = create_overview(phase, assessment)
-      create_phase_component(phase, overview, 'peer-assessment-overview', 'overview')
-      create_header_component(phase)
-      phase
-    end
-
-    def self.create_overview(phase, assessment)
-      Thinkspace::PeerAssessment::Overview.create(authable: phase, assessment_id: assessment.id)
-    end
-
     def self.create_phase(options={})
       phase                   = Thinkspace::Casespace::Phase.new
       phase.assignment_id     = options[:assignment_id]
@@ -68,17 +56,31 @@ module Thinkspace; module PeerAssessment
       phase
     end
 
-    def self.assessment_overview_phase(assignment)
+    def self.assessment_phase(assignment)
       options                     = Hash.new
       options[:assignment_id]     = assignment.id
-      options[:phase_template_id] = assessment_overview_phase_template.id
+      options[:phase_template_id] = assessment_phase_template.id
       options[:team_category_id]  = Thinkspace::Team::TeamCategory.assessment.id
-      options[:title]             = 'Peer Assessment Overview' # TODO: What should title be?
-      options[:description]       = 'See the peer assessment overview here.' # TODO: What should the description be?
+      options[:title]             = 'Peer Assessment' # TODO: What should title be?
+      options[:description]       = 'Take the peer assessment here.' # TODO: What should the description be?
       options[:state]             = :active
-      options[:default_state]     = 'locked'
-      options[:position]          = 2
+      options[:default_state]     = 'unlocked'
+      options[:position]          = 1
       create_phase(options)
+    end
+
+    def self.create_phase(options={})
+      phase                   = Thinkspace::Casespace::Phase.new
+      phase.assignment_id     = options[:assignment_id]
+      phase.phase_template_id = options[:phase_template_id]
+      phase.team_category_id  = options[:team_category_id]
+      phase.title             = options[:title] || 'Peer Assessment Phase'
+      phase.description       = options[:description] || 'Peer assessment description.'
+      phase.state             = options[:state] || :inactive
+      phase.default_state     = options[:default_state] || 'unlocked'
+      phase.position          = options[:position] || 1
+      phase.save
+      phase
     end
 
     def self.assessment_phase(assignment)
@@ -105,6 +107,11 @@ module Thinkspace; module PeerAssessment
         section:       section
       )
       phase_component
+    end
+
+    def quantitative_items
+      return [] unless value.has_key?('quantitative')
+      value['quantitative']
     end
 
     def self.common_component
@@ -166,24 +173,20 @@ module Thinkspace; module PeerAssessment
       end
     end
 
+    def get_or_create_team_sets
+      team_ids          = Thinkspace::Team::Team.scope_by_teamables(self.authable).pluck(:id)
+      assessment_id     = self.id
+      team_sets         = Thinkspace::PeerAssessment::TeamSet.where(assessment_id: assessment_id, team_id: team_ids)
+      existing_team_ids = team_sets.pluck(:team_id)
+      create_team_ids   = team_ids - existing_team_ids
+      create_team_ids.each { |id| Thinkspace::PeerAssessment::TeamSet.create(assessment_id: assessment_id, team_id: id) }
+      team_sets.reload unless create_team_ids.empty?
+      team_sets
+    end
+
     def process_assessment
       # TODO: Re-add notify
       thinkspace_peer_assessment_team_sets.scope_approved.each { |team_set| team_set.mark_as_sent! }
-    end
-
-    def overview_phase
-      phase      = authable
-      assignment = phase.thinkspace_casespace_assignment
-      phase_ids  = assignment.thinkspace_casespace_phases.scope_active.pluck(:id)
-      overview   = Thinkspace::PeerAssessment::Overview.find_by(assessment_id: self.id)
-      return unless overview.present?
-      overview_phase = overview.authable
-      raise "Cannot get a phase that is cross-assignment when unlocked a PeerAssessment::Assessment" unless phase_ids.include?(overview_phase.id)
-      overview_phase
-    end
-
-    def notify_overview_unlocked_for_user(user)
-      Thinkspace::PeerAssessment::AssessmentMailer.notify_overview_unlocked(self, user).deliver_now
     end
 
     ## Serialized method to determine whether the current state of the 'value' column differs from the assessment template's.

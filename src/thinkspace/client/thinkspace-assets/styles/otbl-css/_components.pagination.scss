@@ -1,0 +1,14 @@
+///*------------------------------------*\
+//    #PAGINATION
+//\*------------------------------------*
+
+.pagination__container {
+  @extend .group;
+  
+  margin-bottom: 1rem;
+}
+
+.pagination__text {
+  font-size: 14px;
+  margin:    0 1rem;
+}

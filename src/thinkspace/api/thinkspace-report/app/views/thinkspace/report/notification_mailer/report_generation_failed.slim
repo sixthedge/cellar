@@ -1,8 +1,5 @@
-== content_for :header_title do
-  | Hi #{@user.first_name}, your report failed to generate.
+== content_for :content do
+  h3 Hi #{@user.first_name}, your report is ready!
 
-== content_for :header_deets do
   p Your report (#{@report.title}) has failed to generate with an error message of: #{@message}
   p Please contact support and reference error code #{@report.id}-#{@error_code}.
-
-== content_for :footer_terms, "Learn more about ThinkSpace"

@@ -40,3 +40,35 @@
     transform: rotate(-90deg);
   }
 }
+
+.icon__arrow--white {
+  background-image: url('images/icons/otbl-icons_arrow-up--white.svg');
+
+  &.icon__arrow--right {
+    transform: rotate(90deg);
+  }
+
+  &.icon__arrow--left {
+    transform: rotate(-90deg);
+  }
+
+  &.icon__arrow--down {
+    transform: rotate(180deg);
+  }
+}
+
+.icon__arrow-end--white {
+  background-image: url('images/icons/otbl-icons_arrow-top--white.svg');
+
+  &.icon__arrow--right {
+    transform: rotate(90deg);
+  }
+
+  &.icon__arrow--left {
+    transform: rotate(-90deg);
+  }
+
+  &.icon__arrow--down {
+    transform: rotate(180deg);
+  }
+}

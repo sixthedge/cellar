@@ -29,7 +29,7 @@
     - {has_many: thinkspace/common/user_disciplines, as: user, serialize: false}
     - {has_one:  thinkspace/common/configuration,    as: configurable, dependent: destroy, serialize: false}
   serializers:
-    - attributes: [id, first_name, last_name, email, state, avatar_url, avatar_title, avatar_updated_at, profile, email_optin, activated_at, tos_current]
+    - attributes: [id, first_name, last_name, email, state, avatar_url, avatar_title, avatar_updated_at, profile, email_optin, activated_at, tos_current, color]
 
 - model: thinkspace/common/space_type
   domain: true
@@ -66,6 +66,11 @@
     - {belongs_to: thinkspace/common/user, readonly: true}
   serializers:
     - attributes: [id, role, space_id, state]
+
+- model: thinkspace/common/color
+  domain: true
+  serializers:
+    - attributes: [id, color, title, description]
 
 - model: thinkspace/common/configuration
   associations:

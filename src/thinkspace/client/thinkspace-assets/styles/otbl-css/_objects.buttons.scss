@@ -52,6 +52,12 @@ button,
   }
 }
 
+.btn--square {
+  padding: 0 6px;
+  width:   2rem;
+  height:  2rem;
+}
+
 .btn--disabled {
   opacity:        .5;
   pointer-events: none;
@@ -73,7 +79,7 @@ button,
 
 .btn-group {
 
-	.btn {
+	.btn, .dropdown {
 		margin-left: 1rem;
 
 		&:first-child {
@@ -84,5 +90,23 @@ button,
   >.btn__component {
     display: inline-block;
     margin-left: 1rem;
+  }
+}
+
+.btn-group--conjoined {
+  .btn {
+    border-radius: 0;
+    margin-right: 2px;
+
+    &:first-child {
+      border-bottom-left-radius: $border-radius;
+      border-top-left-radius:    $border-radius; 
+    }
+
+    &:last-child {
+      border-bottom-right-radius: $border-radius;
+      border-top-right-radius:    $border-radius; 
+      margin-right:               0;
+    }
   }
 }

@@ -1,14 +1,11 @@
-== content_for :header_title, "Account Invalid"
-== content_for :header_deets, "No ThinkSpace account has been registered for #{@email}"
-== content_for :content_question, "Did you register with a different email?"
-== content_for :content_answer do
+== content_for :content do
+  h3 Password Reset Instructions
+  p Hi #{@email},
+
   - if @has_pending_invite
     | You have a pending invite from an instructor and have not activated your account.  You must create your account through the link provided in the email from the invitation.
   - else
     | Use the button below to try a different email, or if you aren't sure which email you registered your ThinkSpace account with, contact us at 
     b support@thinkspace.org
 
-== content_for :content_contact do
-  | If you don't have a ThinkSpace account, contact your instructor for an invitation.
-
-== content_for :footer_action, "Reset Password"
+    a href="#{@url}" Reset Password
