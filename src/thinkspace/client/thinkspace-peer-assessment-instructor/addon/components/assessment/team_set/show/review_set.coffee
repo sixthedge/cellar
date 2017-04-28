@@ -23,25 +23,25 @@ export default base_component.extend
     @set 'ownerable', ownerable
 
   # ### Helpers
-  state_change: (state) ->
+  review_set_action: (action) ->
     model = @get 'model'
 
     query = 
       id:     model.id
     options =
-      action: state
+      action: action
       verb:   'PUT'
 
     @tc.query_action(ns.to_p('tbl:review_set'), query, options).then (review_set) =>
-      @totem_messages.api_success source: @, model: model, action: state, i18n_path: ns.to_o('tbl:review_set', state)
+      @totem_messages.api_success source: @, model: model, action: action, i18n_path: ns.to_o('tbl:review_set', action)
     , (error) =>
-      @totem_messages.api_failure error, source: @, model: model, action: state     
+      @totem_messages.api_failure error, source: @, model: model, action: saction    
 
   # ### Actions
   actions:
-    unlock: -> @state_change('unlock')
-    ignore: -> @state_change('ignore')
-    unignore: -> @state_change('unignore')
-    notify: -> console.log "TODO: Implement review_set@notify"
+    unlock: -> @review_set_action('unlock')
+    ignore: -> @review_set_action('ignore')
+    unignore: -> @review_set_action('unignore')
+    remind: -> @review_set_action('remind')
 
     toggle_expand: -> @toggleProperty 'is_expanded'

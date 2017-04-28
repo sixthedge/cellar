@@ -22,6 +22,7 @@ module Thinkspace
       end
 
       def color; 'eeeeee'; end
+      def can_email?; email_optin; end
 
       # ###
       # ### Scopes.

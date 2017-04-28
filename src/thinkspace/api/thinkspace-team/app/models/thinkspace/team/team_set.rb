@@ -113,20 +113,6 @@ module Thinkspace
             reconcilers << reconciler 
           end
         end
-
-        if reconcilers.size == 1
-          reconcilers.first.notify
-        else
-          notify_team_set_modified
-        end
-
-      end
-
-      def notify_team_set_modified
-        # TODO: Implement
-        # delta = Thinkspace::Team::Deltas::TeamSet.new(self).process
-        # ids   = delta.get_changed_delta_teams.map(&:id)
-        # Thinkspace::Team::TeamMailer.delay.notify_team_has_changed
       end
 
       def generate_scaffold

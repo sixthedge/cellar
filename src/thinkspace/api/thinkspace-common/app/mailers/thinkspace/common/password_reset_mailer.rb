@@ -1,36 +1,31 @@
 module Thinkspace
   module Common
     class PasswordResetMailer < Thinkspace::Common::BaseMailer
-      layout 'thinkspace/common/layouts/password'
       skip_after_action :prevent_delivery, only: [:instructions, :user_not_found]
 
       def instructions(password_reset)
-        token      = password_reset.token
-        @email     = password_reset.email
-        url_suffix = "/users/password/reset/#{token}"
-        @host      = 'http://localhost:4200' unless Rails.env.production?
-        @host      = Rails.application.secrets.smtp['postmark']['domain'] if Rails.env.production?
-        @url       = @host + url_suffix
-        subject    = 'Password Reset'
+        token   = password_reset.token
+        @email  = password_reset.email
+        @url    = app_domain + password_reset_show_url(token)
+        subject = 'Password Reset'
 
-        mail_settings = { to: @email, subject: format_subject(subject)}
-        mail(mail_settings)
+        mail(to: @email, subject: format_subject(subject))
       end
 
       def user_not_found(email)
         @email              = email
         @user               = Thinkspace::Common::User.find_by(email: email)
         @has_pending_invite = @user.inactive? if @user.present?
-        url_suffix          = "/users/password/reset"
-        @host               = 'http://localhost:4200' if Rails.env.development?
-        @host               = Rails.application.secrets.smtp['postmark']['domain'] if Rails.env.production?
-        @url                = @host + url_suffix
+        @url                = app_domain + password_reset_url
         subject             = 'Password Reset'
 
-        mail_settings = { to: @email, subject: format_subject(subject)}
-        mail(mail_settings)
+        mail(to: @email, subject: format_subject(subject))
       end
 
+      private
+
+      def password_reset_show_url(token); "/users/password/reset/#{token}"; end
+      def password_reset_url; "/users/password/reset"; end
 
     end
   end

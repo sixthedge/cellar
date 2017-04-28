@@ -14,11 +14,7 @@ module Thinkspace
             access_denied_state_error :update if @assessment.active?
             @assessment.value = params_root[:value]
             @assessment.assessment_template_id = params_association_id(:assessment_template_id)
-            # if @assessment.save
-            #   controller_render_no_content
-            # else
             @assessment.save ? controller_render(@assessment) : controller_render_error(@assessment)
-            # end
           end
 
           def activate
@@ -63,65 +59,9 @@ module Thinkspace
           end
 
           def progress_report
-
-            teams       = Thinkspace::Team::Team.scope_by_teamables(@assessment.authable)
-            team_sets   = Thinkspace::PeerAssessment::TeamSet.where(assessment_id: @assessment.id, team_id: teams.pluck(:id))
-            review_sets = Thinkspace::PeerAssessment::ReviewSet.where(team_set_id: team_sets.pluck(:id))
-
-            data = { team_sets: Array.new }
-
-            team_sets.each do |team_set|
-              team         = teams.find_by(id: team_set.team_id)
-              num_total    = team_set.thinkspace_team_team.thinkspace_common_users.count
-              num_complete = team_set.thinkspace_peer_assessment_review_sets.to_a.count { |rs| rs.status == 'complete' }
-
-              team_set_data = {
-                id:           team_set.id,
-                title:        team_set.thinkspace_team_team.title,
-                num_total:    num_total,
-                num_complete: num_complete,
-                num_ignored:  num_total - num_complete,
-                state:        team_set.state,
-                color:        team_set.thinkspace_team_team.color,
-                review_sets:  Array.new
-              }
-
-              team.thinkspace_common_users.order(:first_name, :last_name).each do |user|
-
-                review_set = review_sets.find_by(ownerable: user, team_set_id: team_set.id)
-                id         = if review_set.present? then review_set.id     else nil           end
-                state      = if review_set.present? then review_set.state  else 'neutral'     end
-                status     = if review_set.present? then review_set.status else 'not started' end
-
-                team_set_data[:review_sets] << {
-                  id:             id,
-                  name:           user.full_name,
-                  color:          user.color,
-                  state:          state,
-                  status:         status,
-                  ownerable_id:   user.id,
-                  ownerable_type: 'thinkspace/common/user'
-                }
-              end
-
-              data[:team_sets] << team_set_data
-            end
-            data[:team_sets] = data[:team_sets].sort { |a,b| a[:title] <=> b[:title] }
-
-            data[:complete] = {
-              review_sets: review_sets.to_a.count { |rs| rs.status == 'complete' },
-              team_sets:   data[:team_sets].count { |tsd| tsd[:num_complete] == tsd[:num_total] }
-            }
-
-            data[:total] = {
-              review_sets: Thinkspace::Team::TeamUser.where(team_id: teams.pluck(:id)).count,
-              team_sets:   team_sets.count
-            }
-
+            data = Thinkspace::PeerAssessment::ProgressReports::Assessment.new(@assessment).process
             controller_render_json(data) 
-
           end
-
 
           private
 

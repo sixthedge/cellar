@@ -9,9 +9,9 @@ module Thinkspace
 
       private
 
-      def postmark_domain; Rails.application.secrets.smtp['postmark']['domain']; end
-      def prevent_delivery; mail.perform_deliveries = @user.can_email?;          end
-      def format_subject(suffix); '[OTBL] ' + suffix;                            end
+      def app_domain; Rails.application.secrets.smtp['postmark']['domain']; end
+      def prevent_delivery; mail.perform_deliveries = @user.can_email?;     end
+      def format_subject(subject); '[OTBL] ' + subject;                     end
         
     end
   end
