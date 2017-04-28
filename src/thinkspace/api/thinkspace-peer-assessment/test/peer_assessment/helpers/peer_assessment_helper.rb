@@ -5,7 +5,6 @@ require 'test_helper'
 require 'pp'
 
 require_relative '../../../../thinkspace-casespace/test/helpers/casespace_helper'
-# require_relative '../../../../../thinkspace-casespace/test/helpers/controller_helper'
 require_test_helper_files('../peer_assessment/helpers/route', engine: 'thinkspace-peer-assessment')
 require_test_helper_files('../peer_assessment/helpers', engine: 'thinkspace-peer-assessment')
 Test::Casespace::Seed.load(config: :peer_assessment)
@@ -39,22 +38,6 @@ def assert_explode(team_set, transform)
     assert_equal ids.uniq.sort, team.thinkspace_common_users.pluck(:id).uniq.sort, "user ids are equal for team #{trans_team['title']}"
   end
 end
-
-# def assert_reconcile(team_set)
-#   team_set.thinkspace_team_teams.each do |team|
-#     users = team.thinkspace_common_users
-#     ts = get_team_set_for_team(team)
-#     assert_presence ts
-#     users.each do |ownerable|
-#       rs = get_review_set_for_ownerable(team_set, ownerable)
-#       assert_presence rs
-#       (users - Array.wrap(user)).each do |reviewable|
-#         rv = get_review_for_reviewable(rs, reviewable)
-#         assert_presence rv
-#       end
-#     end
-#   end
-# end
 
 # assert that the PE team_sets were reassigned to the correct team_ids
 def assert_team_ids_reassigned(team_set)

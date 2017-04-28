@@ -54,25 +54,6 @@ module Thinkspace
         unlock_phase_for_ownerable
       end
 
-      # def approve_reviews
-      #   thinkspace_peer_assessment_reviews.each { |review| review.approve! if review.may_approve? }
-      # end
-
-      # def unapprove_reviews
-      #   self.transaction do
-      #     thinkspace_peer_assessment_reviews.each { |review| review.unapprove! if review.may_unapprove? }
-      #     unlock_phase_for_ownerable
-      #   end
-      # end
-
-      # def mark_as_sent_reviews
-      #   thinkspace_peer_assessment_reviews.each { |review| review.mark_as_sent! if review.may_mark_as_sent? }
-      # end
-
-      # def submit_reviews
-      #   thinkspace_peer_assessment_reviews.each { |review| review.submit! if review.may_submit? }
-      # end
-
       def unlock_phase_for_ownerable
         ownerable = self.ownerable
         phase     = self.get_authable
@@ -80,6 +61,7 @@ module Thinkspace
         raise 'Cannot unlock a phase without a valid ownerable.' unless ownerable.present?
         phase_state = Thinkspace::Casespace::PhaseState.find_or_create_by(ownerable: ownerable, phase_id: phase.id)
         phase_state.unlock_phase!
+        Thinkspace::PeerAssessment::AssessmentMailer.delay.notify_assessment_unlocked(get_assessment,ownerable).deliver_now
       end
 
       # ### Review Helpers

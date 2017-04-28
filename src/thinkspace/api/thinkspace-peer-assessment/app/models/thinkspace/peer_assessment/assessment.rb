@@ -11,7 +11,7 @@ module Thinkspace
         state :approved
         state :active
 
-        event :activate, before: :activate_assessment do
+        event :activate do
           transitions from: :neutral, to: :active
         end
 
@@ -41,18 +41,6 @@ module Thinkspace
         phase
       end
 
-      def self.create_assessment_overview_phase(assignment, assessment)
-        phase    = assessment_overview_phase(assignment)
-        overview = create_overview(phase, assessment)
-        create_phase_component(phase, overview, 'peer-assessment-overview', 'overview')
-        create_header_component(phase)
-        phase
-      end
-
-      def self.create_overview(phase, assessment)
-        Thinkspace::PeerAssessment::Overview.create(authable: phase, assessment_id: assessment.id)
-      end
-
       def self.create_phase(options={})
         phase                   = Thinkspace::Casespace::Phase.new
         phase.assignment_id     = options[:assignment_id]
@@ -65,19 +53,6 @@ module Thinkspace
         phase.position          = options[:position] || 1
         phase.save
         phase
-      end
-
-      def self.assessment_overview_phase(assignment)
-        options                     = Hash.new
-        options[:assignment_id]     = assignment.id
-        options[:phase_template_id] = assessment_overview_phase_template.id
-        options[:team_category_id]  = Thinkspace::Team::TeamCategory.assessment.id
-        options[:title]             = 'Peer Assessment Overview' # TODO: What should title be?
-        options[:description]       = 'See the peer assessment overview here.' # TODO: What should the description be?
-        options[:state]             = :active
-        options[:default_state]     = 'locked'
-        options[:position]          = 2
-        create_phase(options)
       end
 
       def self.assessment_phase(assignment)
@@ -114,10 +89,6 @@ module Thinkspace
         Thinkspace::Casespace::PhaseTemplate.find_by(name: 'peer_assessment/assessment')
       end
 
-      def self.assessment_overview_phase_template
-        Thinkspace::Casespace::PhaseTemplate.find_by(name: 'peer_assessment/overview')
-      end
-
       def quantitative_items
         return [] unless value.has_key?('quantitative')
         value['quantitative']
@@ -151,38 +122,9 @@ module Thinkspace
         [min_score, max_score]
       end
 
-      def activate_assessment
-        self.transaction do
-          team_set_teamable = authable.thinkspace_team_team_set_teamables.first
-          raise "Cannot activate assessment [#{self.id}] without a valid team set teamble." unless team_set_teamable.present?
-          team_set = team_set_teamable.thinkspace_team_team_set
-          raise "Cannot activate assessment [#{self.id}] without a valid team set." unless team_set.present?
-          authable.unassign_team_set # Remove all team sets from the phase.
-          new_team_set  = team_set.clone_and_lock(authable)
-          teamables = thinkspace_peer_assessment_overviews.map(&:authable).uniq
-          teamables.push authable # All overview phases and assessment phase.
-          new_team_set.add_teamables teamables
-        end
-      end
-
       def process_assessment
         # TODO: Re-add notify
         thinkspace_peer_assessment_team_sets.scope_approved.each { |team_set| team_set.mark_as_sent! }
-      end
-
-      def overview_phase
-        phase      = authable
-        assignment = phase.thinkspace_casespace_assignment
-        phase_ids  = assignment.thinkspace_casespace_phases.scope_active.pluck(:id)
-        overview   = Thinkspace::PeerAssessment::Overview.find_by(assessment_id: self.id)
-        return unless overview.present?
-        overview_phase = overview.authable
-        raise "Cannot get a phase that is cross-assignment when unlocked a PeerAssessment::Assessment" unless phase_ids.include?(overview_phase.id)
-        overview_phase
-      end
-
-      def notify_overview_unlocked_for_user(user)
-        Thinkspace::PeerAssessment::AssessmentMailer.notify_overview_unlocked(self, user).deliver_now
       end
 
       def get_or_create_team_sets

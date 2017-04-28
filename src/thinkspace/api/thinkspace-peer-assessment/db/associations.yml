@@ -51,11 +51,3 @@
     - belongs_to: thinkspace/peer_assessment/assessment
   serializers:
     - attributes: [id, state, team_id]
-
-- model: thinkspace/peer_assessment/overview
-  associations:
-    - belongs_to: authable
-      polymorphic: true
-    - belongs_to: thinkspace/peer_assessment/assessment
-  serializers:
-    - attributes: [id, authable_id, authable_type]

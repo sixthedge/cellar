@@ -1,8 +1,10 @@
-== content_for :header_title, "Password reset instructions"
-== content_for :header_deets, "To reset your password, press the button below."
-== content_for :content_question, "Wait a minute, I didn't request a password reset!"
-== content_for :content_answer do
-  | If you didn't request one then ignore this email. If you continue receiving them, contact us at 
-  b support@thinkspace.org
-
-== content_for :footer_action, "Reset Password"
+== content_for :content do
+  h3 Password Reset Instructions
+  p Hi #{@email},
+  p 
+    | To reset your pasword, press the button below.
+    a href="#{@url}" Reset Password
+  p
+    | With love,
+    br
+    | The OTBL Team

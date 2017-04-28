@@ -21,7 +21,7 @@ module Thinkspace; module PeerAssessment; module Reconcilers
       @assessment                 = options[:componentable]
       @assignment                 = @phase.thinkspace_casespace_assignment
       @delta                      = options[:delta]
-      @notifications              = Array.new
+      @teams_to_notify            = Array.new
       @team_sets                  = team_set_class.where(assessment_id: @assessment.id)
       @team_sets_by_team_id       = @team_sets.index_by(&:team_id)
       @review_sets_by_team_set_id = review_set_class.where(team_set_id: @team_sets.pluck(:id)).group_by(&:team_set_id)
@@ -39,13 +39,20 @@ module Thinkspace; module PeerAssessment; module Reconcilers
       process_moves
       reassign_team_sets
       reset_quantitative_data
+      notify
     end
 
     # We implement notify as a public method to be called by the creator of the reconciler in order to avoid potentially multiple
     # reconcilers each sending the user a notification as part of their 'process' method
     def notify
-      # TODO: Implement
+      @teams_to_notify.each do |id|
+        team_set = get_team_set_by_team_id(id)
+        team_set.thinkspace_peer_assessment_review_sets.each do |review_set|
+          mailer_class.notify_quant_data_reset(@assessment, review_set.ownerable).deliver_now
+        end
+      end
     end
+    handle_asynchronously :notify
 
     private
 
@@ -132,15 +139,18 @@ module Thinkspace; module PeerAssessment; module Reconcilers
           team_set = get_team_set_by_team_id(team[:id])
           next if team_set.blank?
           team_set.reset_quantitative_data
+          @teams_to_notify << team_set.team_id
         end
+
       end
     end
 
     # ### Classes
-    def user_class;       Thinkspace::Common::User;              end
-    def team_set_class;   Thinkspace::PeerAssessment::TeamSet;   end
-    def review_set_class; Thinkspace::PeerAssessment::ReviewSet; end
-    def review_class;     Thinkspace::PeerAssessment::Review;    end
+    def user_class;       Thinkspace::Common::User;                     end
+    def team_set_class;   Thinkspace::PeerAssessment::TeamSet;          end
+    def review_set_class; Thinkspace::PeerAssessment::ReviewSet;        end
+    def review_class;     Thinkspace::PeerAssessment::Review;           end
+    def mailer_class;     Thinkspace::PeerAssessment::AssessmentMailer; end
 
     # ### Helpers
     def get_team_set_by_team_id(id); @team_sets_by_team_id[id]; end
