@@ -1,14 +1,14 @@
-label Release date
+label.spacing__margin-bottom--0 Release date
 .text__font-size--14.spacing__margin-bottom--1 = model.friendly_release_at
-label Due date
+label.spacing__margin-bottom--0 Due date
 .text__font-size--14.spacing__margin-bottom--1 = model.friendly_due_at
-label Exercise Type
+label.spacing__margin-bottom--0 Exercise Type
 .text__font-size--14.spacing__margin-bottom--1 = model.assignment_type.title
 
 if model.can.update
-  label Team set
+  label.spacing__margin-bottom--0 Team set
   .text__font-size--14.spacing__margin-bottom--1 = team_set.title
 else
-  label Team
+  label.spacing__margin-bottom--0 Team
   each teams as |team|
     .text__font-size--14.spacing__margin-bottom--1 = team.title

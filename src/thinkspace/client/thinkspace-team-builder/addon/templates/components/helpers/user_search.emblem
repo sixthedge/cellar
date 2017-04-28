@@ -1,6 +1,6 @@
-= input value=value
+= input value=value class='spacing__margin-bottom--1' placeholder='Search Students'
 
-ul
+ul.dropdown__list
   each results as |user|
-    li{action 'select' user}
+    li.dropdown__item.dropdown__item--thick{action 'select' user}
       = user.first_name

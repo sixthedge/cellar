@@ -27,6 +27,7 @@ export default base.extend arr_helpers,
       resolve() unless ember.isPresent(space)
       @init_team_set().then (team_set) =>
         @init_abstract().then (abstract) =>
+          console.log('Abstract is:', abstract)
           @reconcile_assigned_users()
           resolve()
 
@@ -59,6 +60,7 @@ export default base.extend arr_helpers,
 
   init_abstract: ->
     new ember.RSVP.Promise (resolve, reject) =>
+      console.log('Calling init_abstract')
       team_set = @get('team_set')
       resolve() unless ember.isPresent(team_set)
       params =

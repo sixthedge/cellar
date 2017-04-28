@@ -1,6 +1,7 @@
-.main-content__header
+.main-content__section-header.spacing__margin-bottom--2
   h1.text--inline-block
-    | #{model.title}
+    | Teams
+  / p Create and manager your teams.
 
   .btn-group.is-right
     = link-to 'builder' model (query-params team_id=null)
@@ -9,8 +10,13 @@
     .btn.btn-small
       | Import file
 
-  div{action 'toggle_view'}
-    p class={is_roster:text--bold}
-      | Students
-    p class={is_teams:text--bold}
-      | Teams
+.switch.is-left.spacing__margin-right--2{action 'toggle_view'}
+  input name='team_view' type='checkbox' 
+  span.switch__label class={is_roster:switch__label--on}
+    | Students
+  .switch__slider class={is_teams:switch__slider--right}
+  span.switch__label class={is_teams:switch__label--on}
+    | Teams
+
+.forms__field-wrapper.forms__field-wrapper--med.forms__field-wrapper--inline
+  component 'helpers/user_search' value=search_field results=results search_results='search_results' select='select_user' space=model

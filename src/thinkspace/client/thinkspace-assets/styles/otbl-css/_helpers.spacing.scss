@@ -122,7 +122,7 @@
 }
 
 .spacing__margin-bottom--1 {
-  margin-bottom: 1rem;
+  margin-bottom: 1rem !important;
 }
 
 .spacing__margin-bottom--2 {
@@ -173,6 +173,10 @@
 /**
  * Margin left. 
  */
+
+ .spacing__margin-left--half {
+  margin-left: .5rem;
+}
 
 .spacing__margin-left--1 {
   margin-left: 1rem;

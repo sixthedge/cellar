@@ -168,7 +168,7 @@
 	background-color: white;
 	transition:       $transition-animation--background-color;
 
-	&:hover {
+	&:hover, &:focus {
 		background-color: $color-gray-med;
 	}
 }

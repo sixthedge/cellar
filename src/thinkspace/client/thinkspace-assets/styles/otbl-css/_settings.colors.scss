@@ -4,6 +4,7 @@
 
 // Blue
 $color-blue-base: #12a6c7;
+$color-blue-light: #E7F6F9;
 $color-blue-dark: darken($color-blue-base, 10%);
 
 // Green
@@ -33,3 +34,6 @@ $color-gray-base:  #a9aeb8;
 $color-gray-dark: darken($color-gray-base, 10%);
 $color-gray-med:   #EDEEF0;
 $color-gray-light: #fbfbff;
+
+// Off gray that works well with list items
+$color-gray-lists: #F7F7F7;
