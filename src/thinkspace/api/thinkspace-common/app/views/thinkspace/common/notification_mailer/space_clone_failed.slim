@@ -1,8 +1,5 @@
-== content_for :header_title do
-  | Your space #{@original_space.title} could not be cloned.
-
-== content_for :header_deets do
-  span
-    | Please contact support at support@thinkspace.org or with the in-app messenger if you need help in cloning this space.
-    
-== content_for :footer_terms, "Learn more about ThinkSpace"
+== content_for :content do
+  h1 style="font-size:18px; font-weight:700; color:#464646; margin-bottom:16px;" 
+    | Your space could not be cloned  
+  p
+    | We seem to have encountered an error when cloning the space <strong>#{@original_space.title}</strong>. If this issue persists, contact us at <a href='mailto:support@opentbl.com?Subject=Problems%20cloning%20space'>support@opentbl.com</a> or use the in-app support messenger. 
