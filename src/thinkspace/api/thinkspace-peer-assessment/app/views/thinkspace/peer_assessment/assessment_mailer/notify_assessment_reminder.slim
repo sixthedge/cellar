@@ -1,10 +1,10 @@
 == content_for :content do
-  h3 #{@assignment.title}
+  h1 style="font-size:18px; font-weight:700; color:#464646; margin-bottom:16px;" 
+    | Pending Evaluations in #{@assignment.title}
   p Hi #{@to.first_name},
   p 
-    | Your instructor wants to remind you that your peer evaluation still needs to be filled out 
-    a href="#{@url}"  here.
-  p
-    | With love,
-    br
-    | The OTBL Team
+    | Your instructor wants to remind you that your peer evaluations in <strong>#{@assignment.title}</strong> still need to be filled out. To access them, click on the button below. 
+
+  br
+
+  a href="#{@url}" class="btn btn--primary" style="display:inline-block; font-weight:700; font-size:12px; text-align:center; vertical-align:middle; text-transform:capitalize; background-color:#12a6c7; color:#ffffff; border-radius:4px; border:none; cursor:pointer; white-space:nowrap; overflow:hidden; padding:0 1.15rem; text-decoration:none; height:2rem; line-height:2rem;" Go to evaluations

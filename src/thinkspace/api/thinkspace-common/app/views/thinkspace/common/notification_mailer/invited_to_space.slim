@@ -2,7 +2,7 @@
   h3 #{@space.title}
   p Hi #{@to.first_name},
   p 
-    | Your instructor #{@sender.full_name} has invited you to OTBL. Sign up here 
+    | Your instructor <strong>#{@sender.full_name}</strong> has invited you to join the space <strong>#{@space.title}</strong>. Sign up here 
     a href="#{@url}"  here.
     | This invitation will self-destruct in #{expires_in} day(s).
   p
