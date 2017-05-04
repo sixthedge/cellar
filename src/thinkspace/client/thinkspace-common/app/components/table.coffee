@@ -14,3 +14,5 @@ export default base.extend
   # => To avoid having to override `init_base`, etc, these are copied into here.
   handle_click_header: 'handle_click_header'
   handle_click_cell:   'handle_click_cell'
+
+  delete_row: 'delete_row'

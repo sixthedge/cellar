@@ -21,6 +21,9 @@ module Thinkspace
         event :deactivate do; transitions to: :inactive, after: :after_deactivate end
       end
 
+      def color; 'eeeeee'; end
+      def can_email?; email_optin; end
+
       # ###
       # ### Scopes.
       # ###

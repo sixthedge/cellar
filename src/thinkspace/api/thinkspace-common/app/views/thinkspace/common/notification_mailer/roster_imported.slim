@@ -1,22 +1,8 @@
-== content_for :header_title do
+== content_for :content do
   - if @success
-    | We have successfully imported your roster for
+    | We have successfully imported your roster for #{@space.title}
+    p 
+      | You can view the list of invited students 
+      a href="#{@url}" here
   - else
-    | Oops! There was an error in processing your roster for
-
-== content_for :header_deets do
-  span
-    b #{@invitable.title}
-    - unless @success
-      br
-      | Please contact us at 
-      b support@thinkspace.org
-
-== content_for :content_contact do
-  - unless @success
-    p #{@status}
-
-  p You can view the list of invited students using the button below.
-
-== content_for :footer_action, "View Roster"
-== content_for :footer_terms, "Learn more about ThinkSpace"
+    | Oops! There was an error in processing your roster for #{@space.title}. Contact us at support@opentbl.com. #{@status}

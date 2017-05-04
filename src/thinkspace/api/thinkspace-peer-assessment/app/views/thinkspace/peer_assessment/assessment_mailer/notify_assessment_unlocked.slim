@@ -1,0 +1,10 @@
+== content_for :content do
+  h3 #{@assignment.title}
+  p Hi #{@to.first_name},
+  p 
+    | Your peer evaluation must be re-submitted because there were changes to your team.
+    a href="#{@url}"  here.
+  p
+    | With love,
+    br
+    | The OTBL Team

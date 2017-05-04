@@ -16,5 +16,5 @@ export default {
       invitation:     'common'
       password_reset: 'common'
       upload:         'common'
-
+      color:          'common'
 }

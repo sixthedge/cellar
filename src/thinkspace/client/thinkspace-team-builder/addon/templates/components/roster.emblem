@@ -1,32 +1,9 @@
-h1 THIS IS THE ROSTER ROUTE
-
-each teams as |team|
-  .btn.btn-primary.btn-small{action 'add_to_team' team}
-    | Add to #{team.title}
-
-/ if empty
-/   h3 aint nobody on your roster
-/ else
-/   table
-/     thead
-/       tr
-/         th
-/         th Avatar
-/         th Last Name
-/         th First Name
-/         th Team
-/     tbody
-/       each users as |user|
-/         component 'roster/student' model=user select='select_user' deselect='deselect_user' selected_users=selected_users
-
-component '__table' rows=rows columns=columns
+if all_data_loaded
+  if has_selected_users
+    component '__dropdown' collection=teams display_property='title' text='Add to existing team' selected=selected_team select_action='add_to_team' action_receiver=this
+    .btn.btn--primary{action 'create_team'}
+      | Create team with selected    
 
 
-link-to 'builder' model
-  | builder
+  component '__table' rows=rows columns=columns
 
-link-to 'edit' model
-  | edit
-
-link-to 'manage' model
-  | manage

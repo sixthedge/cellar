@@ -67,6 +67,11 @@
   serializers:
     - attributes: [id, role, space_id, state]
 
+- model: thinkspace/common/color
+  domain: true
+  serializers:
+    - attributes: [id, color, title, description]
+
 - model: thinkspace/common/configuration
   associations:
     - {belongs_to: configurable, polymorphic: true}

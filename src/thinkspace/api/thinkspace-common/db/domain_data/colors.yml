@@ -1,0 +1,17 @@
+---
+- id: 1
+  color: f44242
+  title: Ruby Red
+  description: Color description
+- id: 2
+  color: 4256f4
+  title: Berry Blue
+  description: Color description
+- id: 3
+  color: f4eb42
+  title: Honeybee Yellow
+  description: Color description
+- id: 4
+  color: 50f442
+  title: Lime Green
+  description: Color description

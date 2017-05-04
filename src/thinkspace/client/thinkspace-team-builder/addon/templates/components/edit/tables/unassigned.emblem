@@ -1,0 +1,10 @@
+h3.is-left Unassigned Students
+
+.btn-group.is-right
+  div{action 'add_selected'} class={:btn :btn--primary has_selected::btn--disabled}
+    | Add selected
+
+  button.btn.btn-small{action 'cancel'}
+    | Cancel
+
+component '__table' columns=columns rows=students

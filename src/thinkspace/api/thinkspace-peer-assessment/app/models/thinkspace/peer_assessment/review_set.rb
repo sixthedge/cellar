@@ -38,7 +38,6 @@ module Thinkspace; module PeerAssessment
 
     def in_progress?; thinkspace_peer_assessment_reviews.where.not(value: nil).count > 0; end
 
-
     def unlock_phase_for_ownerable
       ownerable = self.ownerable
       phase     = self.get_authable
@@ -46,6 +45,11 @@ module Thinkspace; module PeerAssessment
       raise 'Cannot unlock a phase without a valid ownerable.' unless ownerable.present?
       phase_state = Thinkspace::Casespace::PhaseState.find_or_create_by(ownerable: ownerable, phase_id: phase.id)
       phase_state.unlock_phase!
+    end
+
+    def reset_quantitative_data
+      thinkspace_peer_assessment_reviews.each { |review| review.reset_quantitative_data }
+      unlock_phase_for_ownerable
     end
 
     # ### Review Helpers

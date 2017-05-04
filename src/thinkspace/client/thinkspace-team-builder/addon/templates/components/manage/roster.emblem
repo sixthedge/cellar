@@ -1,0 +1,8 @@
+if all_data_loaded
+  if has_selected_users
+    .btn-group.is-right
+      .btn.btn--primary{action 'create_team'}
+        | Create team with selected   
+      component '__dropdown' collection=teams display_property='title' text='Add to existing team' selected=selected_team select_action='add_to_team' action_receiver=this class='is-right' 
+
+  component '__table' rows=rows columns=columns

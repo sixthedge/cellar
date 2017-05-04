@@ -95,6 +95,10 @@
 - Panel-table..........Tile panels with a table header up top.
 - Reveal...............Styles for reveal modals. Mostly foundation overrides.
 - Pagination...........Styles for pagination row under tables.
+- Team-panel...........Panels for team view. 
+- Switch...............Styles for on/off switch. 
+- File-upload..........Styles for file input type.
+- Loaders..............Loader styles. 
 */
 
 @import "otbl-css/components.top-bar";
@@ -120,6 +124,10 @@
 @import "otbl-css/components.panel-table";
 @import "otbl-css/_components.reveal";
 @import "otbl-css/_components.pagination";
+@import "otbl-css/_components.team-panel";
+@import "otbl-css/_components.switch";
+@import "otbl-css/_components.file-upload";
+@import "otbl-css/_components.loaders";
 
 /*
 ## HELPERS

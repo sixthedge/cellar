@@ -1,0 +1,62 @@
+///*------------------------------------*\
+//    #TEAM-PANEL
+//\*------------------------------------*/
+
+.team-panel {
+
+}
+
+.team-panel__header {
+  @extend .group;
+
+  background-color:        $color-rose-base;
+  position:                relative;
+  border-top-left-radius:  $border-radius;
+  border-top-right-radius: $border-radius;
+}
+
+.team-panel__link {
+  float:   left;
+  padding: 8px;
+  width:   100%;
+}
+
+.team-panel__name {
+  color:       white;
+  font-size:   1rem;
+  font-weight: $font-weight--bold;
+}
+
+.team-panel__actions {
+  position: absolute;
+  right:    8px;
+  top:      20px;
+  cursor:   pointer;
+  color:    white;
+
+  &:hover, &:focus {
+    text-decoration: underline;
+  }
+}
+
+.team-panel__list {
+  border: 2px solid $color-rose-base;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  border-bottom-left-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
+}
+
+.team-panel__list-item {
+  padding:          0 8px;
+  height:           2rem;
+  line-height:      2rem;
+  background-color: white;
+  font-size: .875rem;
+  vertical-align: middle;
+
+  &:nth-child(2n) {
+    background-color: $color-gray-lists;
+  }
+}

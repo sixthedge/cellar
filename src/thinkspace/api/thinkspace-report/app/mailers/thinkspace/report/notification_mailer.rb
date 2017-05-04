@@ -1,9 +1,7 @@
 module Thinkspace; module Report
-class NotificationMailer < ActionMailer::Base
-  include Thinkspace::Common::BaseMailer
-  default from: 'ThinkBot <thinkbot@thinkspace.org>'
-  layout 'thinkspace/common/layouts/invitation'
-  
+class NotificationMailer < Thinkspace::Common::BaseMailer
+  skip_after_action :prevent_delivery, only: [:report_access_granted, :report_generation_failed]
+
   def report_access_granted(report_token)
     @report_token = report_token
     @report       = report_token.get_report
@@ -15,10 +13,7 @@ class NotificationMailer < ActionMailer::Base
     raise "Cannot send an notification without an email [#{@user.email}]." unless @user.email.present?
     raise "Cannot send an notification without a valid token [#{@token}]." unless @token.present?
 
-    url_suffix    = "/reports/#{report_token.token}"
-    @host         = 'http://localhost:4200' if Rails.env.development?
-    @host         = Rails.application.secrets.smtp['postmark']['domain'] if Rails.env.production?
-    @url          = @host + url_suffix
+    @url = app_domain + reports_token_url(@report_token)
 
     subject = 'Your report is ready to download!'
     mail(to: @user.email, subject: format_subject(subject))
@@ -32,5 +27,9 @@ class NotificationMailer < ActionMailer::Base
     subject     = 'Your report creation has failed.'
     mail(to: @user.email, subject: format_subject(subject))
   end
+
+  private
+
+  def reports_token_url(report_token); "/reports/#{report_token.token}"; end
 
 end; end; end

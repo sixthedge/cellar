@@ -1,0 +1,10 @@
+== content_for :content do
+  h3 #{@assignment.title}
+  p Hi #{@to.first_name},
+  p 
+    | Your instructor wants to remind you that your peer evaluation still needs to be filled out 
+    a href="#{@url}"  here.
+  p
+    | With love,
+    br
+    | The OTBL Team

@@ -19,7 +19,8 @@ if all_data_loaded
     h2 Space Admins 
     component '__table' rows=admins columns=admin_columns data=admin_data server=true
 else
-  h1 Loading...
-
+  .loader__container
+    .loader.loader--logo
+    .text__font-size--14.text--bold Loading...
 
 component '__file_upload' s3=true authable=model type='thinkspace/importer/roster'

@@ -75,6 +75,10 @@
  * Line height. 
  */
 
+.text__lh--1 {
+  line-height: 1rem;
+}
+
 .text__lh--2 {
   line-height: 2rem;
 }
@@ -99,6 +103,10 @@
 
 .text__color--red {
   color: $color-red-base;
+}
+
+.text__color--white {
+  color: white;
 }
 
 

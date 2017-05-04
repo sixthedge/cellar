@@ -1,44 +1,51 @@
 module Thinkspace; module PeerAssessment
-  class AssessmentMailer < ActionMailer::Base
-    # Thinkspace::PeerAssessment::AssessmentMailer
-    # ---
-    default from: 'ThinkBot <thinkbot@thinkspace.org>'
+  class AssessmentMailer < Thinkspace::Common::BaseMailer
+    skip_after_action :prevent_delivery, only: [:notify_results_unlocked, :notify_assessment_reminder, :notify_assessment_unlocked]
 
-    def notify_overview_unlocked(assessment, user)
-      @user            = user
-      @to              = user.email
-      @phase           = assessment.overview_phase
-      @assignment      = @phase.thinkspace_casespace_assignment
+    def notify_results_unlocked(assessment, user)
+      @to         = user
+      @phase      = assessment.overview_phase
+      @assignment = @phase.thinkspace_casespace_assignment
 
       raise "Cannot send a notification without an email [#{@to}]." unless @to.present?
       raise "Cannot send a notification without a phase [#{@phase}]." unless @phase.present?
       raise "Cannot send a notification without an assignment [#{@assignment}]." unless @assignment.present?
 
-      # TODO: Figure out a better way to determine host, maybe from config?
-      url_suffix = "casespace/cases/#{@assignment.id}/phases/#{@phase.id}?query_id=none"
-      @url       = 'http://localhost:4200/' + url_suffix if Rails.env.development?
-      @url       = 'https://think.thinkspace.org/' + url_suffix if Rails.env.production?
-      subject    = "[ThinkSpace] Peer Evaluation Unlocked for #{@assignment.title}"
-
-      mail(to: @to, subject: subject)
+      @url    = app_domain + phases_show_url(@assignment, @phase)
+      subject = "The results of your peer evaluation #{@assignment.title} are now available"
+      mail(to: @to.email, subject: format_subject(subject))
     end
 
-    def notify_review_set_ownerable(review_set, message)
-      @message  = message
-      @ownerable = review_set.ownerable
-      raise "Cannot send a notificatino without an ownerable [#{review_set.id}]" unless @ownerable.present?
-      phase      = review_set.get_authable
-      raise "Cannot send a notification without a phase [#{phase}]" unless phase.present?
-      assignment = phase.thinkspace_casespace_assignment
-      raise "Cannot send a notification without an assignment [#{assignment}]" unless assignment.present?
-      
-      @to = @ownerable.email
+    def notify_assessment_reminder(review_set)
+      @to         = review_set.ownerable
+      @phase      = review_set.get_authable
+      @assignment = @phase.thinkspace_casespace_assignment
+
       raise "Cannot send a notification without an email [#{@to}]." unless @to.present?
-      url_suffix = "casespace/cases/#{assignment.id}/phases/#{phase.id}?query_id=none"
-      @url       = 'http://localhost:4200/' + url_suffix if Rails.env.development?
-      @url       = 'https://think.thinkspace.org/' + url_suffix if Rails.env.production?
-      subject = "[ThinkSpace] Instructor Notification - Peer Evaluation"
-      mail(to: @to, subject: subject)
+      raise "Cannot send a notification without a phase [#{@phase}]." unless @phase.present?
+      raise "Cannot send a notification without an assignment [#{@assignment}]." unless @assignment.present?
+
+      @url    = app_domain + phases_show_url(@assignment, @phase)
+      subject = "You must submit your peer evaluation #{@assignment.title}"
+      mail(to: @to.email, subject: format_subject(subject))
+    end
+
+    def notify_assessment_unlocked(assessment, user)
+      @to         = user
+      @phase      = assessment.authable
+      @assignment = @phase.thinkspace_casespace_assignment
+
+      raise "Cannot send a notification without an email [#{@to}]." unless @to.present?
+      raise "Cannot send a notification without a phase [#{@phase}]." unless @phase.present?
+      raise "Cannot send a notification without an assignment [#{@assignment}]." unless @assignment.present?
+
+      @url    = app_domain + phases_show_url(@assignment, @phase)
+      subject = "You must re-submit your peer evaluation #{@assignment.title}"
+      mail(to: @to.email, subject: format_subject(subject))
+    end
+
+    def phases_show_url(assignment, phase)
+      "/cases/#{assignment.id}/phases/#{phase.id}?query_id=none"
     end
 
   end

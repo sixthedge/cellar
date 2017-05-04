@@ -33,8 +33,22 @@ module Thinkspace; module PeerAssessment
       thinkspace_peer_assessment_review_sets.scope_ignored.each { |review_set| review_set.unignore! if review_set.may_unignore? }
     end
 
+    def reset_quantitative_data
+      thinkspace_peer_assessment_review_sets.each { |review_set| review_set.reset_quantitative_data }
+    end
+
     # ### Helpers
     def get_assessment; thinkspace_peer_assessment_assessment; end
+    def get_or_create_review_sets
+      Thinkspace::Team::Team.find(team_id).thinkspace_common_users.each do |user|
+        Thinkspace::PeerAssessment::ReviewSet.find_or_create_by(ownerable: user, team_set_id: self.id)
+      end
+      review_sets = self.thinkspace_peer_assessment_review_sets
+    end
+
+    # ### Scopes
+    def self.scope_neutral; neutral; end
+    def self.scope_approved; approved; end
 
     # ### Scopes
     def self.scope_neutral; neutral; end
