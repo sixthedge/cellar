@@ -8,6 +8,14 @@ export default base.extend
   debug:         true
   authenticator: 'authenticator:totem'
 
+  # # Computed properties
+  token:     ember.computed.reads 'query_params.token'
+  email:     ember.computed.reads 'query_params.email'
+  invitable: ember.computed.reads 'query_params.invitable'
+  has_token: ember.computed.notEmpty 'token'
+
+  # {"roles"=>{"student"=>true, "instructor"=>false}}
+
   # # Events
   init_base: ->
     @set_changeset()
@@ -19,7 +27,9 @@ export default base.extend
       last_name:   [totem_changeset.vpresence(presence: true, message: 'You must enter a last name')]
       email:       [totem_changeset.vpresence(presence: true, message: 'You must enter an email address'), totem_changeset.vemail()]
       password:    [totem_changeset.vpresence(presence: true, message: 'You must enter a password')]
+      roles:       [totem_changeset.vpresence(presence: true, message: 'You must select your role')]
     @set_debug_changeset(changeset)
+    changeset.set('email', @get('email')) if @get('has_token') and @get('email')
     @set('changeset', changeset)
 
   set_debug_changeset: (changeset) ->
@@ -47,6 +57,14 @@ export default base.extend
       @totem_messages.error message
 
   actions:
+    toggle_student: ->
+      changeset = @get('changeset')
+      changeset.set('roles', {student: true, instructor: false})
+
+    toggle_instructor: ->
+      changeset = @get('changeset')
+      changeset.set('roles', {student: false, instructor: true})
+
     submit: ->
       changeset = @get('changeset')
       changeset.validate().then =>
@@ -57,9 +75,17 @@ export default base.extend
             last_name:  changeset.get('last_name')
             email:      changeset.get('email')
             password:   changeset.get('password')
+            profile:    
+              roles: changeset.get('roles')
+          token = @get('token')
+          user.set('token', token) if ember.isPresent(token)
           @set_loading('submitting')
           user.save().then =>
             @reset_loading('submitting')
             @authenticate(user)
+          , (error) =>
+            @reset_loading('submitting')
+            # TODO: This currently boots them out of the application in the case of an error.
+            # @totem_messages.api_failure error, source: @, model: user, action: 'create'
         else
           changeset.show_errors_on()

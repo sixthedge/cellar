@@ -10,7 +10,8 @@ export default ta.Model.extend ta.add(
   first_name:   ta.attr('string')
   last_name:    ta.attr('string')
   state:        ta.attr('string')
-  password:     ta.attr('string')
+  password:     ta.attr('string') # Used in sign_up only.
+  token:        ta.attr('string') # Used in sign_up only.
   activated_at: ta.attr('date')
   profile:      ta.attr()
 

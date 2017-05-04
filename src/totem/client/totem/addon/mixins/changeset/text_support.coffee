@@ -35,6 +35,7 @@ export default ember.Mixin.create
 
   default_attributes:
     type:        'text'
+    disabled:    false
     tabindex:    null
     placeholder: null
 

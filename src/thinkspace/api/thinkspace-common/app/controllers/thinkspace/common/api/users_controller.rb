@@ -14,8 +14,6 @@ module Thinkspace
         end
 
         def create
-          email = get_email_from_params
-          @user = user_class.new(email: email) unless @user.present?
           Thinkspace::Common::User.transaction do
             response = nil
             begin
@@ -72,13 +70,26 @@ module Thinkspace
         def validate_token_and_set_user
           email = get_email_from_params
           @user = user_class.find_by(email: email)
-          return unless @user.present?
           token = params_root[:token]
-          return permission_denied('The invitation has already been accepted.') if @user.active?
-          return permission_denied('User was invited, but no invitation token was provided. Check your email for an invitation link and use it to sign up.') unless token.present?
-          return permission_denied('The invitation token is invalid. Please contact your instructor.') unless token == @user.activation_token
-          return permission_denied('The invitation has expired. Please contact your instructor.') if @user.activation_expired?
+          case
+          when (token.present? && @user.present?)
+            # Valid invitation case.
+            permission_denied('The invitation has already been accepted.') if @user.active?
+            permission_denied('User was invited, but no invitation token was provided. Check your email for an invitation link and use it to sign up.') unless token.present?
+            permission_denied('The invitation token is invalid. Please contact your instructor.') unless token == @user.activation_token
+            permission_denied('The invitation has expired. Please contact your instructor.') if @user.activation_expired?
+            params['data']['attributes']['email'] = @user.email # Ensure that the params email is the invitation email.
+          when (token.present? && !@user.present?)
+            # Invalid invitation case.
+            permission_denied('No user was found for the given token.')
+          when (!token.present? && !@user.present?)
+            # New user creation without invitation.
+            @user = user_class.new(email: email)
+          else
+            permission_denied('An error has occured during account creation.  Please try again.  If the error persists, contact support.')
+          end
         end
+
 
         def render_user_creation_error(errors={})
           render json: errors.as_json, status: 403

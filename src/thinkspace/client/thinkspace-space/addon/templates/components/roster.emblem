@@ -6,6 +6,12 @@ if all_data_loaded
       .btn-group.is-right
         button.btn.btn--primary Import Roster
         button.btn Invite User
+
+    / TEMPORARY
+    = input value=email placeholder='example@sixthedge.com'
+    h1 click='invite' Invite
+    / /TEMPORARY
+
     h2 Students
     component '__table/types/server' rows=students columns=student_columns data=student_data
 
@@ -15,9 +21,5 @@ if all_data_loaded
 else
   h1 Loading...
 
-/ TEMPORARY
-= input value=email placeholder='example@sixthedge.com'
-h1 click='invite' Invite
-/ /TEMPORARY
 
 component '__file_upload' s3=true authable=model type='thinkspace/importer/roster'

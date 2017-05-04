@@ -1,81 +1,30 @@
 h1 OpenTBL Sign Up
+if has_token
+  h2 You have been invited to #{invitable}
+  p Sign up below to get access to your course #{invitable}
+  p 
+    | Already have an account? 
+    = link-to 'sign_in'
+      |  Use your account to log in.
 hr
-component '__changeset/input' changeset=changeset attribute='first_name' label='First Name' placeholder='azzz'
-component '__changeset/input' changeset=changeset attribute='last_name'  label='Last Name'  placeholder='22222'
-component '__changeset/input' changeset=changeset attribute='email'      label='Email'    type='email'
+component '__changeset/input' changeset=changeset attribute='first_name' label='First Name'
+component '__changeset/input' changeset=changeset attribute='last_name'  label='Last Name'
+component '__changeset/input' changeset=changeset attribute='email' label='Email' type='email'
 component '__changeset/input' changeset=changeset attribute='password'   label='Password' type='password'
+
+/ TODO: Refactor to changeset/radio when it is fully implemented.
+p Are you an instructor or a student?
+component '__changeset/errors' changeset=changeset attribute='roles'
+p click='toggle_student' I'm a student.
+if changeset.roles.student
+  p ^ is selected
+p click='toggle_instructor' I'm an instructor.
+if changeset.roles.instructor
+  p ^ is selected
+/ END TODO: Refactor to changeset/radio when it is fully implemented.
+
 hr
 if loading.submitting
-  a.btn.btn--disabled SubmitD
+  a.btn.btn--disabled SubmitDisabled
 else
   a.btn click='submit' Submit
-
-
-/ .ts-signup.fade-in
-/   .ts-signup_content
-/     .ts-grid_row: .large-4.small-10.small-centered.ts-grid_columns
-/       h2.ts-signin_header= __t 'thinkspace.branding'
-/       h3= invitation_status
-/       h1 model: #{model}
-/       if invitation_present
-/         h1 asdasd
-/         div class={:ts-signup_invitation invitation_invalid:invalid}
-/           .ts-grid_row 
-/             .small-4.ts-grid_columns
-/               .ts-signup_invitation-img
-/             .small-8.ts-grid_columns
-/               .ts-signup_invitation-text
-/                 h5.ts-signup_invitation-header
-/                   if invitation_invalid
-/                     | Oops! #{invitation_status}
-/                   else
-/                     | You've received an invitation!
-/                 p.ts-signup_invitation-details
-/                   if invitation_accepted
-/                     | Log in to join
-/                   else
-/                     if invitation_invalid
-/                       | Please contact the instructor of
-/                     else
-/                       | Create an account to join
-/                   br
-/                   span.ts-signup_invitation-invitable= invitable
-
-/       p.ts-signup_signin
-/         if invitation_accepted
-/           | You've been automatically added to this space.
-/         else
-/           | Already have an account? 
-/         = link-to 'sign_in' class='ts-signup_signin-link'
-/           |  Use your account to log in
-
-/       unless invitation_accepted
-/         form#ts-signup_form.ts-signup_fields
-/           .ts-validated-input_container
-/             component c_validated_input value=first_name errors=errors.first_name initial_validate=initial_validate_first_name label='First Name' disabled=authenticating name='first_name' tabindex='1' poll=true
-/           .ts-validated-input_container
-/             component c_validated_input value=last_name errors=errors.last_name initial_validate=initial_validate_last_name label='Last Name' disabled=authenticating name='last_name' tabindex='2' poll=true
-/           .ts-validated-input_container
-/             component c_validated_input value=email errors=errors.email type='email' initial_validate=initial_validate_email label='Email Address' disabled=lock_email name='email' tabindex='3' poll=true
-/           .ts-validated-input_container
-/             component c_validated_input value=password errors=errors.password type='password' initial_validate=initial_validate_password label='Password' disabled=authenticating name='password' tabindex='4' poll=true
-
-/         /component c_checkbox label='Keep me logged in' toggle_action='toggle_persist_login'
-/         /component c_checkbox label='Create a space for me to try out' toggle_action='toggle_create_sandbox'
-
-/         if api_response_status
-/           p.ts-signup_server-error
-/             = api_response_status
-
-/         .ts-signup_submit
-/           if authenticating
-/             component c_loader type='small' header='Blasting off!' message='You will arrive shortly.'
-/           else
-/             button.ts-signup_submit-action.btn.btn-husky.btn-primary{action 'submit'} form='ts-signup_form' type='submit' tabindex='5'
-/               | Sign Up & Join
-/             .ts-signup_terms
-/               a Terms of Service
-/             .ts-signup_help
-/               | Have questions? Contact us at 
-/               a href='mailto:support@thinkspace.org'
-/                 | support@thinkspace.org
