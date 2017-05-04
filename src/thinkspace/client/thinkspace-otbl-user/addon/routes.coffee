@@ -7,6 +7,6 @@ export default buildRoutes ->
   @route 'password', path: '/password', ->
     @route 'new',          path: '/reset'
     @route 'show',         path: '/reset/:token'
-    @route 'fail',         path: '/reset/fails'
+    @route 'fail',         path: '/reset/fail'
     @route 'success',      path: '/reset/success'
     @route 'confirmation', path: '/reset/confirmation'

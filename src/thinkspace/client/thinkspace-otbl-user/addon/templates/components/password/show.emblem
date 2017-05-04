@@ -1,30 +1,10 @@
-.ts-password.fade-in
-  .ts-password_content
-    .ts-grid_row: .large-4.small-10.small-centered.ts-grid_columns
-      h2.ts-password_header
-        | Think
-        span.ts-password_branding-space
-          | Space
-      .ts-password_invitation
-        .ts-grid_row 
-          .small-4.ts-grid_columns
-            .ts-password_invitation-img
-          .small-8.ts-grid_columns
-            .ts-password_invitation-text
-              h5.ts-password_invitation-header
-                | Reset Password
-              p.ts-password_invitation-details 
-                | Create a new password for your account.
-
-      form#ts-password_form.ts-password_fields
-        .ts-validated-input_container
-          component c_validated_input value=password errors=errors.password type='password' initial_validate=false label='Enter new password' disabled=authenticating
-        .ts-validated-input_container
-          component c_validated_input value=password_confirmation errors=password_confirmation_errors type='password' initial_validate=password_confirmation label='Confirm password' disabled=authenticating
-
-      .ts-password_submit
-        = if authenticating
-          component c_loader type='small' header='Blasting off!' message='You will arrive shortly.'
-        = else
-          button.ts-password_submit-action.btn.btn-small.btn-primary{action 'submit'} form='ts-password_form' type='submit'
-            | Reset Password
+h1 new password
+if loading.authenticating
+  .loader__container
+    .loader.loader--logo
+    .text__font-size--14.text--bold Loading...
+else
+  form{action 'submit' on='submit'}
+    component '__changeset/input' changeset=changeset attribute='password' label='Password' type='password'
+    component '__changeset/input' changeset=changeset attribute='password_confirmation' label='Password Confirmation' type='password'
+    button type='submit' Submit

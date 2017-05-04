@@ -1,11 +1,5 @@
 import ember from 'ember'
-import ns from 'totem/ns'
+import ns    from 'totem/ns'
+import base  from 'thinkspace-user/routes/password/show'
 
-export default ember.Route.extend
-  #titleToken: -> 'Password Reset'
-
-  model: (params) ->
-    @tc.query(ns.to_p('password_reset'), params.token)
-      
-  setupController: (controller, model) ->
-    controller.set('model', model)
+export default base.extend()

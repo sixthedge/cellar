@@ -1,22 +1,4 @@
-.ts-password.fade-in
-  .ts-password_content
-    .ts-grid_row: .large-4.small-10.small-centered.ts-grid_columns
-      h2.ts-password_header
-        | Think
-        span.ts-password_branding-space
-          | Space
-      .ts-password_invitation
-        .ts-grid_row 
-          .small-4.ts-grid_columns
-            .ts-password_invitation-img
-          .small-8.ts-grid_columns
-            .ts-password_invitation-text
-              h5.ts-password_invitation-header
-                | Password has been changed.
-              p.ts-password_invitation-details 
-                | Your password has been reset. Please log in with your new password.
-
-
-      .ts-password_submit
-        = link-to r_users_sign_in class='ts-password_submit-action btn btn-small btn-primary'
-          | Back to Log In
+h1 success
+h2 log in here
+= link-to 'sign_in'
+  | Sign in route

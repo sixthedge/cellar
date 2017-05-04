@@ -86,6 +86,6 @@ export default base.extend
           , (error) =>
             @reset_loading('submitting')
             # TODO: This currently boots them out of the application in the case of an error.
-            # @totem_messages.api_failure error, source: @, model: user, action: 'create'
+            @totem_messages.api_failure error, source: @, model: user, action: 'create'
         else
           changeset.show_errors_on()
