@@ -15,7 +15,7 @@ export default base.extend totem_data_mixin,
   tvo_path:        null
   
   all_data_loaded: false
-  loading:         {}
+  loading:         null # Set on init to an object.
 
   init: ->
     @_super(arguments...)
@@ -23,6 +23,7 @@ export default base.extend totem_data_mixin,
     titles    = @get('tvo_titles')
     path      = @get('tvo_path') or null
     @tvo_path = if ember.isBlank(path) and ember.isPresent(titles) then @get('tvo').template.engine_values(titles, @) else path
+    @set('loading', new Object) # Cannot use loading: {} above or all components share the object.
     @init_base()
 
   init_base: -> return

@@ -3,6 +3,10 @@ table.basic-table.spacing__margin-bottom--1
     each columns as |column|
       component '__table/header' column=column c_table=this
   tbody
+    if loading.rows
+      .loader__container
+        .loader.loader--logo
+        .text__font-size--14.text--bold Loading...
     each rows as |row|
       component '__table/row' row=row columns=columns c_table=this
 

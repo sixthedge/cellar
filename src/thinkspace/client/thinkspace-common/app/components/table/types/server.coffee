@@ -14,8 +14,12 @@ export default base.extend
     source = @get_data('source')
     fn     = @get_data('sort')
     column = options.get_data('column')
+    @set_loading('rows')
     source[fn](column).then (rows) =>
+      @reset_loading('rows')
       @set_rows(rows)
+    , (error) =>
+      @reset_loading('rows')
 
   # # Helpers
   # ## Getters/setters

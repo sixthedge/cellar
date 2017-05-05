@@ -8,9 +8,6 @@ export default base.extend
   columns:       null
   selected_rows: null
 
-  rows_obs: ember.observer 'rows', 'rows.length', ->
-    console.log('[TABLE] rows are ', @get('rows'))
-
   # ## Action handlers
   handle_click_header: 'handle_click_header'
   handle_click_cell:   'handle_click_cell'
@@ -22,10 +19,15 @@ export default base.extend
 
   # # Pagination
   # ## Helpers
-  get_next_page:  -> @get_rows().get_next_page()
-  get_prev_page:  -> @get_rows().get_prev_page()
-  get_first_page: -> @get_rows().get_first_page()
-  get_last_page:  -> @get_rows().get_last_page()
+  get_next_page:  -> @go_to_page('get_next_page')
+  get_prev_page:  -> @go_to_page('get_prev_page')
+  get_first_page: -> @go_to_page('get_first_page')
+  get_last_page:  -> @go_to_page('get_last_page')
+
+  # Wrap all of the page loading calls in a rows loader call.
+  go_to_page: (fn) ->
+    @set_loading('rows')
+    @get_rows()[fn]().then => @reset_loading('rows')
 
   # # Helpers
   # ## Getters/setters

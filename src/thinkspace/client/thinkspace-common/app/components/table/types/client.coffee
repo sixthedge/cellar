@@ -16,9 +16,11 @@ export default base.extend
 
   # ### Helpers
   handle_header_click: (column) ->
+    @set_loading('rows')
     column.invert_direction()
     @set_column_selected(column)
     @set_sorted_rows(column)
+    @reset_loading('rows')
 
   set_column_selected: (column) ->
     columns = @get('columns')

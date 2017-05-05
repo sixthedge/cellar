@@ -5,7 +5,7 @@ export default base.extend
   # # Properties
   # ## Radio options  
   role: null
-  role_options: ember.computed ->
+  role_options:
     group:
       label: 'Are you an instructor or a student?'
     choices: [

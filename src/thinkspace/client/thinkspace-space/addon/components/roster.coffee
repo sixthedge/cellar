@@ -38,7 +38,7 @@ export default base.extend
 
   student_sort: (column) ->
     new ember.RSVP.Promise (resolve, reject) =>
-      return unless column.get('has_property')
+      return reject() unless column.get('has_property')
       property  = column.get_property()
       direction = column.invert_direction()
       @get_students(direction: direction).then (students) =>
@@ -46,7 +46,7 @@ export default base.extend
 
   admin_sort: (column) ->
     new ember.RSVP.Promise (resolve, reject) =>
-      return unless column.get('has_property')
+      return reject() unless column.get('has_property')
       property  = column.get_property()
       direction = column.invert_direction()
       @get_admins(direction: direction).then (admins) =>
