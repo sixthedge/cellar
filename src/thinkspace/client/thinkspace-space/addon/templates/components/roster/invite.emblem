@@ -1,0 +1,8 @@
+h1 Roster
+h2 Invite User
+
+form{action 'submit' on='submit'}
+  component '__changeset/input' changeset=changeset attribute='email' label='Email' placeholder='example@sixthedge.com'
+  component '__accessibility/radio/group' value=changeset.role options=role_options changed='changed_role'
+  button type='submit' Invite
+  

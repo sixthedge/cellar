@@ -1,0 +1,4 @@
+h1 Roster
+h2 Import Roster
+p You can use the button below to select files on your computer or you can drag and drop them here.  The files should be in a CSV format with a single column containing student emails with no header.
+component '__file_upload' s3=true authable=model type='thinkspace/importer/roster'
