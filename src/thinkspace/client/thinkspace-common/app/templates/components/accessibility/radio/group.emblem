@@ -3,4 +3,4 @@ fieldset
     label id=label_id #{label}
   .radio__group role='radiogroup' aria-labelledby=label_id
     each choices as |choice|
-      component '__accessibility/radio/choice' model=choice name=name group_value=value changed='changed'
+      component '__accessibility/radio/choice' value=choice.value label=choice.label summary=choice.summary name=name group_value=value changed='changed'
