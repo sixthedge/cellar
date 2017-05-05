@@ -8,3 +8,4 @@ export default base.extend
   totem_data_config: ability: {ajax_source: ns.to_p('spaces')}, metadata: true
 
   all_spaces: ember.computed.reads 'model'
+  

@@ -7,24 +7,14 @@ if has_token
     = link-to 'sign_in'
       |  Use your account to log in.
 hr
-component '__changeset/input' changeset=changeset attribute='first_name' label='First Name'
-component '__changeset/input' changeset=changeset attribute='last_name'  label='Last Name'
-component '__changeset/input' changeset=changeset attribute='email' label='Email' type='email'
-component '__changeset/input' changeset=changeset attribute='password'   label='Password' type='password'
 
-/ TODO: Refactor to changeset/radio when it is fully implemented.
-p Are you an instructor or a student?
-component '__changeset/errors' changeset=changeset attribute='roles'
-p click='toggle_student' I'm a student.
-if changeset.roles.student
-  p ^ is selected
-p click='toggle_instructor' I'm an instructor.
-if changeset.roles.instructor
-  p ^ is selected
-/ END TODO: Refactor to changeset/radio when it is fully implemented.
-
-hr
-if loading.submitting
-  a.btn.btn--disabled SubmitDisabled
-else
-  a.btn click='submit' Submit
+form{action 'submit' on='submit'}
+  component '__changeset/input' changeset=changeset attribute='first_name' label='First Name'
+  component '__changeset/input' changeset=changeset attribute='last_name'  label='Last Name'
+  component '__changeset/input' changeset=changeset attribute='email' label='Email' type='email'
+  component '__changeset/input' changeset=changeset attribute='password'   label='Password' type='password'
+  component '__accessibility/radio/group' value=role options=role_options changed='changed_role'
+  if loading.submitting
+    button.btn.btn--disabled SubmitDisabled
+  else
+    button.btn Submit

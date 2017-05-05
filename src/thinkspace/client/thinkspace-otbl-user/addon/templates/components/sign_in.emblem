@@ -4,26 +4,21 @@
       .spacing__pad-top--2.spacing__pad-bottom--2
         .otbl-logo.otbl-logo--120.grid__container--centered
       h1 Log in to OpenTBL
-      / p
-      /   | Don't have an account? 
-      /   link-to 'sign_up'
-      /     | Create one to join
-      form
-        fieldset
-          .forms__field-wrapper
-            label.spacing__margin-bottom--half Email Address
-            = input value=changeset.email tabindex='1'
-            component '__changeset/errors' changeset=changeset attribute='email'
-          .forms__field-wrapper
-            label.spacing__margin-bottom--half Password
-            = input value=changeset.password type='password' tabindex='2'
-            component '__changeset/errors' changeset=changeset attribute='password'
-
-          if authenticating
-            / nothing
-          else 
-            button.btn.btn--primary{action 'submit'}
-              | Log in
-
+      p
+        | Don't have an account? 
+        link-to 'sign_up'
+          | Create one to join
+      if loading.authenticating
+        .loader__container
+          .loader.loader--logo
+          .text__font-size--14.text--bold Loading...
+      else
+        form{action 'submit' on='submit'}
+          fieldset
+            .forms__field-wrapper
+              component '__changeset/input' changeset=changeset attribute='email' label='Email' type='email'
+            .forms__field-wrapper
+              component '__changeset/input' changeset=changeset attribute='password' label='Password' type='password'
+            button.btn.btn--primary type='submit' Log in
 
     .grid__col--3of4.login__billboard.grid__mobile--hidden

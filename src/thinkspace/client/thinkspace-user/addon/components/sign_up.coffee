@@ -43,11 +43,11 @@ export default base.extend
   authenticate: (user) ->
     changeset = @get('changeset')
     data      = {identification: changeset.get('email'), password: changeset.get('password')}
-    # Reset password values so they're not lingering.
-    user.set('password', null)
-    changeset.set('password', null)
     @set_loading('authenticating')
     @get('session').authenticate(@get('authenticator'), data).then =>
+      # Reset password values so they're not lingering.
+      user.set('password', null)
+      changeset.set('password', null)
       @reset_loading('authenticating')
       @totem_messages.info "Sign in successful!"
     , (error) =>
@@ -57,14 +57,6 @@ export default base.extend
       @totem_messages.error message
 
   actions:
-    toggle_student: ->
-      changeset = @get('changeset')
-      changeset.set('roles', {student: true, instructor: false})
-
-    toggle_instructor: ->
-      changeset = @get('changeset')
-      changeset.set('roles', {student: false, instructor: true})
-
     submit: ->
       changeset = @get('changeset')
       changeset.validate().then =>

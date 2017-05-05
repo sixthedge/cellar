@@ -1,0 +1,5 @@
+input.radio__input id=id type='radio' name=name value=value checked=checked
+label.radio__label-container for=id
+  .radio__label #{label}
+  if summary
+    .radio__label-summary #{summary}

@@ -1,0 +1,6 @@
+fieldset
+  if has_label
+    label id=label_id #{label}
+  .radio__group role='radiogroup' aria-labelledby=label_id
+    each choices as |choice|
+      component '__accessibility/radio/choice' model=choice name=name group_value=value changed='changed'
