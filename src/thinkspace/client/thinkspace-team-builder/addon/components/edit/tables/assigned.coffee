@@ -1,6 +1,6 @@
 import ember  from 'ember'
+import column from 'totem-table/table/column'
 import base   from 'thinkspace-team-builder/components/edit/tables/base'
-import column from 'thinkspace-common/table/column'
 
 ## Component to handle rendering and actions for the edit component's assigned users
 export default base.extend

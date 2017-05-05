@@ -1,8 +1,8 @@
 import ember            from 'ember'
 import ns               from 'totem/ns'
+import column           from 'totem-table/table/column'
 import base_component   from 'thinkspace-base/components/base'
 import student_row      from 'thinkspace-team-builder/mixins/rows/student'
-import column           from 'thinkspace-common/table/column'
 import selectable_mixin from 'thinkspace-common/mixins/table/cells/selectable'
 
 export default base_component.extend selectable_mixin,
