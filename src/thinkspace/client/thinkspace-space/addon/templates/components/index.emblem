@@ -19,17 +19,17 @@
 
         .radio__item
           input#radio__1 type="radio" class='radio__input' name='test' value='option-1'
-          label.radio__label-container for='radio__1' 
+          label.radio__label-container for='radio__1'
             .radio__label Option 1
             .radio__label-summary This is a summary of the option above I just want to make sure it fits.
 
         .radio__item
           input#radio__2 type='radio' class='radio__input' name='test' value='option-2'
-          label.radio__label-container for='radio__2' 
+          label.radio__label-container for='radio__2'
             .radio__label Option 2
 
     / WebAim version
-    
+
     fieldset
       legend Output format
       div

@@ -33,9 +33,9 @@
 /           = input value=changeset.password type='password' tabindex='2'
 /           component '__changeset/errors' changeset=changeset attribute='password'
 
-/         link-to 'password.new' class='ts-signin_field-label-link' 
+/         link-to 'password.new' class='ts-signin_field-label-link'
 /           | Forgot Password?
-  
+
 /           / component '__checkbox' label='Keep me logged in' toggle_action='toggle_persist_login' disabled=authenticating
 
 
@@ -56,13 +56,13 @@
 / mount 'thinkspace-message'
 
 .fade-in
-  .grid__container--flex 
+  .grid__container--flex
     .grid__col--1of4.spacing__pad--2.grid__mobile--full-width
       .spacing__pad-top--2.spacing__pad-bottom--2
         .otbl-logo.otbl-logo--120.grid__container--centered
       h1 Log in to OpenTBL
       / p
-      /   | Don't have an account? 
+      /   | Don't have an account?
       /   link-to 'sign_up'
       /     | Create one to join
       form
@@ -78,7 +78,7 @@
 
           if authenticating
             / nothing
-          else 
+          else
             button.btn.btn--primary{action 'submit'}
               | Log in
 

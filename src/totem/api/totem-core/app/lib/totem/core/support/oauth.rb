@@ -54,7 +54,7 @@ module Totem
           def current_reset_password(object, params={});           reset_password(get_platform_name(object), params); end
           def current_get_password_reset_token(object, params={}); get_password_reset_token(get_platform_name(object), params); end
           def current_set_password_from_token(object, params={});  set_password_from_token(get_platform_name(object), params); end
-          
+
           # ### Oauth API Section.
 
           def api_requests; @platform_api_requests ||= get_api_requests; end
@@ -111,10 +111,8 @@ module Totem
             end
 
             def providers(loaded_providers)
-              loaded_providers.deep_symbolize_keys.each do |provider_name, hash|
-                config    = hash[:_config]
-                platforms = hash.except(:_config)
-                next unless provider_active?(config)
+              loaded_providers.deep_symbolize_keys.each do |provider_name, config|
+                platforms = ::Totem::Settings.registered.non_framework_platforms
                 add_provider_to_platforms(provider_name, config, platforms)
               end
               debug_message
@@ -122,9 +120,8 @@ module Totem
             end
 
             def add_provider_to_platforms(provider_name, provider_config, platforms)
-              platforms.deep_symbolize_keys.each do |platform_name, config|
-                next unless platform_active?(config)
-                add_platform_provider(provider_name, provider_config, platform_name, config)
+              platforms.each do |platform_name|
+                add_platform_provider(provider_name, provider_config, platform_name, provider_config)
               end
             end
 
@@ -132,23 +129,14 @@ module Totem
               platform_name        = platform_name.to_s
               providers            = platform_active_providers[platform_name] || ActiveSupport::OrderedOptions.new
               config               = providers[provider_name] || ActiveSupport::OrderedOptions.new
-              config.provider      = ActiveSupport::OrderedOptions[provider_config.deep_dup]
+              config.provider      = ActiveSupport::OrderedOptions[provider_config.except(:client_id, :client_secret).deep_dup]
               config.provider.name = provider_name
               config.provider.site = config.provider.site.chop  if config.provider.site.end_with?('/')
-              config.platform      = ActiveSupport::OrderedOptions[platform_config.deep_dup]
+              config.platform      = ActiveSupport::OrderedOptions[platform_config.except(:site).deep_dup.merge(name: platform_name)]
               config.order         = platform_config[:order] || provider_config[:order] || providers.keys.length + 1
               providers[provider_name]                 = config
               platform_active_providers[platform_name] = providers
             end
-
-            def provider_active?(config)
-              return false if config.blank?
-              return false unless config[:active] == true
-              return false unless config[:site].present?
-              true
-            end
-
-            def platform_active?(config); config.has_key?(:active) && (config[:active] == true || config[:active] == 'true'); end
 
             def debug_message
               if platform_active_providers.blank?

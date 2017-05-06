@@ -75,10 +75,15 @@ module Totem
         # array of string platform names: ['totem', 'platform', ...]
         def platforms; platform_names; end
 
+        def non_framework_platforms; platform_names - [framework_name]; end
+
+        # assumes only one platform is running
+        def platform_name; non_framework_platforms.first; end
+
         # ######################################################################################
         # @!group Engine Configuration
 
-        # convience methods to get single engine config value 
+        # convience methods to get single engine config value
         def engine_platform_name(engine_name);     engine_config_option(engine_name, :platform_name); end
         def engine_platform_path(engine_name);     engine_config_option(engine_name, :platform_path); end
         def engine_platform_scope(engine_name);    engine_config_option(engine_name, :platform_scope); end

@@ -5,41 +5,21 @@ module Thinkspace; module Authorization; module AbilityClasses
   class_methods do
 
     def require_and_set_ability_classes
-      filename = ::Totem::Settings.authorization.platforms.thinkspace.cancan.config_filename
-      raise_ability_error "Ability config filename is blank."  if filename.blank?
-      filename   += '.yml'  unless filename.end_with?('.yml')
-      config_file = ::Rails.root.join('config', 'totem', filename)
-      raise_ability_error "Abilities yml file does not exist #{config_file.inspect}."  unless File.exist?(config_file)
-      content = File.read(config_file)
-      config  = YAML.load(content)
-      raise_ability_error "Abilities yml file is invalid (not a hash) #{content.inspect}."  unless config.kind_of?(Hash)
-      config      = config.with_indifferent_access
-      class_paths = config[:classes]
-      raise_ability_error "Abilities yml configuration does not contain a classes section #{config.inspect}."  if class_paths.blank?
-      load_ability_classes(class_paths)
-    end
-
-    def load_ability_classes(class_paths)
-      paths   = class_paths.map {|hash| hash[:path]}.compact
-      paths   = File.expand_path('../ability_files', __FILE__)  if paths.blank?  # if packaged, no paths included so are in file folder
-      paths   = Array.wrap(paths)
+      path = Rails.root.join('config/totem/ability_files').to_s
+      raise_ability_error "Authorization ability files path #{path.inspect} is not a directory."  unless File.directory?(path)
       classes = Array.new
-      paths.each do |path|
-        files = get_ability_files(path)
-        next if files.blank?
-        debug_ability_files(path, files)
-        files.each do |file|
-          filename = File.basename(file, '.rb')
-          unless Rails.env.production?
-            rc = require_dependency file
-            raise_ability_error "Require failed for file #{file.inspect}."  if rc.blank?
-          end
-          class_name = 'Thinkspace::Authorization::' + filename.camelize
-          klass      = class_name.safe_constantize
-          raise_ability_error "Ability class #{class_name.inspect} could not be constantized."  if klass.blank?
-          raise_ability_error "Duplicate ability class filename #{filename.inspect} in #{file.inspect}."  if classes.include?(klass)
-          classes.push(klass)
-        end
+      files   = get_ability_files(path)
+      raise_ability_error "Authorization ability files are blank in path #{path.inspect}."  if files.blank?
+      debug_ability_files(path, files)
+      files.each do |file|
+        filename = File.basename(file, '.rb')
+        rc = require_dependency file
+        raise_ability_error "Require failed for file #{file.inspect}."  if rc.blank? && !Rails.env.production?
+        class_name = 'Thinkspace::Authorization::' + filename.camelize
+        klass      = class_name.safe_constantize
+        raise_ability_error "Ability class #{class_name.inspect} could not be constantized."  if klass.blank?
+        raise_ability_error "Duplicate ability class filename #{filename.inspect} in #{file.inspect}."  if classes.include?(klass)
+        classes.push(klass)
       end
       self.ability_classes = classes
     end
@@ -52,11 +32,19 @@ module Thinkspace; module Authorization; module AbilityClasses
 
     def debug_ability_files(path, files)
       return if startup_quiet?
-      filenames = files.map {|f| File.basename(f)}.sort.join(', ')
-      puts "[debug] Ability classes included in path #{path.inspect} (#{filenames})"
+      filenames = files.map {|f| File.basename(f)}.sort
+      debug_ability_message "[debug] Ability classes (#{filenames.length}) included in path #{path.inspect}"
+      filenames.each_with_index do |filename, index|
+        debug_ability_message "[debug]   #{(index+1).to_s.rjust(3)}. #{filename}"
+      end
     end
 
     def startup_quiet?; ::Totem::Settings.config.startup_quiet?; end
+
+    def debug_ability_message(message)
+      # puts message
+      Rails.logger.debug message
+    end
 
     def raise_ability_error(message=''); puts "\n"; raise "#{self.name}: #{message}"; end
 
@@ -75,6 +63,7 @@ module Thinkspace; module Authorization; module AbilityClasses
       set_crud_alias_actions
       set_ability_space_ids
       set_user_role(:user)
+      set_ability_space_ids
       ability_classes.each {|klass| klass.new(self).process}
     end
 
@@ -83,4 +72,3 @@ module Thinkspace; module Authorization; module AbilityClasses
   end # included
 
 end; end; end
-

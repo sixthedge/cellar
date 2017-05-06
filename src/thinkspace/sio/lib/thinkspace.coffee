@@ -15,7 +15,8 @@ class ThinkspacePlatform
     @messages       = new @server.messages(@)
     @timer          = new @server.timer(@)
     @redis_messages = new @server.redis_messages(@)
-    @rooms          = new @server.rooms(@)
+    @redis_store    = new @server.redis_store(@)
+    @rooms          = new @server.rooms(@, room_counts: false)
     @tracker        = new @server.tracker(@)
     @authenticate   = new @server.authenticate(@, 'authenticate_callback')
     @authorize      = new @server.authorize(@, 'authorize_callback')
@@ -38,7 +39,8 @@ class ThinkspacePlatform
       @util.debug '\n', 'on connection sid:', socket.id
       @util.set_not_authenticated(socket)
 
-      socket.on 'disconnect', => @util.disconnect(socket)
+      socket.on 'disconnect',    => @util.disconnect(socket)
+      socket.on 'disconnecting', => @rooms.disconnecting(socket)
 
       socket.on @util.client_event('authenticate'), (data) => @authenticate.process(socket, data)
       socket.on @util.client_event('authorize'),    (data) => @authorize.process(socket, data)

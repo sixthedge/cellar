@@ -1,0 +1,50 @@
+platform_path: thinkspace
+
+classes:
+  ra_irat_submit: Thinkspace::ReadinessAssurance::PhaseActions::Action::IratSubmit
+  ra_trat_submit: Thinkspace::ReadinessAssurance::PhaseActions::Action::TratSubmit
+  ra_auto_score:  Thinkspace::ReadinessAssurance::PhaseActions::Score::Response
+
+modules:
+  action_authorize:             Thinkspace::Casespace::Concerns::Authorize::Phases
+  action_authorize_teams:       Thinkspace::Casespace::Concerns::Authorize::Teams
+  action_authorize_markup:      Thinkspace::Casespace::Concerns::Authorize::Markup
+  action_authorize_teams_bulk:  Thinkspace::Casespace::Concerns::Authorize::TeamsBulk
+  scope_by_ownerables:          Thinkspace::Authorization::ScopeByOwnerables
+  deep_clone_helper:            Thinkspace::Common::DeepCloneHelper
+  delete_ownerable_data_helper: Thinkspace::Common::DeleteOwnerableDataHelper
+
+authentication:
+  classes:
+    user_model:           Thinkspace::Common::User
+    api_session_model:    Thinkspace::Common::ApiSession
+    password_reset_model: Thinkspace::Common::PasswordReset
+
+authorization:
+  cancan:
+    classes:
+      ability:        Thinkspace::Authorization::Ability
+      ability_engine: Thinkspace::Authorization::AbilityEngine
+    config_filename: thinkspace.abilities
+
+routes:
+  url:   api
+  root:  totem/core/application#serve_index_from_redis
+  match:
+    '*ember':
+      to:          totem/core/application#serve_index_from_redis
+      constraints: false
+
+paths:
+  - path: thinkspace/authorization
+  - path: thinkspace/builder
+  - path: thinkspace/common
+  - path: thinkspace/casespace
+  - path: thinkspace/importer
+  - path: thinkspace/peer_assessment
+  - path: thinkspace/pub_sub
+  - path: thinkspace/readiness_assurance
+  - path: thinkspace/report
+  - path: thinkspace/resource
+  - path: thinkspace/team
+  - path: thinkspace/seed
