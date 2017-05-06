@@ -2,6 +2,20 @@
   associations:
     - {belongs_to: thinkspace/common/user}
 
+# TODO: add appropriate institution dependent: destroy
+- model: thinkspace/common/institution
+  domain: true
+  associations:
+    - {has_many: thinkspace/common/spaces}
+    - {has_many: thinkspace/common/users, through: thinkspace/common/institution_users}
+  serializers:
+    - attributes: [id, title, description, state, info]
+
+- model: thinkspace/common/institution_users
+  associations:
+    - {belongs_to: thinkspace/common/institution}
+    - {belongs_to: thinkspace/common/user}
+
 - model: thinkspace/common/agreement
   domain: true
   serializers:
@@ -23,9 +37,11 @@
 
 - model: thinkspace/common/user
   associations:
+    - {has_many: thinkspace/common/institution_users}
     - {has_many: thinkspace/common/space_users}
-    - {has_many: thinkspace/common/spaces,      through: thinkspace/common/space_users}
-    - {has_many: thinkspace/common/disciplines, through: thinkspace/common/user_disciplines, source: discipline, source_type: 'Thinkspace::Common::Discipline'}
+    - {has_many: thinkspace/common/institutions, through: thinkspace/common/institution_users}
+    - {has_many: thinkspace/common/spaces,       through: thinkspace/common/space_users}
+    - {has_many: thinkspace/common/disciplines,  through: thinkspace/common/user_disciplines, source: discipline, source_type: 'Thinkspace::Common::Discipline'}
     - {has_many: thinkspace/common/user_disciplines, as: user, serialize: false}
     - {has_one:  thinkspace/common/configuration,    as: configurable, dependent: destroy, serialize: false}
   serializers:
@@ -41,6 +57,7 @@
 
 - model: thinkspace/common/space
   associations:
+    - {belongs_to: thinkspace/common/institution}
     - {belongs_to: thinkspace/common/space, alias: sandbox_space, foreign_key: sandbox_space_id}
     - {has_many: thinkspace/common/space_users}
     - {has_many: thinkspace/common/space_space_types}

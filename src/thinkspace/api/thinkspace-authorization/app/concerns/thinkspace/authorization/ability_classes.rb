@@ -61,9 +61,9 @@ module Thinkspace; module Authorization; module AbilityClasses
       @user = user
       set_read_alias_actions
       set_crud_alias_actions
+      set_ability_institution_ids
       set_ability_space_ids
       set_user_role(:user)
-      set_ability_space_ids
       ability_classes.each {|klass| klass.new(self).process}
     end
 

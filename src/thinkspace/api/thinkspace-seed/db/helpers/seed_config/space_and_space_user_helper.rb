@@ -8,6 +8,14 @@ def casespace_seed_config_add_spaces(config)
   return if spaces.blank?
   seed_config_message('++Adding seed config spaces.', config)
   spaces.each do |hash|
+    title = hash[:institution]
+    if title.blank?
+      hash[:institution] = nil
+    else
+      institution = find_institution(title: title)
+      seed_config_error "Space institution title #{title.inspect} not found.", config if institution.blank?
+      hash[:institution] = institution
+    end
     hash[:title]   ||= get_default_record_title(:common, :space)
     hash[:state]   ||= :active
     sandbox_space_id = casespace_seed_config_get_sandbox_space_id(hash)

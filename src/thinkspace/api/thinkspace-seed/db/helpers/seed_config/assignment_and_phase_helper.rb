@@ -25,7 +25,7 @@ def casespace_seed_config_add_assignments(config)
     casespace_add_assignment_created(assignment)
   end
 end
-  
+
 def casespace_reset_assignments_created;          @all_assignments_created = Array.new; end
 def casespace_get_assignments_created;            @all_assignments_created; end
 def casespace_add_assignment_created(assignment); @all_assignments_created.push(assignment); end
@@ -54,7 +54,7 @@ def casespace_seed_config_add_phases(config)
     else
       seed_config_error "Phase assignment has not been specified and is not inheritable [phase: #{hash.inspect}].", config  if assignment.blank?
     end
-    template_name = hash[:template_name]
+    template_name = hash[:template_name] || hash[:phase_template]
     if template_name.present?
       template = find_casespace_phase_template(name: template_name)
       seed_config_error "Phase template name #{template_name.inspect} not found [phase: #{hash.inspect}].", config  if template.blank?
@@ -74,4 +74,3 @@ def casespace_seed_config_add_phases(config)
     get_casespace_phase_template_section_configs[phase.id] = hash[:sections]
   end
 end
-

@@ -82,7 +82,7 @@ def seed_config_get_config_methods
 end
 
 def seed_config_process_method_order
-  [:users, :spaces, :space_users, :repeat_space_users, :assignments, :phase_templates, :phases] # base casespace methods in order of processing
+  [:users, :institutions, :institution_users, :spaces, :space_users, :repeat_space_users, :assignments, :phase_templates, :phases] # base casespace methods in order of processing
 end
 
 def seed_config_get_config_method_from_key(key); "casespace_seed_config_add_#{key}".to_sym; end

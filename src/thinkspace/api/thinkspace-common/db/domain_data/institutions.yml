@@ -1,0 +1,15 @@
+- id: 1
+  title:       dummy_institution
+  description: 'this is a sample institution record'
+  state:       inactive
+  info:
+    full_name: Dummy Institution Tech
+    address:
+      - dummy address one
+      - dummy address two
+    city: dummy city
+    zip:  12345
+    contacts:
+      purchasing:
+        attn:  Jane Doe
+        email: dit@dummy.edu
