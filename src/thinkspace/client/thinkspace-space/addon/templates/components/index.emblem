@@ -1,3 +1,7 @@
+#content style="display: none;"
+  p Test ProseMirror content.
+#editor
+
 .grid__container--flex
   .grid__col--4of4
     .main-content__header
