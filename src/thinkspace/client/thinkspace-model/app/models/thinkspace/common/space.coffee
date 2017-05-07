@@ -41,7 +41,7 @@ export default ta.Model.extend ta.add(
   get_default_team_set: (options={}) ->
     new ember.RSVP.Promise (resolve, reject) =>
       @get_team_sets().then (team_sets) =>
-        team_set = team_sets.findBy('default', true)
+        team_set = team_sets.findBy('state', 'default')
         resolve(team_set)
     , (error) => console.error "[space model] Error in get_default_team_set.", error
 

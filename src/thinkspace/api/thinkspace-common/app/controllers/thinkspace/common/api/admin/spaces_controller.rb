@@ -94,9 +94,8 @@ module Thinkspace
             team_sets = @space.thinkspace_team_team_sets
             default   = team_sets.scope_default
             if default.empty?
-              team_set         = team_sets.first
-              team_set.default = true
-              team_set.save
+              team_set = team_sets.first
+              team_set.make_default!
             end
           end
 
