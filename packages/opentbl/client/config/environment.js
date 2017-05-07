@@ -65,11 +65,6 @@ module.exports = function(environment) {
     },
     "pub_sub": {
         "namespace": "thinkspace"
-    },
-    "roles_map": {
-        "read": "Student",
-        "update": "Teaching Assistant",
-        "owner": "Instructor"
     }
   }
 

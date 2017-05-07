@@ -2,23 +2,28 @@
 
 module.exports = function(deployTarget) {
   var ENV = {
-    build: {}
-    // include other plugin configuration that applies to all deploy targets here
+    build: {},
+    redis: {
+      url: process.env['APP_DEPLOY_REDIS_URL']
+    },
+    s3: {
+      accessKeyId:     process.env['APP_DEPLOY_S3_ACCESS_KEY_ID'],
+      secretAccessKey: process.env['APP_DEPLOY_S3_SECRET_ACCESS_KEY'],
+      bucket:          process.env['APP_DEPLOY_S3_BUCKET'],
+      region:          process.env['APP_DEPLOY_S3_REGION']
+    }
   };
 
   if (deployTarget === 'development') {
     ENV.build.environment = 'development';
-    // configure other plugins for development deploy target here
   }
 
   if (deployTarget === 'staging') {
     ENV.build.environment = 'production';
-    // configure other plugins for staging deploy target here
   }
 
   if (deployTarget === 'production') {
     ENV.build.environment = 'production';
-    // configure other plugins for production deploy target here
   }
 
   // Note: if you need to build some configuration asynchronously, you can return
