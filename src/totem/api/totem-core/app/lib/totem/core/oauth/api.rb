@@ -25,27 +25,16 @@ module Totem
 
           # => Create a Totem OAuth user account from a trusted platform.
           # POST request to /api/trusted/users
-          # user_params should be in the format of: { user: { first_name: '...' } } - note: having the :user is important.
-          # REQUIRED:
-          #   => params[:user][:first_name]
-          #   => params[:user][:last_name]
-          #   => params[:user][:password]
-          #   => params[:user][:email] - note: this must be a valid email.
           # RETURN:
           #   => {"id"=>19, "first_name"=>"ApiTestFirst", "last_name"=>"ApiTestLast", "settings"=>{}, "email"=>"test@test.com", "authentication_token"=>nil, "created_at"=>"2014-11-04T21:04:21.807Z", "updated_at"=>"2014-11-04T21:04:21.807Z"}
           def create_user(params, options={})
-            if (root_key = options[:root_key]).present?
-              raise InvalidParamsError, "Create user params does not contain root_key of #{root_key.inspect} [params: #{params.inspect}]." unless params.has_key?(root_key)
-              user_params   = params.delete(root_key)
-              params[:user] = (params[:user] || {}).deep_merge(user_params)
-            end
-            user = params[:user] || {}
+            user = params.dig('data', 'attributes')
             [:first_name, :last_name, :password, :email].each do |k|
               raise InvalidParamsError, "Create user missing parameter #{k.inspect} in params #{params.inspect}." if user[k].blank?
             end
             email = user[:email]
             raise InvalidEmailError, "Create user email #{email.inspect} is invalid." unless is_valid_email?(email)
-            post_request 'trusted/users', params
+            post_request 'trusted/users', json_api_to_oauth_params('user', params)
           end
 
           # => Check if an email exists on the master Totem OAuth server.
@@ -138,6 +127,11 @@ module Totem
           def add_platform_to_params(params)
             params[:secret]    = provider.platform.client_secret
             # params[:client_id] = provider.platform.client_id
+          end
+
+          def json_api_to_oauth_params(key, params)
+            attributes = params.dig('data', 'attributes')
+            {"#{key}": attributes}
           end
 
           def response_valid?(response); response['valid'] == true; end

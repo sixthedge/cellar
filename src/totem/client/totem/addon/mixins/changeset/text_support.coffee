@@ -22,7 +22,7 @@ export default ember.Mixin.create
   label:                    null  # [string] add this label before the input
   show_errors_on_focus_out: true  # [true|false] show errors on focus-out for the input
   error_class: 'has-errors'       # [string] class added (if errors) or removed (no errors) from the element selected by 'input_id'
-  input_id:    ember.computed.reads 'elementId'  # [string] default is this component's elementId; element to add the error_class
+  input_id:    ember.computed 'elementId', -> "input-#{@get('elementId')}" # [string] default is this component's elementId; element to add the error_class
 
   value: ember.computed
     get: -> @get_value()
@@ -35,6 +35,7 @@ export default ember.Mixin.create
 
   default_attributes:
     type:        'text'
+    disabled:    false
     tabindex:    null
     placeholder: null
 
@@ -56,7 +57,7 @@ export default ember.Mixin.create
     @[fn](args...) if util.is_object_function(@, fn)
 
   handle_focus_out: (value) -> @set 'show_errors', @get('show_errors_on_focus_out') == true
-
+ 
   init: ->
     @_super(arguments...)
     @set 'input_attributes', @get_attributes()

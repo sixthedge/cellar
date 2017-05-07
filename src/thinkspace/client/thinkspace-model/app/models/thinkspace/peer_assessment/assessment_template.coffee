@@ -13,10 +13,6 @@ export default base.extend ta.add(
   ownerable_type: ta.attr('string')
   value:          ta.attr()
 
-  is_michaelsens:  ember.computed.equal 'title', "Michaelsen's Method (Balance Points)"
-  is_categories:   ember.computed.equal 'title', "Categories"
-  is_blank_canvas: ember.computed.equal 'title', "Blank Canvas"
-
   is_balance:    ember.computed.equal 'value.options.type', 'balance'
   is_categories: ember.computed.equal 'value.options.type', 'categories'
 

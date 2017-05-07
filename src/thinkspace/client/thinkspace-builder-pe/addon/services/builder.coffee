@@ -20,15 +20,7 @@ import initialize        from 'thinkspace-builder-pe/services/builder/initialize
 export default base.extend initialize, navigate,
   # ## Properties
   current_step:       null
-
   current_step_index: ember.computed.reads 'current_step.index'
-  step_prototypes:    ember.computed -> 
-    [
-      details_step,
-      content_step,
-      settings_step,
-      confirmation_step
-    ]
 
   # ## Methods
 
