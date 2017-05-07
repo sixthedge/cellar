@@ -64,6 +64,7 @@
     "thinkspace-message": "0.0.1",
     "thinkspace-message-pubsub": "0.0.1",
     "thinkspace-model": "0.0.1",
+    "thinkspace-otbl-user": "0.0.1",
     "thinkspace-peer-assessment": "0.0.1",
     "thinkspace-peer-assessment-instructor": "0.0.1",
     "thinkspace-peer-assessment-pe": "0.0.1",
@@ -79,6 +80,7 @@
     "thinkspace-toolbar": "0.0.1",
     "thinkspace-user": "0.0.1",
     "totem": "0.0.1",
+    "totem-accessibility": "0.0.1",
     "totem-admin": "0.0.1",
     "totem-application": "0.0.1",
     "totem-assets": "0.0.1",
@@ -88,6 +90,7 @@
     "totem-messages": "0.0.1",
     "totem-pub-sub": "0.0.1",
     "totem-simple-auth": "0.0.1",
+    "totem-table": "0.0.1",
     "totem-template-manager": "0.0.1"
   },
   "engines": {
