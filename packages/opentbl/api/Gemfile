@@ -1,0 +1,103 @@
+source 'http://rubygems.org'
+
+# Env Variables
+is_docker  = ENV['APP_IS_DOCKER'] == 'true'
+cellar_src = ENV['APP_BUNDLE_SRC'] || (File.directory?('../../cellar/src') ? '../../cellar/src' : '../../../cellar/src')
+passenger  = ['passenger', '5.1.2', require: "phusion_passenger/rack_handler"]
+
+# Server Framework
+gem 'rails', '5.0.1'
+gem 'pg', '0.19.0'
+gem 'responders', '2.3.0'
+
+group :production do
+  gem *passenger
+  gem 'newrelic_rpm', '3.18.1.330'
+  gem 'dalli', '2.7.6' # MemCachier store
+end
+
+group :development do
+  is_docker ? gem(*passenger) : gem('thin')
+end
+
+group :test do
+  gem 'simplecov', :require => false
+end
+
+# Auditing
+gem 'paper_trail', '6.0.2'
+gem 'deep_cloneable', '2.2.2'
+
+# Amazon SQS
+gem 'aws-sdk', '2.7.14'
+
+# CORS - config in application.rb
+gem 'rack-cors', '0.4.1', require: 'rack/cors'
+
+# Server to Server API (rails-to-oauth)
+gem 'rest-client', '2.0.1'
+
+# Redis for serving Index.
+gem 'redis', '3.3.3'
+
+# Slim for Mailer Views
+gem 'slim', '3.0.7'
+
+# State Machine
+gem 'aasm', '4.11.1'
+
+# For quickly parsing CSVs into arrays of hashes
+gem 'smarter_csv', '1.1.4'
+
+# Delayed Job (background processing)
+gem 'delayed_job_active_record', '4.1.1'
+
+# Discourse API
+gem 'discourse_api', '0.14.1'
+
+# Tagging
+gem 'acts-as-taggable-on', '4.0.0'
+
+# Pagination
+gem 'kaminari', '1.0.1'
+
+# JSONAPI
+gem 'jsonapi', '0.1.1.beta6'
+gem 'jsonapi-parser', '0.1.1.beta3'
+gem 'jsonapi-renderer', '0.1.1.beta1'
+
+# OpenTBL specfic
+gem 'cancancan', '1.16.0'
+gem 'paperclip', '5.1.0'
+gem 'has_secure_token', '1.0.0'
+gem 'spreadsheet', '1.1.4'
+
+# Cellar Totem
+gempath = "#{cellar_src}/totem/api"
+# Using a local version of active_model_serializers to freeze code that works with totem.
+gem 'active_model_serializers',                path: "#{gempath}/vendor/active_model_serializers-0.10.2"
+gem 'totem',                          '0.5.0', path: "#{gempath}"
+gem 'totem-authentication-session',   '0.5.0', path: "#{gempath}/totem-authentication-session"
+gem 'totem-authorization-cancan',     '0.5.0', path: "#{gempath}/totem-authorization-cancan"
+gem 'totem-core',                     '0.5.0', path: "#{gempath}/totem-core"
+gem 'totem-pub-sub',                  '0.5.0', path: "#{gempath}/totem-pub-sub"
+
+# Cellar OpenTBL
+gempath = "#{cellar_src}/thinkspace/api"
+gem 'thinkspace',                      '0.2.0', path: "#{gempath}"
+gem 'thinkspace-authorization',        '0.2.0', path: "#{gempath}/thinkspace-authorization"
+gem 'thinkspace-builder',              '0.2.0', path: "#{gempath}/thinkspace-builder"
+gem 'thinkspace-casespace',            '0.2.0', path: "#{gempath}/thinkspace-casespace"
+gem 'thinkspace-common',               '0.2.0', path: "#{gempath}/thinkspace-common"
+gem 'thinkspace-importer',             '0.2.0', path: "#{gempath}/thinkspace-importer"
+gem 'thinkspace-peer-assessment',      '0.2.0', path: "#{gempath}/thinkspace-peer-assessment"
+gem 'thinkspace-pub-sub',              '0.2.0', path: "#{gempath}/thinkspace-pub-sub"
+gem 'thinkspace-readiness-assurance',  '0.2.0', path: "#{gempath}/thinkspace-readiness-assurance"
+gem 'thinkspace-report',               '0.2.0', path: "#{gempath}/thinkspace-report"
+gem 'thinkspace-resource',             '0.2.0', path: "#{gempath}/thinkspace-resource"
+gem 'thinkspace-team',                 '0.2.0', path: "#{gempath}/thinkspace-team"
+
+group :development, :test do
+  gem 'thinkspace-seed', '0.2.0', path: "#{gempath}/thinkspace-seed"
+  gem 'thinkspace-test', '0.2.0', path: "#{gempath}/thinkspace-test"
+end

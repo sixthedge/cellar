@@ -1,0 +1,10 @@
+h1 new password
+if loading.authenticating
+  .loader__container
+    .loader.loader--logo
+    .text__font-size--14.text--bold Loading...
+else
+  form{action 'submit' on='submit'}
+    component '__changeset/input' changeset=changeset attribute='password' label='Password' type='password'
+    component '__changeset/input' changeset=changeset attribute='password_confirmation' label='Password Confirmation' type='password'
+    button type='submit' Submit

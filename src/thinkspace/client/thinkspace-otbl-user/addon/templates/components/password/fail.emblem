@@ -1,0 +1,4 @@
+h1 password reset failed
+h2 try again here
+= link-to 'password.new'
+  | password reset link

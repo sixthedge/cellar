@@ -1,0 +1,21 @@
+variables:
+  - &INSTITUTION Institute of Readiness Assurance
+  - &SPACE Readiness Assurance
+
+users: import[users@superusers]
+
+institutions:
+  - title: *INSTITUTION
+
+institution_users:
+  - institutions: *INSTITUTION
+    users: import[users@iadmin_1]
+    role:  iadmin
+
+spaces:
+  - title: *SPACE
+    institution: *INSTITUTION
+
+space_users:
+  - spaces: *SPACE
+    users:  import[users]

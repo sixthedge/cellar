@@ -1,0 +1,43 @@
+# If want to test an institutional admin.
+# CONFIG=all,spacei
+
+variables:
+  - &I_1  Institutional 1
+  - &I_2  Institutional 2
+  - &I_3  Institutional 3
+  - &IS_1 Ispace 1
+  - &IS_2 Ispace 2
+  - &IS_3 Ispace 3
+
+institutions:
+  - title: *I_1
+  - title: *I_2
+  - title: *I_3
+
+institution_users:
+  - institutions: [*I_1, *I_3]
+    users: import[users@iadmin_2]
+    role:  iadmin
+
+spaces:
+  - title: *IS_1
+    institution: *I_1
+  - title: *IS_2
+    institution: *I_2
+  - title: *IS_3
+    institution: *I_3
+
+assignments:
+  - {title: Iassignment_1, space: *IS_1}
+  - {title: Iassignment_2, space: *IS_2}
+  - {title: Iassignment_3, space: *IS_3}
+
+phases:
+  - {title: Iphase_1, assignment: Iassignment_1, template_name: spacei_phase_template}
+  - {title: Iphase_2, assignment: Iassignment_2, template_name: spacei_phase_template}
+  - {title: Iphase_3, assignment: Iassignment_3, template_name: spacei_phase_template}
+
+phase_templates:
+  - title: spacei_phase_template
+    name: spacei_phase_template
+    template: <row><column></column></row>

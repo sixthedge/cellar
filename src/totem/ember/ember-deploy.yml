@@ -1,7 +1,0 @@
-commands:
-  - ember install ember-cli-deploy
-  - ember install ember-cli-deploy-build
-  - ember install ember-cli-deploy-s3
-  - ember install ember-cli-deploy-redis
-  - ember install ember-cli-deploy-display-revisions
-  - ember install ember-cli-deploy-revision-data

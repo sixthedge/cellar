@@ -11,35 +11,6 @@
       each model as |space|
         component 'space' model=space
 
-
-    / For testing purposes - Accessible radio btns
-    fieldset
-      label#radio-group__label Pick an option
-      .radio__group role='radiogroup' aria-labelledby='radio-group__label'
-
-        .radio__item
-          input#radio__1 type="radio" class='radio__input' name='test' value='option-1'
-          label.radio__label-container for='radio__1' 
-            .radio__label Option 1
-            .radio__label-summary This is a summary of the option above I just want to make sure it fits.
-
-        .radio__item
-          input#radio__2 type='radio' class='radio__input' name='test' value='option-2'
-          label.radio__label-container for='radio__2' 
-            .radio__label Option 2
-
-    / WebAim version
-    
-    fieldset
-      legend Output format
-      div
-        input type="radio" name="format" id="txt" value="txt"
-        label for="txt" Text file
-      div
-        input type="radio" name="format" id="csv" value="csv"
-        label for="csv" CSV file
-
-
 .grid__container--flex
   .grid__col--4of4
     .footnote

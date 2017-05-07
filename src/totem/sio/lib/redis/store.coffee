@@ -10,17 +10,15 @@ class SocketIORedisStore
     @set_client()
 
   init_env_vars: ->
-    @host    = @util.env_var('REDIS_HOST')
-    @port    = @util.env_var('REDIS_PORT')
+    @url = @util.env_var('REDIS_URL')
+    @util.error 'No store SIO_REDIS_URL specified, cannot connect to Redis.' unless @url
     @retries = @util.env_var_int('REDIS_CONNECT_RETRY_ATTEMPTS') or 'none'
     @delay   = @util.env_var_int('REDIS_CONNECT_RETRY_DELAY_SECONDS') or 10
 
   set_client: (options={}, callback=null) ->
-    options.port           = @port  unless options.port
-    options.host           = @host  unless options.host
     options.retry_strategy = @retry_strategy  unless options.retry_strategy
-    @util.info "redis server store '#{@namespace}' -> port: '#{@port}' host: '#{@host}'"
-    @client = @redis.createClient(options)
+    @util.info "redis server store '#{@namespace}' -> url: '#{@url}'"
+    @client = @redis.createClient(@url)
     @client.on 'connect', =>
       @clear()
       @util.info "redis server store connected '#{@namespace}'"

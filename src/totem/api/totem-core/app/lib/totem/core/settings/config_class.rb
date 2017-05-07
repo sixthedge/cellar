@@ -5,7 +5,7 @@ module Totem
 
         attr_reader :class_map
         attr_reader :classes
-    
+
         def initialize
           @class_map = ActiveSupport::OrderedHash.new
           @classes   = HashWithIndifferentAccess.new
@@ -27,6 +27,8 @@ module Totem
           error "Cannot contantize class name [#{name.inspect}]"  if klass.blank?
           klass
         end
+
+        def get_class_name(key); class_map[key.to_sym]; end
 
         private
 

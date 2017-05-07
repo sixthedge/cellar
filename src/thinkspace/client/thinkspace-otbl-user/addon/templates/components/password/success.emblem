@@ -1,0 +1,4 @@
+h1 success
+h2 log in here
+= link-to 'sign_in'
+  | Sign in route

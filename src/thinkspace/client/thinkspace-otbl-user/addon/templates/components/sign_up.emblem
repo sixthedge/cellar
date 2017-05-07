@@ -1,0 +1,20 @@
+h1 OpenTBL Sign Up
+if has_token
+  h2 You have been invited to #{invitable}
+  p Sign up below to get access to your course #{invitable}
+  p 
+    | Already have an account? 
+    = link-to 'sign_in'
+      |  Use your account to log in.
+hr
+
+form{action 'submit' on='submit'}
+  component '__changeset/input' changeset=changeset attribute='first_name' label='First Name'
+  component '__changeset/input' changeset=changeset attribute='last_name'  label='Last Name'
+  component '__changeset/input' changeset=changeset attribute='email' label='Email' type='email'
+  component '__changeset/input' changeset=changeset attribute='password'   label='Password' type='password'
+  component '__accessibility/radio/group' value=role options=role_options changed='changed_role'
+  if loading.submitting
+    button.btn.btn--disabled SubmitDisabled
+  else
+    button.btn Submit

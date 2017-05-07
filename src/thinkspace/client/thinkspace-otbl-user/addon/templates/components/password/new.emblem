@@ -1,0 +1,12 @@
+h1 password reset
+if has_errors
+  h1 there has been an error, please check the email address and try again.
+if loading.authenticating
+  .loader__container
+    .loader.loader--logo
+    .text__font-size--14.text--bold Loading...
+else
+  / Wrap the inputs in a form, on the 'submit' event, run the 'submit' action in the component.
+  form{action 'submit' on='submit'}
+    component '__changeset/input' changeset=changeset attribute='email' label='Email' type='email'
+    button type='submit' Submit!

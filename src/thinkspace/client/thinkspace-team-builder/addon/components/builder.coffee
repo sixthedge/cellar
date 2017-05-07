@@ -1,10 +1,9 @@
 import ember          from 'ember'
 import ns             from 'totem/ns'
+import column         from 'totem-table/table/column'
 import base_component from 'thinkspace-base/components/base'
 import arr_helpers    from 'thinkspace-common/mixins/helpers/common/array'
-import column         from 'thinkspace-common/table/column'
-
-import student_row from 'thinkspace-team-builder/mixins/rows/student'
+import student_row    from 'thinkspace-team-builder/mixins/rows/student'
 
 export default base_component.extend arr_helpers,
   
