@@ -1,24 +1,32 @@
-.fade-in
-  .grid__container--flex 
-    .grid__col--1of4.spacing__pad--2.grid__mobile--full-width
-      .spacing__pad-top--2.spacing__pad-bottom--2
-        .otbl-logo.otbl-logo--120.grid__container--centered
-      h1 Log in to OpenTBL
-      p
-        | Don't have an account? 
-        link-to 'sign_up'
-          | Create one to join
-      if loading.authenticating
+.grid__container
+  .spacing__pad-top--4.spacing__pad-bottom--4
+        .otbl-logo.otbl-logo--80.grid__container--centered
+
+.grid__container
+  .bordered-panel.bordered-panel--authentication.bordered-panel--shadow.bordered-panel--mobile.spacing__pad--2.grid__container--centered
+    h1.text__font-size--18.spacing__margin-top--0.spacing__margin-bottom--0 Log in to OpenTBL
+    p.text__font-size--14.spacing__margin-top--half 
+      | Don't have an account? 
+      = link-to 'sign_up'
+        |  Create one here.
+    hr
+
+    if loading.authenticating
         .loader__container
           .loader.loader--logo
           .text__font-size--14.text--bold Loading...
-      else
-        form{action 'submit' on='submit'}
-          fieldset
-            .forms__field-wrapper
-              component '__changeset/input' changeset=changeset attribute='email' label='Email' type='email'
-            .forms__field-wrapper
-              component '__changeset/input' changeset=changeset attribute='password' label='Password' type='password'
+    else
+      form{action 'submit' on='submit'}
+        fieldset
+          .forms__field-wrapper
+            component '__changeset/input' changeset=changeset attribute='email' label='Email' type='email'
+          .forms__field-wrapper
+            component '__changeset/input' changeset=changeset attribute='password' label='Password' type='password'
+          .spacing__margin-top--1.spacing__margin-bottom--2
             button.btn.btn--primary type='submit' Log in
+            a.text__font-size--14.is-right Forgot password?
 
-    .grid__col--3of4.login__billboard.grid__mobile--hidden
+
+    hr
+    .text__font-size--12.text__color--gray 
+      | ©2001–2017 All Rights Reserved. OpenTBL is a registered trademark of Sixth Edge. <a href='#'>Privacy</a> and <a href='#'>Terms</a>

@@ -17,3 +17,18 @@
   border-top-left-radius:    0;
   border-bottom-left-radius: 0;
 }
+
+.bordered-panel--shadow {
+  box-shadow: 0px 2px 15px rgba(78, 78, 78, 0.15);
+}
+
+.bordered-panel--authentication {
+  max-width: 550px;
+}
+
+.bordered-panel--mobile {
+  @media only screen and (max-width: 40rem) {
+    border:     none;
+    box-shadow: none !important;
+  }
+}
