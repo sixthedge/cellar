@@ -4,14 +4,19 @@
 
 .grid__container
   .bordered-panel.bordered-panel--authentication.bordered-panel--shadow.bordered-panel--mobile.spacing__pad--2.grid__container--centered
-    h1.text__font-size--18.spacing__margin-top--0.spacing__margin-bottom--0 Create an OpenTBL account
     if has_token
-      h2 You have been invited to #{invitable}
-      p Sign up below to get access to your course #{invitable}
-    p.text__font-size--14.spacing__margin-top--half 
-      | Already have an account? 
-      = link-to 'sign_in'
-        |  Log in here.
+      h1.text__font-size--18.spacing__margin-top--0.spacing__margin-bottom--0  
+        | You have been invited to <span class='text__color--green'>#{invitable}</span>
+      p.text__font-size--14.spacing__margin-top--half.spacing__margin-bottom 
+        | Sign up below to get access to your course. Already have an account? 
+        = link-to 'sign_in'
+          |  Log in here.
+    else
+      h1.text__font-size--18.spacing__margin-top--0.spacing__margin-bottom--0 Create an OpenTBL account
+      p.text__font-size--14.spacing__margin-top--half 
+        | Already have an account? 
+        = link-to 'sign_in'
+          |  Log in here.
     hr
 
     form{action 'submit' on='submit'}
@@ -34,4 +39,4 @@
             | By creating an account you agree to <a href='#'>OpenTBL's Terms of Use.</a>
     hr
     .text__font-size--12.text__color--gray 
-      | ©2001–2017 All Rights Reserved. OpenTBL is a registered trademark of Sixth Edge. <a href='#'>Privacy</a> and <a href='#'>Terms</a>
+      | ©2017 All Rights Reserved. OpenTBL is a registered trademark of Sixth Edge. <a href='#'>Privacy</a> and <a href='#'>Terms</a>
