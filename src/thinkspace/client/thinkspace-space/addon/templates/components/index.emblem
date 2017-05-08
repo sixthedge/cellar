@@ -3,6 +3,9 @@
     .main-content__header
       h1 Welcome back, #{session.user.first_name}!
       p Here's an overview of what's happening in your spaces.
+      = if can.create
+        link-to 'new' class='btn'
+          | + New Space
 
 .grid__container--flex.spacing__margin-bottom--4
   .grid__col--3of4.grid__mobile--full-width

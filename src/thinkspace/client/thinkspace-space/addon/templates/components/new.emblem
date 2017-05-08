@@ -1,0 +1,12 @@
+h1 New Space
+
+label Title
+component '__changeset/input' value=changeset.title changeset=changeset attribute='title' display_errors=true
+
+label Which institution do you belong to?
+
+link-to 'index' class='btn'
+  | Back
+
+.btn{action 'submit'}
+  | Submit
