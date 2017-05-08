@@ -4,7 +4,7 @@
 
 ### API
 
-**cd my/path/to/attic/cellar/local**
+**cd my/path/to/cellar/local**
 
 ```
 # totem-oauth
@@ -16,7 +16,7 @@
 
 ### Client
 
-**cd my/path/to/attic/cellar/local**
+**cd my/path/to/cellar/local**
 
 ```
 # opentbl
@@ -26,7 +26,7 @@
 
 ### Socket.io
 
-**cd my/path/to/attic/cellar/local**
+**cd my/path/to/cellar/local**
 
 ```
 # opentbl
