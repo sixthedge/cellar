@@ -1,6 +1,7 @@
-import ember from 'ember'
-import base  from 'thinkspace-base/services/base'
+import ember          from 'ember'
+import base           from 'thinkspace-base/services/base'
 import totem_messages from 'totem-messages/messages'
+import ta             from 'totem/ds/associations'
 
 ###
 # # builder.coffee
@@ -55,6 +56,18 @@ export default base.extend initialize, navigate,
     model = @get('model')
     route = @get('route')
     route.transitionToExternal 'cases.show', model
+
+  query_assignment: (id) ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      params = 
+        id: id
+      options =
+        action: 'load'
+        model:  ta.to_p('assignment')
+        single: true
+
+      @tc.query_action(ta.to_p('assignment'), params, options).then (assignment) =>
+        resolve(assignment)
 
   _warn: (message) ->
     console.warn "[pe builder service] #{message}"

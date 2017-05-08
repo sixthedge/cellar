@@ -9,14 +9,40 @@ import totem_changeset from 'totem/changeset'
 ###
 export default ember.Object.extend
   # ### Properties
-  model:         null
+  model:  null
+  index:  null
+  answer: null
   
+  alphabet: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
   id:      ember.computed.reads 'model.id'
   label:   ember.computed.reads 'model.label'
 
+  is_answer: ember.computed 'id', 'answer', -> parseInt(@get('id')) == parseInt(@get('answer'))
+
   init: ->
     @_super()
+
+    console.lgo9'piniting choice with answer', @get('answer'), @get('id')
+
+  init: ->
+    @_super()
+    console.log('initing choice with asnwer ', @get('answer'), @get('id'), parseInt(@get('answer')) == parseInt(@get('id')), @get('is_answer'))
+
+
+    @init_prefix(@get('index'))
     @create_changeset()
+
+  init_prefix: (i) ->
+
+    console.log('calling init_prefix with index ', i)
+    prefix = i%26
+    prefix = @get('alphabet')[prefix]
+    suffix = Math.floor(i/26)
+    if suffix == 0 then suffix = ''
+    result = prefix + suffix
+    console.log('should be setting prefix to ', result)
+    @set('prefix', result)
 
   create_changeset: ->
     model     = @get('model')

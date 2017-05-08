@@ -14,4 +14,4 @@ export default base.extend
     next_step: -> @get('builder').transition_to_next_step()
     exit: ->      @get('builder').transition_to_cases_show()
 
-    toggle_assessment_sync: -> @get('step').toggle_assessment_sync()
+    toggle_assessment_sync: (val) -> @get('step').toggle_assessment_sync(val)

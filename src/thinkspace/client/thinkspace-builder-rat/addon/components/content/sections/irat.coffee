@@ -15,15 +15,18 @@ export default base.extend
 
   manager: ember.inject.service()
 
-  question_items: ember.computed 'step.irat_assessment.questions.@each', ->
-    items = @get('step.irat_assessment.questions')
+  question_items: ember.computed 'step.irat_assessment.questions_with_answers.@each', ->
+    items = @get('step.irat_assessment.questions_with_answers')
     if ember.isPresent(items)
       @create_question_item(item) for item in items
 
   create_question_item: (item) ->
     question_item.create
-      model: item
+      model:      item
       assessment: @get('model')
+      type:       @get('type')
+      ## Container necessary if we want to inject the manager service
+      container:  @container
 
   actions:
     create: ->

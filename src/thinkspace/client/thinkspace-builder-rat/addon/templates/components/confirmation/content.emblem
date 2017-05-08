@@ -3,3 +3,6 @@
 
   link-to step.route_path model class='button btn is-right spacing__margin-top--half'
     | Edit content
+
+  component 'confirmation/content/sections/irat' assessment=irat_assessment
+  component 'confirmation/content/sections/trat' assessment=trat_assessment sync=sync_assessments

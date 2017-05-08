@@ -27,13 +27,16 @@ export default ta.Model.extend resource_mixin, ta.totem_data, ta.add(
   builder_version:     ta.attr('number')
   builder_template_id: ta.attr('number')
 
-  is_pubsub:      ember.computed.bool 'settings.pub_sub'
-  is_active:      ember.computed.equal 'state', 'active'
-  is_inactive:    ember.computed.equal 'state', 'inactive'
-  has_due_at:     ember.computed.notEmpty 'due_at'
-  has_release_at: ember.computed.notEmpty 'release_at'
+  is_pubsub:            ember.computed.bool 'settings.pub_sub'
+  is_active:            ember.computed.equal 'state', 'active'
+  is_inactive:          ember.computed.equal 'state', 'inactive'
+  has_due_at:           ember.computed.notEmpty 'due_at'
+  has_release_at:       ember.computed.notEmpty 'release_at'
+  
+  sync_rat_assessments: ember.computed.bool 'settings.rat.sync'
 
-  # sync_rat:       ember.computed.bool 'settings.rat.sync'
+  rat_obs: ember.observer 'sync_rat_assessments', ->
+    console.log('[ASSIGNMENT] rat changing ', @get('sync_rat_assessments'))
 
   ttz: ember.inject.service()
 
@@ -172,4 +175,4 @@ export default ta.Model.extend resource_mixin, ta.totem_data, ta.add(
     console.log('[set_sync_assessment] ', value, settings)
     settings.rat = {} unless ember.isPresent(settings.rat)
     ember.set(settings.rat, 'sync', value)
-    console.log('[set_sync_assessment] ', settings)
+    console.log('[set_sync_assessment] ', @get('settings'))

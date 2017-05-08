@@ -12,6 +12,17 @@ export default base.extend
 
   manager: ember.inject.service()
   type:    null
+  default_text: 'Choose an answer'
+
+  choice_items: ember.computed.reads 'model.choice_items'
+  answer:       ember.computed.reads 'model.answer'
+
+  dropdown_text: ember.computed 'answer', ->
+    if ember.isPresent(@get('answer')) then @get('answer.prefix') else @get('default_text')
+
+  select_answer: (choice) ->
+    console.log('setting selected_answer to ', choice)
+    @get('model').select_answer(choice)
 
   update_model: -> 
     @get('model').save().then (success) =>
@@ -25,7 +36,9 @@ export default base.extend
     update: -> @update_model()
 
     add_choice: ->
-      @get('manager').add_choice_to_item(@get('type'), @get('model.id'))
+      @get('model').add_choice_to_item(@get('type'), @get('model.id'))
 
     delete_choice: (choice) ->
-      @get('manager').delete_choice_from_item(@get('type'), @get('model.id'), choice)
+      @get('model').delete_choice_from_item(@get('type'), @get('model.id'), choice)
+
+    select_answer: (choice) -> @select_answer(choice)

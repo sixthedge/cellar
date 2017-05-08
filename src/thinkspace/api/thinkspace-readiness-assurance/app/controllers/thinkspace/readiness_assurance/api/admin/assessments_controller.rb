@@ -8,6 +8,7 @@ module Thinkspace
           def update
             @assessment.questions = params_root[:questions]
             @assessment.settings  = params_root[:settings]
+            @assessment.answers   = params_root[:answers]
             @assessment.sync_assessments
             controller_save_record(@assessment)
           end

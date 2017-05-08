@@ -22,7 +22,7 @@ export default step.extend
 
   model: ember.computed.reads 'builder.model'
 
-  sync_assessments: ember.computed.reads 'model.settings.rat.sync'
+  sync_assessments: ember.computed.reads 'model.sync_rat_assessments'
 
   initialize: ->
     @reset_all_data_loaded()
@@ -62,9 +62,9 @@ export default step.extend
     manager.set_assessment('irat', irat)
     manager.set_assessment('trat', trat)
 
-  toggle_assessment_sync: ->
+  toggle_assessment_sync: (val) ->
     model = @get('model')
-    value = model.set_sync_assessment(!@get('sync_assessments'))
+    value = model.set_sync_assessment(val)
 
     model.save().then =>
       @query_assessments().then (assessments) =>

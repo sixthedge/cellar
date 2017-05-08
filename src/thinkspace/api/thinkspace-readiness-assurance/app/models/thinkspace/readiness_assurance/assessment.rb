@@ -37,6 +37,7 @@ module Thinkspace
           assessments = Thinkspace::ReadinessAssurance::Assessment.where(authable: assignment.thinkspace_casespace_phases).without(self)
           assessments.each do |assessment|
             assessment.questions = self.questions
+            assessment.answers   = self.answers
             ## May need to refactor to accommodate irat/trat-only settings
             assessment.settings  = self.settings.deep_merge(assessment.settings)
             assessment.save

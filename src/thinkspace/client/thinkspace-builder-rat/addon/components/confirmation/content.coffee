@@ -12,4 +12,8 @@ export default base.extend
 
   model:      ember.computed.reads 'builder.model'
   step:       ember.computed.reads 'builder.step_content'
+
+  trat_assessment:  ember.computed.reads 'manager.trat'
+  irat_assessment:  ember.computed.reads 'manager.irat'
+  sync_assessments: ember.computed.reads 'model.sync_rat_assessments'
   

@@ -6,8 +6,8 @@
 .forms__field-wrapper
   label Answer choices
   .forms__label-summary We recommend 3-4 choices for students to choose from.
-  each model.choice_items as |choice index|
-    component 'content/question/choice/edit' model=choice index=index delete='delete_choice'
+  each choice_items as |choice|
+    component 'content/question/choice/edit' model=choice delete='delete_choice'
 
   a{action 'add_choice'}
     | Add another answer choice
@@ -15,7 +15,9 @@
 .forms__field-wrapper
   label Choose correct answer
   .forms__label-summary This will help give immediate feedback to students.
+  component '__dropdown' collection=choice_items display_property='prefix' text=dropdown_text selected=model.changeset.answer select_action='select_answer' action_receiver=this
 
+  component '__changeset/errors' changeset=model.changeset attribute='answer' errors_visible=true 
 hr
 .btn-group
   button.btn.btn--primary click='update'

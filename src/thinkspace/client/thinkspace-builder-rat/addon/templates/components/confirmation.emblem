@@ -3,7 +3,7 @@ partial 'components/header'
   .grid__container--flex.spacing__margin-bottom--4
     .grid__col--3of4.grid__mobile--full-width
       .main-content__header
-        h1 Peer Evaluation Confirmation
+        h1 Readiness Assurance Confirmation
         p Make sure everything looks fine
 
       component 'confirmation/details'

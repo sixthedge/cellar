@@ -1,0 +1,7 @@
+h1 im an irat!
+
+= assessment
+= questions.length
+each questions as |question|
+  = question.question
+  component 'confirmation/content/items/question' model=question assessment=assessment

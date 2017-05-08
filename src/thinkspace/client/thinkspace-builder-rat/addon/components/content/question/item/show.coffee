@@ -7,9 +7,11 @@ import base  from 'thinkspace-base/components/base'
 - Package: **ethinkspace-builder-rat**
 ###
 export default base.extend
-  
+  ## Model is ember object wrapping raw question json
   manager: ember.inject.service()
   type:    null
+
+  choice_items: ember.computed.reads 'model.choice_items'
 
   actions:
     toggle_edit: ->

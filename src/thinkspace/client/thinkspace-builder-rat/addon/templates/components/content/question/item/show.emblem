@@ -1,8 +1,8 @@
 .forms__field-wrapper
   label #{model.question}
 
-each model.choice_items as |choice index|
-  component 'content/question/choice/show' model=choice index=index
+each choice_items as |choice index|
+  component 'content/question/choice/show' model=choice
 
 hr
 .btn-group

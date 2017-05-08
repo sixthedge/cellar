@@ -11,6 +11,8 @@ import array_helpers  from 'thinkspace-common/mixins/helpers/common/array'
 export default ember.Service.extend array_helpers,
   irat: null
   trat: null
+  ## Assignment
+  model: null
 
   default_choices: [
     {id: 1, label: 'Choice 1'},
@@ -41,9 +43,10 @@ export default ember.Service.extend array_helpers,
 
   get_new_question_item: (type, title, choices) ->
     item =
-      id: @get_next_id(type)
+      id:       @get_next_id(type)
       question: title || 'New question'
-      choices: @get_default_choices()
+      choices:  @get_default_choices()
+      answer:   null
 
   get_item_by_id: (type, id) -> @get_items(type).findBy 'id', id
 
@@ -117,3 +120,21 @@ export default ember.Service.extend array_helpers,
     items.insertAt(add_at, item)
     @save_model(type)
 
+  get_answer_by_id: (type, id) ->
+    items = @get_items(type)
+
+  test_fn: ->
+    console.log('YUP YA GOT ME')
+
+  set_question_answer: (type, item_id, choice) ->
+    ## Choice is an instance of the ember object 'thinkspace-builder-rat/addon/items/question/choice.coffee'
+    item       = @get_item_by_id(type, item_id)
+    assessment = @get_assessment(type)
+
+    answers = if ember.isPresent(assessment.get('answers')) then assessment.get('answers') else {}
+    correct_answers = if ember.isPresent(answers) and ember.isPresent(answers.correct) then answers.correct else {}
+    correct_answers["#{item_id}"] = choice.get('id')
+    answers.correct = correct_answers
+    console.log('answers are ', answers)
+    assessment.set('answers', answers)
+    @save_model(type)
