@@ -1,7 +1,5 @@
 .multiple-choice__list class={qm.answers_disabled:multiple-choice__list--is-disabled}
-
-  each qm.choices as |choice|
-    component 'radio/ifat_button' qm=qm choice=choice select='select'
+  component '__accessibility/radio/group' value=value options=options changed='select'
 
 hr
 if has_selections

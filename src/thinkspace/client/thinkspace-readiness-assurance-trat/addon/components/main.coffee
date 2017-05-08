@@ -7,6 +7,9 @@ export default base.extend
 
   init_base: ->
     console.warn '====TRAT', @
+
+  # TODO: Is this okay moving it from init_base?  @totem_data is not setup in init_base.
+  willInsertElement: ->
     @totem_data.ability.refresh().then =>
       @rm.init_manager
         assessment:            @get('model')

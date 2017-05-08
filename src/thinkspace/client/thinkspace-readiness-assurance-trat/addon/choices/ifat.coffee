@@ -1,16 +1,34 @@
 import ember from 'ember'
-import base  from 'thinkspace-base/components/base'
 
-export default base.extend
-  tagName: ''
-
+export default ember.Object.extend
   button_id:        ember.computed.reads 'choice.id'
   button_label:     ember.computed.reads 'choice.label'
-  buttons_disabled: ember.computed.or 'qm.readonly', 'qm.answers_disabled'
+  
   is_correct:       false
 
   get_answer_id: -> @get('qm.answer_id')
   get_button_id: -> @get('button_id')
+
+  # # Accessibility
+  # ## Properties
+  delayed:  true # Do not auto fire `click` on arrow keys.
+
+  # ## Computed properties
+  checked:  ember.computed.reads 'is_selected'
+  value:    ember.computed.reads 'choice.id'
+  label:    ember.computed.reads 'choice.label'
+  disabled: ember.computed.or 'qm.readonly', 'qm.answers_disabled', 'has_been_selected'
+
+  classes: ember.computed 'is_correct', 'is_selected', 'has_been_selected', ->
+    has_been_selected = @get('has_been_selected')
+    return unless has_been_selected
+    css         = []
+    is_selected = @get('is_selected')
+    is_correct  = @get('is_correct')
+    css.pushObject('is-selected')  if is_selected
+    css.pushObject('is-correct')   if is_correct
+    css.pushObject('is-incorrect') if !is_correct
+    css.join(' ')
 
   is_selected: ember.computed 'qm.answer_id', ->
     aid = @get_answer_id()
@@ -29,9 +47,3 @@ export default base.extend
     @set 'is_correct', is_correct
     @qm.set_question_disabled_on() if is_correct
     true
-
-  actions:
-    select: ->
-      return if @get('buttons_disabled')
-      return if @get('has_been_selected')
-      @sendAction 'select', @get_button_id()
