@@ -11,7 +11,7 @@ export default ember.Object.extend
 
   # # Accessibility
   # ## Properties
-  delayed:  true # Do not auto fire `click` on arrow keys.
+  delay:  true # Do not auto fire `click` on arrow keys.
 
   # ## Computed properties
   checked:  ember.computed.reads 'is_selected'

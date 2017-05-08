@@ -1,5 +1,5 @@
 .multiple-choice__list class={qm.answers_disabled:multiple-choice__list--is-disabled}
-  component '__accessibility/radio/group' value=value options=options changed='select'
+  component '__accessibility/radio/group' value=value options=options changed='save' delayed='select'
 
 hr
 if has_selections
@@ -13,6 +13,8 @@ if has_selections
           |Please try again.
 
 .is-right
+  .btn.btn--primary click='save'
+    | Save
   if qm.rm.room_users
     .btn.btn--primary click='toggle_chat'
       if qm.chat_displayed 
