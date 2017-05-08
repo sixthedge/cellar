@@ -1,10 +1,26 @@
-h1 new password
-if loading.authenticating
-  .loader__container
-    .loader.loader--logo
-    .text__font-size--14.text--bold Loading...
-else
-  form{action 'submit' on='submit'}
-    component '__changeset/input' changeset=changeset attribute='password' label='Password' type='password'
-    component '__changeset/input' changeset=changeset attribute='password_confirmation' label='Password Confirmation' type='password'
-    button type='submit' Submit
+.grid__container
+  .spacing__pad-top--4.spacing__pad-bottom--4
+        .otbl-logo.otbl-logo--80.grid__container--centered
+
+.grid__container
+  .bordered-panel.bordered-panel--authentication.bordered-panel--shadow.bordered-panel--mobile.spacing__pad--2.grid__container--centered
+    h1.text__font-size--18.spacing__margin-top--0.spacing__margin-bottom--0 Let's reset your password
+    p.text__font-size--14.spacing__margin-top--half 
+      | Last step! Enter and confirm your new password.  
+    hr
+
+    if loading.authenticating
+      .loader__container
+        .loader.loader--logo
+        .text__font-size--14.text--bold Loading...
+    else
+      / Wrap the inputs in a form, on the 'submit' event, run the 'submit' action in the component.
+      form{action 'submit' on='submit'}
+        component '__changeset/input' changeset=changeset attribute='password' label='New password' type='password'
+        component '__changeset/input' changeset=changeset attribute='password_confirmation' label='Confirm new password' type='password'
+        button.btn.btn--primary.spacing__margin-bottom--2 type='submit' Reset Password
+
+
+    hr
+    .text__font-size--12.text__color--gray 
+      | ©2017 All Rights Reserved. OpenTBL is a registered trademark of Sixth Edge. <a href='#'>Privacy</a> and <a href='#'>Terms</a>

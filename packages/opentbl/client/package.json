@@ -53,6 +53,7 @@
     "ember-moment": "6.1.0",
     "ember-resolver": "^2.0.3",
     "ember-simple-auth": "1.1.0",
+    "ember-uploader": "1.2.3",
     "loader.js": "^4.0.10",
     "thinkspace-assets": "0.0.1",
     "thinkspace-base": "0.0.1",

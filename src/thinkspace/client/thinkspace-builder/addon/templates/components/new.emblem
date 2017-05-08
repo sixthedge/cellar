@@ -1,7 +1,7 @@
 .top-bar.top-bar--white
   .top-bar__info.is-left
     .nav-list__logo
-      img src='/assets/images/branding/otbl-logo_builder.svg' alt="Builder" title="Builder"
+      img src='/assets/images/branding/otbl-logo_default.svg' alt="OpenTBL Logo" title="OpenTBL Logo"
     .top-bar__info-item
       | Building - Untitled
   nav.top-bar__nav.is-right

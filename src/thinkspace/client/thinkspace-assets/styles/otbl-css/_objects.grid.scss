@@ -22,6 +22,7 @@
 
   &.flex__justify--between {
     justify-content: space-between;
+    -webkit-justify-content: space-between; 
   }
 }
 
@@ -70,6 +71,11 @@
 
 .grid__col--3of3 {
   width: 100%;
+}
+
+.grid__col--48 {
+  display: inline-block;
+  width:   48%;
 }
 
 .grid__col--49 {

@@ -1,6 +1,59 @@
 html
   head
-    link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'
+    meta name='viewport' content='width=device-width'
+    link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700" rel="stylesheet"
 
-  body style="color: #363636; font-family: 'Lato', sans-serif; font-size: 14px;"
-    == yield :content
+  body bgcolor='#FBFBFF' topmargin='0' leftmargin='0' marginheight='0' marginwidth='0' style="-webkit-font-smoothing:antialiased; width:100% !important; margin:0; padding:0; font-family: 'Noto', sans-serif; color: #464646; font-size: 14px;"
+  <style type='text/css'>a{text-decoration:none;color:#12a6c7;}a:hover{color:#0e7f98!important;text-decoration:underline!important;}a.btn:hover{color:white!important;text-decoration:none!important;background-color:#0e7f98!important;}p{line-height:1.5em;}</style>
+    /Main Table
+    table width='100%' cellpadding='0' cellspacing='0' border='0' bgcolor='#FBFBFF' 
+      tbody
+        tr
+          td width='100%'
+
+            /Content Table
+            table width='600' cellpadding='0' cellspacing='0' border='0' align='center' class='table' valign='top'
+              tbody
+                tr
+                  td width='600' class='cell' valign='top' style='border-left: 2px solid #EDEEF0; border-right: 2px solid #EDEEF0; background-color: #ffffff; height: 100vh;'
+
+                    / Logo Table
+                    table width='100%' border='0' cellspacing='0' cellpadding='0'
+                      tbody
+                        tr
+                          td align='center' style='padding: 40px;'
+                            a href='http://www.opentbl.com/'
+                              img border='0' src="http://i.imgur.com/JBkub8E.png" label='OpenTBL Logo' title='OpenTBL' alt='OpenTBL' style='width:75px;height:75px;'
+                    br
+
+                    / Message Label
+                    table width='100%' border='0' cellspacing='0' cellpadding='0'
+                      tbody
+                        tr
+                          td style='padding: 0 40px;'
+                            span style='display: block; width: 100%; padding-bottom: 8px; font-size: 12px; font-weight: 700; color:#12a6c7; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #EDEEF0;' OpenTBL Notification
+
+                    / Content 
+                    table width='100%' border='0' cellspacing='0' cellpadding='0'
+                      tbody
+                        tr
+                          td style='padding: 24px 40px 100px;'
+                            == yield :content
+
+                    / Footer
+                    table width='100%' border='0' cellspacing='0' cellpadding='0'
+                      tbody
+                        tr
+                          td style='padding: 40px 40px;'
+                            table width='100%' border='0' cellspacing='0' cellpadding='0'
+                              tbody
+                                tr
+                                  td style='padding-top: 16px; border-top-width: 2px; border-top-style: solid; border-top-color: #EDEEF0;'
+                                    table width='100%' cellpadding='0' cellspacing='0' border='0'
+                                      tbody
+                                        tr
+                                          td width='50%' style='text-align: left;'
+                                            a href='http://www.opentbl.com/' style='font-size: 12px; font-weight: 700; color: #a9aeb8; text-decoration: none;' OpenTBL.com
+                                          td width='50%' align='right' style='text-align:right;'
+                                            a href='#' style='font-size: 12px; font-weight: 700; color: #a9aeb8; text-decoration: none;' Manage preferences
+                                    

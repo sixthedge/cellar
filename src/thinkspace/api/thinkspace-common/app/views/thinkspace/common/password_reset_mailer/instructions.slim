@@ -1,10 +1,16 @@
 == content_for :content do
-  h3 Password Reset Instructions
-  p Hi #{@email},
+  h1 style="font-size:18px; font-weight:700; color:#464646; margin-bottom:16px;" 
+    | Let's get you a new password
   p 
-    | To reset your pasword, press the button below.
-    a href="#{@url}" Reset Password
-  p
-    | With love,
-    br
-    | The OTBL Team
+    | We recieved a request to reset the password for the account with the email <strong>#{@email}</strong>. If you don't want to reset your password, you can ignore this email. 
+
+  br
+
+  a href="#{@url}" class="btn btn--primary" style="display:inline-block; font-weight:700; font-size:12px; text-align:center; vertical-align:middle; text-transform:capitalize; background-color:#12a6c7; color:#ffffff; border-radius:4px; border:none; cursor:pointer; white-space:nowrap; overflow:hidden; padding:0 1.15rem; text-decoration:none; height:2rem; line-height:2rem; margin-bottom:48px;" Reset Your Password
+
+  br
+    
+  .email-faq__label style="font-size:12px; font-weight:700; color:#464646; line-height: 1.6rem; margin-bottom:0px;"
+    | I didn't request a password reset?
+  p.text--small style="font-size:12px; margin-top:0px;"
+    | If you didn't request a password reset and you're getting this email please contact us at <a href='mailto:support@opentbl.com?Subject=Password%20reset%20request%20without%20my%20permission'>support@opentbl.com</a> or use the in-app support messenger. 

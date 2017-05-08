@@ -13,13 +13,14 @@
   }
 
   th {
+    position:      relative;
     line-height:   48px;
     font-size:     .75rem;
     text-align:    left;
     padding:       0 1rem;
     height:        2rem;
     border-bottom: $border--default;
-    transition: $transition-animation--background-color;
+    transition:    $transition-animation--background-color;
 
     &.th__sortable {
       &:hover, &:focus {
@@ -30,6 +31,31 @@
       &:active {
         outline:        1px dotted $color-gray-base;
         outline-offset: -4px;
+      }
+    }
+
+    &.th-sort__asc {
+      &::after {
+        content:          "";
+        position:         absolute;
+        top:              16px;
+        background-image: url('images/icons/otbl-icons_arrow--blue.svg');
+        width:            16px;
+        height:           16px;
+        margin-left:      6px;
+      }
+    }
+
+    &.th-sort__desc {
+      &::after {
+        content:          "";
+        position:         absolute;
+        top:              16px;
+        background-image: url('images/icons/otbl-icons_arrow--blue.svg');
+        transform: rotate(-180deg);
+        width:            16px;
+        height:           16px;
+        margin-left:      6px;
       }
     }
   }
