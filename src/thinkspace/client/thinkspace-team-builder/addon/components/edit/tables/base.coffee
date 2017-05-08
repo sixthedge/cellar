@@ -1,6 +1,6 @@
-import ember          from 'ember'
-import base_component from 'thinkspace-base/components/base'
-import column         from 'thinkspace-common/table/column'
+import ember            from 'ember'
+import column           from 'totem-table/table/column'
+import base_component   from 'thinkspace-base/components/base'
 import selectable_mixin from 'thinkspace-common/mixins/table/cells/selectable'
 
 ## Component to handle rendering and actions for the edit component's assigned users

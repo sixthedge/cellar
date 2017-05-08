@@ -7,7 +7,7 @@ export default base.extend
   role: null
   role_options:
     group:
-      label: 'Are you an instructor or a student?'
+      label: 'Are you an instructor or a student?*'
     choices: [
       {label: "I'm a student", value: 'student'},
       {label: "I'm an instructor", value: 'instructor'}
