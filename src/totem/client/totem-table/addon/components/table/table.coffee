@@ -12,6 +12,10 @@ export default base.extend
   handle_click_header: 'handle_click_header'
   handle_click_cell:   'handle_click_cell'
 
+  # # Computed properties
+
+  
+
   # # Clicks
   # ## Events
   click_cell:   (options) -> @warn('click_cell')
@@ -33,6 +37,12 @@ export default base.extend
   # ## Getters/setters
   get_rows: -> @get('rows')
   set_rows: -> @warn('set_rows')
+
+  get_columns: -> @get('columns')
+
+  # ## Columns
+  reset_column_directions: (column=null) ->
+    @get_columns().forEach (c) => c.set_direction(null) unless c == column
 
   # ## Logging
   warn: (fn) -> console.warn("[table/table] #{fn} needs to be implemented in the table type: #{@get('table_type')}.")

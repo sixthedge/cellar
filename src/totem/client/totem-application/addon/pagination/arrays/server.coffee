@@ -15,6 +15,8 @@ export default ember.ArrayProxy.extend
   has_prev_page: ember.computed.notEmpty 'links.prev'
   total_pages:   ember.computed.reads 'meta.page.total'
   current_page:  ember.computed.reads 'meta.page.current'
+  
+  has_pages: ember.computed.gt 'total_pages', 1
 
   # ### Events
   init: ->

@@ -22,6 +22,8 @@ export default ember.ArrayProxy.extend
     current_page = @get_current_page()
     (current_page - 1) > 0
 
+  has_pages: ember.computed.gt 'total_pages', 1
+
   # # Events
   init: ->
     all_content  = @get('all_content')  || []

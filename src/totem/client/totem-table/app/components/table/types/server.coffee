@@ -15,6 +15,7 @@ export default base.extend
     fn     = @get_data('sort')
     column = options.get_data('column')
     @set_loading('rows')
+    @reset_column_directions(column)
     source[fn](column).then (rows) =>
       @reset_loading('rows')
       @set_rows(rows)
