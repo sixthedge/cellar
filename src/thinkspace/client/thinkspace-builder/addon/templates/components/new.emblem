@@ -7,7 +7,7 @@
   nav.top-bar__nav.is-right
     ul.nav-list
       li.nav-list__item
-        a.nav-list__link 
+        link-to-external 'spaces.show' space class='nav-list__link'
           | Exit Builder
 
 .main-content
