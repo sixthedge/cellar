@@ -1,8 +1,13 @@
-h1 Roster
-h2 Invite User
+.grid__container.spacing__margin-bottom--4
+  .main-content__section-header.spacing__margin-bottom--1
+    h1.text--inline-block Roster
+  .main-content__sub-header
+    h2.spacing__margin-bottom--half Invite User
 
-form{action 'submit' on='submit'}
-  component '__changeset/input' changeset=changeset attribute='email' label='Email' placeholder='example@sixthedge.com'
-  component '__accessibility/radio/group' value=changeset.role options=role_options changed='changed_role'
-  button type='submit' Invite
+  form{action 'submit' on='submit'}
+    component '__changeset/input' changeset=changeset attribute='email' label='Email' placeholder='example@sixthedge.com'
+    component '__accessibility/radio/group' value=changeset.role options=role_options changed='changed_role'
+    .btn-group.spacing__margin-top--2
+      button.btn.btn--primary type='submit' Send Invitation
+      button.btn Cancel
   

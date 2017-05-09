@@ -128,7 +128,6 @@
 	background-color:  white;
 	border:            2px solid $color-blue-base;
 	box-shadow:        $box-shadow--dialogue;
-	border-left-width: 6px;
 
 	@media only screen and (max-width: 40rem) {
 		width:            100%;
@@ -160,7 +159,7 @@
 .account-panel__link {
 	display:          block;
 	padding:          1rem;
-	line-height:      inherit;
+	line-height:      1rem;
 	height:           inherit;
 	width:            inherit;
 	font-size:        .875rem;
