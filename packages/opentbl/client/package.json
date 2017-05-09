@@ -34,7 +34,7 @@
     "ember-cli-document-title": "0.3.3",
     "ember-cli-emblem": "0.8.2-beta.2",
     "ember-cli-htmlbars": "^1.0.10",
-    "ember-cli-htmlbars-inline-precompile": "0.3.9",
+    "ember-cli-htmlbars-inline-precompile": "^0.3.9",
     "ember-cli-inject-live-reload": "^1.4.1",
     "ember-cli-jshint": "^2.0.1",
     "ember-cli-moment-shim": "3.0.1",
