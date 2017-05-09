@@ -1,0 +1,7 @@
+if model.can.update
+  if is_draft
+    partial '__components/case/states/draft'
+  if is_archived
+    partial '__components/case/states/archived'
+  if is_active
+    partial '__components/case/states/active'

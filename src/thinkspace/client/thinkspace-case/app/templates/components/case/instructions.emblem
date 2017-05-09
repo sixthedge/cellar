@@ -1,0 +1,6 @@
+.dialogue.dialogue--yellow.spacing__margin-bottom--2
+  h1 About this case
+  if model.instructions
+    p== model.instructions
+  else
+    p No instructions given.

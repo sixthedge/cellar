@@ -1,0 +1,6 @@
+component '__case/external/header' model=model
+if model.is_pubsub
+  mount 'thinkspace-message-pubsub'
+
+h1 Scores
+  
