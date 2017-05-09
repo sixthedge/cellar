@@ -1,8 +1,9 @@
 import ember from 'ember'
 import ajax  from 'totem/ajax'
 import tc    from 'totem/cache'
+import range from 'totem-application/mixins/pagination/arrays/range'
 
-export default ember.ArrayProxy.extend
+export default ember.ArrayProxy.extend range,
   # ### Properties
   links:        null # JSON API format links, see: http://jsonapi.org/format/#fetching-pagination
   meta:         null # JSON API format meta, see: http://jsonapi.org/extensions/
@@ -15,7 +16,9 @@ export default ember.ArrayProxy.extend
   has_prev_page: ember.computed.notEmpty 'links.prev'
   total_pages:   ember.computed.reads 'meta.page.total'
   current_page:  ember.computed.reads 'meta.page.current'
-  
+  per_page:      ember.computed.reads 'meta.page.per'
+  total_records: ember.computed.reads 'meta.records.total'
+
   has_pages: ember.computed.gt 'total_pages', 1
 
   # ### Events

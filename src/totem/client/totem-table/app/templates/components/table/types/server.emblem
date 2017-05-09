@@ -12,4 +12,5 @@ table.basic-table.spacing__margin-bottom--1
         .text__font-size--14.text--bold Loading...
 
 if rows.has_pages
+  span #{rows.range}
   component '__table/pagination' rows=rows c_table=this

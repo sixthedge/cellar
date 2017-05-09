@@ -11,4 +11,5 @@ table.basic-table.spacing__margin-bottom--1
       component '__table/row' row=row columns=columns c_table=this
 
 if rows.has_pages
+  span #{rows.range}
   component '__table/pagination' rows=rows c_table=this
