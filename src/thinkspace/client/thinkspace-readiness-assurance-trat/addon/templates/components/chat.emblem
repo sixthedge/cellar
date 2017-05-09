@@ -1,4 +1,4 @@
-.secondary-panel
+.secondary-panel.bordered-panel--shadow.sticky.sticky--bottom-right
   .secondary-panel__header
     h1.text--inline-block.is-left
       | #{qm.qn}. #{qm.question}

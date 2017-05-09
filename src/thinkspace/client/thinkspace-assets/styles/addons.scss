@@ -136,6 +136,7 @@
 - Clearfix.............To do clearfix stuff.
 - Text.................Text helpers.
 - Quick-fixes..........Short term hacks and quick-fixes. 
+- Sticky...............Classes to make items fixed to specific spots on screen.
 */
 
 @import "otbl-css/helpers.positioning";
@@ -143,4 +144,5 @@
 @import "otbl-css/helpers.clearfix";
 @import "otbl-css/helpers.text";
 @import "otbl-css/_helpers.quick-fixes";
+@import "otbl-css/_helpers.sticky"
 
