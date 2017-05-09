@@ -5,13 +5,16 @@
 .secondary-panel {
   border:        $border--default;
   width:         100%;
+  max-width:     300px;
   border-radius: $border-radius;
   margin-bottom: 2rem;
 
   .grid__mobile--overlay & {
-    @media only screen and (max-width: 40rem) {
+    @media only screen and (max-width: 1000px) {
+      position:      initial !important;
       height:        100%;
-      width:         100%;
+      width:         100% !important;
+      max-width:     100% !important;
       border-radius: 0;
       margin:        0;
     }
