@@ -19,6 +19,7 @@ variables:
 
   - &RANDOM true
   - &IFAT   false
+  - &ASSIGNMENT_TYPE_ID 2
   - irat_scoring: &IRAT_SCORING
       correct:           3
       attempted:         1
@@ -48,7 +49,7 @@ settings:
           auto_score: {score_with: ra_auto_score}
 
 assignments:
-  - {title: *CASE, space: *SPACE, settings: *CASE_SETTINGS}
+  - {title: *CASE, space: *SPACE, settings: *CASE_SETTINGS, assignment_type_id: *ASSIGNMENT_TYPE_ID}
 
 phases:
   - {title: *IRAT_PHASE_TITLE, assignment: *CASE, template_name: *IRAT_PT, settings: *IRAT_PS}

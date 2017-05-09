@@ -13,17 +13,9 @@
           link-to-external 'spaces.show' model class="menu-bar__link"
             | Home
         li.menu-bar__item
-          a.menu-bar__link
-            | Exercise List
-        li.menu-bar__item
           link-to-external 'spaces.roster' model class="menu-bar__link"
             | Roster
         li.menu-bar__item
           link-to 'manage' model class="menu-bar__link"
             | Teams
-        li.menu-bar__item
-          a.menu-bar__link
-            | Resources
-        li.menu-bar__item
-          a.menu-bar__link
-            | Settings
+            
