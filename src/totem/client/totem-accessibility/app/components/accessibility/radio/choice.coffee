@@ -18,7 +18,7 @@ export default base.extend
   value:    ember.computed.reads 'model.value'
   label:    ember.computed.reads 'model.label'
   summary:  ember.computed.reads 'model.summary'
-  delayed:  ember.computed.reads 'model.delayed'
+  delay:    ember.computed.reads 'model.delay'
   disabled: ember.computed 'model', 'checked', 'model.disabled', ->
     return false if @get('checked')
     @get('model.disabled')
@@ -31,18 +31,24 @@ export default base.extend
     return if @get('disabled')
     @sendAction('changed', @get_value())
 
+  send_delayed: ->
+    return unless @get('delay')
+    return if     @get('disabled')
+    @sendAction('delayed', @get_value())
+
   # # Events
   keyPress: (event) ->
     # Handle Enter/Space presses.
-    return true unless @get('delayed')
+    return true unless @get('delay')
     if event.keyCode == 0 || event.keyCode == 32 || event.keyCode == 13
+      @send_delayed()
       @send_changed()
 
   click: (event) ->
-    if @get('delayed')
+    if @get('delay')
       # Do not fire `click` on arrow key presses, delay it until a keypress.
       if event.clientX != 0 and event.clientY != 0
-        @send_changed()
+        @send_delayed()
     else
       @send_changed()
 

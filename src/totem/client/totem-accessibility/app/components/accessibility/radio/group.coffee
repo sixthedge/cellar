@@ -22,3 +22,4 @@ export default base.extend
 
   actions:
     changed: (value) -> @sendAction('changed', value)
+    delayed: (value) -> @sendAction('delayed', value)

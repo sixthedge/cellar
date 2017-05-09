@@ -1,12 +1,30 @@
-h1 password reset
-if has_errors
-  h1 there has been an error, please check the email address and try again.
-if loading.authenticating
-  .loader__container
-    .loader.loader--logo
-    .text__font-size--14.text--bold Loading...
-else
-  / Wrap the inputs in a form, on the 'submit' event, run the 'submit' action in the component.
-  form{action 'submit' on='submit'}
-    component '__changeset/input' changeset=changeset attribute='email' label='Email' type='email'
-    button type='submit' Submit!
+.grid__container
+  .spacing__pad-top--4.spacing__pad-bottom--4
+        .otbl-logo.otbl-logo--80.grid__container--centered
+
+.grid__container
+  .bordered-panel.bordered-panel--authentication.bordered-panel--shadow.bordered-panel--mobile.spacing__pad--2.grid__container--centered
+    h1.text__font-size--18.spacing__margin-top--0.spacing__margin-bottom--0 Let's reset your password
+    p.text__font-size--14.spacing__margin-top--half 
+      | We'll need to know the email of your account to send you some instructions. 
+    hr
+
+    if has_errors
+      h1 there has been an error, please check the email address and try again.
+    if loading.authenticating
+      .loader__container
+        .loader.loader--logo
+        .text__font-size--14.text--bold Loading...
+    else
+      / Wrap the inputs in a form, on the 'submit' event, run the 'submit' action in the component.
+      form{action 'submit' on='submit'}
+        component '__changeset/input' changeset=changeset attribute='email' label='Email' type='email'
+        .btn-group.spacing__margin-bottom--2
+          button.btn.btn--primary type='submit' Request Password
+          = link-to 'sign_in' class='action-link--small' 
+            | Return to login
+
+
+    hr
+    .text__font-size--12.text__color--gray 
+      | ©2017 All Rights Reserved. OpenTBL is a registered trademark of Sixth Edge. <a href='#'>Privacy</a> and <a href='#'>Terms</a>

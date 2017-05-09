@@ -4,7 +4,7 @@ default: &default
   pool:     5
   timeout:  5000
   host:     "<%=ENV['APP_DB_HOST']%>"
-  name:     "<%=ENV['APP_DB_NAME']%>"
+  database: "<%=ENV['APP_DB_NAME']%>"
   username: "<%=ENV['APP_DB_USERNAME']%>"
   password: "<%=ENV['APP_DB_PASSWORD']%>"
 

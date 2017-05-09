@@ -1,29 +1,6 @@
 mount 'thinkspace-toolbar'
 .main-content
-  .grid__container--flex
-    .grid__col--4of4
-      .main-content__header
-        .breadcrumbs
-          link-to-external 'spaces.show' model.space class='breadcrumbs__link'
-            = model.space.title
-        h1.text--inline-block = model.title
-        .btn-group.is-right
-          button.btn.btn--primary
-            | View Exercise
-          button.btn
-            | Edit Exercise
-        .text__font-size--14.text--bold.text__color--gray = model.friendly_due_at
-      .menu-bar
-        ul.menu-bar__list
-          li.menu-bar__item
-            link-to-external 'cases.show' model class='menu-bar__link'
-              | Overview
-          li.menu-bar__item
-            a.menu-bar__link.active
-              | Progress Report
-          li.menu-bar__item
-            a.menu-bar__link
-              | Scores
+  component '__case/external/header' model=model
 
   .grid__container--flex.spacing__margin-bottom--4
     .grid__col--4of4

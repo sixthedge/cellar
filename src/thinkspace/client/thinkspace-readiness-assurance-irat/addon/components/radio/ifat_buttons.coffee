@@ -10,6 +10,8 @@ export default base.extend
   has_selections: false
   is_correct:     false
 
+  value: ember.computed.reads 'qm.answer_id'
+
   # # Computed properties
   score: ember.computed 'qm.response_updated', ->
     qid            = @qm.qid
@@ -38,5 +40,10 @@ export default base.extend
       choices: objs
     @set('options', options)
 
+  value_is_answer_id: -> @get('value') == @get('qm.answer_id')
+
   actions:
-    select: (id) -> @sendAction 'select', id
+    save:        ->
+      return if @value_is_answer_id()
+      @sendAction('select', @get('value'))
+    select:      (id) -> @set('value', id)

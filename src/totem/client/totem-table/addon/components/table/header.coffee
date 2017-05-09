@@ -24,7 +24,7 @@ export default base.extend
     direction = @get('direction')
     if direction then "th-sort__#{direction.toLowerCase()}" else null
 
-  sortable_class: ember.computed 'property', -> if @get('property') then 'th-sortable' else null
+  sortable_class: ember.computed 'property', -> if @get('property') then 'th__sortable' else null
 
   # # Event handlers
   click: ->

@@ -1,6 +1,0 @@
-.dialogue.dialogue--green
-  h1 Case is live
-  p This case is available to all your students.
-
-  button.btn{action 'set_drafting'}
-    | Set to draft
