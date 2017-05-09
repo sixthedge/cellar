@@ -12,6 +12,7 @@ export default base.extend ta.add(
   authable_id:       ta.attr('number')
   authable_type:     ta.attr('string')
   ra_type:           ta.attr('string')
+  scribeable:        ta.attr('boolean')
   # below attributes only populated when on dashboard (e.g. admin)
   settings: ta.attr()
   answers:  ta.attr()

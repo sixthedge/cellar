@@ -10,7 +10,7 @@ export default base.extend
 
   # # Computed Properties
   is_readonly: ember.computed.or 'qm.readonly', 'qm.answers_disabled'
-  
+
   # # Events
   init_base: ->
     @tvo_status_register_callback(@, 'submit_validate')

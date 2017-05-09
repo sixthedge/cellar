@@ -8,12 +8,12 @@ export default ember.Mixin.create
   not_viewonly: ember.computed.not   'viewonly'
 
   init: ->
-    @_super()
     @totem_data = totem_data.create(source: @)
+    @_super(arguments...)
 
 
 # Overview
-# 
+#
 #     Currently supports data-names 'ability' and 'metadata'.
 #
 #     Totem data is designed to allow components/templates and models to reference a common
@@ -69,7 +69,7 @@ export default ember.Mixin.create
 #
 #   Configuration options:
 #       model:                 string
-#       ajax_source:           true|string  
+#       ajax_source:           true|string
 #       ajax_method:           string
 #       callback:              string (method in the component/model to alter the data e.g. ability/metadata)
 #       module_only:           true|false
@@ -114,7 +114,7 @@ export default ember.Mixin.create
 #        model_type: model-record-type
 
 # Process Hooks
-#  
+#
 #     Model records 'add_data-name' function (e.g. add_ability, add_metadata):
 #
 #       If a record has a function called 'add_data-name' it will be called with the data and the data can
@@ -132,7 +132,7 @@ export default ember.Mixin.create
 #
 #     Caution: ajax requests for the same id are queued, so 'only' the initiator of the ajax will get
 #              populated data in the callback.
-#             
+#
 
 # thinkspace-authorization
 #

@@ -37,6 +37,7 @@ export default ember.Mixin.create
   set_status: ->
     status = @get(@status_path) or {}
     locked = status.locked
+    @set_scribe_values(locked) if @rm.is_scribeable
     if ember.isBlank(locked)
       @set_question_disabled_by(null)
       @set_question_disabled_off()
@@ -49,6 +50,10 @@ export default ember.Mixin.create
         name = "#{locked.first_name} #{locked.last_name}"
         @set_question_disabled_by(name)
         @set_question_disabled_on()
+
+  set_scribe_values: (locked) ->
+    id = if ember.isBlank(locked) then null else "#{locked.id}"
+    @rm.set 'scribe_user_id', id unless @rm.get('scribe_user_id') == id
 
   # ###
   # ### Save User Values.

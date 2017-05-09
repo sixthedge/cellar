@@ -2,7 +2,8 @@ module Thinkspace
   module ReadinessAssurance
     class Assessment < ActiveRecord::Base
       def question_settings; merged_question_settings; end
-      def ra_type; get_ra_type; end
+      def ra_type;    get_ra_type; end
+      def scribeable; get_scribe; end
       totem_associations
 
       # ###
@@ -25,11 +26,14 @@ module Thinkspace
 
       def get_settings; self.settings || Hash.new; end
       def get_ra_type;  get_settings['ra_type']; end
+      def get_scribe;   get_settings['scribe'] == true; end
 
       def irat?; get_ra_type == 'irat'; end
       def trat?; get_ra_type == 'trat'; end
 
-      def ifat?; get_settings['questions']['ifat'] == true; end
+      def ifat?; get_settings.dig('questions', 'ifat') == true; end
+
+      def scribe?; get_scribe; end
 
       # ###
       # ### Question Helpers.
@@ -125,7 +129,7 @@ module Thinkspace
 
       class FindOrCreateError < StandardError; end
 
-      # ### 
+      # ###
       # ### Progress Reports
       # ###
       def progress_report; Thinkspace::ReadinessAssurance::ProgressReports::Report.new(self).process; end

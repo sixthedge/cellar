@@ -1,0 +1,5 @@
+if is_scribe
+  .btn.btn--primary click='remove' Remove Me as the Scribe
+else
+  unless has_scribe
+    .btn.btn--primary click='add' Make Me the Scribe

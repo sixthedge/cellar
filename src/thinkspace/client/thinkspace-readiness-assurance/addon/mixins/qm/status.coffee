@@ -28,12 +28,16 @@ export default ember.Mixin.create
     @set_answers_disabled_off()
 
   lock: ->
+    return unless @is_lockable()
     @set_question_disabled_by_self()
-    @rm.save_status(@qid, 'lock').then => return
+    @rm.save_status('lock', @qid).then => return
 
   unlock: ->
+    return unless @is_lockable()
     @set_question_disabled_by(null)
-    @rm.save_status(@qid, 'unlock').then => return
+    @rm.save_status('unlock', @qid).then => return
+
+  is_lockable: -> not @rm.is_scribeable
 
   handle_status: (status) ->
     @set @status_path, status

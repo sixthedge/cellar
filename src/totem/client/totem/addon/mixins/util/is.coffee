@@ -31,6 +31,8 @@ export default ember.Mixin.create
 
   is_destroyed: (obj) -> @is_get(obj) and (obj.get('isDestroyed') or obj.get('isDestroying'))
 
+  is_true_or_false: (val) -> val == true or val == false
+
   # is_array: (obj) -> obj and ember.isArray(obj) # does not catch: x={length: 1}; ember.isArray(x) #=> true
   is_array: (obj) ->
     return false  unless obj

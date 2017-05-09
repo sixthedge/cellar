@@ -16,6 +16,7 @@ variables:
   - &TRAT_UNLOCK next
   - &TRAT_STATE  complete
   - &TRAT_JUSTIFICATION true
+  - &TRAT_SCRIBE true
 
   - &RANDOM true
   - &IFAT   false
@@ -82,7 +83,8 @@ assessment_trat:
     assessment:
       title: TRAT Assessment
       settings:
-        ra_type: trat
+        ra_type:   trat
+        scribe:    *TRAT_SCRIBE
         questions:
           type:   multiple_choice
           random: *RANDOM

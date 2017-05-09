@@ -6,45 +6,78 @@ module Thinkspace
         totem_action_authorize!
 
         def lock
-          status = validate_and_get_question_status
-          status.merge!(locked: current_user_json)
-          save_status
-          publish(status)
+          validate_status
+          lock_status(question_id)
+          publish
         end
 
         def unlock
-          status = validate_and_get_question_status
-          status.delete('locked')
-          save_status
-          publish(status)
+          validate_status
+          unlock_status(question_id)
+          publish
+        end
+
+        def scribe
+          validate_scribe_status
+          get_assessment_question_ids.each do |qid|
+            status = lock_status(qid)
+            status[:locked].merge!(scribe: true)
+          end
+          publish
+        end
+
+        def unscribe
+          validate_scribe_status
+          get_assessment_question_ids.each do |qid|
+            unlock_status(qid)
+          end
+          publish
         end
 
         private
 
         include ReadinessAssurance::ControllerHelpers::Base
 
-        def validate_and_get_question_status
-          response = @status.thinkspace_readiness_assurance_response
-          access_denied "Status id #{@chat.id} response is blank."  if response.blank?
-          @assessment = response.thinkspace_readiness_assurance_assessment
-          questions   = @status.questions
-          access_denied "Status questions is not a Hash."  unless questions.is_a?(Hash)
-          question_status = (questions[question_id] ||= Hash.new)
-          access_denied "Status question is not a hash."  unless question_status.is_a?(Hash)
-          question_status
+        def validate_scribe_status
+          validate_status
+          access_denied "Assessment id #{@assessment.id} does not support scribes."  unless @assessment.scribe?
         end
+
+        def validate_status
+          response = @status.thinkspace_readiness_assurance_response
+          access_denied "Status id #{@status.id} response is blank."  if response.blank?
+          access_denied "Cannot read response id #{response.id}."  unless can?(:read, response)
+          @assessment = response.thinkspace_readiness_assurance_assessment
+          access_denied "Status id #{@status.id} response id #{response.id} assessment is blank." if @assessment.blank?
+          access_denied "Cannot read assessment id #{@assessment.id}."  unless can?(:read, @assessment)
+          @questions = @status.questions ||= Hash.new
+          access_denied "Status questions is not a Hash."  unless @questions.is_a?(Hash)
+        end
+
+        def get_question_status(qid)
+          status = (@questions[qid] ||= Hash.new)
+          access_denied "Status question is not a hash."  unless status.is_a?(Hash)
+          status
+        end
+
+        def get_assessment_question_ids; @assessment.questions.map {|h| h['id']}; end
+
+        def lock_status(qid);   get_question_status(qid).merge!(locked: current_user_json); end
+        def unlock_status(qid); get_question_status(qid).delete('locked'); end
 
         def save_status
           access_denied "Could not save status.  Validation errors: #{@status.errors.messages}."  unless @status.save
         end
 
-        def publish(status)
+        def publish
+          save_status
+          value = {questions: @questions}
           pubsub.data.
             room(pubsub_room).
             room_event(:status).
-            value({question_id: question_id, status: status}).
+            value(value).
             publish
-          controller_render_no_content
+          controller_render_json Hash.new
         end
 
       end

@@ -104,7 +104,7 @@ class Ajax
           @totem_scope.add_auth_to_query(model, data)
         else
           @error "Unknown model object (not a string or object).", options
-          
+
       @error "Model typeKey is blank.", options  unless type_key
       url = @build_url(type_key, id, verb, action)
 

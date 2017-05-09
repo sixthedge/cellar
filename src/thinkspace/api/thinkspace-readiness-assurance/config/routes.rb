@@ -41,7 +41,7 @@ Thinkspace::ReadinessAssurance::Engine.routes.draw do
             post :progress_report
           end
         end
-        
+
       end
 
       resources :assessments, only: [:show] do
@@ -66,6 +66,8 @@ Thinkspace::ReadinessAssurance::Engine.routes.draw do
         member do
           post :lock
           post :unlock
+          post :scribe
+          post :unscribe
         end
       end
 

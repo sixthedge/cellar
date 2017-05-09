@@ -1,5 +1,6 @@
 import ember          from 'ember'
 import ajax           from 'totem/ajax'
+import util           from 'totem/util'
 import totem_messages from 'totem-messages/messages'
 
 export default ember.Mixin.create
@@ -8,16 +9,18 @@ export default ember.Mixin.create
 
   handle_status: (data) ->
     console.info 'received status--->', data
-    value  = data.value or {}
-    status = value.status
-    qid    = value.question_id
-    @error "Received status 'status' is blank."     if ember.isBlank(status)
-    @error "Received chat 'question_id' is blank."  if ember.isBlank(qid)
-    qm = @question_manager_map.get(qid)
-    @error "Received status 'question manager' for question_id '#{qid}' not found."  if ember.isBlank(qm)
-    qm.handle_status(status)
+    value = data.value or {}
+    @error "Received status value is not a hash.", data unless util.is_hash(value)
+    questions = value.questions
+    @error "Received status value.questions is not a hash.", data unless util.is_hash(questions)
+    qids = util.hash_keys(questions)
+    for qid in qids
+      status = questions[qid] or {}
+      qm     = @question_manager_map.get(qid)
+      @error "Received status 'question manager' for question_id '#{qid}' not found."  if ember.isBlank(qm)
+      qm.handle_status(status)
 
-  save_status: (question_id, action) ->
+  save_status: (action, question_id=null) ->
     new ember.RSVP.Promise (resolve, reject) =>
       return resolve() if @readonly
       unless @save_to_server
@@ -29,3 +32,5 @@ export default ember.Mixin.create
       data  = {question_id}
       ajax.object({verb, model, id, action, data}).then =>
         resolve()
+      , (error) =>
+        @error 'Save status error.', {error, question_id, action, id, model}

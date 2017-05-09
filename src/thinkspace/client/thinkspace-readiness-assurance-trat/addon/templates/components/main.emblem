@@ -2,6 +2,8 @@ if rm.ready
   .grid__container--flex
     .grid__col--3of4.grid__mobile--full-width
       h4= rm.assessment.title
+      if rm.is_scribeable
+        component 'scribe' rm=rm
       component 'questions' rm=rm chat='chat' chat_close='chat_close'
 
     .grid__col--1of4.grid__mobile--full-width

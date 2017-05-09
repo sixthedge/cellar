@@ -28,6 +28,7 @@ export default ember.Mixin.create
     new ember.RSVP.Promise (resolve, reject) =>
       @init_manager_properties(options)
       @init_assessment(options)
+      @init_scribe(options)
       @init_response_models(options).then =>
         @init_random_choices(options)
         @init_question_managers(options)
@@ -85,6 +86,10 @@ export default ember.Mixin.create
   init_assessment: (options) ->
     @assessment = options.assessment
     @error "Required assessment model in 'options.model' is blank."  if ember.isBlank(@assessment)
+
+  init_scribe: (options) ->
+    @is_scribeable  = @is_trat and @assessment.get('scribeable')
+    @scribe_user_id = null
 
   init_response_models: (options) ->
     new ember.RSVP.Promise (resolve, reject) =>
