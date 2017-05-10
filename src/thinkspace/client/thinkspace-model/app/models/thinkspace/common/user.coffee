@@ -3,14 +3,18 @@ import ta from 'totem/ds/associations'
 
 export default ta.Model.extend ta.add(
     ta.has_many 'spaces', inverse: ta.to_p('users')
+    ta.has_many 'space_users'
   ),
 
   email:        ta.attr('string')
   first_name:   ta.attr('string')
   last_name:    ta.attr('string')
   state:        ta.attr('string')
+  password:     ta.attr('string') # Used in sign_up only.
+  token:        ta.attr('string') # Used in sign_up only.
   activated_at: ta.attr('date')
   profile:      ta.attr()
+
 
   full_name:     ember.computed 'first_name', 'last_name', ->
     first_name = @get('first_name') or '?'

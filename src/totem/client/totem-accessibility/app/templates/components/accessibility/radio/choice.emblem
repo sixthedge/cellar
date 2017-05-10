@@ -1,0 +1,5 @@
+component '__accessibility/radio/input' id=id name=name value=value checked=checked disabled=disabled
+label.radio__label-container for=id
+  .radio__label #{label}
+  if summary
+    .radio__label-summary #{summary}

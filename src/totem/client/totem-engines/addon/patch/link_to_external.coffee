@@ -11,6 +11,8 @@ export default ->
       @_super(arguments...)
       owner = ember.getOwner(@)
       return if owner.mountPoint
-      targetRouteName = ember.get(@, 'targetRouteName')
-      externalRoute   = owner._getExternalRoute(targetRouteName)
-      ember.set(@, 'targetRouteName', externalRoute)
+      if owner._externalRoutes
+        targetRouteName = ember.get(@, 'targetRouteName')
+        return unless targetRouteName
+        externalRoute = owner._getExternalRoute(targetRouteName)
+        ember.set(@, 'targetRouteName', externalRoute) if externalRoute

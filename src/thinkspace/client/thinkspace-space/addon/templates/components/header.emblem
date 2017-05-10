@@ -13,11 +13,8 @@
           link-to 'show' model class="menu-bar__link"
             | Home
         li.menu-bar__item
-          a.menu-bar__link
-            | Exercise List
+          link-to 'roster' model class="menu-bar__link"
+            | Roster
         li.menu-bar__item
-          a.menu-bar__link
-            | People
-        li.menu-bar__item
-          a.menu-bar__link
-            | Scores
+          link-to-external 'thinkspace-team-builder.manage' model class="menu-bar__link"
+            | Teams

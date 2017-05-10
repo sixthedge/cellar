@@ -1,3 +1,0 @@
-source 'http://rubygems.org'
-
-eval(File.read(File.dirname(__FILE__) + '/Gemfile_common.rb'))

@@ -70,7 +70,7 @@ module Thinkspace; module PubSub; module AuthHelpers
       access_denied(message)
     end
 
-    # Raise an exception (captured with rescue_from) to interupt the noraml flow
+    # Raise an exception (captured with rescue_from) to interupt the normal flow
     # and return a 'can: false' response.
     def access_denied(message); raise AccessDenied, message; end
 

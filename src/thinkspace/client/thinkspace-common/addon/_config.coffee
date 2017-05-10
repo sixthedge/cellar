@@ -15,5 +15,6 @@ export default {
       component:      'common'
       invitation:     'common'
       password_reset: 'common'
-
+      upload:         'common'
+      color:          'common'
 }

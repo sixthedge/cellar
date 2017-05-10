@@ -1,0 +1,38 @@
+team_123:
+  - variables:
+    - &TEAM_123       team_123
+    - &TEAM_123_SET   team_123_set
+    - &TEAM_123_DESC  'Team-123 : read_1, read_2, read_3'
+    - &TEAM_123_USERS [read_1, read_2, read_3]
+    team_sets:
+      - {space: *SPACE, title: *TEAM_123_SET, dup: skip, state: default}
+    team_set_teams:
+      - {space: *SPACE, title: *TEAM_123, description: *TEAM_123_DESC, users: *TEAM_123_USERS, team_set: *TEAM_123_SET, dup: skip}
+    phase:
+      - {space: *SPACE, assignment: *CASE, title: *TRAT_PHASE_TITLE, team_sets: [*TEAM_123_SET]}
+
+team_456:
+  - variables:
+    - &TEAM_456       team_456
+    - &TEAM_456_SET   team_456_set
+    - &TEAM_456_DESC  'Team-456 : read_4, read_5, read_6'
+    - &TEAM_456_USERS [read_4, read_5, read_6]
+    team_sets:
+      - {space: *SPACE, title: *TEAM_456_SET, dup: skip}
+    team_set_teams:
+      - {space: *SPACE, title: *TEAM_456, description: *TEAM_456_DESC, users: *TEAM_456_USERS, team_set: *TEAM_456_SET, dup: skip}
+    phase:
+      - {space: *SPACE, assignment: *CASE, title: *TRAT_PHASE_TITLE, team_sets: [*TEAM_456_SET]}
+
+team_789:
+  - variables:
+    - &TEAM_789       team_789
+    - &TEAM_789_SET   team_789_set
+    - &TEAM_789_DESC  'Team-789 : read_7, read_8, read_9'
+    - &TEAM_789_USERS [read_7, read_8, read_9]
+    team_sets:
+      - {space: *SPACE, title: *TEAM_789_SET, dup: skip}
+    team_set_teams:
+      - {space: *SPACE, title: *TEAM_789, description: *TEAM_789_DESC, users: *TEAM_789_USERS, team_set: *TEAM_789_SET, dup: skip}
+    phase:
+      - {space: *SPACE, assignment: *CASE, title: *TRAT_PHASE_TITLE, team_sets: [*TEAM_789_SET]}

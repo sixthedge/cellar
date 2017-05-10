@@ -2,7 +2,7 @@
   nav.top-bar__nav.is-left
     ul.nav-list 
       li.nav-list__logo
-        img src='/assets/images/branding/otbl-logo_default.svg' alt="Builder" title="Builder"
+        img src='/assets/images/branding/otbl-logo_default.svg' alt="OpenTBL Logo" title="OpenTBL Logo"
       li.nav-list__item
         link-to-external 'home' class='nav-list__link'
           | Spaces

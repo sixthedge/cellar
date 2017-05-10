@@ -1,0 +1,12 @@
+.grid__container.spacing__margin-bottom--4
+  .main-content__section-header.spacing__margin-bottom--1
+    h1.text--inline-block Roster
+  .main-content__sub-header
+    h2.spacing__margin-bottom--half Import Roster
+    p.text__font-size--14 
+      | You can use the button below to select files on your computer or you can drag and drop them here. <i>The files should be in a CSV format with a single column containing student emails with no header.</i>
+  .grid__container.grid__container--content-width.spacing__margin-bottom--2
+    .icon.icon--24.icon__info--black.is-left.spacing__margin-top--6px
+    .text__font-size--14.text--bold.spacing__margin-left--3
+      | This may take up to several minutes depending on the size of the roster. You will receive an email when it is ready.
+  component '__file_upload' s3=true authable=model type='thinkspace/importer/roster'

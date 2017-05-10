@@ -13,17 +13,21 @@ module Thinkspace; module Authorization; class AbilityEngine
 
   private
 
+  delegate :admin?,                 to: :ability
+  delegate :read_space_ids,         to: :ability
+  delegate :admin_space_ids,        to: :ability
+
+  delegate :iadmin?,                to: :ability
+  delegate :admin_institution_ids,  to: :ability
+
+  delegate :can,    to: :ability
+  delegate :cannot, to: :ability
+
+  delegate :alias_action, to: :ability
+
+  def admin_ability?; admin? || iadmin?; end
+
   def get_class(class_name); class_name.safe_constantize; end
-
-  def read_space_ids;  ability.read_space_ids; end
-  def admin_space_ids; ability.admin_space_ids; end
-
-  def admin?; ability.admin?; end
-
-  def can(   actions, klass, hash={}); ability.can(actions, klass, hash); end
-  def cannot(actions, klass, hash={}); ability.cannot(actions, klass, hash); end
-
-  def alias_action(*args); ability.alias_action(*args); end
 
   def get_private_methods; self.private_methods(false); end
 

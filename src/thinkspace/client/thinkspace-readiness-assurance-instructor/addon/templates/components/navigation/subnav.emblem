@@ -1,0 +1,9 @@
+.menu-bar
+  ul.menu-bar__list
+    li.menu-bar__item
+      link-to-external 'case-readiness-assurance.overview' model class='menu-bar__link'
+        | Overview
+    if model.can.update
+      li.menu-bar__item
+         link-to 'progress_report' model class='menu-bar__link'
+          | Progress Report

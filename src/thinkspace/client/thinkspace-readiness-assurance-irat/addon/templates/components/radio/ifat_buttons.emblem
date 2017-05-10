@@ -1,8 +1,6 @@
 .multiple-choice__list class={qm.answers_disabled:multiple-choice__list--is-disabled}
-
-  each qm.choices as |choice|
-    component 'radio/ifat_button' qm=qm choice=choice select='select'
-
+  component '__accessibility/radio/group' value=value options=options changed='save' delayed='select'
+  
 hr
 if has_selections
   .is-left class={is_correct:ifat-correct:ifat-incorrect}
@@ -13,6 +11,8 @@ if has_selections
         'Incorrect!
         unless qm.readonly
           |Please try again.
+.btn.btn--primary click='save'
+  | Save  
 .counter-box.counter-box--gray.is-right
   span.counter-box__label Score:
   span.counter-box__value #{score}

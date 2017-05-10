@@ -1,22 +1,19 @@
-import ember from 'ember'
+import ember           from 'ember'
 import totem_changeset from 'totem/changeset'
+import base            from 'thinkspace-base/components/base'
 
-export default ember.Component.extend
-  tagName: ''
+export default base.extend
+  # # Properties
+  authenticator: 'authenticator:totem'
 
-  session: ember.inject.service()
-
+  # # Events
   init: ->
     @_super(arguments...)
     @set_changeset()
 
-  authenticator: 'authenticator:totem'
-
-  invitation_present:   ember.computed.notEmpty 'query_params.invitable'
-  referred_from_signup: ember.computed.equal    'query_params.refer', 'signup'
-
   didInsertElement: -> $('form input').first().select()
 
+  # # Helpers
   set_changeset: ->
     mock_model = ember.Object.create(email: null, password: null, credential_error: null)
     vpresence  = totem_changeset.vpresence(presence: true)
@@ -25,7 +22,6 @@ export default ember.Component.extend
       password: [totem_changeset.vpresence(presence: true, message: 'You must enter a password')]
 
   actions:
-
     submit: ->
       changeset = @get('changeset')
       changeset.validate().then =>
@@ -33,14 +29,14 @@ export default ember.Component.extend
           changeset.first_error_on()
           changeset.show_errors_on()
           return
-        @set 'authenticating', true
+        @set_loading('authenticating')
         data = {identification: changeset.get('email'), password: changeset.get('password')}
         changeset.set 'password', null
         @get('session').authenticate(@get('authenticator'), data).then =>
-          @set 'authenticating', false
+          @reset_loading('authenticating')
           @totem_messages.info "Sign in successful!"
         , (error) =>
           changeset.show_errors_off()
-          @set 'authenticating', false
+          @reset_loading('authenticating')
           message = error.responseText or 'Email or password incorrect'
           @totem_messages.error message

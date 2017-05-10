@@ -1,3 +1,0 @@
-div class={:ts-checkbox_button checked:is-checked}
-if label
-  label.ts-checkbox_label #{label}

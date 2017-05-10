@@ -1,0 +1,29 @@
+///*------------------------------------*\
+//    #LOADERS
+//\*------------------------------------*/
+
+.loader__container {
+  margin: 4rem auto;
+  text-align: center;
+}
+
+.loader {
+  width:  80px;
+  height: 80px;
+  margin: auto;
+}
+
+.loader--logo {
+  background-image: url('images/loaders/loader__logo--stroke.svg');
+}
+
+.loader__overlay {
+  z-index:          2;
+  display:          block;
+  position:         absolute;
+  top:              0;
+  left:             0;
+  right:            0;
+  bottom:           0;
+  background-color: rgba(251, 251, 255, 0.8);
+}

@@ -1,3 +1,0 @@
-commands:
-  - {command: clean_up_app_directory}
-  - {command: gsub_file, path: .ember-cli, regex: '"disableAnalytics":\s*false', replace: '"disableAnalytics": true'}

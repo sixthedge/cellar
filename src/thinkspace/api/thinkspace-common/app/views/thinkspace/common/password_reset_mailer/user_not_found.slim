@@ -1,14 +1,14 @@
-== content_for :header_title, "Account Invalid"
-== content_for :header_deets, "No ThinkSpace account has been registered for #{@email}"
-== content_for :content_question, "Did you register with a different email?"
-== content_for :content_answer do
+== content_for :content do
+  h1 style="font-size:18px; font-weight:700; color:#464646; margin-bottom:16px;" 
+    | Could not find account with email #{@email}
+
   - if @has_pending_invite
-    | You have a pending invite from an instructor and have not activated your account.  You must create your account through the link provided in the email from the invitation.
+    p
+      | You have a pending invite from an instructor and have not activated your account.  You must create your account through the link provided in the email from the invitation.
+
+    br
+    
+    a href="#{@url}" class="btn btn--primary" style="display:inline-block; font-weight:700; font-size:12px; text-align:center; vertical-align:middle; text-transform:capitalize; background-color:#12a6c7; color:#ffffff; border-radius:4px; border:none; cursor:pointer; white-space:nowrap; overflow:hidden; padding:0 1.15rem; text-decoration:none; height:2rem; line-height:2rem; margin-bottom:48px;" Create Account
   - else
-    | Use the button below to try a different email, or if you aren't sure which email you registered your ThinkSpace account with, contact us at 
-    b support@thinkspace.org
-
-== content_for :content_contact do
-  | If you don't have a ThinkSpace account, contact your instructor for an invitation.
-
-== content_for :footer_action, "Reset Password"
+    p
+      | Try using a different email, or if you aren't sure which email you registered your OpenTBL account with, contact us at <a href='mailto:support@opentbl.com?Subject=Dont%20remember%20account%20email'>support@opentbl.com</a>.

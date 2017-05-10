@@ -8,12 +8,12 @@ Thinkspace::Common::Engine.routes.draw do
         resources :spaces, only: [:update, :create] do
           member do
             get  :roster
-            get  :invitations
             get  :teams
             get  :team_sets
-            put  :invite
+            post :invite
             post :import
             post :clone
+            get  :search
           end
         end
 
@@ -31,15 +31,17 @@ Thinkspace::Common::Engine.routes.draw do
           put :activate, on: :member
           put :inactivate, on: :member
         end
-
-        resources :invitations, only: [:create, :destroy] do
-          put :refresh, on: :member
-          put :resend, on: :member
-          get :fetch_state, on: :member
-        end
       end
 
       # Non-admin
+      resources :uploads, only: [] do
+        collection do
+          post :upload
+          get  :sign
+          post :confirm
+        end
+      end
+
 			resources :spaces, only: [:index, :show]
 
       resources :users, only: [:show, :create, :update] do
@@ -65,6 +67,12 @@ Thinkspace::Common::Engine.routes.draw do
         collection do
           get :select
           get :latest_for
+        end
+      end
+
+      resources :colors, only: [:index, :show] do
+        collection do
+          get :select
         end
       end
       

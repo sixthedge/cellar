@@ -1,0 +1,21 @@
+prereq_configs: space
+
+variables:
+  import_text[config_space@variables]
+  import_text[peer_assessment@variables]
+  import_text[peer_assessment@settings]
+
+assignments:
+  import_text[peer_assessment@assignments]
+
+phases:
+  import_text[peer_assessment@phases]
+
+teams:
+  import_text[teams@team_123]
+  import_text[teams@team_456]
+  import_text[teams@team_789]
+
+peer_assessment:
+  assessments:
+    import_text[peer_assessment@assessments]

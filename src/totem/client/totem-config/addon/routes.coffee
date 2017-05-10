@@ -1,6 +1,7 @@
 import ember from 'ember'
 import util  from 'totem/util'
 import tc    from 'totem-config/configs'
+import fm    from 'totem-config/find_modules'
 
 class TotemRoutes
 
@@ -86,6 +87,16 @@ class TotemRoutes
     _this = @
     rmap.route name, options, ->
       _this.root_routes[name] = @
+
+  # Call package '_router' to map routes.
+  routers: (Router) ->
+    mod_regex = new RegExp ".*\/_router$"
+    mods      = fm.filter_by(mod_regex)
+    return if ember.isBlank(mods)
+    for mod in mods
+      rmod = util.require_module(mod)
+      @error "Router '#{mod}' not found."  if ember.isBlank(rmod)
+      rmod.map(Router)
 
   error: -> util.error(@, arguments...)
 

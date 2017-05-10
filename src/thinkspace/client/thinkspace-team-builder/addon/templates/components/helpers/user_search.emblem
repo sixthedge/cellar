@@ -1,0 +1,6 @@
+= input value=value class='spacing__margin-bottom--1' placeholder='Search Students'
+
+ul.dropdown__list
+  each results as |user|
+    li.dropdown__item.dropdown__item--thick{action 'select' user}
+      = user.first_name

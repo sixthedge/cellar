@@ -1,0 +1,22 @@
+.dialogue.dialogue--blue.grid__container--centered.dialogue--shadow
+  h1 Are you sure you want to save these changes?
+  p You have <strong>#{assignments.length} current or upcoming exercises</strong> that will be affected by these changes:
+
+  ul.basic-list.spacing__margin-bottom--2
+    each assignments as |assignment|
+      li.basic-list__item
+        .text__font-size--14.text--inline-block.spacing__margin-left--1 = assignment.title
+        .text__font-size--14.text--inline-block.text__font-style--italic.is-right Due #{assignment.friendly_due_at}
+
+  p 
+    strong Students may have some of their team-dependent work reset for these exercises. 
+    | Affected students will have their exercises unlocked and be notified by email to re-submit their work.
+
+  p.spacing__margin-bottom--2 Learn more about <a href='#'> the effects of editing your teams.</a> 
+
+  .btn-group
+    button.btn.btn--primary click='confirm'
+      | Save Team Changes
+    button.btn click='deny'
+      | Cancel
+

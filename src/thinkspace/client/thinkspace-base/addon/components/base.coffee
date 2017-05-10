@@ -1,5 +1,5 @@
-import ember from 'ember'
-import base  from 'totem-base/components/base'
+import ember            from 'ember'
+import base             from 'totem-base/components/base'
 import totem_data_mixin from 'totem/mixins/data'
 
 export default base.extend totem_data_mixin,
@@ -13,29 +13,15 @@ export default base.extend totem_data_mixin,
 
   tvo_titles:      null
   tvo_path:        null
-  all_data_loaded: false
-
+  
   init: ->
-    @_super(arguments...)
     @session  = @get('session')
     titles    = @get('tvo_titles')
     path      = @get('tvo_path') or null
     @tvo_path = if ember.isBlank(path) and ember.isPresent(titles) then @get('tvo').template.engine_values(titles, @) else path
-    @init_base()
-
-  init_base: -> return
-
-  set_all_data_loaded:   -> @set 'all_data_loaded', true
-  reset_all_data_loaded: -> @set 'all_data_loaded', false
+    @_super(arguments...)
 
   current_models: -> @get('thinkspace')
-
-  is_destroyed: -> @get('isDestroyed') or @get('isDestroying')
-
-  # Query param support
-  get_query_params_controller:    -> @get('query_params_controller')
-  get_query_param: (param)        -> @get_query_params_controller().get(param)
-  set_query_param: (param, value) -> @get_query_params_controller().set(param, value)
 
   # Tvo Helpers.
   tvo_show_errors_on:  -> @get('tvo').show_errors_on()
@@ -50,5 +36,3 @@ export default base.extend totem_data_mixin,
   tvo_section_define_ready:      (args...) -> @get('tvo.section').define_ready(@, args...)
   tvo_section_ready:             (args...) -> @get('tvo.section').ready_component(@, args...)
   tvo_section_register_actions:  (hash)    -> @get('tvo.section').register_component(@, actions: hash)
-
-  get_app_route:  -> @totem_messages.get_app_route()

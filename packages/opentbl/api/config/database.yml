@@ -1,0 +1,18 @@
+default: &default
+  adapter:  postgresql
+  encoding: utf-8
+  pool:     5
+  timeout:  5000
+  host:     "<%=ENV['APP_DB_HOST']%>"
+  database: "<%=ENV['APP_DB_NAME']%>"
+  username: "<%=ENV['APP_DB_USERNAME']%>"
+  password: "<%=ENV['APP_DB_PASSWORD']%>"
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default

@@ -3,67 +3,126 @@
 //\*------------------------------------*/
 
 .radio__item {
+	@extend .group;
+
+	display:       block;
+	position:      relative;
 	margin-bottom: 1rem;
+
+}
+
+.radio__input {
+	position:    absolute;
+	top:         0;
+	width:       22px;
+	height:      22px;
+	margin:      0;
+	opacity:     0;
+	line-height: 1;
+}
+
+.radio__label-container {
+	position:    relative;
+	display:     block;
+	float:       left;
+	margin:      0;
+	cursor:      pointer;
+	text-indent: 0;
+}
+
+// Radio icon is served on label's pseudo element
+.radio__label-container:after {
+	position:            absolute;
+	top:                 0;
+	left:                0;
+	display:             block;
+	width:               22px;
+	height:              22px;
+	content:             '';
+	background-image:    url('images/icons/icons_checkbox-radio-sprite.png');
+	background-repeat:   no-repeat;
+	overflow:            hidden;
+	background-size:     22px 220px;
+	background-position: 0 0;
+
+	@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
+		background-image: url('images/icons/icons_checkbox-radio-sprite@2x.png');
+		}
+
+	// IF-AT Functionality
+	.is-incorrect & {
+		background-image:    url('images/icons/otbl-icons_cross.svg') !important;
+		background-position: 0 0 !important;
+    background-size:     22px 22px !important;
+    opacity:             1 !important;
+	}
+
+	.is-correct & {
+		background-image:    url('images/icons/otbl-icons_checkmark.svg') !important;
+		background-position: 0 0 !important;
+    background-size:     22px 22px !important;
+    opacity:             1 !important;
+	}
 }
 
 .radio__label {
-	max-width:    $max-width--content;
-	padding-left: 36px;
-	text-indent:  -36px;
-	cursor:       pointer;
+	padding-left: 2rem;
+
+	// IF-AT Functionality
+	.is-incorrect & {
+		color: $color-gray-base;
+	}
+
+	.is-correct & {
+		color: $color-green-base;
+	}
 }
 
 .radio__label-summary {
+	padding-left:  2rem;
 	font-size:     .75rem;
-	margin-bottom: .75rem;
 	max-width:     42em;
 	font-weight:   $font-weight--regular;
-	text-indent:   0;
 }
 
-.radio__icon {
-	display:           inline-block;
-	width:             22px;
-	height:            22px;
-	vertical-align:    middle;
-	margin-right:      12px;
-	cursor:            pointer;
-	background-image:  url('images/icons/icons_checkbox-radio-sprite.png');
-	background-repeat: no-repeat;
-	overflow:          hidden;
-	background-size:   22px 220px;
+// Targets input when it is in HOVER
+.radio__input:hover + label:after{
+	background-position: 0 -22px;
+}
+
+// Targets input when it is in FOCUS for the outline
+.radio__input:focus + label:after,
+.radio__input:checked:focus + label:after {
+	outline:        1px dotted $color-blue-base;
+	outline-offset: 2px;
+}
+
+// Targets input when it is FOCUSED and ACTIVE
+.radio__input:focus + label:after, 
+.radio__input:active + label:after {
+	background-position: 0 -44px;
+}
+
+// Targets input when it is CHECKED
+.radio__input:checked + label:after{
+	background-position: 0 -66px;
+}
+
+// Targets input when it is CHECKED and in HOVER
+.radio__input:checked:hover + label:after{
+	background-position: 0 -88px;
+}
+
+// Targets input when it is FOCUSED and ACTIVE and CHECKED
+.radio__input:checked:focus + label:after, 
+.radio__input:checked:active + label:after {
+	background-position: 0 -66px;
+}
+
+// Targets input when it is DISABLED
+.radio__input[disabled] + label:after{
 	background-position: 0 0;
-
-	-moz-appearance:    none;
-	-webkit-appearance: none;
-
-	&:hover {
-		background-position: 0 -22px;
-	}
-
-	&:focus, &:active {
-		background-position: 0 -44px;
-	}
-
-	&.radio__icon--is-checked {
-		background-position: 0 -66px;
-
-		&:hover {
-			background-position: 0 -88px;
-		}
-
-		&:focus, &:active {
-			background-position: 0 -66px;
-		}
-
-	}
-
-
-	@media 
-	(-webkit-min-device-pixel-ratio: 2), 
-	(min-resolution: 192dpi) { 
-		background-image: url('images/icons/icons_checkbox-radio-sprite@2x.png');
-	}
-
-
+	cursor:              not-allowed;
+	opacity:             .5;
 }
+

@@ -1,8 +1,0 @@
-commands:
-  - bower install --save rangeslider.js
-
-import:
-  - pattern: bower_components/rangeslider.js/dist/rangeslider.css
-    comment: rangeslider css
-  - pattern: bower_components/rangeslider.js/dist/rangeslider.js
-    comment: rangeslider js

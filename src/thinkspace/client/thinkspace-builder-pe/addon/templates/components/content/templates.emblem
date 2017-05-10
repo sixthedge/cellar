@@ -59,6 +59,10 @@ fieldset.forms__section
         /   .ts-builder-pe-templates_user
         /     component '__dropdown' collection=user_templates display_property='title' text='Choose a template' selected=selected_template select_action='select_user_template' action_receiver=this
 
+    else
+      .loader__container
+        .loader.loader--logo
+        .text__font-size--14.text--bold Loading...
   .btn-group
     button.btn.btn--primary{action 'confirm'}
       | Select Template

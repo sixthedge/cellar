@@ -94,6 +94,10 @@
   margin-top: 0;
 }
 
+.spacing__margin-top--6px {
+  margin-top: 6px;
+}
+
 .spacing__margin-top--half {
   margin-top: .5rem;
 }
@@ -118,11 +122,11 @@
 }
 
 .spacing__margin-bottom--half {
-  margin-bottom: .5rem;
+  margin-bottom: .5rem !important;
 }
 
 .spacing__margin-bottom--1 {
-  margin-bottom: 1rem;
+  margin-bottom: 1rem !important;
 }
 
 .spacing__margin-bottom--2 {
@@ -174,10 +178,22 @@
  * Margin left. 
  */
 
+ .spacing__margin-left--half {
+  margin-left: .5rem;
+}
+
 .spacing__margin-left--1 {
   margin-left: 1rem;
 }
 
 .spacing__margin-left--2 {
   margin-left: 2rem;
+}
+
+.spacing__margin-left--3 {
+  margin-left: 3rem;
+}
+
+.spacing__margin-left--4 {
+  margin-left: 4rem;
 }

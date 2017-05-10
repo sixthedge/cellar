@@ -34,6 +34,16 @@ module Thinkspace
             controller_save_record(@team_set)
           end
 
+          def update_transform
+            @team_set.transform = params[:transform].deep_dup
+            controller_save_record(@team_set)
+          end
+
+          def explode
+            title = params[:title] || "Team Set - #{Date.today.to_s}"
+            controller_render @team_set.explode(title: title)
+          end
+
           def teams
             controller_render_plural_root(@team_set)
           end
@@ -41,6 +51,10 @@ module Thinkspace
           def destroy
             raise_access_denied_exception("Cannot destroy a locked team set.") if @team_set.locked?
             controller_destroy_record(@team_set)
+          end
+
+          def abstract
+            controller_render_json(@team_set.abstract(:users, :teams))
           end
 
           private

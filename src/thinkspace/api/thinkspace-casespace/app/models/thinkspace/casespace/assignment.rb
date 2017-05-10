@@ -70,6 +70,12 @@ module Thinkspace
         scope_active
       end
 
+      def self.scope_upcoming(ownerables=nil, tts=nil)
+        (tts || timetable_scope(ownerables)).
+        where_now('>=', :due_at).
+        with_scope
+      end
+
       # ### Timetable helpers
       def get_or_set_timetable_for_self(options={})
         Thinkspace::Common::Timetable.find_or_create_timetable(self, options)

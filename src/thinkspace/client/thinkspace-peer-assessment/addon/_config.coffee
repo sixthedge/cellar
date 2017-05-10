@@ -4,16 +4,19 @@ export default {
 
   env: env
 
-  engine:
-    mount:           {as: 'thinkspace-peer-assessment', path: '/cases/:assignment_id/pe'}
-    external_routes: [{login: 'users.sign_in'}, 'spaces.show', 'cases.show', 'phases.show']
+  ns:
+    namespaces:
+      peer_assessment: 'thinkspace/peer_assessment'
+    type_to_namespace:
+      assessment:          'peer_assessment'
+      assessment_template: 'peer_assessment'
+      review:              'peer_assessment'
+      progress_report:     'peer_assessment'
+
+  query_params:
+    review: ownerable: true, authable: false
 
   add_engines: [
     'thinkspace-message'
-    'thinkspace-message-pubsub'
-    'thinkspace-dock'
-    'thinkspace-peer-assessment-results': {external_routes: {login: 'users.sign_in'}}
-    'thinkspace-peer-assessment-instructor': {external_routes: {login: 'users.sign_in'}}
-    'thinkspace-toolbar':  {external_routes: {home: 'spaces.index'}}
   ]
 }

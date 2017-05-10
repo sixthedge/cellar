@@ -1,6 +1,0 @@
-commands:
-  - bower install --save foundation-sites
-
-import:
-  - pattern: bower_components/foundation-sites/dist/foundation.min.js
-    comment: foundation.min

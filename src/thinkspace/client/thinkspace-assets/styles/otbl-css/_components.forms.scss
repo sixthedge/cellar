@@ -24,6 +24,16 @@ fieldset {
 	clear:    both;
 	position: relative;
 	overflow: visible;
+
+  &.forms__field-wrapper--med {
+    width: 400px;
+  }
+
+}
+
+.forms__field-wrapper--inline {
+  display: inline-block;
+
 }
 
 
@@ -97,12 +107,28 @@ input[type="color"] {
     height: 3rem;
   }
 
-  &::-webkit-input-placeholder, 
-  &::-moz-placeholder, 
-  &:-ms-input-placeholder, 
+  &::-webkit-input-placeholder {
+    color:       $color-gray-base;
+    font-size:   .75rem;
+    font-weight: $font-weight--bold;
+  }
+
+  &::-moz-placeholder {
+    color:       $color-gray-base;
+    font-size:   .75rem;
+    font-weight: $font-weight--bold;
+  }
+
+  &:-ms-input-placeholder {
+    color:       $color-gray-base;
+    font-size:   .75rem;
+    font-weight: $font-weight--bold;
+  } 
+
   &:-moz-placeholder {
-    color: $color-gray-base;
-    font-weight: bold;
+    color:       $color-gray-base;
+    font-size:   .75rem;
+    font-weight: $font-weight--bold;
   }
 
   // if disabled
@@ -167,6 +193,10 @@ textarea {
   display:        flex;
   flex-direction: row;
   max-width:      $max-width--content;
+
+  &.inline-group--med {
+    max-width: 400px;
+  }
  }
 
 .inline-group__item {

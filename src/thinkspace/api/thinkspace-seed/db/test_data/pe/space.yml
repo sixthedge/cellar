@@ -1,0 +1,11 @@
+variables:
+  - &SPACE Peer Evaluation
+
+users: import[users@superusers]
+
+spaces:
+  - title: *SPACE
+
+space_users:
+  - spaces: *SPACE
+    users:  import[users]

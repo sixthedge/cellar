@@ -1,0 +1,2 @@
+component 'header' model=model
+outlet
