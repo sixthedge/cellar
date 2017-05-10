@@ -52,6 +52,7 @@ select, .dropdown__anchor {
 
 
 .dropdown__list {
+  position:        initial !important;
   display:         none;
   list-style-type: none;
   margin-left:     0;

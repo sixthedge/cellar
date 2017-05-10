@@ -11,7 +11,11 @@
 
   .grid__mobile--overlay & {
     @media only screen and (max-width: 1000px) {
-      position:      initial !important;
+      max-width: 200px;
+    }
+
+    @media only screen and (max-width: 40rem) {
+      position: initial !important;
       height:        100%;
       width:         100% !important;
       max-width:     100% !important;
