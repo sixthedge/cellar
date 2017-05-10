@@ -1,4 +1,6 @@
-h1 im a trat!
-= sync
-
-= assessment
+h4 tRAT
+if sync
+  h5 tRAT questions will be the same as the iRAT's questions
+else
+  each questions as |question index|
+    component 'confirmation/content/items/question' model=question assessment=assessment index=index

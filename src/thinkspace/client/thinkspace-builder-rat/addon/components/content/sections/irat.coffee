@@ -1,7 +1,5 @@
 import ember         from 'ember'
 import base          from 'thinkspace-base/components/base'
-import question_item from 'thinkspace-builder-rat/items/question'
-
 
 ###
 # # irat.coffee
@@ -15,18 +13,8 @@ export default base.extend
 
   manager: ember.inject.service()
 
-  question_items: ember.computed 'step.irat_assessment.questions_with_answers.@each', ->
-    items = @get('step.irat_assessment.questions_with_answers')
-    if ember.isPresent(items)
-      @create_question_item(item) for item in items
-
-  create_question_item: (item) ->
-    question_item.create
-      model:      item
-      assessment: @get('model')
-      type:       @get('type')
-      ## Container necessary if we want to inject the manager service
-      container:  @container
+  question_items: ember.computed.reads 'step.irat_question_items'
+  has_questions:  ember.computed.notEmpty 'question_items'
 
   actions:
     create: ->

@@ -15,13 +15,12 @@ export default base.extend
   default_text: 'Choose an answer'
 
   choice_items: ember.computed.reads 'model.choice_items'
-  answer:       ember.computed.reads 'model.answer'
+  answer:       ember.computed.reads 'model.changeset.answer'
 
   dropdown_text: ember.computed 'answer', ->
-    if ember.isPresent(@get('answer')) then @get('answer.prefix') else @get('default_text')
+    if ember.isPresent(@get('answer')) then @get('model').get_choice_by_id(@get('answer')).get('prefix') else @get('default_text')
 
   select_answer: (choice) ->
-    console.log('setting selected_answer to ', choice)
     @get('model').select_answer(choice)
 
   update_model: -> 
@@ -31,7 +30,7 @@ export default base.extend
   actions:
     toggle_show: ->
       @get('model').changeset_rollback().then =>
-        @sendAction('show')
+        @sendAction('show', false)
 
     update: -> @update_model()
 

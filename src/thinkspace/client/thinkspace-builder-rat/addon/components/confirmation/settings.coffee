@@ -11,3 +11,5 @@ export default base.extend
 
   model: ember.computed.reads 'builder.model'
   step:  ember.computed.reads 'builder.step_settings'
+
+  phases: ember.computed.reads 'step.model.active_phases'

@@ -5,9 +5,20 @@
     | Edit details
 
   label Exercise Name
-  p.text__font-size--14.spacing__margin-top--0 = model.title
+  p.text__font-size--14.spacing__margin-top--0
+    if has_title_error
+      br
+      component '__changeset/errors' changeset=step.changeset attribute='title' errors_visible=true
+    else
+      = model.title
 
   label Instructions/Overview
-  p.text__font-size--14.spacing__margin-top--0 = model.instructions
+  p.text__font-size--14.spacing__margin-top--0
+    if has_instruction_error
+      br
+      component '__changeset/errors' changeset=step.changeset attribute='instructions' errors_visible=true
+    else
+      = model.instructions
 
-  // label Team Set
+  label Team Set
+  p.text__font-size--14.spacing__margin-top--0 = step.selected_team_set.title

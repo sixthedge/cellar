@@ -11,4 +11,6 @@ export default base.extend
   is_editing: false
 
   actions:
-    toggle_is_editing: -> @toggleProperty('is_editing')
+    toggle_is_editing: (val) -> 
+      @get('model').init() if val
+      @set('is_editing', val)

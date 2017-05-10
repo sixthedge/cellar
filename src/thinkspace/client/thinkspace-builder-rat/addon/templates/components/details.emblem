@@ -1,26 +1,27 @@
 partial 'components/header'
 
-.main-content
-  .grid__container--flex.spacing__margin-bottom--4
-    component 'details/content' model=model step=step class='grid__col--3of4 grid__mobile--full-width'
-    component 'progress' model=model class='grid__col--1of4 grid__mobile--hidden'
-  .grid__container--flex.grid__mobile--hidden
-    .grid__col--4of4
-      button.btn.is-left click='back'
-        | Back
-      button.btn.btn--primary.is-right click='next_step'
-        | Next Step
+if step.all_data_loaded
+  .main-content
+    .grid__container--flex.spacing__margin-bottom--4
+      component 'details/content' model=model step=step class='grid__col--3of4 grid__mobile--full-width'
+      component 'progress' model=model class='grid__col--1of4 grid__mobile--hidden'
+    .grid__container--flex.grid__mobile--hidden
+      .grid__col--4of4
+        button.btn.is-left click='back'
+          | Back
+        button.btn.btn--primary.is-right click='next_step'
+          | Next Step
 
-.mobile-progress
-  .mobile-progress__item.is-left
-    .mobile-progress__link click='back'
-      .text__font-size--12.text--bold
-        | Back
-      .text__font-size--14
-        | Type
-  .mobile-progress__item.is-right
-    .mobile-progress__link click='next_step'
-      .text__font-size--12.text--bold
-        | Go to next
-      .text__font-size--14
-        | Content
+  .mobile-progress
+    .mobile-progress__item.is-left
+      .mobile-progress__link click='back'
+        .text__font-size--12.text--bold
+          | Back
+        .text__font-size--14
+          | Type
+    .mobile-progress__item.is-right
+      .mobile-progress__link click='next_step'
+        .text__font-size--12.text--bold
+          | Go to next
+        .text__font-size--14
+          | Content

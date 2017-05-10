@@ -22,26 +22,15 @@ export default ember.Object.extend
 
   init: ->
     @_super()
-
-    console.lgo9'piniting choice with answer', @get('answer'), @get('id')
-
-  init: ->
-    @_super()
-    console.log('initing choice with asnwer ', @get('answer'), @get('id'), parseInt(@get('answer')) == parseInt(@get('id')), @get('is_answer'))
-
-
     @init_prefix(@get('index'))
     @create_changeset()
 
   init_prefix: (i) ->
-
-    console.log('calling init_prefix with index ', i)
     prefix = i%26
     prefix = @get('alphabet')[prefix]
     suffix = Math.floor(i/26)
     if suffix == 0 then suffix = ''
     result = prefix + suffix
-    console.log('should be setting prefix to ', result)
     @set('prefix', result)
 
   create_changeset: ->
@@ -63,5 +52,4 @@ export default ember.Object.extend
   rollback: -> @get('changeset').rollback()
 
   save: ->
-    console.log('calling save on choice with label ', @get('changeset.label'))
     @get('changeset').save()

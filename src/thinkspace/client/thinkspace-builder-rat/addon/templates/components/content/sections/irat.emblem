@@ -1,7 +1,16 @@
 fieldset.forms__section.spacing__margin-bottom--4
   h2.text--inline-block iRAT Questions
-  .btn.is-right.btn--primary click='create'
-    | New Question
+  if has_questions
+    .btn.is-right.btn--primary click='create'
+      | New Question
 
-each question_items as |item|
-  component 'content/question/item' model=item type=type
+if has_questions
+  each question_items as |item|
+    component 'content/question/item' model=item type=type
+else
+  div class={:bordered-panel :bordered-panel--active}
+    .forms__field-wrapper
+      label You have no questions
+      .forms__label-summary Add a new question to start off your RAT.
+    .btn.btn--primary click='create'
+      | New Question

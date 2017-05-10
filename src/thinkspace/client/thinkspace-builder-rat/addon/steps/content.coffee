@@ -5,6 +5,7 @@ import totem_changeset from 'totem/changeset'
 import ta              from 'totem/ds/associations'
 import totem_scope     from 'totem/scope'
 import step            from './step'
+import question_item   from 'thinkspace-builder-rat/items/question'
 
 ###
 # # content.coffee
@@ -24,6 +25,9 @@ export default step.extend
 
   sync_assessments: ember.computed.reads 'model.sync_rat_assessments'
 
+  irat_type: 'irat'
+  trat_type: 'trat'
+
   initialize: ->
     @reset_all_data_loaded()
 
@@ -31,7 +35,6 @@ export default step.extend
       assessments: @query_assessments()
 
     @rsvp_hash_with_set(promises, @).then (results) =>
-      @get('manager')
       @init_assessments()
 
   query_assessments: ->
@@ -70,3 +73,42 @@ export default step.extend
       @query_assessments().then (assessments) =>
         @set('assessments', assessments)
         @init_assessments()
+
+  irat_question_items: ember.computed 'irat_assessment.questions_with_answers.@each', ->
+    items = @get('irat_assessment.questions_with_answers')
+    if ember.isPresent(items)
+      @create_question_item(@get('irat_type'), item) for item in items
+
+  trat_question_items: ember.computed 'trat_assessment.questions_with_answers.@each', ->
+    items = @get('trat_assessment.questions_with_answers')
+    if ember.isPresent(items)
+      @create_question_item(@get('trat_type'), item) for item in items
+
+  create_question_item: (type, item) ->
+    question_item.create
+      model:      item
+      assessment: @get('model')
+      type:       type
+      ## Container necessary if we want to inject the manager service
+      container:  @container
+
+  validate: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      irat_items = @get('irat_question_items')
+      trat_items = @get('trat_question_items')
+      items      = unless @get('sync_assessments') then irat_items.concat(trat_items) else irat_items
+
+      promises = ember.makeArray()
+
+      resolve() unless ember.isPresent(items)
+      items.forEach (item) =>
+        promises.pushObject(item.validate())
+
+      ember.RSVP.all(promises).then (valids) =>
+        resolve(!valids.contains(false))
+
+
+  save: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      @validate().then (validity) =>
+        resolve(validity)

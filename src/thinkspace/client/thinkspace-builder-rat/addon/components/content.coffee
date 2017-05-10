@@ -10,8 +10,8 @@ export default base.extend
 
   # ## Actions
   actions:
-    prev_step: -> @get('builder').transition_to_prev_step()
-    next_step: -> @get('builder').transition_to_next_step()
+    prev_step: -> @get('builder').transition_to_prev_step(save: true)
+    next_step: -> @get('builder').transition_to_next_step(save: true)
     exit: ->      @get('builder').transition_to_cases_show()
 
     toggle_assessment_sync: (val) -> @get('step').toggle_assessment_sync(val)

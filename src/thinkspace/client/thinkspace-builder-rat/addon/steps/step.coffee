@@ -11,7 +11,7 @@ export default ember.Object.extend common_helper,
 
   all_data_loaded: false
 
-  set_all_data_loaded: ->   
+  set_all_data_loaded: -> 
     @set('all_data_loaded', true)
   reset_all_data_loaded: -> 
     @set('all_data_loaded', false)

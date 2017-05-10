@@ -17,6 +17,7 @@
   .forms__label-summary This will help give immediate feedback to students.
   component '__dropdown' collection=choice_items display_property='prefix' text=dropdown_text selected=model.changeset.answer select_action='select_answer' action_receiver=this
 
+  br
   component '__changeset/errors' changeset=model.changeset attribute='answer' errors_visible=true 
 hr
 .btn-group

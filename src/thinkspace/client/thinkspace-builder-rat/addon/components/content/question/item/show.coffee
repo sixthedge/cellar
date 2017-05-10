@@ -15,7 +15,7 @@ export default base.extend
 
   actions:
     toggle_edit: ->
-      @sendAction('edit')
+      @sendAction('edit', true)
 
     duplicate: -> @get('manager').duplicate_question_item(@get('type'), @get('model.model'))
 

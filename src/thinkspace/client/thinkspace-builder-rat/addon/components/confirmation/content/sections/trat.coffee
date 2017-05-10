@@ -7,3 +7,5 @@ import base  from 'thinkspace-base/components/base'
 - Package: **ethinkspace-builder-pe**
 ###
 export default base.extend()
+
+

@@ -11,3 +11,19 @@ export default base.extend
 
   model: ember.computed.reads 'builder.model'
   step:  ember.computed.reads 'builder.step_details'
+
+  init_base: ->
+    @get('step').validate().then =>
+      @set('changeset', @get('step.changeset'))
+
+  has_title_error: ember.computed 'changeset', ->
+    errors = @get('changeset.errors')
+    return false unless ember.isPresent(errors)
+    if ember.isPresent(errors.findBy('key', 'title'))
+      return !ember.isEmpty(errors.findBy('key', 'title').validation)
+
+  has_instruction_error: ember.computed 'changeset', ->
+    errors = @get('changeset.errors')
+    return false unless ember.isPresent(errors)
+    if ember.isPresent(errors.findBy('key', 'instructions'))
+      return !ember.isEmpty(errors.findBy('key', 'instructions').validation)

@@ -26,27 +26,33 @@ export default step.extend
     changeset = totem_changeset.create model,
       title:        [vpresence, vlength]
       instructions: [vpresence]
-
-    changeset.set 'show_errors', true
     @set 'changeset', changeset
 
 
   initialize: ->
     model = @get('builder.model')
     @set 'model', model
+    @create_changeset()
     @load_assignment_data().then (assignment) =>
       @query_team_sets().then (team_sets) =>
         @initialize_team_set().then (team_set) =>
-          @create_changeset()
           @set_all_data_loaded()
 
   save: ->
     new ember.RSVP.Promise (resolve, reject) =>
       changeset = @get('changeset')
-      changeset.save()
-      @get('model').save().then (saved_model) =>
-        resolve(saved_model)
-      , (error) => reject(error)
+      @validate().then (valid) =>
+        if valid
+          changeset.save().then =>
+            @get('model').save().then (saved_model) =>
+              resolve(saved_model)
+            , (error) => reject(error)
+
+  validate: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      changeset = @get('changeset')
+      changeset.validate().then =>
+        resolve(changeset.get('isValid'))
 
   load_assignment_data: ->
     new ember.RSVP.Promise (resolve, reject) =>

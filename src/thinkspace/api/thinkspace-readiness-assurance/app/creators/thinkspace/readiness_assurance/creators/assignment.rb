@@ -11,10 +11,10 @@ module Thinkspace; module ReadinessAssurance; module Creators
     def generate
       ActiveRecord::Base.transaction do
         @assignment = create_assignment_from_params
-        trat_phase  = create_assessment_phase(trat_assessment_template)
         irat_phase  = create_assessment_phase(irat_assessment_template)
-        @trat_assessment = create_assessment(trat_phase, 'trat')
+        trat_phase  = create_assessment_phase(trat_assessment_template)
         @irat_assessment = create_assessment(irat_phase, 'irat')
+        @trat_assessment = create_assessment(trat_phase, 'trat')
       end
 
       @assignment
@@ -38,7 +38,7 @@ module Thinkspace; module ReadinessAssurance; module Creators
         questions: []
       )
       create_header_component(phase)
-      create_phase_component(phase, assessment, 'readiness-assurance', 'assessment')
+      create_phase_component(phase, assessment, 'readiness-assurance', 'rat')
       @assessment
     end
 

@@ -5,16 +5,20 @@
   fieldset.forms__section
     h2 Logistics
 
-    = step.changeset.release_at
-    .forms__field-wrapper
-      label Release date
-      .forms__label-summary Choose the date and time this exercise will be made available to students
-      component '__datetime_picker' value=step.changeset.release_at select='select_release_at'
+    h4 iRAT Logistics
+    component 'settings/phases/phase' model=step.irat_phase type='irat' step=step
 
-    = step.changeset.due_at
-    .forms__field-wrapper
-      label Due date
-      .forms__label-summary Set the due date and time for this exercise. After this date, the exercise will be read-only.
-      component '__datetime_picker' value=step.changeset.due_at select='select_due_at'
+    h4 tRAT Logistics
+    component 'settings/phases/phase' model=step.trat_phase type='trat' step=step
 
-  component 'settings/phases/phases' model=step.model.active_phases select_unlock_at='select_unlock_at' class='borderless-table'
+    / = step.changeset.release_at
+    / .forms__field-wrapper
+    /   label Release date
+    /   .forms__label-summary Choose the date and time this exercise will be made available to students
+    /   component '__datetime_picker' value=step.changeset.release_at select='select_release_at'
+
+    / = step.changeset.due_at
+    / .forms__field-wrapper
+    /   label Due date
+    /   .forms__label-summary Set the due date and time for this exercise. After this date, the exercise will be read-only.
+    /   component '__datetime_picker' value=step.changeset.due_at select='select_due_at'

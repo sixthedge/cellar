@@ -4,13 +4,7 @@ fieldset.forms__section.spacing__margin-bottom--4
     .btn.is-right.btn--primary click='create'
       | New Question
 
-= sync_assessments
-= display_questions
-= sync_checked
 component '__changeset/checkbox' label='Use different questions for the tRAT' value=sync_checked save='toggle_assessment_sync'
-
-/ .btn click='toggle_assessment_sync'
-/   | Sync Assessments
 
 if display_questions
   .forms__field-wrapper
