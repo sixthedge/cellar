@@ -6,10 +6,23 @@ export default base_component.extend
 
   manager: ember.inject.service()
 
-  on_teams: true
+  is_manage: true
 
-  is_teams:  ember.computed.equal 'on_teams', true
-  is_roster: ember.computed.equal 'on_teams', false
+  search_field: ''
+  results:      []
+
+  highlighted_users: ember.computed 'results.@each', -> @get('results').mapBy('id')
 
   actions:
     toggle_view: -> @toggleProperty('on_teams'); false
+
+    search_results: (val) -> 
+      @set('results', val)
+
+    explode: ->
+      @get('manager').explode().then =>
+        @set 'explode_success', true
+
+    revert: ->
+      @get('manager').revert_transform().then =>
+        @set 'revert_success', true

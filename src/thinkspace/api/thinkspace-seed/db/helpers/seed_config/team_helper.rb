@@ -54,12 +54,14 @@ def casespace_seed_config_add_team_sets(config, teams_hash)
     description = hash[:description] || "description for #{title}"
     settings    = hash[:settings]    || Hash.new
     state       = hash[:state]
+    default     = hash[:default]
     team_set    = create_team_team_set(
       space:       space,
       title:       title,
       description: description,
       settings:    settings,
       state:       state,
+      default:     default
     )
     seed_config_models.add(config, team_set)
   end

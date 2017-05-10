@@ -81,6 +81,11 @@ select, .dropdown__anchor {
     border-bottom-right-radius: $border-radius;
     border-bottom-left-radius: $border-radius;
   }
+
+  &.dropdown__item-selectable {
+    &.is-selected {
+    }
+  }
 }
 
 .dropdown__item-link {

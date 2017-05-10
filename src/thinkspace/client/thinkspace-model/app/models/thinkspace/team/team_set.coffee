@@ -15,6 +15,8 @@ export default ta.Model.extend ta.add(
   metadata:    ta.attr()
   scaffold:    ta.attr()
   transform:   ta.attr()
+
+  is_default: ember.computed.reads 'default'
   
   # ### State management
   is_locked:       ember.computed.equal 'state', 'locked'
@@ -56,7 +58,16 @@ export default ta.Model.extend ta.add(
     if count.then? then count.get('length') else count
 
   # # Builder Additions
-  has_transform: ember.computed 'transform', ->
+  has_transform: ember.computed 'transform', 'transform.teams.@each', 'scaffold.teams.@each', ->
     transform = @get('transform')
-    !ember.isEmpty(ember.keys(transform))
+    scaffold = @get('scaffold')
+    console.log "[model] has_transform", @get('transform.teams'), ember.keys(transform), ember.isEmpty(transform['teams']), ember.isEmpty(scaffold['teams'])
+    return false if ember.isEmpty(ember.keys(transform))
+    return false if ember.isEmpty(transform['teams']) && ember.isEmpty(scaffold['teams'])
+    return true
 
+  didLoad: ->
+    console.log "team set #{@get('id')} didLoad"
+
+  didUpdate: ->
+    console.log "team set #{@get('id')} didUpdate"

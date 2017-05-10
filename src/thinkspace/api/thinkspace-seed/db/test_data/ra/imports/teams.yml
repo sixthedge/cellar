@@ -5,7 +5,7 @@ team_123:
     - &TEAM_123_DESC  'Team-123 : read_1, read_2, read_3'
     - &TEAM_123_USERS [read_1, read_2, read_3]
     team_sets:
-      - {space: *SPACE, title: *TEAM_123_SET, dup: skip, state: default}
+      - {space: *SPACE, title: *TEAM_123_SET, dup: skip, default: true}
     team_set_teams:
       - {space: *SPACE, title: *TEAM_123, description: *TEAM_123_DESC, users: *TEAM_123_USERS, team_set: *TEAM_123_SET, dup: skip}
     phase:

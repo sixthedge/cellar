@@ -15,7 +15,9 @@ export default base_component.extend arr_helpers,
 
   team_title: ember.computed.reads 'team.title'
 
+  has_teams:          ember.computed.notEmpty 'teams'
   has_selected_users: ember.computed.notEmpty 'selected_users'
+  no_selected_users:  ember.computed.not 'has_selected_users'
   has_team_id:        ember.computed.notEmpty 'team_id'
 
   selected_users: null
@@ -82,6 +84,8 @@ export default base_component.extend arr_helpers,
       team_id = @get('team_id')
       team    = teams.findBy('id', parseInt(team_id))
       @set('team', team)
+    else
+      @set 'team', null
 
   find_unassigned: (users) ->
     unless ember.isPresent(users)
@@ -108,15 +112,10 @@ export default base_component.extend arr_helpers,
     options.users = selected_users
     options.title = @get('team_title')
 
-    console.log('[process_create_team] selected color is ', @get('selected_color'))
-
     options.color = @get('selected_color.color')
 
     manager.create_team(options).then (team) =>
-      @get_app_route().transitionTo({queryParams: {team_id: team.id}}).then =>
-        @set_query_param()
-        @init_team()
-        @init_table_data()
+      @goto_team(team)
 
   set_query_param: -> @set('team_id', @get_query_param('team_id'))
 
@@ -162,6 +161,19 @@ export default base_component.extend arr_helpers,
       manager.save_transform().then =>
         resolve()
 
+  goto_team: (team) ->
+    qp = {team_id: null}
+    qp = {team_id: team.id} if ember.isPresent(team)
+    @get_app_route().transitionTo(ns.to_r('team_builder', 'builder'), @get('model'), {queryParams: qp}).then =>
+      @set_query_param()
+      @init_team()
+      @init_table_data()
+      @init_selected_users()
+      console.log "selected:", @get('has_team_id')
+
+  goto_manage_route: ->
+    @get_app_route().transitionTo(ns.to_r('team_builder', 'manage'), @get('model'))
+
   actions:
     search_results: (users) ->
       return unless ember.isPresent(users)
@@ -182,6 +194,13 @@ export default base_component.extend arr_helpers,
     create_team: ->
       @process_create_team()
 
+    add_to_team: (team) ->
+      @set('selected_team', team)
+      manager = @get('manager')
+      @get('selected_users').forEach (user) =>
+        manager.add_to_team(team.id, user)
+      manager.save_transform()
+
     cancel: ->
       @get('manager').remove_team_from_transform(@get('team')).then =>
         @get_app_route().transitionTo(ns.to_r('team_builder', 'manage'))
@@ -193,13 +212,11 @@ export default base_component.extend arr_helpers,
       @refresh()
 
     add_members: ->
-      console.log('calling adding_members')
       @set('adding_members', true)
       false
 
     select_color: (color) -> @set('selected_color', color)
 
     finalize_team: ->
-      console.log('calling finalize_team!')
       @save_transform().then =>
-        @get_app_route().transitionTo(ns.to_r('team_builder', 'manage'))
+        @goto_team(null)

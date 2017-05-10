@@ -1,0 +1,7 @@
+if all_data_loaded
+  .grid__container--flex.flex__justify--between
+    if teams.length
+      each teams as |team|
+        component 'helpers/team' model=team space=model abstract=abstract class='grid__col--49 grid__mobile--full-width spacing__margin-bottom--1' highlighted_users=highlighted_users
+    else
+      h2 you have no teams yet. use the team builder button to find students and create a team.

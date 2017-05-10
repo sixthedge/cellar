@@ -13,7 +13,7 @@ export default base.extend arr_helpers,
 
   has_transform: ember.computed.reads 'team_set.has_transform'
 
-  teams: ember.computed 'has_transform', ->
+  teams: ember.computed 'has_transform', 'transform.teams.@each', 'scaffold.teams.@each', ->
     if @get('has_transform')
       @get('team_set.transform.teams')
     else
@@ -82,7 +82,36 @@ export default base.extend arr_helpers,
         verb:   'PUT'
 
       @tc.query_action(ns.to_p('team_set'), params, options).then (team_set) =>
-        resolve(team_set)
+        @init_abstract().then (new_abstract) =>
+          @reconcile_assigned_users()
+          resolve(team_set)
+
+  team_set_watcher: ember.observer 'team_set', ->
+    console.log "fired team set watcher"
+
+  revert_transform: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      team_set = @get('team_set')
+      params =
+        id:        team_set.get('id')
+        transform: {}
+
+      options =
+        action: 'update_transform'
+        verb:   'PUT'
+        single: true
+
+      @tc.query_action(ns.to_p('team_set'), params, options).then (saved_team_set) =>
+
+        # record = @tc.peek_record(ns.to_p('team_set'), 7)
+        # record.get('transform.teams').forEach (team) =>
+        #   @_debug "record team", team
+        # @_debug "record", record
+        @_debug "saved_team_set teams length", saved_team_set.get('transform.teams.length')
+        @_debug "saved_team_set", saved_team_set
+        @_debug "saved_team_set title", saved_team_set.get('title')
+        @set 'team_set', saved_team_set
+        resolve(saved_team_set)
 
   explode: ->
     new ember.RSVP.Promise (resolve, reject) =>
@@ -164,6 +193,7 @@ export default base.extend arr_helpers,
 
   add_users_to_transform: (team) ->
     new ember.RSVP.Promise (resolve, reject) =>
+      @generate_transform()
       abstract  = @get('abstract')
       team_set  = @get('team_set')
       transform = team_set.get('transform')
@@ -180,6 +210,7 @@ export default base.extend arr_helpers,
 
   add_team_to_transform: (team) ->
     new ember.RSVP.Promise (resolve, reject) =>
+      @generate_transform()
       team_set  = @get('team_set')
       transform = team_set.get('transform')
       teams     = transform.teams
@@ -189,8 +220,12 @@ export default base.extend arr_helpers,
 
   remove_team_from_transform: (team) ->
     new ember.RSVP.Promise (resolve, reject) =>
+      @generate_transform()
       teams = @get('teams')
-      teams.removeObject(team) if teams.contains(team)
+      @remove_objects_with_value(teams, 'id', team.id)
       @save_transform().then (saved) =>
         @reconcile_assigned_users()
         resolve()
+
+  _debug: (message, args...) ->
+    console.log "[tb/manager] #{message}", args...

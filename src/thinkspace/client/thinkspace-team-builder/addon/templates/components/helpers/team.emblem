@@ -10,5 +10,4 @@
 
   ul.team-panel__list style='border-color:##{model.color};'
     each user_ids as |user_id|
-      li.team-panel__list-item
-        component 'manage/member' user_id=user_id abstract=abstract
+      component 'helpers/team/member' user_id=user_id abstract=abstract highlighted_users=highlighted_users
