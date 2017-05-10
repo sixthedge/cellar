@@ -1,5 +1,9 @@
 #application
   mount 'thinkspace-toolbar'
+  .totem-message.totem-message--success
+    .totem-message__text-container
+      .text__font-size--14.text--bold Testing for the heading
+      .text__font-size--14 This is the description for thalksdjfalkjlkajsdfk
   .main-content
     mount 'thinkspace-message'
     outlet

@@ -1,0 +1,19 @@
+///*------------------------------------*\
+//    #TOTEM-MESSAGES
+//\*------------------------------------*/
+
+.totem-message {
+  margin-top: $top-bar-height;
+  height: $top-bar-height;
+  // line-height: 1.5rem;
+}
+
+.totem-message--success {
+  background-color: $color-green-light;
+}
+
+.totem-message__text-container {
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: .5rem $spacing-unit 0;
+}
