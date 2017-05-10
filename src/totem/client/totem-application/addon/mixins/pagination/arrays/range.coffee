@@ -14,4 +14,4 @@ export default ember.Mixin.create
         max = (current_page * per_page)
     else
         max = (current_page * per_page)
-    "Showing #{min} to #{max} of #{total_records} entries"
+    "Showing #{min} - #{max} of #{total_records} items"
