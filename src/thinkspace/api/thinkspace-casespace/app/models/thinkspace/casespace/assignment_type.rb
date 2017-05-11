@@ -3,8 +3,8 @@ module Thinkspace
     class AssignmentType < ActiveRecord::Base
       totem_associations
 
-      PEER_EVALUATION          = 'Peer Evaluation'
-      READINESS_ASSURANCE_TEST = 'Readiness Assurance'
+      PEER_EVALUATION     = 'Peer Evaluation'
+      READINESS_ASSURANCE = 'Readiness Assurance'
 
       def get_creator_class
 
@@ -17,7 +17,7 @@ module Thinkspace
       end
 
       def pe?; title == PEER_EVALUATION; end
-      def rat?; title == READINESS_ASSURANCE_TEST; end
+      def rat?; title == READINESS_ASSURANCE; end
     end
   end
 end

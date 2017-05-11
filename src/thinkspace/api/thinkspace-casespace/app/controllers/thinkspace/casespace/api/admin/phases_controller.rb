@@ -60,20 +60,6 @@ module Thinkspace
             ids           = params[:ids]
             date_property = params[:property]
             @phases       = Thinkspace::Casespace::Phase.where(id: ids)
-            puts '***************************************BULKrESETdATE************************************'
-            puts '***************************************BULKrESETdATE************************************'
-            puts '***************************************BULKrESETdATE************************************'
-            puts '***************************************BULKrESETdATE************************************'
-            puts '***************************************BULKrESETdATE************************************'
-            puts '***************************************BULKrESETdATE************************************'
-            puts '***************************************BULKrESETdATE************************************'
-            puts '***************************************BULKrESETdATE************************************'
-            puts '***************************************BULKrESETdATE************************************'
-            puts '***************************************BULKrESETdATE************************************'
-            puts '***************************************BULKrESETdATE************************************'
-            puts @phases
-            puts @phases.inspect
-            puts ids
             timetables    = Thinkspace::Common::Timetable.where(timeable: @phases, ownerable: nil)
             ActiveRecord::Base.transaction do
               if date_property == 'due_at'
