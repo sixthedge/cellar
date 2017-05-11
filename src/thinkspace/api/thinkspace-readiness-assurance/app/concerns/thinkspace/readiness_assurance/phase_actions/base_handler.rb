@@ -39,6 +39,7 @@ class BaseHandler
   include Helpers::Handler::Params
   include Helpers::Handler::PhaseStates
   include Helpers::Handler::Records
+  include Helpers::Handler::Timers
   include Helpers::Handler::Classes
 
   include Thinkspace::Casespace::PhaseActions::Helpers::Action::Controller

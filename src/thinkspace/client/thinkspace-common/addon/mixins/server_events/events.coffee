@@ -10,13 +10,19 @@ export default ember.Mixin.create
     value.rooms = rooms
     console.info 'received server_event--->', {event, rooms, data}
     switch event
-      when 'transition_to_phase'  then @event_transition_to_phase(value, socketio_event)
-      when 'phase_states'         then @event_phase_states(value, socketio_event)
-      when 'message'              then @event_message(value, socketio_event)
+      when 'transition_to_assignment' then @event_transition_to_assignment(value, socketio_event)
+      when 'transition_to_phase'      then @event_transition_to_phase(value, socketio_event)
+      when 'phase_states'             then @event_phase_states(value, socketio_event)
+      when 'message'                  then @event_message(value, socketio_event)
 
   # ###
   # ### Events.
   # ###
+
+  event_transition_to_assignment: (value, socketio_event) ->
+    @load_records_into_store(value).then =>
+      @change_phase_states(value).then =>
+        @transition_to_assignment(value.transition_to_assignment_id)
 
   event_transition_to_phase: (value, socketio_event) ->
     @load_records_into_store(value).then =>
@@ -32,6 +38,15 @@ export default ember.Mixin.create
     console.info 'recevied assignment message:', {value, socketio_event}
     return if ember.isBlank(value)
     @messages.add(value)
+
+  # ###
+  # ### Transition to Assignment.
+  # ###
+
+  transition_to_assignment: (assignment_id) ->
+    return if ember.isBlank(assignment_id)
+    @find_record(ns.to_p('assignment'), assignment_id).then (assignment) =>
+      @thinkspace.transition_to_assignment(assignment)
 
   # ###
   # ### Transition to Phase.
@@ -84,4 +99,3 @@ export default ember.Mixin.create
   regenerate_phase_view: -> @phase_manager.generate_view()
 
   find_phase: (id) -> @find_record(ns.to_p('phase'), id)
-

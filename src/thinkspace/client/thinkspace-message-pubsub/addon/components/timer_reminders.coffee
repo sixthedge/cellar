@@ -1,4 +1,5 @@
 import ember from 'ember'
+import util  from 'totem/util'
 import base  from 'thinkspace-base/components/base'
 
 export default base.extend
@@ -25,7 +26,7 @@ export default base.extend
   start_timer_callback: (options) -> @se.timer_show(options)
 
   handle_timer: (data={}) ->
-    console.info 'handle_timer:', data
+    console.info 'handle_timer--->', data
     @set_message(data)
 
   set_message: (data) ->
@@ -48,5 +49,20 @@ export default base.extend
     msg.message = data.message
     msg.prefix  = if data.n == (data.of-1) then 'in less than' else 'in about'
     msg.units   = data.units
-    msg.label   = data.label
+    msg.label   = data.label or ''
+    @format_minutes(msg) if msg.label.match('second')
     msg
+
+  format_minutes: (msg) ->
+    units = msg.units
+    return if ember.isBlank(units)
+    duration = moment.duration("PT#{units}S")
+    mins     = duration.minutes()
+    secs     = duration.seconds()
+    return if mins == 0
+    min_text   = util.pluralize('minute', mins)
+    msg.label  = ''
+    msg.units  = "#{mins} #{min_text}"
+    if secs > 0
+      sec_text   = util.pluralize('second', secs)
+      msg.units += " and #{secs} #{sec_text}"

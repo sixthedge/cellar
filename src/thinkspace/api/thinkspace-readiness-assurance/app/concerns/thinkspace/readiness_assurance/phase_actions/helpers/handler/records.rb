@@ -43,6 +43,7 @@ module Thinkspace; module ReadinessAssurance; module PhaseActions; module Helper
   # ###
 
   def assessment_class;          ::Thinkspace::ReadinessAssurance::Assessment; end
+  def server_event_class;        ::Thinkspace::PubSub::ServerEvent; end
   def server_event_record_class; ::Thinkspace::PubSub::ServerEvent::Record; end
   def processor_class;           ::Thinkspace::Casespace::PhaseActions::Processor; end
   def team_class;                ::Thinkspace::Team::Team; end

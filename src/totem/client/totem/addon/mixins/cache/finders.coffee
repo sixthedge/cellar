@@ -27,7 +27,8 @@ export default ember.Mixin.create
         options.model  = model_name
         options.id     = id
         options.action = 'find'
-        reject @totem_messages.api_failure(error, options)
+        @totem_messages.api_failure(error, options)
+        reject(error)
 
   find_all: (model_name, options={}) ->
     new ember.RSVP.Promise (resolve, reject) =>
@@ -52,4 +53,5 @@ export default ember.Mixin.create
       , (error) =>
         options.model  = model_name
         options.action = 'find all'
-        reject @totem_messages.api_failure(error, options)
+        @totem_messages.api_failure(error, options)
+        reject(error)

@@ -2,12 +2,13 @@ if messages
   .ts_timer-content: .ts_timer-messages
 
     each messages as |message|
-      .ts_timer-message
-        .ts_timer-message-text= message.message
+      .ts_timer-message.text--inline-block.text__font-style--italic.text__color--blue
+        .ts_timer-message-text.text--inline-block= message.message
         '
-        .ts_timer-prefix= message.prefix
+        .ts_timer-prefix.text--inline-block= message.prefix
         '
-        .ts_timer-time
-          .ts_timer-units= message.units
+        .ts_timer-time.text--inline-block
+          .ts_timer-units.text--inline-block= message.units
           '
-          .ts_timer-label= message.label
+          .ts_timer-label.text--inline-block= message.label
+          |.

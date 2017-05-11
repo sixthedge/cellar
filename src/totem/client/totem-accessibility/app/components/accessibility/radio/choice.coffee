@@ -39,10 +39,11 @@ export default base.extend
       @send_changed()
 
   click: (event) ->
+    # TODO: Click triggers twice: on the radio label and the radio input (opacity: 0).  Make a better check for second click event.
+    return if event.timeStamp == 0
     if @get('delayed')
       # Do not fire `click` on arrow key presses, delay it until a keypress.
       if event.clientX != 0 and event.clientY != 0
         @send_changed()
     else
       @send_changed()
-

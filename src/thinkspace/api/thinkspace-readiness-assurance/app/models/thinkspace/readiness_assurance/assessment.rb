@@ -24,16 +24,18 @@ module Thinkspace
       # ### Settings.
       # ###
 
-      def get_settings; self.settings || Hash.new; end
-      def get_ra_type;  get_settings['ra_type']; end
-      def get_scribe;   get_settings['scribe'] == true; end
+      def get_settings;   self.settings || Hash.new; end
+      def get_ra_type;    get_settings['ra_type']; end
+      def get_scribe;     get_settings['scribe'] == true; end
+      def get_auto_timer; get_settings['auto_timer']; end
 
       def irat?; get_ra_type == 'irat'; end
       def trat?; get_ra_type == 'trat'; end
 
       def ifat?; get_settings.dig('questions', 'ifat') == true; end
 
-      def scribe?; get_scribe; end
+      def scribe?;     get_scribe; end
+      def auto_timer?; get_auto_timer.present?; end
 
       # ###
       # ### Question Helpers.

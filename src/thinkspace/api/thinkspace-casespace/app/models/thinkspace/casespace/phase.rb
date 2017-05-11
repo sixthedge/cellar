@@ -199,6 +199,7 @@ module Thinkspace
           raise FindOrCreateError, "Could not find or create phase state for phase [errors: #{state.errors.messages}] [#{self.inspect}] [ownerable: #{ownerable.inspect}]."  if state.errors.present?
         end
         raise FindOrCreateError, "Could not find or create phase state for phase [phase: #{self.inspect}] [ownerable: #{ownerable.inspect}]."  unless state.present?
+        state.lock_phase if state.is_unlocked? && due_at(ownerable) <= Time.now.utc
         state
       end
 

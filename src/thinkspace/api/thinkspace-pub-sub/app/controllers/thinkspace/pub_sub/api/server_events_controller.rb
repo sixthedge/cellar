@@ -46,7 +46,7 @@ module Thinkspace
           id = get_params[:id]
           access_denied "Timer cancel id is blank in params." if id.blank?
           se = get_timer_server_event(id)
-          access_denied "Server event record with id #{se_id.inspect} not found." if se.blank?
+          access_denied "Server event record with id #{id.inspect} not found." if se.blank?
           publish_timer_cancel(se, id)
           controller_render_no_content
         end

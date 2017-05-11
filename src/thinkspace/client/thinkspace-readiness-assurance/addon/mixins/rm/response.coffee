@@ -1,5 +1,4 @@
-import ember          from 'ember'
-import totem_messages from 'totem-messages/messages'
+import ember from 'ember'
 
 export default ember.Mixin.create
 

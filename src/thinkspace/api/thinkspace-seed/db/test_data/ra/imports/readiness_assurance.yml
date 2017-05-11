@@ -30,6 +30,8 @@ variables:
       attempted:         1
       no_answer:         0
       incorrect_attempt: -1
+  - irat_auto_timer: &IRAT_AUTO_TIMER false
+  - trat_auto_timer: &TRAT_AUTO_TIMER false
 
 settings:
   - irat_settings: &IRAT_PS
@@ -64,8 +66,9 @@ assessment_irat:
     assessment:
       title: IRAT Assessment
       settings:
-        ra_type: irat
-        submit: {transition_user_team_members_on_last_user_submit: true}
+        ra_type:    irat
+        submit:     {transition_user_team_members_on_last_user_submit: true}
+        auto_timer: *IRAT_AUTO_TIMER
         questions:
           type:   multiple_choice
           random: *RANDOM
@@ -83,8 +86,9 @@ assessment_trat:
     assessment:
       title: TRAT Assessment
       settings:
-        ra_type:   trat
-        scribe:    *TRAT_SCRIBE
+        ra_type:    trat
+        scribe:     *TRAT_SCRIBE
+        auto_timer: *TRAT_AUTO_TIMER
         questions:
           type:   multiple_choice
           random: *RANDOM

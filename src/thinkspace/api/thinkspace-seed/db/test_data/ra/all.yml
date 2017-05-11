@@ -1,4 +1,6 @@
 include_configs:
+  - ra_auto_timer_minutes_random_ifat
+  - ra_auto_timer_seconds_random_ifat
   - ra_fixed_ifat
   - ra_fixed
   - ra_multi_team_random_ifat

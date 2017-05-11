@@ -1,4 +1,5 @@
-import ember from 'ember'
+import ember          from 'ember'
+import totem_messages from 'totem-messages/messages'
 
 export default ember.Mixin.create
 
@@ -67,6 +68,8 @@ export default ember.Mixin.create
       @rm.save_response().then =>
         @notify_response_updated()
         resolve()
+      , (error) =>
+        @question_manager_save_error(error)
 
   save_justification: (value) ->
     new ember.RSVP.Promise (resolve, reject) =>
@@ -76,8 +79,20 @@ export default ember.Mixin.create
       @rm.save_response().then =>
         @notify_response_updated()
         resolve()
+      , (error) =>
+        @question_manager_save_error(error)
 
   notify_response_updated: -> @notifyPropertyChange 'response_updated'
+
+  question_manager_save_error: (error) ->
+    options =
+      model:          @rm.response
+      id:             @rm.response.get('id')
+      action:         'save'
+      append_message: ' The response was not saved!'
+    totem_messages.api_failure(error, options)
+    if totem_messages.api.is_unauthorized_access(error)
+      @rm.se.thinkspace.transition_to_current_assignment()
 
   # ###
   # ### Question Change Callbacks.

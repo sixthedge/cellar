@@ -67,6 +67,7 @@ module Thinkspace
       def can_unlock_phase?; may_unlock_phase?; end
       def can_complete_phase?; may_complete_phase?; end
 
+      def is_unlocked?; unlocked? || neutral?; end
 
     end
   end
