@@ -6,12 +6,17 @@ import student_row      from 'thinkspace-team-builder/mixins/rows/student'
 import selectable_mixin from 'thinkspace-common/mixins/table/cells/selectable'
 
 export default base_component.extend selectable_mixin,
-
-  # ### Computed Properties
+  
+  # ### Services
   manager:  ember.inject.service()
 
+  # ### Properties
   is_roster: true
+  selected_team: null
+  search_field: ''
+  results:      []
 
+  # ### Computed Properties
   teams:    ember.computed.reads 'manager.teams'
   team_set: ember.computed.reads 'manager.team_set'
   abstract: ember.computed.reads 'manager.abstract'
@@ -20,9 +25,10 @@ export default base_component.extend selectable_mixin,
   empty:    ember.computed.empty 'teams'
 
   has_selected_users: ember.computed.notEmpty 'selected_rows'
+  highlighted_users:           ember.computed 'results.@each', -> @get('results').mapBy('id')
+  has_selected_assigned_users: ember.computed.notEmpty 'selected_assigned_users'
+  selected_assigned_users:     ember.computed.filterBy 'selected_rows', 'has_team'
 
-  selected_team: null
-  
   columns: ember.computed 'manager', 'model', ->
     [
       column.create({display: 'Select', component: '__table/cells/selectable', data: {calling: {component: @}}}),
@@ -31,17 +37,18 @@ export default base_component.extend selectable_mixin,
       column.create({display: 'Team', component: 'helpers/cells/team'}),
     ]
 
-
-  search_field: ''
-  results:      []
-
-  highlighted_users: ember.computed 'results.@each', -> @get('results').mapBy('id')
-
-  # ### Helpers
+  # ### Initialization
   init_base: ->
     @init_table_data()
     @set_all_data_loaded()
 
+  init_table_data: ->
+    users   = @get('users')
+    manager = @get('manager')
+    rows    = @get_students()
+    @set('rows', rows)
+
+  # ### Helpers
   generate_dummy_model: ->
     obj            = {}
     obj.first_name = Math.random().toString(36).substring(7)
@@ -66,18 +73,8 @@ export default base_component.extend selectable_mixin,
       rows.pushObject(row)
     rows
 
-  init_table_data: ->
-    users   = @get('users')
-    manager = @get('manager')
-    rows    = @get_students()
-    @set('rows', rows)
-
   ## Needs to be called to ensure that changes to the transform are reflected
   refresh: -> @init_table_data()
-
-  goto_teams_edit: (team) ->
-    space = @get('manager.space')
-    @get_app_route().transitionTo 'edit', space, {queryParams: {team_id: team.id }}
 
   process_create_team: ->
     selected_users = @get('selected_rows')
@@ -88,8 +85,11 @@ export default base_component.extend selectable_mixin,
     options.users = selected_users.mapBy 'model'
 
     manager.create_team(options).then (team) =>
-      console.log "XFORM:", @get('manager.team_set.transform')
       @get_app_route().transitionTo(ns.to_r('team_builder', 'builder'), space, {queryParams: {team_id: team.id}})
+
+  goto_teams_edit: (team) ->
+    space = @get('manager.space')
+    @get_app_route().transitionTo 'edit', space, {queryParams: {team_id: team.id }}
 
   actions:
     add_to_team: (team) ->
@@ -109,7 +109,7 @@ export default base_component.extend selectable_mixin,
 
     explode: ->
       @get('manager').explode().then =>
-        @set 'explosw_success', true
+        @set 'explode_success', true
 
     revert: ->
       @get('manager').revert_transform().then =>

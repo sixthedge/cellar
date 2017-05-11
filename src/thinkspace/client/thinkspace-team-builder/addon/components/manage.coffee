@@ -4,13 +4,15 @@ import base_component from 'thinkspace-base/components/base'
 
 export default base_component.extend
 
+  # ### Services
   manager: ember.inject.service()
 
-  is_manage: true
-
+  # ### Properties
+  is_manage:    true
   search_field: ''
   results:      []
 
+  # ### Computed Properties
   highlighted_users: ember.computed 'results.@each', -> @get('results').mapBy('id')
 
   actions:

@@ -1,0 +1,15 @@
+.dialogue.dialogue--blue.grid__container--centered.dialogue--shadow
+  h1 Add to existing team
+  p You have selected students who are already assigned to a team:
+
+  ul.basic-list.spacing__margin-bottom--2
+    each assigned_users as |user|
+      li.basic-list__item
+        .text__font-size--14.text--inline-block.spacing__margin-left--1 = user.formal_name
+
+  p Before adding these students to a team, deselect the assigned students or remove them from their current team.
+
+  .btn-group
+    button.btn click='deny'
+      | Okay
+
