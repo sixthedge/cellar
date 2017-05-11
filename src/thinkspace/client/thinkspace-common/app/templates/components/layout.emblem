@@ -2,8 +2,10 @@
   mount 'thinkspace-toolbar'
   .totem-message.totem-message--success
     .totem-message__text-container
-      .text__font-size--14.text--bold Testing for the heading
-      .text__font-size--14 This is the description for thalksdjfalkjlkajsdfk
+      .icon.icon--32.totem-icon__checkmark--black.spacing__margin-right--1
+      .text__font-size--14.text--bold.text--inline-block
+        | 1 Invite successfully sent! <a href='#'>Learn more.</a>
+    .icon.icon--24.icon__cross--black
   .main-content
     mount 'thinkspace-message'
     outlet

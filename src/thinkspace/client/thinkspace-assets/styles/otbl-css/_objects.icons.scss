@@ -17,6 +17,11 @@
   height: 24px;
 }
 
+.icon--32 {
+  width:  32px;
+  height: 32px;
+}
+
 .icon--36 {
   width:  36px;
   height: 36px;
@@ -94,4 +99,17 @@
   &.icon__arrow--down {
     transform: rotate(180deg);
   }
+}
+
+
+/*
+/ Totem msg icons
+*/
+
+.totem-icon__checkmark--black {
+  background-image: url('images/icons/totem-msgs/otbl-icons__totem-msgs__success.svg');
+}
+
+.totem-icon__warning--black {
+  background-image: url('images/icons/totem-msgs/otbl-icons__totem-msgs__warning.svg');
 }

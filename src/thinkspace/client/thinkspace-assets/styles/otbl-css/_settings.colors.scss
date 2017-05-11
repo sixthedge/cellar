@@ -16,6 +16,7 @@ $color-green-light: #b6e1b8;
 
 // Red
 $color-red-base: #ee6055;
+$color-red-light: lighten($color-red-base, 20%);
 
 // Rose
 $color-rose-dark: #A55469;
