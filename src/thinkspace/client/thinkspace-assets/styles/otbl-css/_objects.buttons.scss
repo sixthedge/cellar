@@ -41,7 +41,7 @@ button,
 }
 
 .btn--primary {
-	background-color: $color-blue-base;
+	background-color: $color-blue--accessible;
 
 	&:hover, &:focus {
     background-color: darken($color-blue-base, 10%);
