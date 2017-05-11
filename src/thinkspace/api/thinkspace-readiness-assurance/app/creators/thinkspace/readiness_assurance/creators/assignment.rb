@@ -39,6 +39,7 @@ module Thinkspace; module ReadinessAssurance; module Creators
       )
       create_header_component(phase)
       create_phase_component(phase, assessment, 'readiness-assurance', 'rat')
+      create_submit_component(phase)
       @assessment
     end
 
