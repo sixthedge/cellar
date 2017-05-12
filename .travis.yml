@@ -14,7 +14,7 @@ before_install:
   - cd local
 
 install:
-  - echo Installing to: $APP_INSTALL_DIR
+  - echo Installing to $APP_INSTALL_DIR
   - ./install.sh --package opentbl/api --install $APP_INSTALL_DIR --platform thinkspace
   - mkdir -p $APP_INSTALL_DIR/vendor/src/thinkspace/api
   - mkdir -p $APP_INSTALL_DIR/vendor/src/totem/api
@@ -27,7 +27,7 @@ script:
   - echo Skipping script step...
 
 before_deploy:
-  - cd opentbl
+  - cd $APP_INSTALL_DIR
   - rails railties:install:migrations
 
 deploy:
