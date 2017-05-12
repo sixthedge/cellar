@@ -37,6 +37,7 @@ module Thinkspace; module Casespace; module Creators; class Base
     end
 
     def create_header_component(phase); create_phase_component(phase, phase, 'casespace-phase-header', 'header'); end
+    def create_submit_component(phase); create_phase_component(phase, phase, 'casespace-phase-submit', 'submit'); end
 
     def create_phase_component(phase, componentable, component_title, section)
       component = Thinkspace::Common::Component.find_by(title: component_title)
