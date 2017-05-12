@@ -17,5 +17,8 @@ export default base.extend
       pm.set_all_phase_states().then =>
         assignment.get('assignment_type').then (assignment_type) =>
           return unless ember.isPresent(assignment_type)
-          if assignment_type.get('is_pe')
-            @transitionToExternal('thinkspace-peer-assessment.overview', assignment)
+          switch
+            when assignment_type.get('is_pe')
+              @transitionToExternal('case-peer-assessment.overview', assignment)
+            when assignment_type.get('is_rat')
+              @transitionToExternal('case-readiness-assurance.overview', assignment)

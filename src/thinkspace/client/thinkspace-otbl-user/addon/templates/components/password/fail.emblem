@@ -1,0 +1,17 @@
+.grid__container
+  .spacing__pad-top--4.spacing__pad-bottom--4
+        .otbl-logo.otbl-logo--80.grid__container--centered
+
+.grid__container
+  .bordered-panel.bordered-panel--authentication.bordered-panel--shadow.bordered-panel--mobile.spacing__pad--2.grid__container--centered
+    h1.text__font-size--18.spacing__margin-top--0.spacing__margin-bottom--0 Something happend while resetting your password
+    p.text__font-size--14.spacing__margin-top--half.spacing__margin-bottom--2 
+      | Try resetting it again. If the problem persists, please <a href='#'>contact us.</a>   
+
+    = link-to 'password.new' class='btn btn--primary spacing__margin-bottom--2'
+      | Reset Password
+
+
+    hr
+    .text__font-size--12.text__color--gray 
+      | ©2017 All Rights Reserved. OpenTBL is a registered trademark of Sixth Edge. <a href='#'>Privacy</a> and <a href='#'>Terms</a>

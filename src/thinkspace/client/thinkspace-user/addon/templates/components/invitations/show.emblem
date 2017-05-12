@@ -1,1 +1,0 @@
-component c_new_user token=model.token sign_in_transition='sign_in_transition' email=email

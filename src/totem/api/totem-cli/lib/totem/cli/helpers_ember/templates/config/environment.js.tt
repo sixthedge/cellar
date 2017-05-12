@@ -1,8 +1,0 @@
-/* jshint node: true */
-
-module.exports = function(environment) {
-
-<%=template_content%>
-
-  return ENV;
-};

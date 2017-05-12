@@ -52,8 +52,10 @@ module Totem; module Core; module Database; module Domain; class Loader
     ActiveRecord::Base.transaction do
       delete_all_model_records(model)
       load_model_domain_records(engine, model, data)
-      create_engine_domain_directory(engine)
-      create_engine_domain_yml_file(engine, model)
+      unless @skip_file_create
+        create_engine_domain_directory(engine)
+        create_engine_domain_yml_file(engine, model)
+      end
     end
     print_run_messages
   end
@@ -176,8 +178,9 @@ module Totem; module Core; module Database; module Domain; class Loader
 
   def validate_load_from_yml(args)
     args = args.flatten
-    stop_run "load_from_yml arguments must be engine_name, model_path, yml-string not #{args.inspect}"  unless args.length == 3
-    engine_name, model_path, content = args
+    stop_run "load_from_yml arguments must be engine_name, model_path, yml-string not #{args.inspect}"  unless (args.length == 3 || args.length == 4)
+    engine_name, model_path, content, options = args
+    @skip_file_create = options.is_a?(Hash) && options[:create_file] == false
     stop_run "YAML argument is not a string but #{content.class.name.inspect}."  unless content.is_a?(String)
     engine = totem_engine_by_name(engine_name)
     model  = get_model_class(model_path)
@@ -476,7 +479,7 @@ module Totem; module Core; module Database; module Domain; class Loader
   def get_table_column_names(model); model.column_names; end
 
   def get_table_column_names_without_timestamps(model); get_table_column_names(model) - timestamps_columns; end
-  
+
   def has_domain_column?(model); get_table_column_names(model).include?('domain'); end
 
   # ###
@@ -489,7 +492,7 @@ module Totem; module Core; module Database; module Domain; class Loader
     @records_updated   = 0
     @records_destroyed = 0
     @records_verified  = 0
-    
+
     @records_created_attributes   = Array.new
     @records_recreated_attributes = Array.new
     @records_updated_attributes   = Array.new

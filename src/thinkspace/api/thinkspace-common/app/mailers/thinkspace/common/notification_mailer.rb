@@ -22,8 +22,8 @@ module Thinkspace
         @sender     = inviter
         @space      = space_user.thinkspace_common_space
         @to         = space_user.thinkspace_common_user
-        @expires_in = ((@user.activation_expires_at - DateTime.now).to_i)/86400 # to days
-        token       = @user.activation_token
+        @expires_in = (@to.activation_expires_at.to_datetime - DateTime.now).to_i + 1 # Add back in 'today'
+        token       = @to.activation_token
         @url        = app_domain + users_signup_url(token,@to.email,@space)
 
         raise "Cannot send an notification without a sender [#{@sender}]." unless @sender.present?
@@ -74,7 +74,7 @@ module Thinkspace
       private
 
       def spaces_show_url(space); "spaces/#{space.id}"; end
-      def users_signup_url(token, email, space); "/users/sign_up/?token=#{CGI.escape(token)}&email=#{CGI.escape(email)}&space=#{CGI.escape(space.title)}"; end
+      def users_signup_url(token, email, space); "/users/sign_up?token=#{CGI.escape(token)}&email=#{CGI.escape(email)}&space=#{CGI.escape(space.title)}"; end
       def teams_roster_url(space); "spaces/#{space.id}/teams/manage"; end
 
     end

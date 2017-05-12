@@ -1,22 +1,5 @@
-/ Needs cleaning
-
-
-#application class={right_pocket_is_expanded:right-pocket_is-expanded top_pocket_is_expanded:top-pocket_is-expanded right_pocket_width_class}
-
+#application
   mount 'thinkspace-toolbar'
-  
   .main-content
     mount 'thinkspace-message'
     outlet
-
-  / #top-pocket
-  /   component '__dock_engine_mount' pocket='top_pocket' reset_dock=true
-
-  / #content-wrapper
-  /   #content
-  /     outlet
-  /   #right-pocket
-  /     .ts-grid_row
-  /       component '__dock_engine_mount' pocket='right_pocket'
-
-  / mount 'thinkspace-dock'

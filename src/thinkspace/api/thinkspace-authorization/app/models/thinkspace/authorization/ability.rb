@@ -5,6 +5,7 @@ module Thinkspace; module Authorization
     include ::CanCan::Ability
     include AbilityUtility
     include AbilityClasses
+    include AbilityInstitutionIds
     include AbilitySpaceIds
 
     def initialize(user=nil)

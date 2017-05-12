@@ -5,19 +5,19 @@ module Thinkspace
         before_action :set_password_reset_class
 
         def create
-          return error_json('No email in params.') unless params_root.has_key?(:email)
+          permission_denied('No email in params.') unless params_root.has_key?(:email) && params_root[:email].present?
           params_email   = params_root[:email].strip.downcase
           password_reset = @password_reset_class.find_by(email: params_email)
           if password_reset.present? # resend email if password_reset present
             password_reset.send_instructions
-            return controller_render_json({})
+            return controller_render_no_content
           end
           response = ::Totem::Settings.oauth.current_get_password_reset_token(self, email: params_email)
 
           # Must be a blank return here or else could leak email validity information.
           unless response['valid']
             @password_reset_class.notify_user_not_found(params_email)
-            return controller_render_json({})
+            return controller_render_no_content
           end
 
           token          = response['token']
@@ -25,35 +25,36 @@ module Thinkspace
           password_reset = @password_reset_class.create(token: token, email: email)
           password_reset.send_instructions
           # Do NOT render the model to the client.  This would cause major security issues.
-          controller_render_json({})
+          controller_render_no_content
         end
 
         def show
           # params: { id: 'token-here' } # Note: the `id` is the token in this instance.
           token                          = params[:id]
           password_reset                 = @password_reset_class.find_by(token: token)
-          password_reset.present? ? json = controller_as_json(password_reset) : json = generate_fake_model(token)
+          password_reset.present? ? json = controller_as_json(password_reset) : json = controller_as_json(generate_fake_model(token))
           controller_render_json(json)
         end
 
         def update
-          # params: { id: 2, 'thinkspace/common/password_reset': { token: 'token-here'} }
           token          = params_root[:token]
           password       = params_root[:password]
 
           # Check for the ID, if it is not found, return a fake model.
           password_reset = @password_reset_class.find_by(token: token)
-          return controller_render_json(generate_fake_model(token)) unless password_reset.present?
+          return controller_render(generate_fake_model(token)) unless password_reset.present?
 
           email = password_reset.email
-          return error_json('Invalid request.')  unless password_reset.token == params_root[:token]
-          return error_json('Invalid password.') unless password.present? # params_root checks this, but just in case it changes.
+          permission_denied('Invalid request.')  unless password_reset.token == params_root[:token]
+          permission_denied('Invalid password.') unless password.present? # params_root checks this, but just in case it changes.
 
           response = ::Totem::Settings.oauth.current_set_password_from_token(self, email: email, password: password, token: token)
           # if this returns an error, render 423
-          password_reset.destroy
-          permission_denied(get_message_for_error(response['errors'])) if response['errors'].present?
-          controller_render(password_reset) unless response['errors'].present?
+          if response['errors'].present?
+            permission_denied(get_message_for_error(response['errors'])) 
+          else
+            controller_render(password_reset) if password_reset.destroy
+          end
         end
 
         private
@@ -75,14 +76,12 @@ module Thinkspace
         end
 
         def error_json(message)
-          render json: { error: message }
+          render json: { errors: [message] }
         end
 
         def generate_fake_model(token)
-          key = @password_reset_class.to_s.underscore
-          # Use the hash of the token to provide a consistent ID return.
           id  = token.hash.abs.to_s.first(3)
-          { "#{key}" => { id: id, token: token } }
+          @password_reset_class.new(id: id, token: token)
         end
 
         def set_password_reset_class; @password_reset_class = ::Totem::Settings.authentication.current_model_class(self, :password_reset_model); end

@@ -22,7 +22,11 @@ export default ->
     if !state.hasParentOutlet and !ViewClass
       outletState.render.ViewClass = owner._lookupFactory('view:toplevel')
 
-    name      = toRender.name
+    name = toRender.name
+
+    controller_template = owner.lookup("template:#{name}")
+    return original_render(arguments...) if controller_template
+
     component = owner._lookupFactory("component:#{name}")
     layout    = owner.lookup("template:components/#{name}")
 

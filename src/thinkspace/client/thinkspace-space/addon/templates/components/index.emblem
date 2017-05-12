@@ -1,7 +1,7 @@
 .grid__container--flex
   .grid__col--4of4
     .main-content__header
-      h1 Welcome back, #{session.user.first_name}!
+      h1 Hello, #{session.user.first_name}!
       p Here's an overview of what's happening in your spaces.
       = if can.create
         link-to 'new' class='btn'
@@ -14,35 +14,6 @@
       each model as |space|
         component 'space' model=space
 
-
-    / For testing purposes - Accessible radio btns
-    fieldset
-      label#radio-group__label Pick an option
-      .radio__group role='radiogroup' aria-labelledby='radio-group__label'
-
-        .radio__item
-          input#radio__1 type="radio" class='radio__input' name='test' value='option-1'
-          label.radio__label-container for='radio__1' 
-            .radio__label Option 1
-            .radio__label-summary This is a summary of the option above I just want to make sure it fits.
-
-        .radio__item
-          input#radio__2 type='radio' class='radio__input' name='test' value='option-2'
-          label.radio__label-container for='radio__2' 
-            .radio__label Option 2
-
-    / WebAim version
-    
-    fieldset
-      legend Output format
-      div
-        input type="radio" name="format" id="txt" value="txt"
-        label for="txt" Text file
-      div
-        input type="radio" name="format" id="csv" value="csv"
-        label for="csv" CSV file
-
-
 .grid__container--flex
   .grid__col--4of4
     .footnote
@@ -50,5 +21,5 @@
         p.spacing__margin-top--0.spacing__margin-bottom--0 Use the <strong>progress report</strong> to keep up with your students.
         a Learn about exercise
       else
-        p.spacing__margin-top--0.spacing__margin-bottom--0 Use the <strong>team chat</strong> to discuss questions with your team members.
-        a Learn about team chat
+        p.spacing__margin-top--0.spacing__margin-bottom--0 Need help using OpenTBL? Checkout our support guides.
+        a Learn how to get started with OpenTBL

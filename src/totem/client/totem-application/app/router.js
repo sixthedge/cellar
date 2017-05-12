@@ -9,4 +9,6 @@ var Router = Ember.Router.extend({location: config.locationType});
 
 Router.map(function() {totem_routes.map(this);});
 
+totem_routes.routers(Router)
+
 export default Router;

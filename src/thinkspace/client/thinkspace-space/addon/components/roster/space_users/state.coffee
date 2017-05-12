@@ -1,6 +1,6 @@
 import ember from 'ember'
 import ns    from 'totem/ns'
-import base  from 'thinkspace-common/components/table/cell'
+import base  from 'totem-table/components/table/cell'
 
 export default base.extend
   # # Computed properties

@@ -18,8 +18,6 @@ export default ember.Object.extend
   timer_unit:      'minute'
 
   team_users:       null
-  select_all_teams: false
-  select_all_users: false
   show_all:         false
 
   init: ->

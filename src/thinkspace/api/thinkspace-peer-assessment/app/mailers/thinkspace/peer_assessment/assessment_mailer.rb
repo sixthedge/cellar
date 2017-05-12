@@ -26,7 +26,7 @@ module Thinkspace; module PeerAssessment
       raise "Cannot send a notification without an assignment [#{@assignment}]." unless @assignment.present?
 
       @url    = app_domain + phases_show_url(@assignment, @phase)
-      subject = "You must submit your peer evaluation #{@assignment.title}"
+      subject = "Your evaluations for #{@assignment.title} are pending"
       mail(to: @to.email, subject: format_subject(subject))
     end
 

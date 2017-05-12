@@ -1,11 +1,14 @@
 == content_for :content do
-  h3 #{@space.title}
+  h1 style="font-size:18px; font-weight:700; color:#464646; margin-bottom:16px;"
+    | You've been invited to a space in OpenTBL!
+
   p Hi #{@to.first_name},
   p 
-    | Your instructor #{@sender.full_name} has invited you to OTBL. Sign up here 
-    a href="#{@url}"  here.
-    | This invitation will self-destruct in #{expires_in} day(s).
-  p
-    | With love,
-    br
-    | The OTBL Team
+    | Your instructor <strong>#{@sender.full_name}</strong> has invited you to join the space <strong>#{@space.title}</strong>. Accept your invitation to get started! 
+  br
+  a href="#{@url}" class="btn btn--primary" style="display:inline-block; font-weight:700; font-size:12px; text-align:center; vertical-align:middle; text-transform:capitalize; background-color:#12a6c7; color:#ffffff; border-radius:4px; border:none; cursor:pointer; white-space:nowrap; overflow:hidden; padding:0 1.15rem; text-decoration:none; height:2rem; line-height:2rem; margin-bottom:48px;" Accept Invitation
+
+  .email-faq__label style="font-size:12px; font-weight:700; color:#464646; line-height: 1.6rem; margin-bottom:0px;"
+    | What if I don't have an OpenTBL account?
+  p.text--small style="font-size:12px; margin-top:0px;"
+    | If you don't have an account with OpenTBL you will be taken through an account creation step before getting access. 

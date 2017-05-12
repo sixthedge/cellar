@@ -22,6 +22,7 @@
 
   &.flex__justify--between {
     justify-content: space-between;
+    -webkit-justify-content: space-between; 
   }
 }
 
@@ -72,6 +73,11 @@
   width: 100%;
 }
 
+.grid__col--48 {
+  display: inline-block;
+  width:   48%;
+}
+
 .grid__col--49 {
   display: inline-block;
   width:   49%;
@@ -91,7 +97,7 @@
 
 .grid__mobile--overlay {
   @media only screen and (max-width: 40rem) {
-    position:         absolute;
+    position:         fixed;
     background-color: rgba(255, 255, 255, .75);
     top:              0;
     right:            0;
