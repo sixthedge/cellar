@@ -1,37 +1,35 @@
 language: ruby
 sudo: required
-
 env:
   global:
-    - APP_BUNDLE_SRC=./vendor/src
-    - APP_INSTALL_DIR=$TRAVIS_BUILD_DIR/opentbl
-    - APP_SRC_DIR=$TRAVIS_BUILD_DIR/src
-    - HEROKU_API_KEY=WKZGLGlEhgBDWXZQdRK+QWGVWSrRtN6I+C0EaMXl4Ojx9tCh9sql6/R8xAJ8f+hSMi6wtUwWHMiAvoNB3wuF4AvqXWvDn06jD2kYHEfo9a76kD5nWZRVDqsF1ySN2qvt5a8NjcCqsIOFEjYGcBrL99RnXTKXXZoekAzeVrEQyGjs3f3CfbwBoO2X+qS2ieUKq/CHwznE1vm0FN8U+rGbnfDt/eyROw1tyCzeIBN9YTe9pn2r8o4N36wm4KivZEGsuSrY5TefGZRzVPVLKyOOHIV1IYuL8KvCM3KHxigXZpZlLIxecZPodBkakGdMMIOPkYmhPNGY89UOCwf4HHQAF4mo/EbzoMwdIzjGcvvYeDlEE81AodIG31qMzTv+vYYPF3mer4wcpXQvsKcEq+wx5cLsATGIBs2gTokT2JBLCWGRZN3jQHqPZRRvoDP4/vOh2LE6ZimtJc+kfM/oiBgT6A9+ORE8n/eC40AW494S83EnQ7ZX+aGrgIOpwPSZRikLjiC8P0PQYSdgowYR8sviQyKJSee6AYY27JV3acRpZ9m/xAiTGx478cd5sBu9aCvfycO7Cw5CJZsrJvZ36uEPPeJO6/vf6gVHT4ZMRZZHHaGqCCumHWt+ENEF841KJmfVYB+Vend9Z8+UenutMVzT3cJ2vpz4DfP3LR9vu8wU2RM=
+  - APP_BUNDLE_SRC=./vendor/src
+  - APP_INSTALL_DIR=$TRAVIS_BUILD_DIR/opentbl
+  - APP_SRC_DIR=$TRAVIS_BUILD_DIR/src
+  - secure: PVZ24ftGhmma9mVbHXQCGIcv96V4mptAR/UieS3+uIyF+nI7f72buj9jyJWLP0aPyRDaf1q9wfJ09qjs92O4m3litdNzoU1bvcw4B95VSznoWfW8vBfII00s6PgsMqD9lVUc8uqftiuxZylXQ3f41ZB/jToLoyupyujcFK6tlTk5Ul4a2Bc0RrqfsotrWSHNPqhC6lH3eUADDUAQBVfIlkjZPhIDEk4soyfj8yp4ezByYYfF5Ma+aLOtnIwLl1ngJiQM2AaS9Vy+xVB58K+doJS8Isa4D08RWdVh801ldRmdhxDUXtEsSVcn2CHQbK4qk8mLksHFsjwYqsufjMpBxyhXWsQqLDGYKbYVdUDRG8g3+pbF+u9GoYDPp1NkZ7EVTe1dk2ZyiSY23Lrf0OPO24w5SJOv86cJIgATgY+u19tmwhbEu5z8Zn6Bbt2NERtTy3yTQ+t3E1880ASZy1NPTQwC/PelEvVFrCjHqPg/YumOGas6OSqPCBH4w6EtDgtUFm2cEKzIdbGELydLqBCtfN/FEz3fgkHdsQ8PP+F5rVy8otQ2niIxyXpDHMKED6JEZh41bYgrnRiRLP5cCg5fwpQh1RE74rs7fRpkM0Xfbv7LUas/gUl7+Im4TNmRp9gcT1pAkDQqml32MYoJ/FlsZBCMHTWlJeNKhGnEheiGDDM=
 rvm:
-  - 2.3.1
+- 2.3.1
 before_install:
-  - gem install bundler
-  - wget -qO- https://toolbelt.heroku.com/install.sh | sh
-  - /usr/local/heroku/bin/heroku git:clone -a opentbl-staging
-
+- gem install bundler
+- wget -qO- https://toolbelt.heroku.com/install.sh | sh
+- "/usr/local/heroku/bin/heroku git:clone -a opentbl-staging"
 install:
-  - echo Installing to $APP_INSTALL_DIR
-  - "./install.sh --package opentbl/api --install $APP_INSTALL_DIR --platform thinkspace"
-  - mkdir -p $APP_INSTALL_DIR/vendor/src/thinkspace/api
-  - mkdir -p $APP_INSTALL_DIR/vendor/src/totem/api
-  - mkdir -p $APP_INSTALL_DIR/.git
-  - cp -a $APP_SRC_DIR/thinkspace/api/. $APP_INSTALL_DIR/vendor/src/thinkspace/api/
-  - cp -a $APP_SRC_DIR/totem/api/. $APP_INSTALL_DIR/vendor/src/totem/api/
-  - cp -a $TRAVIS_BUILD_DIR/opentbl-staging/.git/. $APP_INSTALL_DIR/.git
-  - cd $APP_INSTALL_DIR
-  - echo Bundling with $APP_BUNDLE_SRC
-  - ls -l
-  - bundle install
+- echo Installing to $APP_INSTALL_DIR
+- "./install.sh --package opentbl/api --install $APP_INSTALL_DIR --platform thinkspace"
+- mkdir -p $APP_INSTALL_DIR/vendor/src/thinkspace/api
+- mkdir -p $APP_INSTALL_DIR/vendor/src/totem/api
+- mkdir -p $APP_INSTALL_DIR/.git
+- cp -a $APP_SRC_DIR/thinkspace/api/. $APP_INSTALL_DIR/vendor/src/thinkspace/api/
+- cp -a $APP_SRC_DIR/totem/api/. $APP_INSTALL_DIR/vendor/src/totem/api/
+- cp -a $TRAVIS_BUILD_DIR/opentbl-staging/.git/. $APP_INSTALL_DIR/.git
+- cd $APP_INSTALL_DIR
+- echo Bundling with $APP_BUNDLE_SRC
+- ls -l
+- bundle install
 script:
-  - echo Skipping script step...
+- echo Skipping script step...
 before_deploy:
-  - cd $APP_INSTALL_DIR
-  - pwd
+- cd $APP_INSTALL_DIR
+- pwd
 deploy:
   provider: heroku
   skip_cleanup: true
