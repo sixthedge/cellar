@@ -13,6 +13,7 @@ before_install:
 
 install:
   - ./install.sh --package opentbl/api --install ../../opentbl --platform thinkspace
+  - cd ../../
   - cp -a sixthedge/cellar/src/thinkspace/api sixthedge/opentbl/vendor/src/thinkspace/api
   - cp -a sixthedge/cellar/src/totem/api sixthedge/opentbl/vendor/src/totem/api
   - bundle install
