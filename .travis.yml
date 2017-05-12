@@ -18,8 +18,8 @@ install:
   - ./install.sh --package opentbl/api --install $APP_INSTALL_DIR --platform thinkspace
   - mkdir -p $APP_INSTALL_DIR/vendor/src/thinkspace/api
   - mkdir -p $APP_INSTALL_DIR/vendor/src/totem/api
-  - cp -a $APP_SRC_DIR/thinkspace/api $APP_INSTALL_DIR/vendor/src/thinkspace/api
-  - cp -a $APP_SRC_DIR/totem/api $APP_INSTALL_DIR/vendor/src/totem/api
+  - cp -a $APP_SRC_DIR/thinkspace/api/. $APP_INSTALL_DIR/vendor/src/thinkspace/api/
+  - cp -a $APP_SRC_DIR/totem/api/. $APP_INSTALL_DIR/vendor/src/totem/api/
   - cd $APP_INSTALL_DIR
   - echo Bundling with $APP_BUNDLE_SRC
   - ls -l
