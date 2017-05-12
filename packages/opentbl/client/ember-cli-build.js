@@ -9,18 +9,9 @@ module.exports = function(defaults) {
 
   var app_deploy_target = process.env['APP_DEPLOY_TARGET'];
 
-  if (app_deploy_target === 'staging') {
-    APP_OPTIONS.fingerprint = {
-      "prepend":    "STAGING-PREPEND",
-      "extensions": ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg']
-    }
-  }
-
-  if (app_deploy_target === 'production') {
-    APP_OPTIONS.fingerprint = {
-      "prepend":    "PRODUCTION-PREPEND",
-      "extensions": ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg']
-    }
+  APP_OPTIONS.fingerprint = {
+    "prepend":    process.env['APP_DEPLOY_FINGERPRINT_PREPEND'],
+    "extensions": ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg']
   }
 
   APP_OPTIONS.sassOptions = {

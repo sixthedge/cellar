@@ -4,11 +4,12 @@ module Totem
     class ApplicationController < ActionController::Base
 
       def serve_index_from_redis
-        glob_routes   = ::Totem::Settings.registered.engine_glob_routes
-        glob_route    = glob_routes.first
-        platform_name = glob_route[:platform_name]
+        ember         = Rails.application.secrets[:ember]
+        raise "Cannot find a Redis-backed index without a valid `ember` secret key." unless ember.present?
+        platform_name = ember.dig('platform')
+        raise "Cannot find a Redis-backed index without a ember.platform specified." unless platform_name.present?
         redis         = Redis.new(url: Rails.application.secrets.redis_url)
-        version = params[:version]
+        version       = params[:version]
         if version.present?
           index = redis.get("#{version}")
         else

@@ -36,9 +36,9 @@ module Totem
 
         def self.local_filesystem?; ::Rails.env.development? && get_access_key.blank?; end
 
-        def self.get_access_key;        ::Rails.application.secrets.dig('s3', 'paperclip', 'access_key'); end
-        def self.get_bucket;            ::Rails.application.secrets.dig('s3', 'paperclip', 'bucket_name'); end
-        def self.get_secret_access_key; ::Rails.application.secrets.dig('s3', 'paperclip', 'secret_access_key'); end
+        def self.get_access_key;        ::Rails.application.secrets.aws.dig('s3', 'paperclip', 'access_key'); end
+        def self.get_bucket;            ::Rails.application.secrets.aws.dig('s3', 'paperclip', 'bucket_name'); end
+        def self.get_secret_access_key; ::Rails.application.secrets.aws.dig('s3', 'paperclip', 'secret_access_key'); end
 
       end
     end
