@@ -3,20 +3,24 @@ language: ruby
 env:
   global:
     - APP_BUNDLE_SRC=./vendor/src
+    - APP_INSTALL_DIR=$TRAVIS_BUILD_DIR/opentbl
+    - APP_SRC_DIR=$TRAVIS_BUILD_DIR/src
 
 rvm:
   - 2.3.1
 
 before_install:
-  - echo Building from $TRAVIS_BUILD_DIR
   - gem install bundler
   - cd local
 
 install:
-  - ./install.sh --package opentbl/api --install $TRAVIS_BUILD_DIR/opentbl --platform thinkspace
-  - cp -a $TRAVIS_BUILD_DIR/src/thinkspace/api $TRAVIS_BUILD_DIR/opentbl/vendor/src/thinkspace/api
-  - cp -a $TRAVIS_BUILD_DIR/src/totem/api $TRAVIS_BUILD_DIR/opentbl/vendor/src/totem/api
-  - cd $TRAVIS_BUILD_DIR/opentbl
+  - echo Installing to: $APP_INSTALL_DIR
+  - ./install.sh --package opentbl/api --install $APP_INSTALL_DIR --platform thinkspace
+  - mkdir -p $APP_INSTALL_DIR/vendor/src/thinkspace/api
+  - mkdir -p $APP_INSTALL_DIR/vendor/src/totem/api
+  - cp -a $APP_SRC_DIR/thinkspace/api $APP_INSTALL_DIR/vendor/src/thinkspace/api
+  - cp -a $APP_SRC_DIR/totem/api $APP_INSTALL_DIR/vendor/src/totem/api
+  - cd $APP_INSTALL_DIR
   - bundle install
 
 script:
