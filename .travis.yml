@@ -24,6 +24,7 @@ script:
   - echo Skipping script step...
 deploy:
   provider: heroku
+  skip_cleanup: true
   strategy: git
   on: development
   api_key:
