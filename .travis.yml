@@ -8,14 +8,15 @@ rvm:
   - 2.3.1
 
 before_install:
+  - echo Building from $TRAVIS_BUILD_DIR
   - gem install bundler
   - cd local
 
 install:
   - ./install.sh --package opentbl/api --install ../../opentbl --platform thinkspace
   - cd ../../
-  - cp -a sixthedge/cellar/src/thinkspace/api sixthedge/opentbl/vendor/src/thinkspace/api
-  - cp -a sixthedge/cellar/src/totem/api sixthedge/opentbl/vendor/src/totem/api
+  - cp -a cellar/src/thinkspace/api opentbl/vendor/src/thinkspace/api
+  - cp -a cellar/src/totem/api opentbl/vendor/src/totem/api
   - bundle install
 
 script:
