@@ -1,0 +1,29 @@
+language: ruby
+
+rvm:
+  - 2.3.1
+
+before_install:
+  - gem install bundler
+  - git clone --depth=1 https://github.com/sixthedge/cellar.git cellar
+  - cd cellar/local
+
+install:
+  - ./install.sh --package opentbl/api --install opentbl --platform thinkspace
+
+before_script:
+  - cd opentbl
+  - bundle install
+
+before_deploy:
+  - cd opentbl
+  - rails railties:install:migrations
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: encrypted-key-here
+  app: opentbl-testing
+  run:
+    - "rails totem:db:production_migrate"
+    - "rails totem:db:domain:load"
