@@ -13,10 +13,10 @@ before_install:
   - cd local
 
 install:
-  - ./install.sh --package opentbl/api --install ../../opentbl --platform thinkspace
-  - cd ../../
-  - cp -a cellar/src/thinkspace/api opentbl/vendor/src/thinkspace/api
-  - cp -a cellar/src/totem/api opentbl/vendor/src/totem/api
+  - ./install.sh --package opentbl/api --install $TRAVIS_BUILD_DIR/opentbl --platform thinkspace
+  - cp -a $TRAVIS_BUILD_DIR/src/thinkspace/api $TRAVIS_BUILD_DIR/opentbl/vendor/src/thinkspace/api
+  - cp -a $TRAVIS_BUILD_DIR/src/totem/api $TRAVIS_BUILD_DIR/opentbl/vendor/src/totem/api
+  - cd $TRAVIS_BUILD_DIR/opentbl
   - bundle install
 
 script:
