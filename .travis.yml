@@ -5,13 +5,10 @@ env:
   - APP_BUNDLE_SRC=./vendor/src
   - APP_INSTALL_DIR=$TRAVIS_BUILD_DIR/opentbl
   - APP_SRC_DIR=$TRAVIS_BUILD_DIR/src
-  - secure: gxxwUPdUK+cW/GAOH3e9vVqM7gcWqfB38X8fkdtUDkuJRCWQOvgBzMRKK5NJEKcKmnFg9qJYjVb/tW1AD1yE+Mt4lu7qqLEDiZIdGTwSx0evKWmJr6RjSpAKVzeidRIUkDkx7j219O7IVhrvr03VTEOp5L/zR6XVM37qogBB7l1NH0SZar3vxVaJPRQBdvzsoBZYckZivnR/fn+R9HGkPc4GUk5vIS7rIza51ENnCwI5iMEvyVlfcVoUQx3r4TDcnAfVHiig30cgqUJ2fQ6bHmqBhfmMJ6Kjz97BDNgCV9BTnA8YVj/37j6PeCmOQtFtPuQ1swnp0k3jTmk+Hmsp8GH++G2vJbcTA3i6zDCl4UAr7rIERG797K5W93iUT9BXDitzkSy9I4wM/AmD14juVIaMuDRfdzRJY2Y8G2CIo7EoyPVKgaHjmMuNs0Sp4kxWM5RPxsYHMYEFDOthMRb8A8iLOwk6m93F0tk7YnCIkNcVc/g7F7WUlcBb5ljPPbbdn9eXzYEt9+FyM5iCyoJBk72ka9x0JDHHfTn/QYuDCxcmcwaRgOlMScWurGf7KLN4rpkZ5epR63lf+KoAjpdKAHOSlTflSCuRhRjDEGKTXFLzpYHt21lAVQuFkgLloApMBZNjqr9aViMd3pL5A0cXHrOA7wPJ6Hb0kqF7URy2Ugc=
 rvm:
 - 2.3.1
 before_install:
 - gem install bundler
-- wget -qO- https://toolbelt.heroku.com/install.sh | sh
-- "/usr/local/heroku/bin/heroku git:clone -a opentbl-staging"
 - cd local
 install:
 - echo Installing to $APP_INSTALL_DIR
@@ -21,7 +18,6 @@ install:
 - mkdir -p $APP_INSTALL_DIR/.git
 - cp -a $APP_SRC_DIR/thinkspace/api/. $APP_INSTALL_DIR/vendor/src/thinkspace/api/
 - cp -a $APP_SRC_DIR/totem/api/. $APP_INSTALL_DIR/vendor/src/totem/api/
-- cp -a $TRAVIS_BUILD_DIR/opentbl-staging/.git/. $APP_INSTALL_DIR/.git
 - cd $APP_INSTALL_DIR
 - echo Bundling with $APP_BUNDLE_SRC
 - ls -l
@@ -30,7 +26,8 @@ script:
 - echo Skipping script step...
 before_deploy:
 - cd $APP_INSTALL_DIR
-- pwd
+- git init
+- git remote add heroku git@heroku.com:opentbl-staging.git
 deploy:
   provider: heroku
   skip_cleanup: true
