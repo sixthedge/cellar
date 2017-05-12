@@ -24,6 +24,8 @@ script:
   - echo Skipping script step...
 before_deploy:
   - cd $APP_INSTALL_DIR
+  - echo Deploying from
+  - pwd
 deploy:
   provider: heroku
   skip_cleanup: true
