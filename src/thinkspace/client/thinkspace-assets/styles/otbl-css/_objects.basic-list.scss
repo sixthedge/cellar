@@ -19,3 +19,13 @@
 .basic-list__item--clickable {
   &:hover { cursor: pointer; }
 }
+
+.basic-list--dividers {
+  >li {
+    border-bottom: $border--thin;
+
+    &:last-of-type {
+      border-bottom: none;
+    }
+  }
+}

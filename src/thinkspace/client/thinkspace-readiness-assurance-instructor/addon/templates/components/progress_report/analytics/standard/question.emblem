@@ -1,21 +1,52 @@
-.grid__container--flex
-  .grid__col--1of3.grid__mobile--full-width
-    .rat-report__overview-container
-      .rat-report__overview-number 1
-      .rat-report__bar-graph
-        component 'progress_report/analytics/standard/percentages' assessment=assessment data=data
-      .rat-report__overview-avg
-        .rat-report__overview-avg-number #{correct_total}
-        .rat-report__overview-avg-label Correct
-  .grid__col--2of3.grid__mobile--full-width
-    if is_expanded
-      .rat-report__question-container
-        .forms__field-wrapper
-          label #{model.question}
-          hr
-        each choices as |choice|
-          .rat-report__question-choice class=choice.correct:rat-report__question-choice--correct
-            if choice.correct
-              .icon.icon--16.icon__checkmark--green.spacing__margin-right--half
-            .rat-report__choice-label #{choice.label}
-            .rat-report__choice-total #{choice.total}
+/ .grid__container--flex
+/   .grid__col--1of3.grid__mobile--full-width
+/     .rat-report__overview-container
+/       .rat-report__overview-number 1
+/       .rat-report__bar-graph
+/         component 'progress_report/analytics/standard/percentages' assessment=assessment data=data
+/       .rat-report__overview-avg
+/         .rat-report__overview-avg-number #{correct_total}
+/         .rat-report__overview-avg-label Correct
+/   .grid__col--2of3.grid__mobile--full-width
+/     if is_expanded
+/       .rat-report__question-container
+/         .forms__field-wrapper
+/           label #{model.question}
+/           hr
+/         each choices as |choice|
+/           .rat-report__question-choice class=choice.correct:rat-report__question-choice--correct
+/             if choice.correct
+/               .icon.icon--16.icon__checkmark--green.spacing__margin-right--half
+/             .rat-report__choice-label #{choice.label}
+/             .rat-report__choice-total #{choice.total}
+
+/ .grid__container--flex
+/   .grid__col--2of4.grid__mobile--full-width
+/   .grid__col--2of4
+/     .grid__col--1of2.grid__mobile--full-width
+/     .grid__col--1of2.grid__mobile--full-width
+
+h1 test
+
+
+
+/   .grid__col--1of3.grid__mobile--full-width
+/     .rat-report__overview-container
+/       .rat-report__overview-number 1
+/       .rat-report__bar-graph
+/         component 'progress_report/analytics/standard/percentages' assessment=assessment data=data
+/       .rat-report__overview-avg
+/         .rat-report__overview-avg-number #{correct_total}
+/         .rat-report__overview-avg-label Correct
+/   .grid__col--2of3.grid__mobile--full-width
+/     if is_expanded
+/       .rat-report__question-container
+/         .forms__field-wrapper
+/           label #{model.question}
+/           hr
+/         each choices as |choice|
+/           .rat-report__question-choice class=choice.correct:rat-report__question-choice--correct
+/             if choice.correct
+/               .icon.icon--16.icon__checkmark--green.spacing__margin-right--half
+/             .rat-report__choice-label #{choice.label}
+/             .rat-report__choice-total #{choice.total}
