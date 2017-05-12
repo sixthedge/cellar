@@ -19,6 +19,8 @@ export default base.extend
 
   is_on_team: ember.computed.notEmpty 'team'
 
+  totem_data_config: ability: {ajax_source: true}, metadata: true
+
   init_base: ->
     @init_assignment_type().then =>
       @init_phase_states().then =>

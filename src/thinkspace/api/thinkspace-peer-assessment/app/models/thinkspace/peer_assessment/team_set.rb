@@ -21,7 +21,7 @@ module Thinkspace; module PeerAssessment
       end
 
       event :mark_as_sent do
-        transitions from: [:approved], to: :sent
+        transitions from: [:approved], to: :sent, after: :notify_results_unlocked
       end
     end
 
@@ -37,6 +37,15 @@ module Thinkspace; module PeerAssessment
       thinkspace_peer_assessment_review_sets.each { |review_set| review_set.reset_quantitative_data }
     end
 
+    def notify_results_unlocked
+      assessment = get_assessment
+      self.thinkspace_peer_assessment_review_sets.each do |review_set|
+        Thinkspace::PeerAssessment::AssessmentMailer.notify_results_unlocked(assessment, review_set.ownerable).deliver_now
+      end
+    end
+    handle_asynchronously :notify_results_unlocked
+
+
     # ### Helpers
     def get_assessment; thinkspace_peer_assessment_assessment; end
     def get_or_create_review_sets
@@ -46,11 +55,6 @@ module Thinkspace; module PeerAssessment
       review_sets = self.thinkspace_peer_assessment_review_sets
     end
 
-    # ### Scopes
-    def self.scope_neutral; neutral; end
-    def self.scope_approved; approved; end
-
-    # ### Scopes
     def self.scope_neutral; neutral; end
     def self.scope_approved; approved; end
 

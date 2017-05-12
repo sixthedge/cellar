@@ -142,6 +142,12 @@ export default ta.Model.extend resource_mixin, ta.totem_data, ta.add(
   archived_phases: ember.computed 'phases.@each.state', ->
     ta.PromiseArray.create promise: @phase_state_promise('archived')
 
+  first_active_phase: ember.computed 'phases.@each.state', 'phases.@each.position', ->
+    promise  = new ember.RSVP.Promise (resolve, reject) =>
+      @get('active_phases').then (phases) =>
+        resolve(phases.get('firstObject'))
+    ta.PromiseObject.create promise: promise
+
   # ### Phase validity
   has_valid_phases: ember.computed.and 'has_no_phases_without_team_set', 'has_no_inactive_phases'
 
