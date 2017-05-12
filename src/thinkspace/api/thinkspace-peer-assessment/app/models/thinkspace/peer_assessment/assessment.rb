@@ -12,7 +12,7 @@ module Thinkspace; module PeerAssessment
       state :approved
       state :active
 
-      event :activate, before: :activate_assessment do
+      event :activate do
         transitions from: :neutral, to: :active
       end
 
@@ -21,109 +21,9 @@ module Thinkspace; module PeerAssessment
       end
     end
 
-    # ### Helpers
-    def self.create_assessment(assignment, assessment, team_set)
-      self.transaction do
-        authable         = assignment.thinkspace_common_space
-        team_set         = team_set.clone_and_lock(authable)
-        phase_assessment = create_assessment_phase(assignment, assessment)
-        phase_overview   = create_assessment_overview_phase(assignment, assessment)
-        team_set.add_teamables([phase_assessment, phase_overview])
-      end
-    end
-
-
-    def self.create_assessment_phase(assignment, assessment)
-      phase               = assessment_phase(assignment)
-      assessment.authable = phase
-      assessment.save
-      create_phase_component(phase, assessment, 'peer-assessment', 'assessment')
-      create_header_component(phase)
-      phase
-    end
-
-    def self.create_phase(options={})
-      phase                   = Thinkspace::Casespace::Phase.new
-      phase.assignment_id     = options[:assignment_id]
-      phase.phase_template_id = options[:phase_template_id]
-      phase.team_category_id  = options[:team_category_id]
-      phase.title             = options[:title] || 'Peer Assessment Phase'
-      phase.description       = options[:description] || 'Peer assessment description.'
-      phase.state             = options[:state] || :inactive
-      phase.default_state     = options[:default_state] || 'unlocked'
-      phase.position          = options[:position] || 1
-      phase.save
-      phase
-    end
-
-    def self.assessment_phase(assignment)
-      options                     = Hash.new
-      options[:assignment_id]     = assignment.id
-      options[:phase_template_id] = assessment_phase_template.id
-      options[:team_category_id]  = Thinkspace::Team::TeamCategory.assessment.id
-      options[:title]             = 'Peer Assessment' # TODO: What should title be?
-      options[:description]       = 'Take the peer assessment here.' # TODO: What should the description be?
-      options[:state]             = :active
-      options[:default_state]     = 'unlocked'
-      options[:position]          = 1
-      create_phase(options)
-    end
-
-    def self.create_phase(options={})
-      phase                   = Thinkspace::Casespace::Phase.new
-      phase.assignment_id     = options[:assignment_id]
-      phase.phase_template_id = options[:phase_template_id]
-      phase.team_category_id  = options[:team_category_id]
-      phase.title             = options[:title] || 'Peer Assessment Phase'
-      phase.description       = options[:description] || 'Peer assessment description.'
-      phase.state             = options[:state] || :inactive
-      phase.default_state     = options[:default_state] || 'unlocked'
-      phase.position          = options[:position] || 1
-      phase.save
-      phase
-    end
-
-    def self.assessment_phase(assignment)
-      options                     = Hash.new
-      options[:assignment_id]     = assignment.id
-      options[:phase_template_id] = assessment_phase_template.id
-      options[:team_category_id]  = Thinkspace::Team::TeamCategory.assessment.id
-      options[:title]             = 'Peer Assessment' # TODO: What should title be?
-      options[:description]       = 'Take the peer assessment here.' # TODO: What should the description be?
-      options[:state]             = :active
-      options[:default_state]     = 'unlocked'
-      options[:position]          = 1
-      create_phase(options)
-    end
-
-    def self.create_header_component(phase); create_phase_component(phase, phase, 'casespace-phase-header', 'header'); end
-    def self.create_submit_component(phase); create_phase_component(phase, phase, 'casespace-phase-submit', 'submit'); end
-    def self.create_phase_component(phase, componentable, component_title, section)
-      component = Thinkspace::Common::Component.find_by(title: component_title)
-      raise "Component with title #{component_title.inspect} not found." if component.blank?
-      phase_component = phase.thinkspace_casespace_phase_components.create(
-        componentable: componentable,
-        component_id:  component.id,
-        section:       section
-      )
-      phase_component
-    end
-
     def quantitative_items
       return [] unless value.has_key?('quantitative')
       value['quantitative']
-    end
-
-    def self.common_component
-      Thinkspace::Common::Component.find_by(title: 'peer-assessment')
-    end
-
-    def self.assessment_phase_template
-      Thinkspace::Casespace::PhaseTemplate.find_by(name: 'peer_assessment/assessment')
-    end
-
-    def self.assessment_overview_phase_template
-      Thinkspace::Casespace::PhaseTemplate.find_by(name: 'peer_assessment/overview')
     end
 
     def quantitative_items
@@ -185,7 +85,6 @@ module Thinkspace; module PeerAssessment
     end
 
     def process_assessment
-      # TODO: Re-add notify
       thinkspace_peer_assessment_team_sets.scope_approved.each { |team_set| team_set.mark_as_sent! }
     end
 
