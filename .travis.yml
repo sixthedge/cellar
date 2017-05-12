@@ -22,6 +22,8 @@ install:
   - bundle install
 script:
   - echo Skipping script step...
+before_deploy:
+  - cd $APP_INSTALL_DIR
 deploy:
   provider: heroku
   skip_cleanup: true
