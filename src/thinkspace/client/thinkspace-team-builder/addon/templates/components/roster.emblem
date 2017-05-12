@@ -4,8 +4,9 @@ partial 'components/helpers/headers/builder'
 if all_data_loaded
   if has_selected_users
     if has_selected_assigned_users
-      component '__confirmation/modal' modal_partial='components/roster/modals/create/modal' modal_reveal_partial='components/roster/modals/create/action' assigned_users=selected_assigned_users class='btn__component text--inline-block'
-      component '__confirmation/modal' modal_partial='components/roster/modals/add/modal' modal_reveal_partial='components/roster/modals/add/action' assigned_users=selected_assigned_users class='btn__component text--inline-block'
+      .btn-group.is-right
+        component '__confirmation/modal' modal_partial='components/roster/modals/create/modal' modal_reveal_partial='components/roster/modals/create/action' assigned_users=selected_assigned_users class='btn__component text--inline-block'
+        component '__confirmation/modal' modal_partial='components/roster/modals/add/modal' modal_reveal_partial='components/roster/modals/add/action' assigned_users=selected_assigned_users class='btn__component text--inline-block'
     else
       .btn-group.is-right
         .btn.btn--primary{action 'create_team'}
