@@ -9,7 +9,7 @@ rvm:
 
 before_install:
   - gem install bundler
-  - cd sixthedge/cellar/local
+  - cd local
 
 install:
   - ./install.sh --package opentbl/api --install ../../opentbl --platform thinkspace
