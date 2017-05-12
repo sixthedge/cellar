@@ -1,19 +1,24 @@
 language: ruby
 
+env:
+  global:
+    - APP_BUNDLE_SRC=./vendor/src
+
 rvm:
   - 2.3.1
 
 before_install:
   - gem install bundler
-  - git clone --depth=1 https://github.com/sixthedge/cellar.git cellar
-  - cd cellar/local
+  - cd sixthedge/cellar/local
 
 install:
-  - ./install.sh --package opentbl/api --install opentbl --platform thinkspace
-
-before_script:
-  - cd opentbl
+  - ./install.sh --package opentbl/api --install ../../opentbl --platform thinkspace
+  - cp -a sixthedge/cellar/src/thinkspace/api sixthedge/opentbl/vendor/src/thinkspace/api
+  - cp -a sixthedge/cellar/src/totem/api sixthedge/opentbl/vendor/src/totem/api
   - bundle install
+
+script:
+  - echo Skipping script step...
 
 before_deploy:
   - cd opentbl
