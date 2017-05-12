@@ -25,6 +25,9 @@ script:
 before_deploy:
   - cd $APP_INSTALL_DIR
   - rails railties:install:migrations
+  - git init
+  - git add -A
+  - "git commit -m '[RELEASE] New revision'"
 deploy:
   provider: heroku
   strategy: git
