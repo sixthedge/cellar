@@ -2,13 +2,14 @@ import ember          from 'ember'
 import ns             from 'totem/ns'
 import totem_messages from 'totem-messages/messages'
 import array_helpers  from 'thinkspace-common/mixins/helpers/common/array'
+import uuid from 'thinkspace-common/mixins/helpers/common/uuid'
 
 ###
 # # manager.coffee
 # - Type: **Service**
 # - Package: **ethinkspace-builder-rat**
 ###
-export default ember.Service.extend array_helpers,
+export default ember.Service.extend array_helpers, uuid,
   ## Assessments
   irat:       null
   trat:       null
@@ -50,11 +51,7 @@ export default ember.Service.extend array_helpers,
       answer:   null
 
   get_item_by_id: (type, id) -> @get_items(type).findBy 'id', id
-
-  get_next_id: (type) ->
-    items = @get_items(type).sortBy('id')
-    id    = items.get('lastObject.id')
-    if ember.isPresent(id) then id = id + 1 else id = 1
+  get_next_id:    (type) -> @uuid()
 
   add_question_item: (type) ->
     item = @get_new_question_item(type)
@@ -86,16 +83,12 @@ export default ember.Service.extend array_helpers,
     @save_model(type)
 
   get_new_choice: (item, changeset_choices) ->
-    choices = if ember.isPresent(changeset_choices) then changeset_choices else item.choices
-   # choices        = item.choices
+    choices        = if ember.isPresent(changeset_choices) then changeset_choices else item.choices
     sorted_choices = choices.sortBy 'id'
     last_id        = sorted_choices.get('lastObject.id')
     new_id         = last_id + 1
 
-    choice = {
-      id: new_id
-      label: "Choice #{new_id}"
-    }
+    choice         = {id: new_id, label: "Choice #{new_id}"}
 
   delete_question_item: (type, item) ->
     items = @get_items(type)

@@ -18,7 +18,8 @@ export default base.extend
   answer:       ember.computed.reads 'model.changeset.answer'
 
   dropdown_text: ember.computed 'answer', ->
-    if ember.isPresent(@get('answer')) then @get('model').get_choice_by_id(@get('answer')).get('prefix') else @get('default_text')
+    answer = @get('answer')
+    if ember.isPresent(answer) then @get('model').get_choice_by_id(answer).get('prefix') else @get('default_text')
 
   select_answer: (choice) ->
     @get('model').select_answer(choice)
@@ -34,10 +35,7 @@ export default base.extend
 
     update: -> @update_model()
 
-    add_choice: ->
-      @get('model').add_choice_to_item(@get('type'), @get('model.id'))
-
-    delete_choice: (choice) ->
-      @get('model').delete_choice_from_item(@get('type'), @get('model.id'), choice)
+    add_choice:             -> @get('model').add_choice_to_item(@get('type'), @get('model.id'))
+    delete_choice: (choice) -> @get('model').delete_choice_from_item(@get('type'), @get('model.id'), choice)
 
     select_answer: (choice) -> @select_answer(choice)

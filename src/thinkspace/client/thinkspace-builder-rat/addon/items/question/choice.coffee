@@ -36,10 +36,7 @@ export default ember.Object.extend
   create_changeset: ->
     model     = @get('model')
     vpresence = totem_changeset.vpresence(true)
-
-    changeset = totem_changeset.create(model,
-      label: [vpresence]
-    )
+    changeset = totem_changeset.create(model, label: [vpresence])
     @set('changeset', changeset)
 
   validate: ->

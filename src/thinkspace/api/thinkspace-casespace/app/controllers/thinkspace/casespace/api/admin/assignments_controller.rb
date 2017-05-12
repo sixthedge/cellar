@@ -161,7 +161,7 @@ module Thinkspace
             @assignment.instructions = params_root[:instructions] if params_root_has?(:instructions)
             @assignment.bundle_type  = params_root[:bundle_type]  if params_root_has?(:bundle_type)
             @assignment.state        = params_root[:state]        if params_root_has?(:state)
-            @assignment.settings = params_root[:settings] if params_root_has?(:settings)
+            @assignment.settings     = params_root[:settings]     if params_root_has?(:settings)
           end
 
           def update_timetable

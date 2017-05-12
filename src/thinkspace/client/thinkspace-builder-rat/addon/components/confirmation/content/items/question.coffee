@@ -17,10 +17,9 @@ export default base.extend
   choices:  ember.computed.reads 'model.choices'
 
   display_question: ember.computed 'question', -> return "#{@get('index') + 1}. #{@get('question')}"
-
-  choice_items: ember.computed 'choices', ->
+  choice_items:     ember.computed 'choices', ->
     choice_items = ember.makeArray()
-    items      = @get('choices')
+    items        = @get('choices')
     if ember.isPresent(items)
       items.forEach (item, index) =>
         item = @create_choice_item(item, index)

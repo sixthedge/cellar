@@ -236,8 +236,7 @@ module Thinkspace
       end
 
       def sync_rat
-        return false unless settings.present?
-        return false unless settings['rat']['sync'].present?
+        return false unless settings.present? && settings.dig('rat', 'sync').present?
         return settings['rat']['sync']
       end
 

@@ -81,15 +81,14 @@ export default step.extend
   save: ->
     new ember.RSVP.Promise (resolve, reject) =>
       changeset = @get('changeset')
-      changeset.save()
-      @get('model').save().then (saved_model) =>
-        @get('model').save_logistics().then (saved_model) =>
-          resolve(saved_model)
-        , (error) => reject(error)
+      ## Need to use an execute instead of a save here, because changeset.save proxies to the underlying object's save() fn as well
+      changeset.execute()
+      @get('model').save_logistics().then (saved_model) =>
+        resolve(saved_model)
       , (error) => reject(error)
 
   select_release_at: (date) -> @get('changeset').set 'release_at', date
-  select_due_at: (date) -> @get('changeset').set 'due_at', date
+  select_due_at:     (date) -> @get('changeset').set 'due_at', date
 
   select_unlock_at: (date) -> @set('unlock_at', date)
 

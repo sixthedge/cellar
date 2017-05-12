@@ -1,9 +1,7 @@
 module Thinkspace
   module ReadinessAssurance
     class Assessment < ActiveRecord::Base
-      ## Can get the after_save working via callbacks (http://stackoverflow.com/questions/1342761/how-to-skip-activerecord-callbacks?noredirect=1&lq=1)
-      ## but seems a little unwieldy
-      # after_save :sync_assessments
+      after_save :sync_assessments
 
       def question_settings; merged_question_settings; end
       def ra_type; get_ra_type; end
@@ -36,11 +34,7 @@ module Thinkspace
         if assignment.sync_rat
           assessments = Thinkspace::ReadinessAssurance::Assessment.where(authable: assignment.thinkspace_casespace_phases).without(self)
           assessments.each do |assessment|
-            assessment.questions = self.questions
-            assessment.answers   = self.answers
-            ## May need to refactor to accommodate irat/trat-only settings
-            assessment.settings  = self.settings.deep_merge(assessment.settings)
-            assessment.save
+            assessment.update_columns(questions: self.questions, answers: self.answers, settings: self.settings.deep_merge(assessment.settings))
           end
         end
       end

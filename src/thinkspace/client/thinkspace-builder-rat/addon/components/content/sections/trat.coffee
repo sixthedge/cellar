@@ -27,5 +27,6 @@ export default base.extend
       manager.add_question_item(@get('type'))
 
     toggle_assessment_sync: (val) -> 
+      ## Translates the value passed by the 'common/checkbox' component from string to boolean
       val = if val=='true' then false else true
       @sendAction('toggle_assessment_sync', val)

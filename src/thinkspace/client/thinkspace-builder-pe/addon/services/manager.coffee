@@ -115,8 +115,6 @@ export default ember.Service.extend
   duplicate_item: (type, id, item) ->
     items = @get_items_for_type type
     index = items.indexOf(item)
-
-    console.log('index is ', index)
     return unless index > -1
     add_at = index + 1
     return if add_at < 0
