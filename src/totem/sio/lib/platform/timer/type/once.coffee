@@ -11,6 +11,8 @@ class SocketIOTimerOnce
     @end_at  = @helpers.data_end_at(@data)
     @timeout = @helpers.timeout_value(@end_at)
     return unless @has_timeout()
+    message  = @helpers.data_message(@data)
+    @emit    = {type: 'once', @id, n: 1, of: 1, message}
     @util.debug "TIMER once added. id:", @id
     @create_timeout()
 

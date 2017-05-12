@@ -73,7 +73,7 @@ class SocketIOTimer
     id         = timer.id
     emit_data  = {id, cancel: true}
     @util.debug @util.bold_line("CANCEL TIMER EMIT:\n", 'red'), {rooms, room_event, emit_data}
-    @emit_to_rooms(rooms, room_event, emit_data)
+    @emit_to_rooms(timer, rooms, room_event, emit_data)
 
   # ###
   # ### Emit to Rooms.
@@ -91,17 +91,17 @@ class SocketIOTimer
         @util.blank_line()
         @util.debug @util.bold_line("TIMER #{timer.type} final emit:\n", 'magenta'), {id, rooms, room_event, data: emit_data}
         @util.blank_line()
-      @emit_to_rooms(rooms, room_event, emit_data)
+      @emit_to_rooms(timer, rooms, room_event, emit_data)
       @emit_final(timer, data)
     else
       @emit_non_final(timer, data)
 
   emit_non_final: (timer, data) ->
-    rooms        = @util.data_rooms(data)
-    room_event   = @helpers.data_event(data)
-    emit_data    = timer.emit or {}
-    emit_data.id = timer.id unless emit_data.id
-    @emit_to_rooms(rooms, room_event, emit_data)
+    rooms             = @util.data_rooms(data)
+    room_event        = @helpers.data_event(data)
+    emit_data         = timer.emit or {}
+    emit_data.id      = timer.id unless emit_data.id
+    @emit_to_rooms(timer, rooms, room_event, emit_data)
 
   emit_final: (timer, data) ->
     rooms = @util.data_rooms(data)
@@ -118,10 +118,12 @@ class SocketIOTimer
       @util.say {id, rooms, room_event, emit_data}
       @util.say @util.color_line(@util.sep(), 'yellow')
       @util.blank_line()
-    @emit_to_rooms(rooms, room_event, emit_data)
+    @emit_to_rooms(timer, rooms, room_event, emit_data)
     @remove(timer)
 
-  emit_to_rooms: (rooms, room_event, emit_data) ->
+  emit_to_rooms: (timer, rooms, room_event, emit_data) ->
+    emit_data.emit_at = new Date()
+    emit_data.end_at  = timer.end_at
     for room in rooms
       event = @util.data_room_room_event(room, {room_event})
       @nsio.in(room).emit(event, emit_data)
@@ -144,7 +146,9 @@ class SocketIOTimer
     timers     = @find_timers_by({id, rooms})
     return if @util.is_array_blank(timers)
     for timer in timers
-      emit_data = timer.emit or {}
+      emit_data         = timer.emit or {}
+      emit_data.emit_at = new Date()
+      emit_data.end_at  = timer.end_at
       for room in rooms
         event = @util.data_room_room_event(room, {room_event})
         @util.debug @util.bold_line("TIMER SHOW for a user.", 'magenta'), ' sid: ', socket.id, {id, room, event, emit_data}

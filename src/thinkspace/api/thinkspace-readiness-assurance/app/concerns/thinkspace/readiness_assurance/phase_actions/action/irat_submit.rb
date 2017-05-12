@@ -5,6 +5,7 @@ class IratSubmit < Thinkspace::Casespace::PhaseActions::Action::Submit
 
   def process
     @irat = irat_handler_class.new(processor.current_phase, current_user, {}, processor)
+    process_auto_timer
     if transition_team_members?
       completed_teams = get_ownerable_completed_teams
       if completed_teams.present?
@@ -20,6 +21,11 @@ class IratSubmit < Thinkspace::Casespace::PhaseActions::Action::Submit
   end
 
   private
+
+  def process_auto_timer
+    return unless irat.assessment.auto_timer?
+    irat.cancel_auto_timers if irat.auto_timers_exist?
+  end
 
   def transition_team_members?
     settings = (irat.assessment.settings || Hash.new).deep_symbolize_keys

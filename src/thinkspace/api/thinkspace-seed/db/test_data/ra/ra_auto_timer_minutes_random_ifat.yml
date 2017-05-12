@@ -5,11 +5,12 @@ variables:
   import_text[readiness_assurance@variables]
   - &IFAT   true
   - &RANDOM true
-  - &CASE   Auto Timer Minutes - Random Order - IFAT
+  - &CASE   Auto Timer Minutes - Random Order - IFAT - (3 min; remind 1 min)
   - irat_auto_timer: &IRAT_AUTO_TIMER
       duration: {minutes: 3}
-      unit:     minute
-      interval: 1
+      timer_settings:
+        unit:     minute
+        interval: 1
   import_text[readiness_assurance@settings]
 
 assignments:

@@ -7,9 +7,13 @@ export default base.extend
 
   server_events: ember.inject.service()
 
+  actions:
+    refresh: -> @se.timer_show({room}) for room in @timer_rooms
+
   init_base: ->
     @messages    = []
     @se          = @get('server_events')
+    @ttz         = @get('ttz')
     @timer_rooms = @se.get_filter_rooms()
     @join_timer_rooms()
 
@@ -45,24 +49,41 @@ export default base.extend
 
   get_message: (data) ->
     msg         = {}
-    msg.id      = data.id
-    msg.message = data.message
-    msg.prefix  = if data.n == (data.of-1) then 'in less than' else 'in about'
-    msg.units   = data.units
-    msg.label   = data.label or ''
-    @format_minutes(msg) if msg.label.match('second')
+    emit_at     = data.emit_at
+    end_at      = data.end_at
+    return msg unless (emit_at and end_at)
+    message      = data.message or ''
+    message     += " in "
+    message     += @format_duration(data, emit_at, end_at)
+    message     += '.' unless util.ends_with(message, '.')
+    msg.id       = data.id
+    msg.message  = message
     msg
 
-  format_minutes: (msg) ->
-    units = msg.units
-    return if ember.isBlank(units)
-    duration = moment.duration("PT#{units}S")
-    mins     = duration.minutes()
+  format_duration: (data, emit_at, end_at) ->
+    msg      = ''
+    dd       = new Date(end_at) - new Date(emit_at)
+    dd       = 0 if dd <= 0
+    dd_secs  = Math.ceil(dd / 1000)
+    iso      = "PT#{dd_secs}S"
+    duration = moment.duration(iso)
+    mins     = duration.minutes() + (duration.hours() * 60)
     secs     = duration.seconds()
-    return if mins == 0
-    min_text   = util.pluralize('minute', mins)
-    msg.label  = ''
-    msg.units  = "#{mins} #{min_text}"
+    [mins, secs] = @adjust_time(data, mins, secs)
+    if mins > 0
+      min_text  = util.pluralize('minute', mins)
+      msg      += "#{mins} #{min_text}"
     if secs > 0
-      sec_text   = util.pluralize('second', secs)
-      msg.units += " and #{secs} #{sec_text}"
+      sec_text  = util.pluralize('second', secs)
+      msg      += " and " if mins > 0
+      msg      += "#{secs} #{sec_text}"
+    msg
+
+  # Make some minor adjustments e.g. add 1 min if secs = 59
+  adjust_time: (data, mins, secs) ->
+    if secs >= 59
+      mins += 1
+      secs  = 0
+    if secs == 29
+        secs = 30
+    [mins, secs]

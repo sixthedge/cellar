@@ -5,12 +5,9 @@ variables:
   import_text[readiness_assurance@variables]
   - &IFAT   true
   - &RANDOM true
-  - &CASE   Auto Timer Seconds - Random Order - IFAT - (3 min 30 sec; remind 10 sec)
+  - &CASE   Auto Timer With No Reminders - Random Order - IFAT - (2 min; remind never)
   - irat_auto_timer: &IRAT_AUTO_TIMER
-      duration: {minutes: 3, seconds: 30}
-      timer_settings:
-        unit:     second
-        interval: 10
+      duration: {minutes: 2}
   import_text[readiness_assurance@settings]
 
 assignments:

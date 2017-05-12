@@ -109,7 +109,7 @@ module Thinkspace
 
         COLUMN_METHODS = [:authable, :user, :origin, :channel, :event, :room_event, :room, :rooms, :value, :records, :timer_settings, :timer_start_at, :timer_end_at]
 
-        attr_reader :server_event, :pubsub, :error_class
+        attr_reader :server_event, :pubsub, :error_class, :save_record
 
         def initialize(options={})
           @server_event = ::Thinkspace::PubSub::ServerEvent.new
@@ -117,6 +117,7 @@ module Thinkspace
           @action       = nil
           @pubsub       = server_event.class.totem_pubsub
           set_error_class
+          save_record_on
           options.present? ? with_options(options) : init_defaults
         end
 
@@ -129,7 +130,7 @@ module Thinkspace
         def save; save_error unless server_event.save; self; end
 
         def publish
-          save if server_event.new_record?
+          save if server_event.new_record? && save_record
           value = get_publish_value
           timer = get_publish_timer
           pubsub.data
@@ -174,6 +175,9 @@ module Thinkspace
             self.send m, opts[m]  if self.respond_to?(m)
           end
         end
+
+        def save_record_on;  @save_record = true;  self; end
+        def save_record_off; @save_record = false; self; end
 
         def on_error(klass); @error_class = klass; self; end
 
