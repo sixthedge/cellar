@@ -25,7 +25,9 @@ module Thinkspace
         "array[#{str}]"
       end
 
-      def self.scope_by_active_timers; where('timer_settings IS NOT NULL').where('timer_cancelled_at IS NULL'); end
+      def self.scope_by_timers; where('timer_settings IS NOT NULL'); end
+
+      def self.scope_by_active_timers; scope_by_timers.where('timer_cancelled_at IS NULL'); end
 
       def self.scope_timers_by_gt_time(time=Time.now.utc)
         where('timer_end_at > ?', time).scope_by_active_timers

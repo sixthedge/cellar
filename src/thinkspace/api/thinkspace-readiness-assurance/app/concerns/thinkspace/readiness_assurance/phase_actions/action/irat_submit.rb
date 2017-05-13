@@ -24,7 +24,7 @@ class IratSubmit < Thinkspace::Casespace::PhaseActions::Action::Submit
 
   def process_auto_timer
     return unless irat.assessment.auto_timer?
-    irat.cancel_auto_timers if irat.auto_timers_exist?
+    irat.cancel_auto_timers
   end
 
   def transition_team_members?
