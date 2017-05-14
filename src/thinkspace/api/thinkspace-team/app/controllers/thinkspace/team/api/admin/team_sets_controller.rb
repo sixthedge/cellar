@@ -36,7 +36,9 @@ module Thinkspace
 
           def update_transform
             @team_set.transform = params[:transform].deep_dup
-            controller_save_record(@team_set)
+            @team_set.title = Time.now.to_s
+            @team_set.save
+            controller_render(@team_set)
           end
 
           def explode

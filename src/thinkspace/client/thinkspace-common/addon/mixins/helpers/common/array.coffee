@@ -69,3 +69,9 @@ export default ember.Mixin.create
       promises = model.getEach(relationship)
       ember.RSVP.Promise.all(promises).then (results) =>
         resolve results
+
+  remove_objects_with_value: (array, key, value) ->
+    array.forEach (element) =>
+      array.removeObject(element) if element[key] == value
+    array
+

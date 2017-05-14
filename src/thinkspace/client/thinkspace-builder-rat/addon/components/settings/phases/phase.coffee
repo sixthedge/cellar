@@ -39,14 +39,11 @@ export default base.extend
 
   actions:
     select_unlock_at: (date) ->
-      console.log "DATE IS: ", date
       @set_date('unlock_at', date)
       @set_assignment_date('release_at', date) if @get('is_irat')
-      @sendAction('select_unlock_at', date) # TODO: These don't seem to be hooked up?
       @save()
 
     select_due_at: (date) -> 
       @set_date('due_at', date)
       @set_assignment_date('due_at', date) if @get('is_trat')
-      @sendAction('select_due_at', date) # TODO: These don't seem to be hooked up?
       @save()

@@ -3,7 +3,7 @@
 //\*------------------------------------*/
 
 select, .dropdown__anchor {
-  display:          inline-block;
+  display:          block;//inline-block;
   vertical-align:   middle;
   font-family:      $font-family;
   color:            white;
@@ -52,18 +52,12 @@ select, .dropdown__anchor {
 
 
 .dropdown__list {
-  position:        initial !important;
-  display:         none;
   list-style-type: none;
   margin-left:     0;
   padding:         0;
   max-width:       $max-width--content;
   margin:          2px 0 0;
   box-shadow:      0 3px 12px rgba(27,31,35,0.15);
-
-  &.is-open {
-    display: inherit;
-  }
 }
 
 .dropdown__item {
@@ -82,6 +76,11 @@ select, .dropdown__anchor {
     border-bottom-right-radius: $border-radius;
     border-bottom-left-radius: $border-radius;
   }
+
+  &.dropdown__item-selectable {
+    &.is-selected {
+    }
+  }
 }
 
 .dropdown__item-link {
@@ -96,7 +95,7 @@ select, .dropdown__anchor {
   line-height:      2rem;
   font-size:        .875rem;
   cursor:           pointer;
-  transition:       $transition-animation;
+  //transition:       $transition-animation;
 
   
 

@@ -155,12 +155,13 @@ module Thinkspace
       def ensure_default_team_set
         team_sets = thinkspace_team_team_sets
         if team_sets.empty?
-          Thinkspace::Team::TeamSet.create(title: 'Default', state: 'default', space_id: self.id, user_id: 0)
+          Thinkspace::Team::TeamSet.create(title: 'Default', default: true, space_id: self.id, user_id: 0)
         end
         default = team_sets.scope_default
         unless default.present?
-          team_set = team_sets.first
-          team_set.make_default!
+          team_set         = team_sets.first
+          team_set.default = true
+          team_set.save
         end
       end
 

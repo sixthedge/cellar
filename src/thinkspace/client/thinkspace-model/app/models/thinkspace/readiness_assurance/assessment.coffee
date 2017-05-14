@@ -8,14 +8,13 @@ export default base.extend ta.add(
   ),
 
   title:             ta.attr('string')
-  question_settings: ta.attr()
+  question_settings: ta.attr() # Used in the QuestionMangers, etc.  Contains questions + settings.
   authable_id:       ta.attr('number')
   authable_type:     ta.attr('string')
   ra_type:           ta.attr('string')
   # below attributes only populated when on dashboard (e.g. admin)
-  settings: ta.attr()
-  answers:  ta.attr()
-
+  settings:  ta.attr()
+  answers:   ta.attr()
   questions: ta.attr()
 
   is_irat: ember.computed.equal 'ra_type', 'irat'

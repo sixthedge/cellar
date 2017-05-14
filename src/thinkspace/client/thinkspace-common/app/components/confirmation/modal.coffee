@@ -42,7 +42,9 @@ export default base.extend
   set_modal: (modal) -> @set 'modal', modal
   get_modal: -> @get 'modal'
 
-  didInsertElement: -> @set_modal new Foundation.Reveal(@get_$modal())
+  init_base: -> 
+    ember.run.schedule 'afterRender', =>
+      @set_modal new Foundation.Reveal(@get_$modal())
 
   willDestroyElement: -> 
     $modal = @get_$modal()

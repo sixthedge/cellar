@@ -17,7 +17,7 @@
 .forms__section.spacing__margin-bottom--2
   .forms__field-wrapper
     label Team name
-    = input value=team.title
+    = input value=team_title
   .forms__field-wrapper
     label.spacing__margin-bottom--0 Team color
     .forms__label-summary Helps distinguish the teams
