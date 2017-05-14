@@ -1,0 +1,11 @@
+.top-bar.top-bar--white
+  .top-bar__info.is-left
+    .nav-list__logo
+      img src='/assets/images/branding/otbl-logo_builder.svg' alt="Builder" title="Builder"
+    .top-bar__info-item
+      | Building - #{model.friendly_title}
+  nav.top-bar__nav.is-right
+    ul.nav-list
+      li.nav-list__item
+        a.nav-list__link click='exit'
+          | Exit Builder

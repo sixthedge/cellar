@@ -1,0 +1,6 @@
+if model.is_answer
+  div style='font-weight:bold;'
+    | #{display}
+else
+  div
+    | #{display}

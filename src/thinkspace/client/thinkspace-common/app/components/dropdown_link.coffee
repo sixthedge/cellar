@@ -5,6 +5,7 @@ import base  from 'thinkspace-base/components/base'
 # see thinkspace/common/dropdown for usage instructions
 
 export default base.extend
+  tagName: 'li'
 
   init_base: -> @classNames = ember.makeArray(@list_item_class)
 

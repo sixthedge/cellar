@@ -46,83 +46,8 @@ module Thinkspace; module PeerAssessment
     end
 
     def self.generate_anonymized_review_json(assessment, reviews)
-      results             = {}
-      json                = {}
-      json[:options]      = get_options(assessment, reviews)
-      json[:qualitative]  = {}
-      json[:quantitative] = {}
-
-      reviews.each do |review|
-        values = review.qualitative_item_values
-        values.each do |type, array|
-          json[:qualitative][type] ||= []
-          json[:qualitative][type] << array
-          json[:qualitative][type].flatten!
-        end
-
-        values  = review.quantitative_items
-        values.each do |id, attrs|
-          results[id] ||= []
-          value = attrs['value']
-          next unless value.present?
-          results[id] << value.to_f
-        end
-
-        # Sort by category.
-        items = assessment.quantitative_items
-        items.each do |item|
-          id    = item['id']
-          label = item['label']
-          next unless id.present?
-          json[:quantitative][id] ||= {}
-          json[:quantitative][id][:label] = label
-          json[:quantitative][id][:value] = results[id]
-        end
-      end
-
-      values  = review.quantitative_items
-      values.each do |id, attrs|
-        results[id] ||= []
-        value = attrs['value']
-        next unless value.present?
-        results[id] << value.to_f
-      end
-
-      # Sort by category.
-      items = assessment.quantitative_items
-      items.each do |item|
-        id    = item['id']
-        label = item['label']
-        next unless id.present?
-        json[:quantitative][id] ||= {}
-        json[:quantitative][id][:label] = label
-        json[:quantitative][id][:value] = results[id]
-      end
-
-      # Average results
-      results.each do |id, array|
-        avg         = array.inject(0.0) { |sum, el| sum + el } / array.size
-        results[id] = avg.round(2)
-      end
-      json[:quantitative] = results
-      json
+      Thinkspace::PeerAssessment::JsonAnonymizers::Review.new(assessment, reviews).process
     end
-
-    def self.get_options(assessment, reviews)
-      options = assessment.options.with_indifferent_access
-      add_score_range_to_options(options, assessment, reviews)
-      options
-    end
-
-    def self.add_score_range_to_options(options, assessment, reviews)
-      min, max = assessment.get_min_max_score_for_reviews(reviews.count)
-      options  = options.with_indifferent_access
-      options[:points] ||= {}
-      options[:points][:min] = min
-      options[:points][:max] = max
-      options
-    end
-
 
     def qualitative_items
       return [] unless value.present? && value.has_key?('qualitative')

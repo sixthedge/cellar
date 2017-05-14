@@ -6,7 +6,14 @@ export default {
 
   engine:
     mount:           'cases'
-    external_routes: [{login: 'users.sign_in'}, 'spaces.show', 'phases.show', {reports: 'reports.show'}, 'readiness_assurance.progress_report', 'thinkspace-peer-assessment.overview', 'thinkspace-peer-assessment.results', 'thinkspace-peer-assessment.admin']
+    external_routes: [
+      {login: 'users.sign_in'}, 
+      'spaces.show', 
+      'phases.show', 
+      {reports: 'reports.show'}, 
+      'case-peer-assessment.overview',
+      'case-readiness-assurance.overview'
+    ]
 
   ns:
     namespaces: {casespace: 'thinkspace/casespace'}

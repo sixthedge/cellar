@@ -1,0 +1,17 @@
+.menu-bar
+  ul.menu-bar__list
+    li.menu-bar__item
+      link-to 'show' model class='menu-bar__link'
+        | Overview
+    if can.update
+      li.menu-bar__item
+         link-to 'progress_report' model class='menu-bar__link'
+          | Progress Report
+      li.menu-bar__item
+        link-to 'scores' model class='menu-bar__link'
+          | Scores
+    else
+      li.menu-bar__item
+        link-to 'scores' model class='menu-bar__link'
+          | Results
+          

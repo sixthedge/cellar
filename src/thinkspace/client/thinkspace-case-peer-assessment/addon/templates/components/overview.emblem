@@ -1,0 +1,25 @@
+component '__case/external/header' model=model phase=model.first_active_phase
+if model.is_pubsub
+  mount 'thinkspace-message-pubsub'
+  
+.grid__container--flex.spacing__margin-bottom--4
+  .grid__col--3of4.grid__mobile--full-width.grid__col--primary
+    if model.can.update
+      component '__case/states' model=model assignment_type=assignment_type
+    component '__case/instructions' model=model
+    component '__case/progress' model=model
+
+  .grid__col--1of4.grid__mobile--full-width
+    if phase_states_loaded
+      component '__case/details' model=model
+
+.grid__container--flex
+  .grid__col--4of4
+    .footnote
+      if model.can.update
+        p.spacing__margin-top--0.spacing__margin-bottom--0 Use the <strong>progress report</strong> to keep up with your students.
+        a Learn about exercise
+      else
+        p.spacing__margin-top--0.spacing__margin-bottom--0 Use the <strong>team chat</strong> to discuss questions with your team members.
+        a Learn about team chat
+        

@@ -1,18 +1,7 @@
-.forms__field-wrapper
-  label.spacing__margin-bottom--half
-    = qm.question
-
-  if qm.rm.room_users
-    .ts-ra_question-chat click='toggle_chat'
-      if qm.chat_displayed
-        |Close Chat
-      else
-        |Chat
-
 if qm.is_ifat
-  component 'radio/ifat_buttons' qm=qm select='select_answer' class='group'
+  component 'radio/ifat_buttons' qm=qm select='select_answer' class='group' toggle_chat='toggle_chat'
 else
-  component 'radio/buttons' qm=qm select='select_answer' class='group'
+  component 'radio/buttons' qm=qm select='select_answer' class='group' toggle_chat='toggle_chat'
 
 if qm.has_justification
   component 'justification' qm=qm focus_in='focus_justification' save='save_justification' cancel='cancel_justification'

@@ -36,7 +36,7 @@ Thinkspace::ReadinessAssurance::Engine.routes.draw do
           end
         end
 
-        resources :assessments, only: [] do
+        resources :assessments, only: [:update] do
           collection do
             post :progress_report
           end

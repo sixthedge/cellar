@@ -114,18 +114,13 @@ export default ember.Service.extend
 
   duplicate_item: (type, id, item) ->
     items = @get_items_for_type type
-    console.log('[PRE] items now ', items)
-
     index = items.indexOf(item)
-
-    console.log('index is ', index)
     return unless index > -1
     add_at = index + 1
     return if add_at < 0
     new_item    = ember.merge({}, item)
     new_item.id = id
     items.insertAt add_at, new_item
-    console.log('[POST] items are at ', items)
 
     @save_model()
 

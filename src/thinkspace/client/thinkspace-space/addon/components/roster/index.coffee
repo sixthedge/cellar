@@ -28,7 +28,7 @@ export default base.extend
       column.create({display: 'Last Name',  property: 'last_name', direction: 'ASC'})
       column.create({display: 'First Name', property: 'first_name'}),
       column.create({display: 'Email',      property: 'email'}),
-      column.create({display: 'I. Status',  property: 'invitation_status'}),
+      column.create({display: 'I. Status',  property: 'invitation_status', sortable: false}),
       column.create({display: 'Status',     component: 'roster/space_users/state', data: {space: @get('model')}})
     ]
 
@@ -37,7 +37,7 @@ export default base.extend
       return reject() unless column.get('has_property')
       property  = column.get_property()
       direction = column.invert_direction()
-      @get_students(direction: direction).then (students) =>
+      @get_students(property: property, direction: direction).then (students) =>
         resolve(students)
 
   admin_sort: (column) ->
@@ -45,7 +45,7 @@ export default base.extend
       return reject() unless column.get('has_property')
       property  = column.get_property()
       direction = column.invert_direction()
-      @get_admins(direction: direction).then (admins) =>
+      @get_admins(property: property, direction: direction).then (admins) =>
         resolve(admins)
 
   # ## Getters/setters
@@ -110,5 +110,6 @@ export default base.extend
   # ### Sort query helpers
   add_sorts: (query, options={}) ->
     direction = options.direction || 'ASC'
-    sorts     = [{last_name: direction}]
+    property  = options.property || 'last_name'
+    sorts     = [{"#{property}": direction}]
     @tc.add_sort_to_query(query, sorts)

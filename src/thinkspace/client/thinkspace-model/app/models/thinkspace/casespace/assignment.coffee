@@ -27,11 +27,16 @@ export default ta.Model.extend resource_mixin, ta.totem_data, ta.add(
   builder_version:     ta.attr('number')
   builder_template_id: ta.attr('number')
 
-  is_pubsub:      ember.computed.bool 'settings.pub_sub'
-  is_active:      ember.computed.equal 'state', 'active'
-  is_inactive:    ember.computed.equal 'state', 'inactive'
-  has_due_at:     ember.computed.notEmpty 'due_at'
-  has_release_at: ember.computed.notEmpty 'release_at'
+  is_pubsub:            ember.computed.bool 'settings.pub_sub'
+  is_active:            ember.computed.equal 'state', 'active'
+  is_inactive:          ember.computed.equal 'state', 'inactive'
+  has_due_at:           ember.computed.notEmpty 'due_at'
+  has_release_at:       ember.computed.notEmpty 'release_at'
+  
+  sync_rat_assessments: ember.computed.bool 'settings.rat.sync'
+
+  rat_obs: ember.observer 'sync_rat_assessments', ->
+    console.log('[ASSIGNMENT] rat changing ', @get('sync_rat_assessments'))
 
   ttz: ember.inject.service()
 
@@ -142,6 +147,12 @@ export default ta.Model.extend resource_mixin, ta.totem_data, ta.add(
   archived_phases: ember.computed 'phases.@each.state', ->
     ta.PromiseArray.create promise: @phase_state_promise('archived')
 
+  first_active_phase: ember.computed 'phases.@each.state', 'phases.@each.position', ->
+    promise  = new ember.RSVP.Promise (resolve, reject) =>
+      @get('active_phases').then (phases) =>
+        resolve(phases.get('firstObject'))
+    ta.PromiseObject.create promise: promise
+
   # ### Phase validity
   has_valid_phases: ember.computed.and 'has_no_phases_without_team_set', 'has_no_inactive_phases'
 
@@ -164,3 +175,10 @@ export default ta.Model.extend resource_mixin, ta.totem_data, ta.add(
   activate:   -> @model_state_change('activate')
   inactivate: -> @model_state_change('inactivate')
   archive:    -> @model_state_change('archive')
+
+  set_sync_assessment: (value) ->
+    settings = @get('settings')
+    console.log('[set_sync_assessment] ', value, settings)
+    settings.rat = {} unless ember.isPresent(settings.rat)
+    ember.set(settings.rat, 'sync', value)
+    console.log('[set_sync_assessment] ', @get('settings'))

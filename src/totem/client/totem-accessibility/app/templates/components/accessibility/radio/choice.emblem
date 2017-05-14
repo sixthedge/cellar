@@ -1,4 +1,4 @@
-input.radio__input id=id type='radio' name=name value=value checked=checked
+component '__accessibility/radio/input' id=id name=name value=value checked=checked disabled=disabled
 label.radio__label-container for=id
   .radio__label #{label}
   if summary
