@@ -38,9 +38,8 @@ export default ember.Mixin.create
 
   stringify: (obj) -> JSON.stringify(obj)
 
-  error: (messages...) ->
-    messages.unshift "#{@toString()}: "
-    throw new Error(messages.join("\n"))
+  warn:  (args...) -> util.warn @, args...
+  error: (args...) -> util.error @, args...
 
   # ###
   # ### Map Helpers.

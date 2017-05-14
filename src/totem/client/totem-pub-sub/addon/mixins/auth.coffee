@@ -76,7 +76,7 @@ export default ember.Mixin.create
 
   authorize_error: (socket, data) ->
     @invalidate_socket(socket)
-    console.error '=> not authorized:', data.message
+    @error '=> not authorized:', data.message
 
   # ###
   # ### Helpers.

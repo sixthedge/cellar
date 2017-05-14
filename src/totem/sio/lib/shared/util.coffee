@@ -58,8 +58,6 @@ class SocketIOUtil
 
   starts_with: (string, prefix) -> (string or '').indexOf(prefix) == 0
 
-  timeout: (to) -> if to then parseInt(to) else 'none'
-
   hash_keys: (hash) -> (@is_hash(hash) and Object.keys(hash)) or []
 
   is_hash_present: (hash) -> @hash_keys(hash).length > 0

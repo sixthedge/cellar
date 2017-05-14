@@ -63,8 +63,10 @@ module Thinkspace; module ReadinessAssurance; module PhaseActions; module Helper
     get_auto_timers(event).present?
   end
 
+  def get_active_auto_timers(event=AUTO_TIMER_TRANSITION_TO_ASSIGNMENT); get_auto_timers(event).scope_by_active_timers; end
+
   def get_auto_timers(event=AUTO_TIMER_TRANSITION_TO_ASSIGNMENT)
-    server_event_class.where(authable: phase, user_id: current_user.id, room_event: :server_event, event: event)
+    server_event_class.scope_by_timers.where(authable: phase, user_id: current_user.id, room_event: 'server_event', event: event.to_s)
   end
 
   def auto_timer_hash_to_duration(hash)
@@ -76,7 +78,7 @@ module Thinkspace; module ReadinessAssurance; module PhaseActions; module Helper
   end
 
   def cancel_auto_timers(event=AUTO_TIMER_TRANSITION_TO_ASSIGNMENT)
-    timers = get_auto_timers(event)
+    timers = get_active_auto_timers(event)
     return if timers.blank?
     timers.each do |se|
       id = se.class.name.underscore + "/#{se.id}"

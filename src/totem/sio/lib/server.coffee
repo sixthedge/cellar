@@ -1,7 +1,8 @@
 class SocketIOServer
 
-  request:  require('request')
-  http:     require('http')
+  request: require('request')
+  http:    require('http')
+  async:   require('async')
 
   authenticate:     require('./auth/authenticate')
   authorize:        require('./auth/authorize')
@@ -22,7 +23,7 @@ class SocketIOServer
     @io  = require('socket.io')(@app)
     # Cloud providers will often not allow a host to be defined here.
     # => Results in EADDRINUSE error.
-    if @app_host then @app.listen(@app_port, @app_host) else @app.listen(@app_port)      
+    if @app_host then @app.listen(@app_port, @app_host) else @app.listen(@app_port)
 
   init_env_vars: ->
     @debugging       = @sutil.env_var('DEBUGGING') == 'true'

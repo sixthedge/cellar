@@ -4,6 +4,7 @@ class ThinkspacePlatform
     @namespace = '/thinkspace'
     @nsio      = @server.io.of(@namespace)
     @request   = @server.request
+    @async     = @server.async
     @init_modules()
     @init_platform_modules()
     @init_redis()

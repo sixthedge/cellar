@@ -29,6 +29,7 @@ module Thinkspace; module PubSub; module AuthHelpers
     # ###
 
     def current_user_data
+      access_denied 'Current user is blank.' if current_user.blank?
       hash = {
         id:         current_user.id,
         first_name: current_user.first_name,

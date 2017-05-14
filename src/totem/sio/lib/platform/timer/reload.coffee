@@ -11,8 +11,7 @@ class SocketIOTimerReload
 
   init_env_variables: ->
     @url     = @util.env_var('TIMER_RELOAD_URL', @namespace)
-    timeout  = @util.env_var('TIMER_RELOAD_TIMEOUT', @namespace)
-    @timeout = @util.timeout(timeout)
+    @timeout = @util.env_var_int('TIMER_RELOAD_TIMEOUT', @namespace) or 3000
 
   process: ->
     return unless @url # if the env url is blank then don't try to reload timers
