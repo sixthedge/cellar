@@ -165,10 +165,8 @@ module Thinkspace
           end
 
           def update_timetable
-            params_configuration = get_params_configuration
-            return unless params_configuration.present?
-            due_at               = get_params_configuration[:due_at]
-            release_at           = get_params_configuration[:release_at]
+            due_at               = params_root[:due_at]
+            release_at           = params_root[:release_at]
             timetable            = @assignment.get_or_set_timetable_for_self
             timetable.due_at     = due_at if due_at.present?
             timetable.release_at = release_at if release_at.present?

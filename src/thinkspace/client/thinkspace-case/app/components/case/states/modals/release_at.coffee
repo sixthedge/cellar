@@ -20,8 +20,7 @@ export default base.extend
       model = @get('model')
       date  = @get('date')
       model.set('release_at', date)
-      model.save_logistics().then =>
-        resolve()
+      model.save().then => resolve()
 
   actions:
     select_release_at: (date) -> @set('date', date)

@@ -11,22 +11,21 @@ export default ta.Model.extend resource_mixin, ta.totem_data, ta.add(
     ta.has_many   'phases', reads: {sort: 'position:asc'}
   ),
 
+  # # Attributes
   title:            ta.attr('string')
   description:      ta.attr('string')
   active:           ta.attr('boolean')
-  release_at:       ta.attr('date')
-  due_at:           ta.attr('date')
   instructions:     ta.attr('string')
   name:             ta.attr('string')
   template_id:      ta.attr('number')
   bundle_type:      ta.attr('string')
   state:            ta.attr('string')
   settings:         ta.attr()
-  included_options: ta.attr() # TODO: Remove in favor of included.records/options?
-  # ### TEMPORARY FOR NEW BUILDER
-  builder_version:     ta.attr('number')
-  builder_template_id: ta.attr('number')
+  # ## Timetable
+  release_at:       ta.attr('date')
+  due_at:           ta.attr('date')
 
+  # # Computed properties
   is_pubsub:            ember.computed.bool 'settings.pub_sub'
   is_active:            ember.computed.equal 'state', 'active'
   is_inactive:          ember.computed.equal 'state', 'inactive'
@@ -69,25 +68,6 @@ export default ta.Model.extend resource_mixin, ta.totem_data, ta.add(
     abilities.update  = update
     abilities.clone   = update
     abilities.destroy = update
-
-  save_logistics: ->
-    new ember.RSVP.Promise (resolve, reject) =>
-      configuration =
-        release_at: @get('release_at')
-        due_at:     @get('due_at')
-
-      query =
-        id:     @get('id')
-        configuration: configuration
-        data: { attributes: {} }
-
-      options =
-        action: ''
-        verb:   'PATCH'
-
-      tc.query_action(ta.to_p('assignment'), query, options).then (saved_assignment) => 
-        resolve saved_assignment
-      , (error) => reject(error)
 
   # ### Phase position
   # => Assumes they've been updated via the phase model functions.
