@@ -3,6 +3,7 @@ import base  from 'thinkspace-base/components/base'
 import ns    from 'totem/ns'
 
 export default base.extend
+  tagName: 'td'
 
   title: ember.computed.reads 'row.computed_title'
   team:  ember.computed.reads 'row.team'

@@ -1,0 +1,20 @@
+h1 Team Builder
+p.text__font-size--14 Quickly build a team by typing in your student's name. You can add multiple by separating with a comma.
+
+component 'helpers/user_search' value=search_field results=results search_results='search_results' select='select_user' space=model show_results=true
+
+if has_selected_users
+  h6 selected users:
+  ul
+    each selected_users as |user|
+      li = user.first_name
+
+  .btn.btn-small{action 'create_team'}
+    | Create team with selected
+
+if has_teams
+  // Keep the dropdown in the DOM with a hidden div so it will initialize properly
+  div class={no_selected_users:is-hidden} 
+    component '__dropdown' collection=teams display_property='title' text='Add to existing team' selected=selected_team select_action='add_to_team' action_receiver=this
+
+  component 'helpers/teams' model=model highlighted_users=results

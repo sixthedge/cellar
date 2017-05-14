@@ -4,7 +4,11 @@ import opt   from 'totem-table/table/options'
 
 export default cell.extend
 
-  is_selected: false
+  is_selected: ember.computed 'column.data.calling.component.selected_rows.@each', ->
+    selected_rows = @get('column.data.calling.component.selected_rows')
+    row = @get('c_row.row')
+    return false if ember.isEmpty(selected_rows)
+    selected_rows.contains(row)
 
   click: ->
     options = opt.create
@@ -19,7 +23,6 @@ export default cell.extend
     component = @get('column.data.calling.component')
     if ember.isPresent(component)
       component.select_row(options)
-      @toggleProperty('is_selected')
 
   register_table_component: ->
     component = @get('column.data.calling.component')

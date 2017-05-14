@@ -23,7 +23,7 @@ import base  from 'thinkspace-base/components/base'
 #   link_class
 
 export default base.extend
-  classNames: ['dropdown']
+  classNames: ['otbl-dropdown']
 
   default_anchor_class:    'dropdown__anchor'
   default_list_class:      'f-dropdown dropdown__list'
@@ -109,25 +109,11 @@ export default base.extend
     click_callbacks: ->
       @callback_auto_width() if @get('auto_width')
 
+    select: ->
+      @get('dropdown').close()
 
-  # ############################################################################
-  # TEST DISPATCH LIFECYLE HOOK
-  # ############################################################################
-  # didInitAttrs:      -> console.warn '.....DID INIT ATTRS', @toString()
-  # didReceiveAttrs:   -> console.warn '.....DID RECEIVE ATTRS', @toString()
-  # willRender:        -> console.warn '.....WILL RENDER', @toString()
-  # didRender:         -> console.warn '.....DID RENDER', @toString()
-  # willUpdate:        -> console.warn '.....WILL UPDATE', @toString()
-  # didUpdate:         -> console.warn '.....DID UPDATE', @toString()
-  # didRenderElement:  -> console.warn '.....DID RENDER ELEMENT', @toString()
-  # didCreateElement:  -> console.warn '.....DID CREATE ELEMENT', @toString()
-  # willInsertElement: -> console.warn '.....WILL INSERT ELEMENT', @
-  # didInsertElement:  -> console.warn '+++++TOOLBAR MAIN DID INSERT ELEMENT', @toString()
-
-  # didInsertElement: -> @$().foundation('dropdown')
-  # didInsertElement: -> $(document).foundation('dropdown')
-  didInsertElement: ->
-    $ul = @$('ul')
-    # do not instantiate a new dropdown in the case of rerender
-    dropdown = @get('dropdown') || new Foundation.Dropdown($ul)
-    @set 'dropdown', dropdown
+  init_base: ->
+    ember.run.schedule 'afterRender', =>
+      $dd = @$('.dropdown-pane')
+      dropdown = new Foundation.Dropdown($dd)
+      @set 'dropdown', dropdown
