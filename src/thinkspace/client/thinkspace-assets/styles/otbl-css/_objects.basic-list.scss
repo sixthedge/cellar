@@ -20,7 +20,7 @@
   &:hover { cursor: pointer; }
 }
 
-.basic-list--dividers {
+.basic-list--thin-dividers {
   >li {
     border-bottom: $border--thin;
 
@@ -29,3 +29,14 @@
     }
   }
 }
+
+.basic-list--thick-dividers {
+  >li {
+    border-bottom: $border--light;
+
+    &:last-of-type {
+      border-bottom: none;
+    }
+  }
+}
+
