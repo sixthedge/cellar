@@ -21,6 +21,8 @@ export default base.extend arr_helpers,
     else
       @get('team_set.scaffold.teams')
 
+  has_teams: ember.computed.notEmpty 'teams'
+
   set_space: (space) -> @set('space', space) if ember.isPresent(space)
 
   # ### Initialization

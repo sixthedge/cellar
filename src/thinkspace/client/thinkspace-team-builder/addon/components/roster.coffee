@@ -11,7 +11,6 @@ export default base_component.extend selectable_mixin,
   manager:  ember.inject.service()
 
   # ### Properties
-  is_roster: true
   selected_team: null
   search_field: ''
   results:      []

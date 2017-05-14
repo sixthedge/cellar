@@ -5,7 +5,6 @@ import base  from 'thinkspace-base/components/base'
 # see thinkspace/common/dropdown for usage instructions
 
 export default base.extend
-  tagName: 'li'
 
   init_base: -> @classNames = ember.makeArray(@list_item_class)
 
@@ -47,3 +46,13 @@ export default base.extend
 
   has_key: (obj, key) ->
     return (key of obj) # TODO: This breaks on string arrays.
+
+  actions:
+    select: -> 
+      @sendAction 'on_click' if @get('on_click')
+
+      target = @get('action_receiver_master')
+      action = @get('select_action')
+      link   = @get('link')
+      target.send action, link
+

@@ -172,6 +172,9 @@ export default base_component.extend arr_helpers,
   goto_manage_route: ->
     @get_app_route().transitionTo(ns.to_r('team_builder', 'manage'), @get('model'))
 
+  goto_roster_route: ->
+    @get_app_route().transitionTo(ns.to_r('team_builder', 'roster'), @get('model'))
+
   actions:
     search_results: (users) ->
       return unless ember.isPresent(users)
@@ -217,4 +220,4 @@ export default base_component.extend arr_helpers,
 
     finalize_team: ->
       @save_transform().then =>
-        @goto_team(null)
+        @goto_roster_route()
