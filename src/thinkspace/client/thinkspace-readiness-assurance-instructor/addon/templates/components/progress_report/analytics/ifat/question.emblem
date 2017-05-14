@@ -57,5 +57,15 @@
 
 
 
-if is_expanded
-  h1 test
+  if is_expanded
+    .rat-report__drawer-container
+      .grid__container--content-width
+        ul.basic-list.basic-list--dividers
+          each choices as |choice|
+            li.basic-list__item
+              if choice.correct
+                .icon.icon--16.spacing__margin-right--half.icon__checkmark--green
+              else
+                .icon.icon--16.spacing__margin-right--half.icon__cross--black
+              .text__font-size--12.text--bold.text--inline-block #{choice.label}
+              .text__font-size--12.text__font-style--italic.spacing__margin-left--24 4 Teams
