@@ -12,9 +12,10 @@ module Thinkspace; module ReadinessAssurance; module Creators
       ActiveRecord::Base.transaction do
         @assignment = create_assignment_from_params
         irat_phase  = create_assessment_phase(irat_assessment_template)
-        trat_phase  = create_assessment_phase(trat_assessment_template)
-        @irat_assessment = create_assessment(irat_phase, 'irat')
-        @trat_assessment = create_assessment(trat_phase, 'trat')
+        trat_phase  = create_assessment_phase(trat_assessment_template, 'trat')
+        assign_teams(trat_phase)
+        @irat_assessment = create_assessment(irat_phase, 'irat', false)
+        @trat_assessment = create_assessment(trat_phase, 'trat', false)
       end
 
       @assignment
@@ -29,11 +30,23 @@ module Thinkspace; module ReadinessAssurance; module Creators
       model
     end
 
-    def create_assessment(phase, type)
+    def create_assessment(phase, type, ifat)
       @assessment = assessment_class.create(
         authable: phase,
         settings: {
-          ra_type: type
+          ra_type: type,
+          questions: {
+            type:          'multiple_choice',
+            random:        false,
+            ifat:          ifat,
+            justification: true
+          },
+          scoring: {
+            correct:           5,
+            attempted:         1,
+            no_answer:         0,
+            incorrect_attempt: -1
+          }
         },
         questions: []
       )
@@ -43,21 +56,34 @@ module Thinkspace; module ReadinessAssurance; module Creators
       @assessment
     end
 
-    def create_assessment_phase(template)
-      options = get_assessment_phase_options(template)
+    def create_assessment_phase(template, type='irat')
+      options = get_assessment_phase_options(template, type)
       create_phase(options)
     end
 
-    def get_assessment_phase_options(template)
+    def assign_teams(phase)
+      assignment                          = phase.thinkspace_casespace_assignment
+      space                               = assignment.get_space
+      team_set                            = space.default_team_set
+      phase.team_category_id = Thinkspace::Team::TeamCategory.collaboration
+      Thinkspace::Team::TeamSetTeamable.create(team_set_id: team_set.id, teamable: assignment)
+    end
+
+    def get_assessment_phase_options(template, type)
       options                     = Hash.new
       options[:assignment_id]     = @assignment.id
       options[:phase_template_id] = template.id
-      options[:team_category_id]  = Thinkspace::Team::TeamCategory.assessment.id
+      options[:team_category_id]  = Thinkspace::Team::TeamCategory.collaboration.id if type == 'trat'
       options[:title]             = template.title
       options[:description]       = 'Readiness assurance default description.'
       options[:state]             = :active
       options[:default_state]     = 'unlocked'
       options[:position]          = 1
+      options[:settings]          = {
+        validation: {validate: true},
+        phase_score_validation: {numericality: {allow_blank: false, greater_than_or_equal_to: 1, less_than_or_equal_to: 50000, decimals: 0}},
+        actions:    {submit: {class: "ra_#{type}_submit", state: 'complete', auto_score: {score_with: 'ra_auto_score'}}}
+      }
       options
     end
 

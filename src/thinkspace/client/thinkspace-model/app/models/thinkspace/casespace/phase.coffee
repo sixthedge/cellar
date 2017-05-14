@@ -5,12 +5,12 @@ import resource_mixin from 'thinkspace-resource/mixins/resources'
 
 export default ta.Model.extend resource_mixin, ta.totem_data, ta.add(
     ta.belongs_to 'assignment',        reads: {}
-    ta.belongs_to 'configuration',     reads: {}
     ta.belongs_to 'phase_template',    reads: {}
     ta.has_many   'phase_components',  reads: {}
     ta.has_many   'phase_states',      reads: {filter: true, notify: true}
   ),
 
+  # TODO: Remove all old/not used properties.
   title:             ta.attr('string')
   phase_template_id: ta.attr('number')
   team_category_id:  ta.attr('number')
@@ -22,9 +22,14 @@ export default ta.Model.extend resource_mixin, ta.totem_data, ta.add(
   user_action:       ta.attr('string')
   default_state:     ta.attr('string')
   state:             ta.attr('string')
+  settings:          ta.attr()
+  # ## Timetable properties
   unlock_at:         ta.attr('date')
   due_at:            ta.attr('date')
-  settings:          ta.attr()
+  release_at:        ta.attr('date')
+  # ## Configuration properties
+  # => Used for managing the `settings` value in a sane manner.
+  configuration: ta.attr()
 
   totem_data_config: ability: true
 
@@ -151,3 +156,7 @@ export default ta.Model.extend resource_mixin, ta.totem_data, ta.add(
   inactivate: -> @state_change('inactivate')
   archive:    -> @state_change('archive')
   activate:   -> @state_change('activate')
+
+  # # Configuration
+  # Ensure that no configuration instructions are sent, e.g. in the case of logistics only updates.
+  clear_configuration: -> @set('configuration', null)

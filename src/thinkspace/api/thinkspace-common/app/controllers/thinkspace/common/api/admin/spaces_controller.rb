@@ -48,7 +48,7 @@ module Thinkspace
           end
 
           def team_sets
-            ensure_default_team_set
+            @space.ensure_default_team_set
             controller_render(@space)
           end
 
@@ -88,15 +88,6 @@ module Thinkspace
           def add_user_to_space_as_owner_and_render
             @space.add_user_as_owner(current_user)
             controller_render(@space)
-          end
-
-          def ensure_default_team_set
-            team_sets = @space.thinkspace_team_team_sets
-            default   = team_sets.scope_default
-            if default.empty?
-              team_set = team_sets.first
-              team_set.make_default!
-            end
           end
 
           # # Helpers

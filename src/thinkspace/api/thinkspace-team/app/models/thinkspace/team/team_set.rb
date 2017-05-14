@@ -52,7 +52,7 @@ module Thinkspace
         team_set.thinkspace_team_teams.where.not(state: Thinkspace::Team::Team.state_locked)
       end
 
-      def self.scope_default; scope_state('default'); end
+      def self.scope_default; find_by(state: 'default'); end
       def self.scope_state(states=[]); where(state: states); end
 
       # ### Cloning

@@ -90,5 +90,3 @@ export default step.extend
   select_release_at: (date) -> @get('changeset').set 'release_at', date
   select_due_at:     (date) -> @get('changeset').set 'due_at', date
 
-  select_unlock_at: (date) -> @set('unlock_at', date)
-

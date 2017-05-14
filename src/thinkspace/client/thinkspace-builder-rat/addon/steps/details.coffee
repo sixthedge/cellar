@@ -72,9 +72,10 @@ export default step.extend
           resolve()
 
   select_team_set: (team_set) -> 
+    # TODO: This needs to be refactored to get the tRAT assessment, then get the authable for it.
     @set 'selected_team_set', team_set
     @get('model').get(ta.to_p('phases')).then (phases) =>
-      phase = phases.get('firstObject')
+      phase = phases.get('lastObject')
       phase.set 'team_set_id', team_set.get('id')
       phase.save()
 

@@ -6,7 +6,6 @@ module Thinkspace
           load_and_authorize_resource class: totem_controller_model_class
           totem_action_serializer_options
           before_action :set_common_values
-          before_action :set_configuration, only: [:update]
 
           include Thinkspace::Casespace::Concerns::Phases::Configuration
 
@@ -45,7 +44,7 @@ module Thinkspace
             @phase.team_category_id = params_root[:team_category_id] if @builder_abilities[:team_category]
             @phase.default_state    = (params_root[:default_state] || 'unlocked') if @builder_abilities[:default_state]
             update_timetable
-            update_phase_team_set if @builder_abilities[:team_set]
+            update_phase_team_set
             update_phase_configuration # From Phases::Configuration
             totem_serializer_options.phases.update(serializer_options)
             if @phase.save 
@@ -138,13 +137,8 @@ module Thinkspace
             @team_class       = Thinkspace::Team::Team
           end
 
-          def set_configuration
-            @params_configuration = params[:configuration]
-            @configuration        = @phase.get_configuration
-            raise_phase_exception "Phase  [id: #{@phase.id}] does not have a configuration."  if @configuration.blank? 
-          end
-
           def update_phase_team_set
+            return unless @builder_abilities[:team_set]
             team_set_id           = params_root[:team_set_id]
             if team_set_id.present?
               team_set              = Thinkspace::Team::TeamSet.find_by(id: team_set_id)
@@ -157,9 +151,9 @@ module Thinkspace
           end
 
           def update_timetable
-            @timetable = Thinkspace::Common::Timetable.find_or_create_by(timeable: @phase, ownerable: nil)
+            @timetable           = Thinkspace::Common::Timetable.find_or_create_by(timeable: @phase, ownerable: nil)
             @timetable.unlock_at = params_root[:unlock_at] if params_root.has_key?(:unlock_at)
-            @timetable.due_at    = params_root[:due_at]
+            @timetable.due_at    = params_root[:due_at] if params_root.has_key?(:due_at)
           end
 
           # ### Error helpers

@@ -26,8 +26,6 @@ module Thinkspace
       # ###
 
       def sync_assessments
-        ## get my partner
-        ## set my settings n questions n thangs
         phase      = self.authable
         assignment = Thinkspace::Casespace::Assignment.find(phase.assignment_id)
 
@@ -45,7 +43,7 @@ module Thinkspace
       def irat?; get_ra_type == 'irat'; end
       def trat?; get_ra_type == 'trat'; end
 
-      def ifat?; get_settings['questions']['ifat'] == true; end
+      def ifat?; get_settings.dig('questions', 'ifat') == true; end
 
       # ###
       # ### Question Helpers.

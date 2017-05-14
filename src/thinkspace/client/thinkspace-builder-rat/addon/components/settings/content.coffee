@@ -12,6 +12,5 @@ export default base.extend
 
   actions:
     select_release_at: (date) -> @get('step').select_release_at(date)
-    select_due_at: (date) -> @get('step').select_due_at(date)
-
-    select_unlock_at: (date) -> @get('step').select_unlock_at(date)
+    select_due_at:     (date) -> @get('step').select_due_at(date)
+    select_unlock_at:  (date) -> @get('step').select_unlock_at(date)
