@@ -1,0 +1,7 @@
+h1 = display_question
+
+each choice_items as |choice|
+  component 'confirmation/content/items/choice' model=choice
+
+br
+component '__changeset/errors' changeset=model.changeset attribute='answer' errors_visible=true 

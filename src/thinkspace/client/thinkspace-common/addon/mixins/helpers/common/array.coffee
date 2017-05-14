@@ -49,7 +49,7 @@ export default ember.Mixin.create
   duplicate_array: (array) ->
     copy = []
     array.forEach (a) => copy.pushObject(a)
-    copy    
+    copy
 
   # gets a has_many relationship from from a record and calls toArray()
   has_many_to_array: (context, property) ->
