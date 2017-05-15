@@ -71,6 +71,7 @@ export default ember.Mixin.create
 
   handle_error: (reason={}) ->
     util.console_info '1.......action-error', reason
+    Rollbar.error(reason) if Rollbar?
     @invalidate_session()
     if util.is_promise(reason)
       result = reason._result

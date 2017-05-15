@@ -30,9 +30,11 @@ class TotemError
     # If the ember application is not ready (e.g. an error raised in an initializer)
     # throw a javascript Error instead of a TotemError.  Otherwise get 'uncaught exception: totem_error'.
     if ember.onerror
+      Rollbar.error(options) if Rollbar?
       throw new TotemError(options)
     else
       message += "\n#{options.stack}"  if options.stack
+      Rollbar.error(options) if Rollbar?
       throw new Error message
 
   # Class method so if "import from 'totem/error'" can call totem_error.throw(@, message, options).
