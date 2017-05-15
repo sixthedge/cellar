@@ -11,7 +11,8 @@ totem_messages = ember.Object.extend
     @_super()
     @reset_elapsed_time()
     @set_type_visibility(type, true) for type in @all_message_types()  # default to visible
-    api.set_app_msgs(@)
+    @api = api
+    @api.set_app_msgs(@)
 
   # ###
   # ### Api Success/Failure.
@@ -19,9 +20,9 @@ totem_messages = ember.Object.extend
   api_success:  (options={}) ->
     @reset_session_timer()
     return (options.return or options.model or null)  if @suppress_all_messages()
-    api.success(options)
+    @api.success(options)
 
-  api_failure:  (error, options={}) -> api.failure(error, options)
+  api_failure:  (error, options={}) -> @api.failure(error, options)
 
   # ###
   # ### Message Queues.
