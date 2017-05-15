@@ -1,6 +1,5 @@
-| #{prefix}. 
+.text__font-size--12.text--bold.text--inline-block #{prefix}:
 
 component '__changeset/input' value=model.changeset.label changeset=model.changeset attribute='label' display_errors=true
 
-.btn click='delete'
-  | Delete
+.icon.icon--16.icon--actionable.icon__trash--black click='delete' title="Delete"

@@ -1,6 +1,7 @@
 if model.is_answer
-  div style='font-weight:bold;'
+  .text--bold.text__font-size--12
+    .icon.icon--16.icon__checkmark--green.spacing__margin-right--half
     | #{prefix}. #{model.label}
 else
-  div
+  .spacing__margin-left--24.text__font-size--12
     | #{prefix}. #{model.label}

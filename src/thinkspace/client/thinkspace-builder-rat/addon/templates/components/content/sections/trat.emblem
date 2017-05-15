@@ -1,5 +1,5 @@
 fieldset.forms__section.spacing__margin-bottom--4
-  h2.text--inline-block tRAT Questions
+  h2.text--inline-block.spacing__margin-top--0 tRAT Questions
   if display_questions
     .btn.is-right.btn--primary click='create'
       | New Question
