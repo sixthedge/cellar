@@ -1,30 +1,39 @@
-.grid__container--flex
-  .grid__col--1of3.grid__mobile--full-width
-    .rat-report__overview-container
-      .rat-report__overview-number #{adjusted_order}
+.rat-report__overview-container.grid__container.grid__container--flex
+
+  .rat-report__question-container
+    .rat-report__overview-number #{adjusted_order}
+    .rat-report__question-content
+      .text__font-size--12.text--bold #{model.question}
+
+  .rat-report__graph-picks-container
+
+    .rat-report__graph-container
       .rat-report__bar-graph
         component 'progress_report/analytics/ifat/percentages' assessment=assessment data=data
       .rat-report__overview-avg
         .rat-report__overview-avg-number #{correct_average}
         .rat-report__overview-avg-label Attempts
-  .grid__col--2of3.grid__mobile--full-width
-    if is_expanded
-      .rat-report__question-container
-        .forms__field-wrapper
-          label #{model.question}
-          hr
-        each choices as |choice|
-          .rat-report__question-choice class=choice.correct:rat-report__question-choice--correct
-            if choice.correct
-              .icon.icon--16.icon__checkmark--green.spacing__margin-right--half
-            .rat-report__choice-label #{choice.label}
-            .rat_report__attempts-container
-              each choice.attempts as |attempt|
-                .rat-report__choice-total-container
-                  .rat-report__choice-total #{attempt.count}
-                  .text__font-size--12.text--bold #{attempt.attempt}
-              .rat-report__choice-total-container
-                .rat-report__choice-total 4
-                .text__font-size--12.text--bold Total
-              .text__align--center.text__font-size--10 Attempts
-          
+
+    .rat-report__top-picks
+      .text__font-size--10.text--bold Most picked
+      ul.basic-list.basic-list--thin-dividers
+        li.basic-list__item.spacing__margin-bottom--0.text__font-size--12 
+          .icon.icon--16.spacing__margin-right--half.icon__checkmark--green
+          | John Lennon
+        li.basic-list__item.spacing__margin-bottom--0.text__font-size--12 
+          .icon.icon--16.spacing__margin-right--half.icon__cross--black
+          | Eric Clapton
+
+  if is_expanded
+    .rat-report__drawer-container
+      .grid__container--content-width
+        ul.basic-list.basic-list--thick-dividers
+          each choices as |choice|
+            li.basic-list__item
+              if choice.correct
+                .icon.icon--16.spacing__margin-right--half.icon__checkmark--green
+              else
+                .icon.icon--16.spacing__margin-right--half.icon__cross--black
+              .text__font-size--12.text--bold.text--inline-block #{choice.label}
+              .text__font-size--12.spacing__margin-left--24 
+                | <strong>4</strong> Teams
