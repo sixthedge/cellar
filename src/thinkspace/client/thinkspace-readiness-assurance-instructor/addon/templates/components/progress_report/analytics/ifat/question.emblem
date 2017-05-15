@@ -21,7 +21,7 @@
           .icon.icon--16.spacing__margin-right--half.icon__checkmark--green
           | John Lennon
         li.basic-list__item.spacing__margin-bottom--0.text__font-size--12 
-          .icon.icon--16.spacing__margin-right--half.icon__cross--black
+          .icon.icon--16.spacing__margin-right--half.icon__cross--red
           | Eric Clapton
 
   if is_expanded
@@ -33,7 +33,7 @@
               if choice.correct
                 .icon.icon--16.spacing__margin-right--half.icon__checkmark--green
               else
-                .icon.icon--16.spacing__margin-right--half.icon__cross--black
+                .icon.icon--16.spacing__margin-right--half.icon__cross--red
               .text__font-size--12.text--bold.text--inline-block #{choice.label}
               .text__font-size--12.spacing__margin-left--24 
                 | <strong>4</strong> Teams
