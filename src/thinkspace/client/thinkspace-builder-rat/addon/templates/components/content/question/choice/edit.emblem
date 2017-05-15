@@ -5,9 +5,10 @@
     component '__changeset/input' value=model.changeset.label changeset=model.changeset attribute='label' display_errors=true class='grid__col--4of4'
 
     .spacing__margin-left--1
-      .icon.icon--16.icon--actionable.icon__trash--black.vertical-align--baseline click='delete' title="Delete"
+      .icon.icon--16.icon--actionable.icon__trash--black.vertical-align--baseline tabindex='0' click='delete' title="Delete"
   .spacing__margin-left--2
-    a.action-link--small.action-link--gray Set as correct
-    .text__font-size--12.text--bold.text__color--green
-      .icon.icon--16.icon__checkmark--green.spacing__margin-right--half
-      span Correct choice
+    a.action-link--small.action-link--gray tabindex='0' Set as correct
+    // if correct show this
+    / .text__font-size--12.text--bold.text__color--green
+    /   .icon.icon--16.icon__checkmark--green.spacing__margin-right--half
+    /   | Correct choice

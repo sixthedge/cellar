@@ -1,7 +1,7 @@
 .spacing__margin-bottom--2
   h2.text--inline-block Settings
 
-  link-to step.route_path model class='button btn is-right spacing__margin-top--half'
+  link-to step.route_path model class='btn is-right spacing__margin-top--half' tabindex='0'
     | Edit settings
 
   h3 iRAT Logistics
