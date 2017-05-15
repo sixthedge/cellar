@@ -74,6 +74,11 @@ button,
 
 .action-link--gray {
   color: $color-gray-base;
+  transition: $transition-animation--color;
+  
+  &:hover, &:focus {
+    color: $color-blue-base;
+  }
 }
 
 

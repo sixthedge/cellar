@@ -12,4 +12,4 @@
   /     | iRAT and tRAT are not synchronized
 
   component 'confirmation/content/sections/irat' questions=step.irat_question_items
-  component 'confirmation/content/sections/trat' questions=step.trat_question_items sync=sync_assessments
+  / component 'confirmation/content/sections/trat' questions=step.trat_question_items sync=sync_assessments
