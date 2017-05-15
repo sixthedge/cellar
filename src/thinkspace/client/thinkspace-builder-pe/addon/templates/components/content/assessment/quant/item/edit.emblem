@@ -10,12 +10,12 @@
   .forms__label-summary Set the minimum and maximum ends of the scale
   // Temp selects until we get ts-dropdown working (12/20)
   .dropdown__container
-    select onchange={action (mut model.points_changeset.min) value='target.value'}
+    select.text--inline-block onchange={action (mut model.points_changeset.min) value='target.value'}
       each min as |num|
         option value=num.value selected=num.is_selected
           = num.value
     span.text--bold.text__font-size--12.spacing__pad-left--1.spacing__pad-right--1 to
-    select onchange={action (mut model.points_changeset.max) value='target.value'}
+    select.text--inline-block onchange={action (mut model.points_changeset.max) value='target.value'}
       each max as |num|
         option value=num.value selected=num.is_selected
           = num.value

@@ -4,8 +4,9 @@ fieldset.forms__section.spacing__margin-bottom--4
     .btn.is-right.btn--primary click='create'
       .icon.icon--16.icon__plus--white.spacing__margin-right--half
       | New Question
-    each question_items as |item|
-      component 'content/question/item' model=item type=type
+    .spacing__margin-bottom--2
+      each question_items as |item|
+        component 'content/question/item' model=item type=type
     button.btn.btn--primary click='create'
       .icon.icon--16.icon__plus--white.spacing__margin-right--half
       | New Question

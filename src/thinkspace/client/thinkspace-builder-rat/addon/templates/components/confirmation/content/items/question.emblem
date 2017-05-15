@@ -1,4 +1,4 @@
-h1 = display_question
+label = display_question
 
 each choice_items as |choice|
   component 'confirmation/content/items/choice' model=choice
