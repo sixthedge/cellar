@@ -1,5 +1,13 @@
-.text__font-size--12.text--bold.text--inline-block #{prefix}:
+.grid__container.spacing__margin-bottom--half
+  .inline-group.text__lh--2
+    .text__font-size--12.text--bold.spacing__margin-right--1.text--inline-block #{prefix}:
 
-component '__changeset/input' value=model.changeset.label changeset=model.changeset attribute='label' display_errors=true
+    component '__changeset/input' value=model.changeset.label changeset=model.changeset attribute='label' display_errors=true class='grid__col--4of4'
 
-.icon.icon--16.icon--actionable.icon__trash--black click='delete' title="Delete"
+    .spacing__margin-left--1
+      .icon.icon--16.icon--actionable.icon__trash--black.vertical-align--baseline click='delete' title="Delete"
+  .spacing__margin-left--2
+    a.action-link--small.action-link--gray Set as correct
+    .text__font-size--12.text--bold.text__color--green
+      .icon.icon--16.icon__checkmark--green.spacing__margin-right--half
+      span Correct choice

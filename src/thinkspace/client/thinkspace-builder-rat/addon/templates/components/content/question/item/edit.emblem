@@ -6,8 +6,9 @@
 .forms__field-wrapper.spacing__margin-bottom--2
   label Answer choices
   .forms__label-summary We recommend 3-4 choices for students to choose from.
-  each choice_items as |choice|
-    component 'content/question/choice/edit' model=choice delete='delete_choice'
+  .input-group
+    each choice_items as |choice|
+      component 'content/question/choice/edit' model=choice delete='delete_choice'
 
   a{action 'add_choice'} class='action-link--small'
     | +  Add another answer choice

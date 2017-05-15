@@ -9,6 +9,7 @@
 
 .icon--actionable {
   cursor: pointer;
+  transition: $transition-animation--background-img;
   &:focus {
     outline:        1px dotted $color-blue-base;
     outline-offset: 4px;
@@ -165,4 +166,9 @@
       background-image: url('images/icons/otbl-icons__trash-outline_blue.svg');
     }
   }
+}
+
+// Plus
+.icon__plus--white {
+  background-image: url('images/icons/otbl-icons__plus--white.svg');
 }

@@ -7,7 +7,7 @@ each choice_items as |choice index|
 hr
 .grid__container
   .btn-group.is-left
-    button.btn.btn--primary click='toggle_edit'
+    button.btn click='toggle_edit'
       | Edit question
     button.btn click='duplicate'
       .icon.icon--16.icon__clone--white.spacing__margin-right--half

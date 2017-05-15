@@ -1,10 +1,14 @@
 fieldset.forms__section.spacing__margin-bottom--4
-  h2.text--inline-block.spacing__margin-top--0 iRAT Questions
+  h2.text--inline-block.spacing__margin-top--0 Questions
   if has_questions
     .btn.is-right.btn--primary click='create'
+      .icon.icon--16.icon__plus--white.spacing__margin-right--half
       | New Question
     each question_items as |item|
       component 'content/question/item' model=item type=type
+    button.btn.btn--primary click='create'
+      .icon.icon--16.icon__plus--white.spacing__margin-right--half
+      | New Question
   else
     div class={:bordered-panel :bordered-panel--active}
       .forms__field-wrapper
