@@ -6,11 +6,7 @@
     button.btn.btn--primary{action 'set_active'}
       | Make live now!
 
-    button.btn{action 'edit_release_at'} data-open='change-date'
-      | Add Release Date
-
-    if is_editing_release_date
-      component '__case/states/modals/release_at' model=model
+    component '__case/states/modals/release_at' modal_partial='components/case/states/modals/release_at/modal' modal_reveal_partial='components/case/states/modals/release_at/action' model=model select='select_release_at'modal_reveal_anchor_class_names='btn' class='btn__component'
 
     button.btn{action 'set_archived'}
       | Archive exercise

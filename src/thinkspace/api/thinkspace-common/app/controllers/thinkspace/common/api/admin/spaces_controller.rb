@@ -90,6 +90,17 @@ module Thinkspace
             controller_render(@space)
           end
 
+          def ensure_default_team_set
+            team_sets = @space.thinkspace_team_team_sets
+            default   = team_sets.scope_default
+            if team_sets.empty?
+              Thinkspace::Team::TeamSet.create(title: 'Default', default: true, space_id: @space.id)
+            elsif default.empty?
+              team_set = team_sets.first
+              team_set.set_default
+            end
+          end
+
           # # Helpers
           def get_space_type; space_type_class.find_by(title: 'Casespace'); end
           def user_class;       Thinkspace::Common::User;       end

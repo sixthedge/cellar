@@ -5,8 +5,8 @@ if all_data_loaded
   if has_selected_users
     if has_selected_assigned_users
       .btn-group.is-right.spacing__margin-bottom--1
-        component '__confirmation/modal' modal_partial='components/roster/modals/create/modal' modal_reveal_partial='components/roster/modals/create/action' assigned_users=selected_assigned_users class='btn__component text--inline-block'
-        component '__confirmation/modal' modal_partial='components/roster/modals/add/modal' modal_reveal_partial='components/roster/modals/add/action' assigned_users=selected_assigned_users class='btn__component text--inline-block'
+        component '__modal/confirmation' modal_partial='components/roster/modals/create/modal' modal_reveal_partial='components/roster/modals/create/action' assigned_users=selected_assigned_users class='btn__component text--inline-block'
+        component '__modal/confirmation' modal_partial='components/roster/modals/add/modal' modal_reveal_partial='components/roster/modals/add/action' assigned_users=selected_assigned_users class='btn__component text--inline-block'
     else
       .btn-group.is-right.spacing__margin-bottom--1
         .btn.btn--primary{action 'create_team'}
