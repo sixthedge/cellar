@@ -3,12 +3,9 @@
 //\*------------------------------------*/
 
 .rat-report__overview-container {
-  display: flex; 
-  border: $border--default;
-  margin-bottom: 4px;
-  min-width: 300px;
-  height: 70px;
-  cursor: pointer;
+  border:           $border--default;
+  margin-bottom:    4px;
+  cursor:           pointer;
   background-color: white;
 
   &:hover, &:focus {
@@ -16,17 +13,28 @@
   }
 }
 
+// Question container
+
+.rat-report__question-container {
+  width: 33.333%;
+  @media only screen and (max-width: 800px) {
+    background-color: $color-gray-med;
+    width: 100%;
+  }
+}
+
 .rat-report__overview-number {
   width:          25px;
   height:         100%;
-  float:          right;
+  float:          left;
   flex-grow:      0;
-  line-height:    66px;
+  padding-top:    8px;
+  line-height:    1.15rem;
   vertical-align: middle;
   text-align:     center;
   font-weight:    $font-weight--bold;
   color:          $color-gray-base;
-  font-size:      .875rem;
+  font-size:      .75rem;
 
   .rat-report__overview-container:hover & {
     background-color: $color-blue-base;
@@ -34,22 +42,68 @@
   }
 }
 
+.rat-report__question-content {
+  overflow:         hidden;
+  padding:          8px;
+  line-height:      1.15em;
+  height: 100%;
+  border-right: $border--default;
+
+  @media only screen and (max-width: 800px) {
+    border-right: none;
+  }
+
+
+
+}
+
+// Bar + Top section
+.rat-report__graph-picks-container {
+  width: 66.666%;
+  @media only screen and (max-width: 800px) {
+    width: 100%;
+    border-top: $border--default;
+  }
+
+  @media only screen and (max-width: 40rem) {
+    border-top: none;
+  }
+}
+
+// Bar graph section
+
+.rat-report__graph-container {
+  height: 100%;
+  width: 50%;
+  display: inline-block;
+
+  @media only screen and (max-width: 40rem) {
+    width:      100%;
+    height:     70px;
+    border-top: $border--default;
+    display:    block;
+  }
+}
+
 .rat-report__bar-graph {
-  flex-grow: 2;
-  padding: 0 .5rem;
+  padding:  0 8px;
+  height:   100%;
+  width:    calc(100% - 66px);
+  overflow: hidden;
+  float:    left;
 }
 
 .rat-report__overview-avg {
-  width: 66px;
-  float: right;
-  flex-grow: 0;
+  width:       66px;
+  height:      100%;
+  float:       right;
   border-left: $border--default;
-  text-align: center;
+  text-align:  center;
   padding-top: 10px;
 
-  .rat-report__overview-container:hover & {
-    border-left-color: $color-blue-base;
-  }
+  // .rat-report__overview-container:hover & {
+  //   border-left-color: $color-blue-base;
+  // }
 }
 
 .rat-report__overview-avg-number {
@@ -66,70 +120,36 @@
 }
 
 
-.rat-report__question-container {
-  border:           $border--default;
-  margin-left:      4px;
-  margin-bottom:    4px;
+// Top Picks section
+
+.rat-report__top-picks {
+  overflow:    hidden;
+  height:      100%;
+  width:       50%;
+  display:     inline-block;
+  padding:     8px;
+  border-left: $border--default;
+
+  .basic-list__item {
+    text-overflow: ellipsis;
+    white-space:   nowrap;
+    overflow:      hidden;
+  }
+
+  @media only screen and (max-width: 40rem) {
+    width: 100%;
+    height: auto;
+    border-top: $border--default;
+    border-left: none;
+    display: block;
+  }
+}
+
+
+// Drawer
+.rat-report__drawer-container {
+  border-top:       $border--default;
   background-color: white;
-  padding:          1rem;
-
-  hr {
-    margin-bottom: 0;
-  }
+  width:            100%;
+  padding:          8px;
 }
-
-.rat-report__question-choice {
-  border-bottom: 2px solid $color-gray-med;
-  padding:       1rem 0;
-
-  &:last-of-type {
-    border-bottom: none;
-    padding-bottom: 0;
-  }
-}
-
-// .rat-report__question-choice--correct {
-//   color: $color-green-base;
-// }
-
-.rat_report__attempts-container {
-  display: table;
-}
-
-.rat-report__choice-total-container {
-  display: inline-block;
-  text-align: center;
-}
-
-.rat-report__choice-label {
-    font-size:     .875rem;
-    margin-bottom: .5rem;
-
-  .rat-report__question-choice--correct & {
-    color:       $color-green-base;
-    font-weight: $font-weight--bold;
-    display:     inline-block;
-  }
-}
-
-.rat-report__choice-total {
-  background-color: $color-gray-med;
-  width:            2rem;
-  height:           2rem;
-  line-height:      2rem;
-  text-align:       center;
-  color:            $color-black-base;
-  font-weight:      $font-weight--bold;
-  margin-right:     6px;
-
-  .rat-report__question-choice--correct & {
-    background-color: $color-green-base !important;
-    color:            white;
-  }
-
-  &.rat-report__choice-total--is-incorrect {
-    background-color: $color-red-base;
-    color: white;
-  }
-}
-

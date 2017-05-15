@@ -40,6 +40,11 @@
   }
 }
 
+.grid__col--1of2 {
+  display: inline-block;
+  width: 50%;
+}
+
 .grid__col--1of4 {
   display: inline-block;
 	width: 25%;

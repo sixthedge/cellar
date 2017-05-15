@@ -19,3 +19,24 @@
 .basic-list__item--clickable {
   &:hover { cursor: pointer; }
 }
+
+.basic-list--thin-dividers {
+  >li {
+    border-bottom: $border--thin;
+
+    &:last-of-type {
+      border-bottom: none;
+    }
+  }
+}
+
+.basic-list--thick-dividers {
+  >li {
+    border-bottom: $border--light;
+
+    &:last-of-type {
+      border-bottom: none;
+    }
+  }
+}
+

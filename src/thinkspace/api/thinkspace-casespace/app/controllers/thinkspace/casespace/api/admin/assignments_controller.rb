@@ -152,9 +152,7 @@ module Thinkspace
 
           # Bundle type creation helpers
           def set_common_assignment_values
-            if params_configuration_has?(:release_at) || params_configuration_has?(:due_at)
-              update_timetable
-            end
+            update_timetable
             @assignment.title        = params_root[:title]        if params_root_has?(:title)
             @assignment.description  = params_root[:description]  if params_root_has?(:description)
             @assignment.name         = params_root[:name]         if params_root_has?(:name)
@@ -165,12 +163,14 @@ module Thinkspace
           end
 
           def update_timetable
-            due_at               = params_root[:due_at]
-            release_at           = params_root[:release_at]
+            due_at               = params_root[:due_at] if params_root_has?(:due_at)
+            release_at           = params_root[:release_at] if params_root_has?(:release_at)
             timetable            = @assignment.get_or_set_timetable_for_self
-            timetable.due_at     = due_at if due_at.present?
-            timetable.release_at = release_at if release_at.present?
-            timetable.save
+            if due_at.present? || release_at.present?
+              timetable.due_at     = due_at if due_at.present?
+              timetable.release_at = release_at if release_at.present?
+              timetable.save
+            end
           end
           
           def included_options
