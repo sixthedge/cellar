@@ -6,7 +6,10 @@
     link-to 'manage' model class='breadcrumbs__link'
       | Teams
 
-  if has_team_id
-    partial 'components/builder/create'
+  if loading.all
+    component '__loader/base'
   else
-    partial 'components/builder/team_builder'
+    if has_team_id
+      partial 'components/builder/create'
+    else
+      partial 'components/builder/team_builder'

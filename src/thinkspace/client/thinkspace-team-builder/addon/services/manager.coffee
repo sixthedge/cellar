@@ -22,11 +22,19 @@ export default base.extend arr_helpers,
       @get('team_set.scaffold.teams')
 
   has_teams: ember.computed.notEmpty 'teams'
+  initialized: false
 
   set_space: (space) -> @set('space', space) if ember.isPresent(space)
 
   # ### Initialization
   initialize: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      resolve() if @get('initialized')
+      @reinitialize().then =>
+        @set 'initialized', true
+        resolve()
+
+  reinitialize: ->
     new ember.RSVP.Promise (resolve, reject) =>
       space = @get('space')
       resolve() unless ember.isPresent(space)
@@ -56,11 +64,6 @@ export default base.extend arr_helpers,
       @tc.query_data(ns.to_p('team_set'), params, options).then (json) =>
         @set('abstract', json)
         resolve(json)
-
-  reinitialize: ->
-    new ember.RSVP.Promise (resolve, reject) =>
-      @initialize().then =>
-        resolve()
 
   # ### Helpers
   reconcile_assigned_users: ->

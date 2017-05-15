@@ -1,4 +1,7 @@
 partial 'components/helpers/headers/space'
 partial 'components/helpers/headers/manage'
 
-component 'helpers/teams' model=model highlighted_users=results
+if loading.all
+  component '__loader/base'
+else
+  component 'helpers/teams' model=model highlighted_users=results
