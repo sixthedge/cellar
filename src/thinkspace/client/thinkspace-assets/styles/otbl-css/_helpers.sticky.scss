@@ -1,0 +1,13 @@
+///*------------------------------------*\
+//    #STICKY
+//\*------------------------------------*/
+
+.sticky {
+  position: fixed;
+}
+
+.sticky--bottom-right {
+  bottom: 0;
+  right:  $spacing-unit;
+}
+

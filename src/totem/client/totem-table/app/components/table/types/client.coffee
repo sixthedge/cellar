@@ -17,6 +17,7 @@ export default base.extend
   # ### Helpers
   handle_header_click: (column) ->
     @set_loading('rows')
+    @reset_column_directions(column)
     column.invert_direction()
     @set_column_selected(column)
     @set_sorted_rows(column)
@@ -37,7 +38,6 @@ export default base.extend
 
   delete_row: (row) ->
     @sendAction('delete_row', row)
-    console.log("maybe this stupid shit will work")
 
   # # Helpers
   # ## Getters/setters
@@ -48,6 +48,4 @@ export default base.extend
     @set('rows', array)
 
   get_rows_all_content: -> 
-    console.log('[get_rows_all_content] rows are ', @get('rows'))
-
     @get('rows.all_content')

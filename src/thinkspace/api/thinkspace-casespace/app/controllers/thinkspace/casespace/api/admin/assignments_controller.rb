@@ -161,52 +161,18 @@ module Thinkspace
             @assignment.instructions = params_root[:instructions] if params_root_has?(:instructions)
             @assignment.bundle_type  = params_root[:bundle_type]  if params_root_has?(:bundle_type)
             @assignment.state        = params_root[:state]        if params_root_has?(:state)
+            @assignment.settings     = params_root[:settings]     if params_root_has?(:settings)
           end
 
           def update_timetable
-            params_configuration = get_params_configuration
-            return unless params_configuration.present?
-            due_at               = get_params_configuration[:due_at]
-            release_at           = get_params_configuration[:release_at]
+            due_at               = params_root[:due_at]
+            release_at           = params_root[:release_at]
             timetable            = @assignment.get_or_set_timetable_for_self
             timetable.due_at     = due_at if due_at.present?
             timetable.release_at = release_at if release_at.present?
             timetable.save
           end
-
-          def create_casespace
-            space_id = params_root['thinkspace/common/space_id']
-            t_id     = params_root[:builder_template_id]
-            template = @template_class.find(t_id)
-            space    = Thinkspace::Common::Space.find(space_id)
-            authorize! :update, space
-            template                = template.templateable 
-            @assignment             = template.cyclone(space: space, title: params_root[:title])
-            @assignment.bundle_type = params_root[:bundle_type]
-            controller_save_record(@assignment)
-          end
-
-          def create_assessment
-            # Two phases, first phase has componentable of the created assessment (maybe added later).
-            # Second phase is the overview componentable to get anonymized feedback.
-            assessment       = extract_included_records(single: true)
-            space_id         = params_root['thinkspace/common/space_id']
-            space            = @space_class.find(space_id)
-            team_set_id      = included_options[:team_set_id]
-            team_set         = Thinkspace::Team::TeamSet.find_by(id: team_set_id)
-            raise_assignment_exception "Cannot create an assessment without a valid team set for id: [#{team_set_id}]" unless team_set.present?
-            authorize! :update, space
-            authorize! :update, team_set.thinkspace_common_space
-            raise_assignment_exception "Team set [#{team_set_id}] does not belong to space_id [#{space_id}]." unless team_set.thinkspace_common_space == space
-            @assignment.thinkspace_common_space = space
-            @assignment.title                   = params_root[:title]
-            @assignment.state                   = 'active'
-            @assignment.save
-            Thinkspace::PeerAssessment::Assessment.create_assessment(@assignment, assessment, team_set)
-            # TODO: AUth team set id
-            controller_render(@assignment)
-          end
-
+          
           def included_options
             params_root[:included_options]
           end

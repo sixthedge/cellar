@@ -18,7 +18,7 @@
         button.btn{action 'toggle_approve' bubbles=false}
           | Unapprove Team
       else
-        component '__confirmation/modal' modal_partial='components/assessment/team_set/index/modals/approve/modal' modal_reveal_partial='components/assessment/team_set/index/modals/approve/action' model=incomplete_review_sets team_set=model confirm='toggle_approve'
+        component '__modal/confirmation' modal_partial='components/assessment/team_set/index/modals/approve/modal' modal_reveal_partial='components/assessment/team_set/index/modals/approve/action' model=incomplete_review_sets team_set=model confirm='toggle_approve'
   hr
   ul.basic-list
     each model.review_sets as |review_set|

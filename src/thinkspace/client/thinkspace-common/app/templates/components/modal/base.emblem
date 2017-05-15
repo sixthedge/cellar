@@ -1,0 +1,24 @@
+a class=modal_reveal_anchor_class_names data-open=modal_id
+  if modal_reveal_partial
+    partial modal_reveal_partial
+  else
+    if modal_reveal_icon_class_names
+      i class=modal_reveal_icon_class_names
+    else
+      i.im.im-open
+
+  div class=all_modal_class_names id=modal_id data-reveal='' data-overlay='true' data-close-on-click='true'
+    if modal_partial
+      partial modal_partial
+    else
+      if title
+        h4.modal__title = title
+      if subtitle
+        h5.modal__subtitle = subtitle
+      if description
+        p.modal__description = description
+
+    if show_close
+      button.modal__close.close-button data-close='' aria-label="Close modal"
+        i.im.im-close
+

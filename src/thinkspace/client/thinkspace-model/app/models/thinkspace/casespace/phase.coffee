@@ -5,12 +5,12 @@ import resource_mixin from 'thinkspace-resource/mixins/resources'
 
 export default ta.Model.extend resource_mixin, ta.totem_data, ta.add(
     ta.belongs_to 'assignment',        reads: {}
-    ta.belongs_to 'configuration',     reads: {}
     ta.belongs_to 'phase_template',    reads: {}
     ta.has_many   'phase_components',  reads: {}
     ta.has_many   'phase_states',      reads: {filter: true, notify: true}
   ),
 
+  # TODO: Remove all old/not used properties.
   title:             ta.attr('string')
   phase_template_id: ta.attr('number')
   team_category_id:  ta.attr('number')
@@ -23,6 +23,13 @@ export default ta.Model.extend resource_mixin, ta.totem_data, ta.add(
   default_state:     ta.attr('string')
   state:             ta.attr('string')
   settings:          ta.attr()
+  # ## Timetable properties
+  unlock_at:         ta.attr('date')
+  due_at:            ta.attr('date')
+  release_at:        ta.attr('date')
+  # ## Configuration properties
+  # => Used for managing the `settings` value in a sane manner.
+  configuration: ta.attr()
 
   totem_data_config: ability: true
 
@@ -78,6 +85,18 @@ export default ta.Model.extend resource_mixin, ta.totem_data, ta.add(
   friendly_submit_visible: ember.computed 'submit_visible', -> ( @get('submit_visible')? and @get('submit_visible') ) or true
   friendly_submit_text:    ember.computed 'submit_text',    -> @get('submit_text') or 'Submit'
   friendly_max_score:      ember.computed 'max_score',      -> (@get('max_score')? and parseInt(@get('max_score'))) or 1
+
+  ttz: ember.inject.service()
+
+  friendly_due_at:    ember.computed 'due_at', ->
+    due_at = @get('due_at')
+    return null unless ember.isPresent(due_at)
+    @get('ttz').format(due_at, format: 'MMM Do, h:mm a')
+    
+  friendly_unlock_at: ember.computed 'unlock_at', ->
+    unlock_at = @get('unlock_at')
+    return null unless ember.isPresent(unlock_at)
+    @get('ttz').format(unlock_at, format: 'MMM Do, h:mm a')
 
   # ### Movement helpers
   # => Note, these do not save the movement positions, only set them client side.
@@ -137,3 +156,7 @@ export default ta.Model.extend resource_mixin, ta.totem_data, ta.add(
   inactivate: -> @state_change('inactivate')
   archive:    -> @state_change('archive')
   activate:   -> @state_change('activate')
+
+  # # Configuration
+  # Ensure that no configuration instructions are sent, e.g. in the case of logistics only updates.
+  clear_configuration: -> @set('configuration', null)

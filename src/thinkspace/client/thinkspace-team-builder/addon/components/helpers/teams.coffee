@@ -10,10 +10,4 @@ export default base_component.extend
   team_set: ember.computed.reads 'manager.team_set'
   abstract: ember.computed.reads 'manager.abstract'
 
-  init_base: ->
-    @set_all_data_loaded()
-
-  actions:
-    save: ->
-      @get('manager').explode().then =>
-        console.log "explosion complete."
+  init_base: -> @set_all_data_loaded()

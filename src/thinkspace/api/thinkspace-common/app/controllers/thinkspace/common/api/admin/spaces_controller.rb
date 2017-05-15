@@ -48,7 +48,7 @@ module Thinkspace
           end
 
           def team_sets
-            ensure_default_team_set
+            @space.ensure_default_team_set
             controller_render(@space)
           end
 

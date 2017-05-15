@@ -9,21 +9,24 @@ import student_row from 'thinkspace-team-builder/mixins/rows/student'
 
 export default base_component.extend arr_helpers,
 
+  # ### Services
   manager: ember.inject.service()
 
-  teams:     ember.computed.reads 'manager.teams'
-  team_set:  ember.computed.reads 'manager.team_set'
-  abstract:  ember.computed.reads 'manager.abstract'
-  transform: ember.computed.reads 'team_set.transform'
-
-  teams_count: ember.computed.reads 'teams.length'
-
+  # ### Properties
   adding_members: false
-
   ## Arrays of user rows that 
   selected_unassigned_user_rows: null
   selected_assigned_user_rows:   null
 
+  # ### Computed Properties
+  teams:       ember.computed.reads 'manager.teams'
+  team_set:    ember.computed.reads 'manager.team_set'
+  abstract:    ember.computed.reads 'manager.abstract'
+  transform:   ember.computed.reads 'team_set.transform'
+  teams_count: ember.computed.reads 'teams.length'
+  team_title:  ember.computed.reads 'team.title'
+
+  # ### Initialization
   init_base: ->
     @init_team()
     @init_team_image()
@@ -73,6 +76,7 @@ export default base_component.extend arr_helpers,
     users    = abstract.users.filter (user) -> ember.isEmpty(user.team_id)
     @set('unassigned_users', users)
 
+  # ### Helpers
   refresh: ->
     @init_team()
     @init_team_users()
@@ -145,12 +149,13 @@ export default base_component.extend arr_helpers,
       @refresh()
 
     save: ->
+      team = @get('team')
+      @get('manager').update_title_for_team(team, @get('team_title'))
+      @get('manager').update_color_for_team(team, @get('selected_color.color'))
       @get('manager').save_transform().then =>
         @get_app_route().transitionTo(ns.to_r('team_builder', 'manage'))
 
-    select_color: (color) ->
-      team = @get('team')
-      ember.set(team, 'color', color.get('color'))
+    select_color: (color) -> @set 'selected_color', color
 
     select_assigned: (opts) ->
       row      = opts.get_data('row')

@@ -54,7 +54,6 @@ module Thinkspace
 
       def after_activate
         set_activated_at
-        sync_sso if Rails.env.production?
         save
       end
 
@@ -64,23 +63,6 @@ module Thinkspace
       end
 
       def is_activated?; activated_at.present?; end
-
-      def sync_sso
-        host                = Rails.application.secrets.discourse['host']
-        api_key             = Rails.application.secrets.discourse['key']
-        api_username        = Rails.application.secrets.discourse['username']
-        sso_secret          = Rails.application.secrets.discourse['sso_secret'] 
-        client              = ::DiscourseApi::Client.new(host)
-        client.api_key      = api_key
-        client.api_username = api_username
-        client.sync_sso(
-          sso_secret:  sso_secret,
-          name:        full_name,
-          username:    username,
-          email:       email,
-          external_id: oauth_user_id
-        )
-      end
 
       def set_activated_at(date=nil);     self.activated_at          = date || DateTime.now;                          end
       def reset_activated_at;             self.activated_at          = nil;                                           end

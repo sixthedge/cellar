@@ -15,12 +15,13 @@ def casespace_seed_config_add_assignments(config)
     else
       seed_config_error "Space assignment has not been specified or is inheritable [assignment: #{hash.inspect}].", config  if space.blank?
     end
-    title      = hash[:title] || get_casespace_assignment_default_title(space)
-    release_at = get_casespace_seed_datetime_value(hash[:release_at])
-    due_at     = get_casespace_seed_datetime_value(hash[:due_at], 7)
-    state      = hash[:state] || :active
-    settings   = hash[:settings] || Hash.new
-    assignment = create_casespace_assignment hash.merge(space: space, title: title, release_at: release_at, state: state, due_at: due_at, settings: settings)
+    title              = hash[:title] || get_casespace_assignment_default_title(space)
+    release_at         = get_casespace_seed_datetime_value(hash[:release_at])
+    due_at             = get_casespace_seed_datetime_value(hash[:due_at], 7)
+    state              = hash[:state] || :active
+    settings           = hash[:settings] || Hash.new
+    assignment_type_id = hash[:assignment_type_id]
+    assignment         = create_casespace_assignment hash.merge(space: space, title: title, release_at: release_at, state: state, due_at: due_at, settings: settings, assignment_type_id: assignment_type_id)
     seed_config_models.add(config, assignment)
     casespace_add_assignment_created(assignment)
   end

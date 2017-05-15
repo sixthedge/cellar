@@ -153,7 +153,9 @@ module Totem
               # TODO: This may need to sync the credentials.
               # User model doesn't have password (it is in oauth), so send a S2S request to OAuth to verify the password.
               # raise CredentialsInvalidPassword, "Invalid password" unless user.authenticate(password) # if user model had a password
-              raise SessionCredentialsInvalidPassword, "Invalid password" unless is_password_valid?(identification, password)
+              oauth_user = get_oauth_user(identification, password)
+              raise SessionCredentialsInvalidPassword, "Invalid password" unless oauth_user['valid'] == true
+              user.sync_user_from_oauth_data(oauth_user)
               set_current_user(user)
               find_or_create_api_session(user)
             else

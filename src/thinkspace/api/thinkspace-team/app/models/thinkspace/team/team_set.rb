@@ -6,12 +6,7 @@ module Thinkspace
 
       aasm column: :state do
         state :neutral, initial: true
-        # state :default
-        # event :make_default do transitions to: :default end
-        # event :undefault do transitions to: :neutral end
       end
-
-      #validates_uniqueness_of :state, scope: :space_id, if: :default # only 1 default team_set per space
 
       # ### Serialized Attributes
       def metadata(scope); get_metadata(scope); end
@@ -63,7 +58,7 @@ module Thinkspace
         team_set.thinkspace_team_teams.where.not(state: Thinkspace::Team::Team.state_locked)
       end
 
-      def self.scope_default; where(default: true); end
+      def self.scope_default; find_by(default: true); end
       def self.scope_state(states=[]); where(state: states); end
 
       # ### Cloning

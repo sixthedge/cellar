@@ -3,9 +3,10 @@
 //\*------------------------------------*/
 
 .basic-table {
-  border:        $border--default;
-  border-radius: $border-radius;
-  width:         100%;
+  position:       relative;
+  border:         $border--default;
+  border-radius:  $border-radius;
+  width:          100%;
   border-spacing: 0;
 
   thead {
@@ -77,8 +78,6 @@
     padding:     0 1rem;
     height:      2rem;
     font-size: .875rem;
-
-
   }
 
   &.basic-table--borderless {

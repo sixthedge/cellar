@@ -62,8 +62,8 @@ export default step.extend
   query_team_sets: ->
     new ember.RSVP.Promise (resolve, reject) =>
       @get('model').get(ta.to_p('space')).then (space) =>
-        space.get_team_sets().then (team_sets) =>
-          @set 'team_sets', team_sets
+        space.get_default_team_set().then (team_set) =>
+          @set 'team_sets', ember.makeArray(team_set)
           resolve()
 
   select_team_set: (team_set) -> 

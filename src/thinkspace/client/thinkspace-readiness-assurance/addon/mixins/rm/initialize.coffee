@@ -124,7 +124,7 @@ export default ember.Mixin.create
   init_question_managers: (options) ->
     qn    = 0
     @qids = []
-    for question in @assessment.get('questions')
+    for question in @assessment.get('question_settings')
       qn += 1
       qm = question_manager.create
         question_hash: question
@@ -184,7 +184,7 @@ export default ember.Mixin.create
       , (error) => reject(error)
 
   init_chat_managers: (options) ->
-    for question in @assessment.get('questions')
+    for question in @assessment.get('question_settings')
       cm = chat_manager.create
         question_hash: question
         rm:            @

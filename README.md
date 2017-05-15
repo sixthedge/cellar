@@ -15,3 +15,4 @@ Please make sure to read the [Contributing Guidelines](https://github.com/sixthe
 
 ## License
 This repository is under the [MIT License](https://github.com/sixthedge/cellar/blob/master/LICENSE.md).
+

@@ -7,8 +7,17 @@ import student_row    from 'thinkspace-team-builder/mixins/rows/student'
 
 export default base_component.extend arr_helpers,
   
+  # ### Services
   manager: ember.inject.service()
 
+  # ### Properties
+  selected_users: null
+  adding_members: false
+  search_field:   ''
+  results:        null
+  rows:           null
+
+  # ### Computed Properties
   teams:    ember.computed.reads 'manager.teams'
   team_set: ember.computed.reads 'manager.team_set'
   abstract: ember.computed.reads 'manager.abstract'
@@ -20,13 +29,6 @@ export default base_component.extend arr_helpers,
   no_selected_users:  ember.computed.not 'has_selected_users'
   has_team_id:        ember.computed.notEmpty 'team_id'
 
-  selected_users: null
-  adding_members: false
-
-  search_field: ''
-  results:      null
-  rows:         null
-
   columns: ember.computed 'manager', 'model', ->
     columns = [
       column.create({display: 'First Name', property: 'first_name'}),
@@ -34,6 +36,7 @@ export default base_component.extend arr_helpers,
       column.create({display: '', component: '__table/cells/delete', data: {calling: @}})
     ]
 
+  # ### Initialization
   init_base: ->
     @set_query_param()
     @init_team()
@@ -45,10 +48,8 @@ export default base_component.extend arr_helpers,
   ## Now used to init row/student Ember Objects
   init_table_data: ->
     selected_users      = @get('selected_users')
-    # unassigned_users    = @get('unassigned_users')
     manager             = @get('manager')
     rows                = ember.makeArray()
-    # unassigned_students = ember.makeArray()
 
     selected_users.forEach (user) =>
       row = student_row.create(model: user, manager: manager)
@@ -87,6 +88,7 @@ export default base_component.extend arr_helpers,
     else
       @set 'team', null
 
+  # ### Helpers
   find_unassigned: (users) ->
     unless ember.isPresent(users)
       @set('results', null)
@@ -135,9 +137,6 @@ export default base_component.extend arr_helpers,
       @set('rows', rows)
       c_table.set('rows', rows)
 
-  select_row: (opts) ->
-    console.log('selecting', opts)
-
   remove_user_from_team: (row) ->
     new ember.RSVP.Promise (resolve, reject) =>
       manager = @get('manager')
@@ -169,10 +168,12 @@ export default base_component.extend arr_helpers,
       @init_team()
       @init_table_data()
       @init_selected_users()
-      console.log "selected:", @get('has_team_id')
 
   goto_manage_route: ->
     @get_app_route().transitionTo(ns.to_r('team_builder', 'manage'), @get('model'))
+
+  goto_roster_route: ->
+    @get_app_route().transitionTo(ns.to_r('team_builder', 'roster'), @get('model'))
 
   actions:
     search_results: (users) ->
@@ -219,4 +220,4 @@ export default base_component.extend arr_helpers,
 
     finalize_team: ->
       @save_transform().then =>
-        @goto_team(null)
+        @goto_roster_route()

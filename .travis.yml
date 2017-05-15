@@ -1,0 +1,42 @@
+language: ruby
+env:
+  global:
+  - APP_BUNDLE_SRC=./vendor/src
+  - APP_INSTALL_DIR=$TRAVIS_BUILD_DIR/opentbl
+  - APP_SRC_DIR=$TRAVIS_BUILD_DIR/src
+rvm:
+  - 2.3.1
+branches:
+  only:
+    - development
+before_install:
+  - gem install bundler
+  - cd local
+install:
+  - echo Installing to $APP_INSTALL_DIR
+  - "./install.sh --package opentbl/api --install $APP_INSTALL_DIR --platform thinkspace"
+  - mkdir -p $APP_INSTALL_DIR/vendor/src/thinkspace/api
+  - mkdir -p $APP_INSTALL_DIR/vendor/src/totem/api
+  - mkdir -p $APP_INSTALL_DIR/.git
+  - cp -a $APP_SRC_DIR/thinkspace/api/. $APP_INSTALL_DIR/vendor/src/thinkspace/api/
+  - cp -a $APP_SRC_DIR/totem/api/. $APP_INSTALL_DIR/vendor/src/totem/api/
+  - cd $APP_INSTALL_DIR
+  - echo Bundling with $APP_BUNDLE_SRC
+  - ls -l
+  - bundle install
+script:
+  - echo Skipping script step...
+before_deploy:
+  - cd $APP_INSTALL_DIR
+  - git init
+  - git remote add heroku git@heroku.com:opentbl-staging.git
+deploy:
+  provider: heroku
+  skip_cleanup: true
+  on: development
+  api_key:
+    secure: WKZGLGlEhgBDWXZQdRK+QWGVWSrRtN6I+C0EaMXl4Ojx9tCh9sql6/R8xAJ8f+hSMi6wtUwWHMiAvoNB3wuF4AvqXWvDn06jD2kYHEfo9a76kD5nWZRVDqsF1ySN2qvt5a8NjcCqsIOFEjYGcBrL99RnXTKXXZoekAzeVrEQyGjs3f3CfbwBoO2X+qS2ieUKq/CHwznE1vm0FN8U+rGbnfDt/eyROw1tyCzeIBN9YTe9pn2r8o4N36wm4KivZEGsuSrY5TefGZRzVPVLKyOOHIV1IYuL8KvCM3KHxigXZpZlLIxecZPodBkakGdMMIOPkYmhPNGY89UOCwf4HHQAF4mo/EbzoMwdIzjGcvvYeDlEE81AodIG31qMzTv+vYYPF3mer4wcpXQvsKcEq+wx5cLsATGIBs2gTokT2JBLCWGRZN3jQHqPZRRvoDP4/vOh2LE6ZimtJc+kfM/oiBgT6A9+ORE8n/eC40AW494S83EnQ7ZX+aGrgIOpwPSZRikLjiC8P0PQYSdgowYR8sviQyKJSee6AYY27JV3acRpZ9m/xAiTGx478cd5sBu9aCvfycO7Cw5CJZsrJvZ36uEPPeJO6/vf6gVHT4ZMRZZHHaGqCCumHWt+ENEF841KJmfVYB+Vend9Z8+UenutMVzT3cJ2vpz4DfP3LR9vu8wU2RM=
+  app: opentbl-staging
+  run:
+    - rails totem:db:production_migrate
+    - rails totem:db:domain:load

@@ -27,16 +27,18 @@ module Thinkspace; module Casespace; module Creators; class Base
       phase.assignment_id     = options[:assignment_id]
       phase.phase_template_id = options[:phase_template_id]
       phase.team_category_id  = options[:team_category_id]
-      phase.title             = options[:title] || 'Peer Assessment Phase'
-      phase.description       = options[:description] || 'Peer assessment description.'
+      phase.title             = options[:title] || 'Phase'
+      phase.description       = options[:description] || 'Description goes here.'
       phase.state             = options[:state] || :inactive
       phase.default_state     = options[:default_state] || 'unlocked'
       phase.position          = options[:position] || 1
+      phase.settings          = options[:settings]
       phase.save
       phase
     end
 
     def create_header_component(phase); create_phase_component(phase, phase, 'casespace-phase-header', 'header'); end
+    def create_submit_component(phase); create_phase_component(phase, phase, 'casespace-phase-submit', 'submit'); end
 
     def create_phase_component(phase, componentable, component_title, section)
       component = Thinkspace::Common::Component.find_by(title: component_title)

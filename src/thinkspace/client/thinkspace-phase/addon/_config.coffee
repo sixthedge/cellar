@@ -31,7 +31,7 @@ export default {
     'thinkspace-diagnostic-expert-path'
     'thinkspace-lab-vet-med'
     'thinkspace-observation-list'
-    'thinkspace-peer-assessment-pe'
+    'thinkspace-peer-assessment'
     'thinkspace-readiness-assurance'
     'thinkspace-weather-forecaster'
     'thinkspace-toolbar':      {external_routes: {home: 'spaces.index'}}

@@ -67,7 +67,6 @@
     - {has_many: thinkspace/common/users,       through: thinkspace/common/space_users, readonly: true, alias: owners, foreign_key: space_id, scope: "where('thinkspace_common_space_users.role = ? AND thinkspace_common_space_users.state = ?', 'owner', 'active')"}
     - {has_many: thinkspace/common/users,       through: thinkspace/common/space_users, readonly: true}
     - {has_many: thinkspace/team/teams,         through: thinkspace/team/team_set_teamables, source: thinkspace/team/teams}
-    - {has_many: thinkspace/common/invitations,      as: invitable}
     - {has_many: thinkspace/team/team_set_teamables, as: teamable}
   serializers:
     - attributes: [id, title]
@@ -99,13 +98,6 @@
   domain: true
   serializers:
     - attributes: [id, value, preprocessors]
-
-- model: thinkspace/common/invitation
-  associations:
-    - {belongs_to: thinkspace/common/user}
-    - {belongs_to: invitable, polymorphic: true}
-  serializers:
-    - attributes: [id, email, state, role, accepted_at, created_at, expires_at, invitable_type, invitable_id]
 
 - model: thinkspace/common/password_reset
   serializers:

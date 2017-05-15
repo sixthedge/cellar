@@ -61,13 +61,6 @@ export default ta.Model.extend ta.add(
   has_transform: ember.computed 'transform', 'transform.teams.@each', 'scaffold.teams.@each', ->
     transform = @get('transform')
     scaffold = @get('scaffold')
-    console.log "[model] has_transform", @get('transform.teams'), ember.keys(transform), ember.isEmpty(transform['teams']), ember.isEmpty(scaffold['teams'])
     return false if ember.isEmpty(ember.keys(transform))
     return false if ember.isEmpty(transform['teams']) && ember.isEmpty(scaffold['teams'])
     return true
-
-  didLoad: ->
-    console.log "team set #{@get('id')} didLoad"
-
-  didUpdate: ->
-    console.log "team set #{@get('id')} didUpdate"

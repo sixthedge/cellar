@@ -11,8 +11,6 @@ export default ember.Mixin.create
       table_col['selected'] = false
       if table_col.id == col.id
         table_col['selected'] = true
-
-    console.log('config_col now ', table_config)
     table_config
 
   update_col_direction: (col) ->
@@ -28,7 +26,6 @@ export default ember.Mixin.create
       col.direction = 'asc'
 
   sort_records_by_attribute: (col, records) ->
-    console.log('calling sort_records_by_attribute with col, records ', col, records)
     return unless ember.isPresent(col.attribute)
     sorted_records = records.sortBy(col.attribute)
     sorted_records = sorted_records.reverse() if col.direction == 'desc'

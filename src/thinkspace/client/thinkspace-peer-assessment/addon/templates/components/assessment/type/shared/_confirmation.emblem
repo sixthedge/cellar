@@ -1,0 +1,29 @@
+/ .ts-grid_row: .ts-grid_columns.ts-grid_columns-thick.small-12
+/   .phase-content_heading 
+/       h4 Assessment confirmation
+/       p Last chance to make changes to your assessments for your team members. Click on the member you'd like to edit.
+
+
+/ log manager
+/ log this
+
+if has_errors
+  .dialogue.dialogue--red.spacing__margin-bottom--1
+    h1 Uh Oh!
+    p Looks like you still haven't met the following evaluation requirements:
+    ul.clear-list.spacing__pad-top--2
+      if is_balance
+        component '__changeset/errors' changeset=manager.changeset attribute='points_remaining' errors_visible=true
+        component '__changeset/errors' changeset=manager.changeset attribute='points_different' errors_visible=true
+      component '__changeset/errors' changeset=manager.changeset attribute='valid_qual_sections' errors_visible=true
+
+ul.clear-list.grid__container--flex.flex__justify--between.spacing__margin-bottom--4
+  each reviews as |review|
+    component 'assessment/review/summary' manager=manager model=review assessment=model class='grid__col--49 grid__mobile--full-width'
+
+.grid__container.spacing__margin-bottom--4.text__align--center 
+  hr 
+  if is_disabled
+    a.btn.btn--primary.is-disabled Submit Assessment
+  else
+    component '__modal/confirmation' modal_partial='components/assessment/type/shared/submit/modal' modal_reveal_partial='components/assessment/type/shared/submit/action' confirm='submit'

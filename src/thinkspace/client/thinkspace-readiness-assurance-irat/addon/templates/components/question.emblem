@@ -1,7 +1,3 @@
-.forms__field-wrapper
-  label.spacing__margin-bottom--half
-    = qm.question
-
 if qm.is_ifat
   component 'radio/ifat_buttons' qm=qm select='select_answer' class='group'
 else

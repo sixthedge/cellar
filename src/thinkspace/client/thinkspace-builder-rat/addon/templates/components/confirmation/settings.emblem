@@ -1,0 +1,20 @@
+.forms__section.spacing__margin-bottom--4
+  h2.text--inline-block Settings
+
+  link-to step.route_path model class='button btn is-right spacing__margin-top--half'
+    | Edit settings
+
+  h4 iRAT Logistics
+  label Release date
+  p.text__font-size--14.spacing__margin-top--0 = step.irat_phase.friendly_unlock_at
+
+  label Due At
+  p.text__font-size--14.spacing__margin-top--0 = step.irat_phase.friendly_due_at
+
+  h4 tRAT Logistics
+
+  label Release date
+  p.text__font-size--14.spacing__margin-top--0 = step.trat_phase.friendly_unlock_at
+
+  label Due At
+  p.text__font-size--14.spacing__margin-top--0 = step.trat_phase.friendly_due_at

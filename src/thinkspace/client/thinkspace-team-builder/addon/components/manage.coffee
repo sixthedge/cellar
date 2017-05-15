@@ -4,14 +4,16 @@ import base_component from 'thinkspace-base/components/base'
 
 export default base_component.extend
 
+  # ### Services
   manager: ember.inject.service()
 
-  is_manage: true
-
+  # ### Properties
   search_field: ''
   results:      []
 
+  # ### Computed Properties
   highlighted_users: ember.computed 'results.@each', -> @get('results').mapBy('id')
+  has_teams: ember.computed.reads 'manager.has_teams'
 
   actions:
     toggle_view: -> @toggleProperty('on_teams'); false

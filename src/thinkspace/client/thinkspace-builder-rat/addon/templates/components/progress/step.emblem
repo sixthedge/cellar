@@ -1,0 +1,4 @@
+a.builder-progress__link click='transition'
+  if is_current_step
+    .icon.icon--16.icon__arrow--blue.icon__arrow--right.spacing__margin-right--half
+  = step.id

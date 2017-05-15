@@ -17,8 +17,22 @@
   height: 24px;
 }
 
+.icon--36 {
+  width:  36px;
+  height: 36px;
+}
+
+.icon--42 {
+  width:  42px;
+  height: 42px;
+}
+
 .icon__cross--black {
   background-image: url('images/icons/otbl-icons_cross--black.svg');
+}
+
+.icon__clock--black {
+  background-image: url('images/icons/otbl-icons_clock--black.svg');
 }
 
 .icon__cross--white {
@@ -31,6 +45,10 @@
 
 .icon__chevron--white {
   background-image: url('images/icons/otbl-icons_chevron-down--white.svg');
+}
+
+.icon__info--black {
+  background-image: url('images/icons/otbl-icons_info--black.svg');
 }
 
 .icon__arrow--blue {

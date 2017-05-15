@@ -37,6 +37,7 @@ module Totem; module Core; module Controllers; module ApiRender; module Paginate
     total_pages            == 0 ? current_page = 0 : current_page = controller_pagination_get_number
     meta[:page][:total]    = total_pages
     meta[:page][:current]  = current_page
+    meta[:page][:per]      = controller_pagination_get_size
     meta[:records][:total] = records.length
     meta
   end
