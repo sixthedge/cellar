@@ -94,7 +94,7 @@ module Thinkspace
             team_sets = @space.thinkspace_team_team_sets
             default   = team_sets.scope_default
             if team_sets.empty?
-              Thinkspace::Team::TeamSet.create(title: 'Untitled Teamset', default: true, space_id: @space.id)
+              Thinkspace::Team::TeamSet.create(title: 'Default', default: true, space_id: @space.id)
             elsif default.empty?
               team_set = team_sets.first
               team_set.set_default

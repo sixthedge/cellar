@@ -26,8 +26,16 @@ module Thinkspace
       def authable; thinkspace_common_space; end
       def get_space; thinkspace_common_space; end
 
-      def set_default; self.default = true; self.save; end
-      def reset_default; self.default = false; self.save; end
+      def set_default 
+        self.title   = "Default"
+        self.default = true
+        self.save
+      end
+      def reset_default
+        self.title   = Time.now.strftime("Team Set %m-%d-%Y %I:%M%p")
+        self.default = false
+        self.save
+      end
 
       def assign_to_record(record, unassign=true)
         self.class.unassign_all_from_record(record) if unassign
