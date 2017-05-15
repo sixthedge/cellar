@@ -10,4 +10,8 @@ export default base.extend
   date:  ember.computed.reads 'model.release_at'
 
   actions:
-    confirm: (date) -> @sendAction 'select', date
+    confirm: -> 
+      @send 'close'
+      @sendAction 'select', @get('date')
+
+    select: (date) -> @set 'date', date

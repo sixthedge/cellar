@@ -13,7 +13,7 @@ a class=modal_reveal_anchor_class_names data-open=modal_id
         h1 Change Release Date
         p This will update when students will be able to view the evaluation. 
         .forms__field-wrapper
-          component '__datetime_picker' value=date
+          component '__datetime_picker' value=date select='select'
 
         .btn-group
           button.btn.btn--primary{action 'confirm'}

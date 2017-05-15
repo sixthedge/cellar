@@ -32,11 +32,9 @@ export default base.extend
     select_date: (date) -> 
       @set_date(date)
       datetime = @get_datetime()
-      console.log "datetime is:", datetime
       @sendAction 'select', datetime
 
     select_time: (time) -> 
       @set_time(time)
       datetime = @get_datetime()
-      console.log "datetime is:", datetime
       @sendAction 'select', datetime
