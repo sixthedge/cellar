@@ -38,7 +38,11 @@ module Thinkspace; module Importer; module Uploaders;
       files     = Array.wrap(files)
       processed = []
       files.each do |file|
-        storage_is_filesystem? ? data = ::File.open(Rails.root.join(file.attachment.path)) : data = open(file.attachment.url)
+        if storage_is_filesystem?
+          data = ::File.open(Rails.root.join(file.attachment.path))
+        else
+          file.is_private? ?  data = open(file.attachment.expiring_url) : data = open(file.attachment.url)
+        end
         data, errors = convert_to_single_column(data, match: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i)
         processed.push({ file: file, data: data, errors: errors })
       end

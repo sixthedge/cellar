@@ -1,11 +1,12 @@
 import ember           from 'ember'
 import totem_changeset from 'totem/changeset'
 import ns              from 'totem/ns'
+import config          from 'totem-config/config'
 import base            from 'thinkspace-base/components/base'
 
 export default base.extend
   # # Properties
-  debug:         true
+  debug:         config.autofill
   authenticator: 'authenticator:totem'
 
   # # Computed properties

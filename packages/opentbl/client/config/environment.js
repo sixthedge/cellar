@@ -91,6 +91,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS         = true;
 
+    ENV.totem.autofill        = true;
     ENV.contentSecurityPolicy = {
       "default-src": "* localhost:* 0.0.0.0:* 'unsafe-eval' 'unsafe-inline' data:",
       "script-src": "* localhost:* 0.0.0.0:* 'unsafe-eval' 'unsafe-inline' data:",
