@@ -8,8 +8,11 @@ partial 'components/header'
       /   component 'content/templates' model=model step=step confirm='confirm' select='select' cancel='cancel' class='menu-panel menu-panel--right grid__mobile--full-width'
       / else
     log model
-    component 'content/sections/irat' model=model step=step class='grid__col--3of4 grid__mobile--full-width'
-    component 'content/sections/trat' model=model step=step class='grid__col--3of4 grid__mobile--full-width' toggle_assessment_sync='toggle_assessment_sync' sync_assessments=step.sync_assessments
+    .grid__col--3of4.grid__mobile--full-width
+      .main-content__header
+        h1 Readiness Assurance Test Content
+      component 'content/sections/irat' model=model step=step
+      component 'content/sections/trat' model=model step=step toggle_assessment_sync='toggle_assessment_sync' sync_assessments=step.sync_assessments
     component 'progress' model=model class='grid__col--1of4 grid__mobile--hidden'
 
   .grid__container--flex.spacing__margin-bottom--4

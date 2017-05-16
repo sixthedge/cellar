@@ -7,7 +7,9 @@ partial 'components/header'
         p Make sure everything looks fine
 
       component 'confirmation/details'
+      hr
       component 'confirmation/content'
+      hr
       component 'confirmation/settings'
   .grid__container--flex.spacing__margin-bottom--4
     .grid__col--4of4.grid__mobile--hidden

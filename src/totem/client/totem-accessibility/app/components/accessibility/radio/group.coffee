@@ -9,9 +9,11 @@ export default base.extend
   # # Computed properties
   # ## Group label
   # Handles the root level label that wraps all of the choices.
-  label:     ember.computed.reads 'options.group.label'
-  has_label: ember.computed.notEmpty 'label'
-  label_id:  ember.computed 'options', -> "#{@get_element_id()}-group__label"
+  label:       ember.computed.reads 'options.group.label'
+  summary:     ember.computed.reads 'options.group.summary'
+  has_label:   ember.computed.notEmpty 'label'
+  has_summary: ember.computed.notEmpty 'summary'
+  label_id:    ember.computed 'options', -> "#{@get_element_id()}-group__label"
 
   # ## Choices
   choices: ember.computed.reads 'options.choices'

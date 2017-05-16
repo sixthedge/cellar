@@ -1,68 +1,14 @@
 fieldset.forms__section
   h2 Peer Evaluation Template
-
-  .forms__field-wrapper
-    label Choose a template for your Peer Evaluation
-    .forms__label-summary This will help get you started. You can always save a peer evaluation as a template to use in the future.
-
-    if all_data_loaded
-      .radio__list.spacing__margin-bottom--2
-        .radio__item{action 'select_assessment_template' assessment_template_michaelsens}
-          label.radio__label 
-            div role='presentation' class={:radio__icon michaelsens_selected:radio__icon--is-checked}
-              input type='radio' role='radio' checked=michaelsens_selected
-            = assessment_template_michaelsens.title
-            .radio__label-summary = assessment_template_michaelsens.description
-
-        .radio__item{action 'select_assessment_template' assessment_template_categories}
-          label.radio__label 
-            div role='presentation' class={:radio__icon categories_selected:radio__icon--is-checked}
-              input type='radio' role='radio' checked=categories_selected
-            = assessment_template_categories.title
-            .radio__label-summary = assessment_template_categories.description
-
-        .radio__item{action 'select_assessment_template' assessment_template_blank_canvas}
-          label.radio__label 
-            div role='presentation' class={:radio__icon blank_canvas_selected:radio__icon--is-checked}
-              input type='radio' role='radio' checked=blank_canvas_selected
-            = assessment_template_blank_canvas.title
-            .radio__label-summary = assessment_template_blank_canvas.description
-
-        .radio__item{ action 'toggle_user_templates' assessment_template_user_templates}
-          label.radio__label 
-            .radio__icon role='presentation' class={:radio__icon user_template_selected:radio__icon--is-checked}
-              input type='radio' role='radio' checked=user_template_selected
-            | Use one of my saved templates
-            .radio__label-summary 
-              | Select a template you've saved.
-              if has_no_user_templates
-                p You have no saved templates.
-
-              if user_template_selected
-                component '__dropdown' collection=user_templates display_property='title' text='Choose a template' selected=selected_template select_action='select_user_template' action_receiver=this
-            
-
-        / div class={:ts-builder-pe-templates_option :ts-grid_row has_no_user_templates:is-disabled} click='toggle_user_templates'
-        /   .ts-builder-pe-templates_option-radio.ts-grid_columns.small-2
-        /     div class={:ts-radio_button user_template_selected:is-checked}
-        /     input type='radio' checked=user_template_selected
-        /   .ts-builder-pe-templates_option-details.ts-grid_columns.small-10
-        /     label.ts-builder-pe-templates_option-title 
-        /       | Use one of my saved templates
-        /       p.ts-builder-pe-templates_option-description 
-        /         | Select a template you've saved.
-        /     if has_no_user_templates
-        /       .ts-builder-pe-templates_option-description-empty You have no saved templates.
-
-
-        / if user_template_selected
-        /   .ts-builder-pe-templates_user
-        /     component '__dropdown' collection=user_templates display_property='title' text='Choose a template' selected=selected_template select_action='select_user_template' action_receiver=this
-
-    else
-      .loader__container
-        .loader.loader--logo
-        .text__font-size--14.text--bold Loading...
+  if all_data_loaded
+    component '__accessibility/radio/group' value=selected_template options=template_options changed='select_assessment_template'
+    if is_user_templates_selected
+      if has_no_user_templates
+        p You have no saved templates.
+      else
+        component '__dropdown' collection=user_templates display_property='title' text='Choose a template' selected=selected_template select_action='select_assessment_template' action_receiver=this
+  else
+    component '__loader/base'
   .btn-group
     button.btn.btn--primary{action 'confirm'}
       | Select Template

@@ -5,18 +5,23 @@ each choice_items as |choice index|
   component 'content/question/choice/show' model=choice
 
 hr
-.btn-group
-  .btn.btn--primary click='toggle_edit'
-    | Edit question
-  .btn click='duplicate'
-    | Duplicate
-  .btn click='reorder_up'
-    | Up
-  .btn click='reorder_down'
-    | Down
-  .btn click='reorder_top'
-    | Top
-  .btn click='reorder_bottom'
-    | Bottom
-  .btn.is_right click='delete'
-    | Delete
+.grid__container
+  .btn-group.is-left
+    button.btn click='toggle_edit'
+      | Edit question
+    button.btn click='duplicate'
+      .icon.icon--16.icon__clone--white.spacing__margin-right--half
+      | Duplicate
+
+  .btn-group.is-right
+    .icon.icon--16.icon--actionable.icon__arrow--black click='reorder_up' title='Up' tabindex='0' role='button'
+
+    .icon.icon--16.icon--actionable.icon__arrow--black.icon__arrow--down click='reorder_down' title='Down' tabindex='0' role='button'
+
+    .icon.icon--16.icon--actionable.icon__arrow-top--black click='reorder_top' title='Top' tabindex='0' role='button'
+
+    .icon.icon--16.icon--actionable.icon__arrow-bottom--black click='reorder_bottom' title='Bottom' tabindex='0' role='button'
+
+    .btn--divider
+    
+    .icon.icon--16.icon--actionable.icon__trash--black click='delete' title='Delete' tabindex='0' role='button'

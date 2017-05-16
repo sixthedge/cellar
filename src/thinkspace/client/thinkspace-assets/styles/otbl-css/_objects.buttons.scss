@@ -72,6 +72,15 @@ button,
   font-weight: $font-weight--bold;
 }
 
+.action-link--gray {
+  color: $color-gray-base;
+  transition: $transition-animation--color;
+  
+  &:hover, &:focus {
+    color: $color-blue-base;
+  }
+}
+
 
 ///*------------------------------------*\
 //    #BUTTON-GROUPS
@@ -79,7 +88,7 @@ button,
 
 .btn-group {
 
-	.btn, .dropdown, .action-link--small {
+	.btn, .dropdown, .action-link--small, .icon--actionable {
 		margin-left: 1rem;
 
 		&:first-child {
@@ -109,4 +118,14 @@ button,
       margin-right:               0;
     }
   }
+}
+
+// Button divider
+.btn--divider {
+  display:          inline-block;
+  height:           2rem;
+  width:            2px;
+  background-color: $color-gray-med;
+  vertical-align:   middle;
+  margin-left:      1rem;
 }

@@ -1,14 +1,13 @@
 .main-content__header
   h1 Readiness Assurance Settings
 
-
+  h2 Logistics
   fieldset.forms__section
-    h2 Logistics
-
-    h4 iRAT Logistics
+    
+    h3 iRAT Logistics
     component 'settings/phases/phase' model=step.irat_phase type='irat' step=step
-
-    h4 tRAT Logistics
+    hr
+    h3 tRAT Logistics
     component 'settings/phases/phase' model=step.trat_phase type='trat' step=step
 
     / = step.changeset.release_at

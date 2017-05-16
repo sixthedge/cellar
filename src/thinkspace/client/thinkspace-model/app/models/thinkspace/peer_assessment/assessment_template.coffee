@@ -15,6 +15,7 @@ export default base.extend ta.add(
 
   is_balance:    ember.computed.equal 'value.options.type', 'balance'
   is_categories: ember.computed.equal 'value.options.type', 'categories'
+  is_blank:      ember.computed.equal 'value.options.type', undefined
 
   is_system: ember.computed.equal 'state', 'system'
   is_user:   ember.computed.equal 'state', 'user'
