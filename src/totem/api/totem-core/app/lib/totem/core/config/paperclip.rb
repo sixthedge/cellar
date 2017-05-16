@@ -14,11 +14,11 @@ module Totem
         def self.s3(config, options={})
           config.paperclip_defaults = {
             storage: :s3,
+            s3_region: get_region,
             s3_credentials: {
               access_key_id:     get_access_key,
               bucket:            get_bucket,
               secret_access_key: get_secret_access_key,
-              region:            get_region
              },
              s3_protocol: :https
           }
