@@ -6,11 +6,11 @@
           = model.space.title
       h1.text--inline-block = model.title
       if model.can.update
-        .btn-group.is-right
-          link-to-external 'phases.show' model phase class='btn btn--primary'
-            | View Exercise
-          button.btn
-            | Edit Exercise
+        / .btn-group.is-right
+        /   link-to-external 'phases.show' model phase class='btn btn--primary'
+        /     | View Exercise
+        /   button.btn
+        /     | Edit Exercise
       else 
         .btn-group.is-right
           link-to-external 'phases.show' model phase class='btn btn--primary'

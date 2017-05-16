@@ -49,17 +49,14 @@ module Thinkspace; module PeerAssessment; module Api;
     def teams
       serializer_options.authorize_action    :read_teammate, :commenterable, scope: :root # allow the `commenterable` user to be serialized
 
-      ownerable = totem_action_authorize.params_ownerable
-      phase     = @assessment.authable
-      teams     = Thinkspace::Team::Team.users_teams(phase, ownerable)
-      access_denied "No teams found on phase for ownerable.", user_message: "You are not assigned to a team for this phase." unless teams.present?
+      ownerable  = totem_action_authorize.params_ownerable
+      phase      = @assessment.authable
+      assignment = phase.thinkspace_casespace_assignment
+      teams      = Thinkspace::Team::Team.users_teams(phase, ownerable)
+      teams      = Thinkspace::Team::Team.users_teams(assignment, ownerable) unless teams.present?
+      access_denied "No teams found for ownerable.", user_message: "You are not assigned to a team for this phase." unless teams.present?
       team = teams.first
       user_ids  = team.thinkspace_common_users.pluck(:id)
-      # json      = controller_as_json(team)
-      # json[:data][:relationships] = {}
-      # json[:data][:relationships]['thinkspace/common/users'] = {}
-      # json[:data][:relationships]['thinkspace/common/users'][:data] = team.thinkspace_common_users
-      # controller_render_json(json)
       controller_render(team)
     end
 
@@ -68,7 +65,9 @@ module Thinkspace; module PeerAssessment; module Api;
       team_id   = params[:team_id]
       team      = Thinkspace::Team::Team.find(team_id)
       access_denied "Team is invalid or not assigned to correct teamable." unless team.present?
-      access_denied "Ownerable is not a member of specified team" unless Thinkspace::Team::Team.users_on_teams?(@assessment.authable, ownerable, team)
+      phase = @assessment.authable
+      assignment = phase.thinkspace_casespace_assignment
+      access_denied "Ownerable is not a member of specified team" unless (Thinkspace::Team::Team.users_on_teams?(phase, ownerable, team) || Thinkspace::Team::Team.users_on_teams?(assignment, ownerable, team))
       team_set   = Thinkspace::PeerAssessment::TeamSet.find_or_create_by(team_id: team_id, assessment_id: @assessment.id)
       review_set = Thinkspace::PeerAssessment::ReviewSet.find_or_create_by(ownerable: ownerable, team_set_id: team_set.id)
       review_set.create_reviews

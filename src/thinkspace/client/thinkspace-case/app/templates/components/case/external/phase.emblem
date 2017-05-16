@@ -1,4 +1,4 @@
 li.spacing__margin-bottom--1
   link-to-external 'phases.show' assignment model (query-params query_id='none') class='text--bold'
     = model.title
-  .text__font-size--12.text__font-style--italic 3 questions  - In progress
+  .text__font-size--12.text__font-style--italic = phase_states.firstObject.computed_current_state
