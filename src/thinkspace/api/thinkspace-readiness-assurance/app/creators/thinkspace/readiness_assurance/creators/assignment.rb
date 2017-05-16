@@ -77,13 +77,14 @@ module Thinkspace; module ReadinessAssurance; module Creators
       options[:title]             = template.title
       options[:description]       = 'Readiness assurance default description.'
       options[:state]             = :active
-      options[:default_state]     = 'unlocked'
+      options[:default_state]     = 'locked'
       options[:position]          = 1
       options[:settings]          = {
         validation: {validate: true},
         phase_score_validation: {numericality: {allow_blank: false, greater_than_or_equal_to: 1, less_than_or_equal_to: 50000, decimals: 0}},
         actions:    {submit: {class: "ra_#{type}_submit", state: 'complete', auto_score: {score_with: 'ra_auto_score'}}}
       }
+
       options
     end
 

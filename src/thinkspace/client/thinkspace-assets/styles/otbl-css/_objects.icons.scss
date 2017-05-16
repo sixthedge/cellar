@@ -3,18 +3,32 @@
 //\*------------------------------------*/
 
 .icon {
- display: inline-block;
+ display:        inline-block;
  vertical-align: middle;
 }
 
+.icon--actionable {
+  cursor: pointer;
+  transition: $transition-animation--background-img;
+  &:focus {
+    outline:        1px dotted $color-blue-base;
+    outline-offset: 4px;
+  }
+}
+
 .icon--16 {
-  width: 16px;
+  width:  16px;
   height: 16px;
 }
 
 .icon--24 {
-  width: 24px;
+  width:  24px;
   height: 24px;
+}
+
+.icon--32 {
+  width:  32px;
+  height: 32px;
 }
 
 .icon--36 {
@@ -27,14 +41,26 @@
   height: 42px;
 }
 
+.icon--64 {
+  width:  64px;
+  height: 64px;
+}
+
 .icon__cross--black {
   background-image: url('images/icons/otbl-icons_cross--black.svg');
 }
 
+// Clock
 .icon__clock--black {
   background-image: url('images/icons/otbl-icons_clock--black.svg');
 }
 
+// Clone
+.icon__clone--white {
+  background-image: url('images/icons/otbl-icons__clone_white.svg');
+}
+
+// Cross
 .icon__cross--white {
   background-image: url('images/icons/otbl-icons_cross_white.svg');
 }
@@ -51,6 +77,12 @@
   background-image: url('images/icons/otbl-icons_chevron-down--white.svg');
 }
 
+// Edit
+.icon__edit--white {
+  background-image: url('images/icons/otbl-icons__edit_white.svg');
+}
+
+// Info
 .icon__info--black {
   background-image: url('images/icons/otbl-icons_info--black.svg');
 }
@@ -63,6 +95,7 @@
   }
 }
 
+// Arrow
 .icon__arrow--white {
   background-image: url('images/icons/otbl-icons_arrow-up--white.svg');
 
@@ -79,6 +112,29 @@
   }
 }
 
+.icon__arrow--black {
+  background-image: url('images/icons/otbl-icons__arrow-up_black.svg');
+
+  &.icon__arrow--right {
+    transform: rotate(90deg);
+  }
+
+  &.icon__arrow--left {
+    transform: rotate(-90deg);
+  }
+
+  &.icon__arrow--down {
+    transform: rotate(180deg);
+  }
+
+  &.icon--actionable {
+    &:hover, &:focus {
+      background-image: url('images/icons/otbl-icons__arrow-up_blue.svg');
+    }
+  }
+}
+
+// Arrow - Ends
 .icon__arrow-end--white {
   background-image: url('images/icons/otbl-icons_arrow-top--white.svg');
 
@@ -93,4 +149,52 @@
   &.icon__arrow--down {
     transform: rotate(180deg);
   }
+}
+
+.icon__arrow-top--black {
+  background-image: url('images/icons/otbl-icons__arrow-top_black.svg');
+
+  &.icon--actionable {
+    &:hover, &:focus {
+      background-image: url('images/icons/otbl-icons__arrow-top_blue.svg');
+    }
+  }
+}
+
+.icon__arrow-bottom--black {
+  background-image: url('images/icons/otbl-icons__arrow-top_black.svg');
+  transform: rotate(180deg);
+
+  &.icon--actionable {
+    &:hover, &:focus {
+      background-image: url('images/icons/otbl-icons__arrow-top_blue.svg');
+    }
+  }
+}
+
+/*
+/ Totem msg icons
+*/
+
+.totem-icon__checkmark--black {
+  background-image: url('images/icons/totem-msgs/otbl-icons__totem-msgs__success.svg');
+}
+
+.totem-icon__warning--black {
+  background-image: url('images/icons/totem-msgs/otbl-icons__totem-msgs__warning.svg');
+}
+
+.icon__trash--black {
+  background-image: url('images/icons/otbl-icons__trash-outline_black.svg');
+
+  &.icon--actionable {
+    &:hover, &:focus {
+      background-image: url('images/icons/otbl-icons__trash-outline_blue.svg');
+    }
+  }
+}
+
+// Plus
+.icon__plus--white {
+  background-image: url('images/icons/otbl-icons__plus--white.svg');
 }

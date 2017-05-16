@@ -14,12 +14,15 @@ module Totem
         def self.s3(config, options={})
           config.paperclip_defaults = {
             storage: :s3,
+            s3_region: get_region,
             s3_credentials: {
               access_key_id:     get_access_key,
               bucket:            get_bucket,
               secret_access_key: get_secret_access_key,
              },
-             s3_protocol: :https
+            s3_protocol: :https,
+            url:         ':s3_domain_url',
+            path:        ':paperclip_path'
           }
         end
 
@@ -39,6 +42,7 @@ module Totem
         def self.get_access_key;        ::Rails.application.secrets.aws.dig('s3', 'paperclip', 'access_key'); end
         def self.get_bucket;            ::Rails.application.secrets.aws.dig('s3', 'paperclip', 'bucket_name'); end
         def self.get_secret_access_key; ::Rails.application.secrets.aws.dig('s3', 'paperclip', 'secret_access_key'); end
+        def self.get_region;            ::Rails.application.secrets.aws.dig('s3', 'paperclip', 'region'); end
 
       end
     end

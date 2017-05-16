@@ -3,28 +3,39 @@ import ta    from 'totem/ds/associations'
 
 export default ta.Model.extend ta.add(
     ta.has_many 'users'
-    ta.has_many 'users', type: ta.to_p('owner'), reads: {name: 'owners'}
+    ta.has_many 'users', type: ta.to_p('owners'), reads: {name: 'owners'}
     ta.has_many 'space_types', reads: {}
     ta.has_many 'assignments', reads: [{sort: 'title'}, {name: 'assignments_due_at_asc', sort: ['due_at:asc', 'title:asc']}]
-    # ta.has_many 'team_sets', reads: {}
   ),
 
+  # # Attributes
+  title: ta.attr('string')
 
-  title:     ta.attr('string')
+  # # Properties
+  valid_roles: ['read', 'update', 'owner']
 
+  # # Computed properties
   immediate_assignment: ember.computed.reads 'assignments_due_at_asc.firstObject'
-  # active_assignments:   ember.computed.filterBy 'assignments_due_at_asc', 'active', true
-  # inactive_assignments: ember.computed.filterBy 'assignments_due_at_asc', 'active', false
-  
-  active_assignments: ember.computed.filterBy 'assignments_due_at_asc', 'state', 'active'
-  draft_assignments: ember.computed.filterBy 'assignments_due_at_asc', 'state', 'inactive'
+  active_assignments:   ember.computed.filterBy 'assignments_due_at_asc', 'state', 'active'
+  draft_assignments:    ember.computed.filterBy 'assignments_due_at_asc', 'state', 'inactive'
   archived_assignments: ember.computed.filterBy 'assignments_due_at_asc', 'state', 'archived'
 
-  valid_roles:          ['read', 'update', 'owner']
+  unlocked_team_sets: ember.computed 'team_sets', ->
+    promise = new ember.RSVP.Promise (resolve, reject) =>
+      @get('team_sets').then (team_sets) =>
+        records = team_sets.filter (team_set) => team_set.get('unlocked_states').includes team_set.get('state')
+        resolve(records)
+    ta.PromiseArray.create promise: promise
 
-  normalizeModelName: (mn) ->
-    console.warn 'NORMALIZE MODEL NAME:', mn
-    @_super(mn)
+  locked_team_sets: ember.computed 'team_sets', ->
+    promise = new ember.RSVP.Promise (resolve, reject) =>
+      @get('team_sets').then (team_sets) =>
+        records = team_sets.filter (team_set) => team_set.get('locked_states').includes team_set.get('state')
+        resolve(records)
+    ta.PromiseArray.create promise: promise
+
+  # # Helpers
+  normalizeModelName: (mn) -> @_super(mn)
 
   get_team_sets: (options={}) ->
     new ember.RSVP.Promise (resolve, reject) =>
@@ -55,20 +66,6 @@ export default ta.Model.extend ta.add(
       @tc.query_action(ta.to_p('space'), params, options).then (teams) =>
         resolve(teams)
     , (error) => console.error "[space model] Error in get_teams.", error
-
-  unlocked_team_sets: ember.computed 'team_sets', ->
-    promise = new ember.RSVP.Promise (resolve, reject) =>
-      @get('team_sets').then (team_sets) =>
-        records = team_sets.filter (team_set) => team_set.get('unlocked_states').includes team_set.get('state')
-        resolve(records)
-    ta.PromiseArray.create promise: promise
-
-  locked_team_sets: ember.computed 'team_sets', ->
-    promise = new ember.RSVP.Promise (resolve, reject) =>
-      @get('team_sets').then (team_sets) =>
-        records = team_sets.filter (team_set) => team_set.get('locked_states').includes team_set.get('state')
-        resolve(records)
-    ta.PromiseArray.create promise: promise
 
   add_ability: (abilities) ->
     update            = abilities.update or false

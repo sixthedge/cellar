@@ -33,6 +33,7 @@
 - Lists................Base list styles.
 */
 
+@import "otbl-css/base.headings";
 @import "otbl-css/base.page";
 @import "otbl-css/base.links";
 @import "otbl-css/base.type";
@@ -101,6 +102,7 @@
 - Switch...............Styles for on/off switch. 
 - File-upload..........Styles for file input type.
 - Loaders..............Loader styles. 
+- Totem-messages.......Styles for totem messages around the app. 
 */
 
 @import "otbl-css/components.top-bar";
@@ -130,6 +132,7 @@
 @import "otbl-css/_components.switch";
 @import "otbl-css/_components.file-upload";
 @import "otbl-css/_components.loaders";
+@import "otbl-css/_components.totem-messages";
 
 /*
 ## HELPERS

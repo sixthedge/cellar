@@ -2,8 +2,10 @@ language: ruby
 env:
   global:
   - APP_BUNDLE_SRC=./vendor/src
-  - APP_INSTALL_DIR=$TRAVIS_BUILD_DIR/opentbl
+  - APP_INSTALL_API_DIR=$TRAVIS_BUILD_DIR/api
+  - APP_INSTALL_CLIENT_DIR=$TRAVIS_BUILD_DIR/client
   - APP_SRC_DIR=$TRAVIS_BUILD_DIR/src
+  - APP_LOCAL_DIR=$TRAVIS_BUILD_DIR/local
 rvm:
   - 2.3.1
 branches:
@@ -11,23 +13,32 @@ branches:
     - development
 before_install:
   - gem install bundler
-  - cd local
+  - curl https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash
+  - nvm install 6.9.1
+  - nvm use 6.9.1
+  - npm install -g ember-cli@2.9.1
+  - npm install -g bower@1.8.0
+  - cd $APP_LOCAL_DIR
 install:
-  - echo Installing to $APP_INSTALL_DIR
-  - "./install.sh --package opentbl/api --install $APP_INSTALL_DIR --platform thinkspace"
-  - mkdir -p $APP_INSTALL_DIR/vendor/src/thinkspace/api
-  - mkdir -p $APP_INSTALL_DIR/vendor/src/totem/api
-  - mkdir -p $APP_INSTALL_DIR/.git
-  - cp -a $APP_SRC_DIR/thinkspace/api/. $APP_INSTALL_DIR/vendor/src/thinkspace/api/
-  - cp -a $APP_SRC_DIR/totem/api/. $APP_INSTALL_DIR/vendor/src/totem/api/
-  - cd $APP_INSTALL_DIR
+  - echo Installing API to $APP_INSTALL_API_DIR
+  - "./install.sh --package opentbl/api --install $APP_INSTALL_API_DIR --platform thinkspace"
+  - mkdir -p $APP_INSTALL_API_DIR/vendor/src/thinkspace/api
+  - mkdir -p $APP_INSTALL_API_DIR/vendor/src/totem/api
+  - mkdir -p $APP_INSTALL_API_DIR/.git
+  - cp -a $APP_SRC_DIR/thinkspace/api/. $APP_INSTALL_API_DIR/vendor/src/thinkspace/api/
+  - cp -a $APP_SRC_DIR/totem/api/. $APP_INSTALL_API_DIR/vendor/src/totem/api/
+  - cd $APP_INSTALL_API_DIR
   - echo Bundling with $APP_BUNDLE_SRC
-  - ls -l
   - bundle install
+  - echo Installing CLIENT to $APP_INSTALL_CLIENT_DIR
+  - cd $APP_LOCAL_DIR
+  - "./install.sh --package opentbl/client --install $APP_INSTALL_CLIENT_DIR --platform thinkspace"
+  - cd $APP_INSTALL_CLIENT_DIR
+  - ember deploy staging --activate
 script:
   - echo Skipping script step...
 before_deploy:
-  - cd $APP_INSTALL_DIR
+  - cd $APP_INSTALL_API_DIR
   - git init
   - git remote add heroku git@heroku.com:opentbl-staging.git
 deploy:

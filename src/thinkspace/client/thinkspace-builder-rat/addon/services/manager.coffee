@@ -55,6 +55,7 @@ export default ember.Service.extend array_helpers, uuid,
 
   add_question_item: (type) ->
     item = @get_new_question_item(type)
+    item.new = true
     @get_items(type).pushObject(item)
     @save_model(type)
 

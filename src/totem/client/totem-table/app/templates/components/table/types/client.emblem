@@ -3,12 +3,13 @@ table.basic-table.spacing__margin-bottom--1
     each columns as |column|
       component '__table/header' column=column c_table=this
   tbody
-    if loading.rows
+    each rows as |row|
+      component '__table/row' row=row columns=columns c_table=this
+  if loading.rows
+    .loader__overlay
       .loader__container
         .loader.loader--logo
         .text__font-size--14.text--bold Loading...
-    each rows as |row|
-      component '__table/row' row=row columns=columns c_table=this
 
 .pagination__container.spacing__margin-bottom--2
   span.text__font-size--14.text__lh--2 #{rows.range}

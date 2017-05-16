@@ -17,6 +17,10 @@
  * Padding top. 
  */
 
+.spacing__pad-top--half { 
+  padding-top: .5rem; 
+}
+
 .spacing__pad-top--1 { 
   padding-top: 1rem; 
 }
@@ -200,4 +204,8 @@
 
 .spacing__margin-left--4 {
   margin-left: 4rem;
+}
+
+.spacing__margin-left--24 {
+  margin-left: 24px;
 }

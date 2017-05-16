@@ -1,6 +1,7 @@
 ///*------------------------------------*\
 //    #FORMS
 //\*------------------------------------*/
+
 fieldset {
 	border:  none;
 	margin:  0;
@@ -47,7 +48,7 @@ label {
 	font-weight: $font-weight--bold;
 	font-size:   .875rem;
 	display:     block;
-  margin-bottom: .5rem;
+  // margin-bottom: .5rem;
 }
 
 .forms__label--subtle {
@@ -180,6 +181,12 @@ textarea {
 
 .input-feedback--success {
 	color: $color-green-base;
+}
+
+.input-group {
+  input {
+    margin-bottom: 0 !important;
+  }
 }
 
 

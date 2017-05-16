@@ -1,24 +1,29 @@
 .forms__field-wrapper
   label Question Label
   .forms__label-summary This is the question the student will see.
-  component '__changeset/input' value=model.changeset.question changeset=model.changeset attribute='question' display_errors=true
+  //component '__changeset/input' value=model.changeset.question changeset=model.changeset attribute='question' display_errors=true
+  component '__changeset/text_area' value=model.changeset.question changeset=model.changeset attribute='question' display_errors=true
 
-.forms__field-wrapper
+.forms__field-wrapper.spacing__margin-bottom--2
   label Answer choices
   .forms__label-summary We recommend 3-4 choices for students to choose from.
-  each choice_items as |choice|
-    component 'content/question/choice/edit' model=choice delete='delete_choice'
+  .input-group.spacing__margin-bottom--1
+    each choice_items as |choice|
+      component 'content/question/choice/edit' model=choice delete='delete_choice' select_answer='select_answer' cur_answer=cur_answer
 
-  a{action 'add_choice'}
-    | Add another answer choice
+  a{action 'add_choice'} class='btn' role='button' tabindex='0'
+    .icon.icon--16.icon__plus--white.spacing__margin-right--half
+    | New Answer choice
 
-.forms__field-wrapper
-  label Choose correct answer
-  .forms__label-summary This will help give immediate feedback to students.
-  component '__dropdown' collection=choice_items display_property='prefix' text=dropdown_text selected=model.changeset.answer select_action='select_answer' action_receiver=this
+// Can delete this block after the new correct link is implemented
 
-  br
-  component '__changeset/errors' changeset=model.changeset attribute='answer' errors_visible=true 
+/ .forms__field-wrapper
+/   label Choose correct answer
+/   .forms__label-summary This will help give immediate feedback to students.
+/   component '__dropdown' collection=choice_items display_property='prefix' text=dropdown_text selected=model.changeset.answer select_action='select_answer' action_receiver=this
+
+/ br
+component '__changeset/errors' changeset=model.changeset attribute='answer' errors_visible=true 
 hr
 .btn-group
   button.btn.btn--primary click='update'

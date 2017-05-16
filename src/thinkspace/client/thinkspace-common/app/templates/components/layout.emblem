@@ -1,5 +1,5 @@
 #application
   mount 'thinkspace-toolbar'
+  mount 'thinkspace-message'
   .main-content
-    mount 'thinkspace-message'
     outlet

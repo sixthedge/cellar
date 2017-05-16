@@ -20,20 +20,26 @@
   /     .tbl-category_comment-container
   /       p comments enabled:
 hr
-.btn-group
-  .btn.btn--primary click='edit'
-    | Edit question
+.grid__container
+  .btn-group.is-left
+    button.btn click='edit'
+      | Edit question
 
+    if is_not_balance
+      button.btn click='duplicate'
+        .icon.icon--16.icon__clone--white.spacing__margin-right--half
+        | Duplicate
+        
   if is_not_balance
-    .btn.btn-small click='duplicate'
-      | Duplicate
-  / .btn.btn-small click='reorder_up'
-  /   | Up
-  / .btn.btn-small click='reorder_down'
-  /   | Down
-  / .btn.btn-small click='reorder_top'
-  /   | Top
-  / .btn.btn-small click='reorder_bottom'
-  /   | Bottom
-  / .btn.btn-small click='delete'
-  /   | Delete
+    .btn-group.is-right
+      .icon.icon--16.icon--actionable.icon__arrow--black click='reorder_up' title='Up' tabindex='0' role='button'
+
+      .icon.icon--16.icon--actionable.icon__arrow--black.icon__arrow--down click='reorder_down' title='Down' tabindex='0' role='button'
+
+      .icon.icon--16.icon--actionable.icon__arrow-top--black click='reorder_top' title='Top' tabindex='0' role='button'
+
+      .icon.icon--16.icon--actionable.icon__arrow-bottom--black click='reorder_bottom' title='Bottom' tabindex='0' role='button'
+
+      .btn--divider
+      
+      .icon.icon--16.icon--actionable.icon__trash--black click='delete' title='Delete' tabindex='0' role='button'
