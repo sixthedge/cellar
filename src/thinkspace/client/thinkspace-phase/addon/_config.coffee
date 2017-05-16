@@ -6,7 +6,7 @@ export default {
 
   engine:
     mount:           {as: 'phases', path: '/cases/:assignment_id/phases'}
-    external_routes: [{login: 'users.sign_in'}, 'spaces.show', 'cases.show']
+    external_routes: [{login: 'users.sign_in'}, 'spaces.index', 'spaces.show', 'cases.show']
 
   ns:
     namespaces: {casespace: 'thinkspace/casespace'}
@@ -31,7 +31,7 @@ export default {
     'thinkspace-diagnostic-expert-path'
     'thinkspace-lab-vet-med'
     'thinkspace-observation-list'
-    'thinkspace-peer-assessment'
+    'thinkspace-peer-assessment-pe'
     'thinkspace-readiness-assurance'
     'thinkspace-weather-forecaster'
     'thinkspace-toolbar':      {external_routes: {home: 'spaces.index'}}

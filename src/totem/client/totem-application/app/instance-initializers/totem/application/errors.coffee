@@ -12,6 +12,7 @@ initializer =
     # by 'totem_error' should they be handled.
     ember.RSVP.on 'error', (reason=null) ->
       console.info '2.......rsvp-error', reason
+      Rollbar.error(reason) if Rollbar?
       if reason and reason.is_totem_error
         if not reason.is_handled
           route = instance.lookup('route:application')
@@ -25,6 +26,7 @@ initializer =
     #       However, this function is the first in the error-chain for them.
     ember.onerror = (reason=null) ->
       console.info '3.......on-error', reason
+      Rollbar.error(reason) if Rollbar?
       message = reason and reason.message
       console.error message  if message
       # return if reason and reason.status == 422   # ignore model validations

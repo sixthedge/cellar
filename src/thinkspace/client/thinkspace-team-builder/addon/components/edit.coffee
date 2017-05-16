@@ -26,14 +26,25 @@ export default base_component.extend arr_helpers,
   teams_count: ember.computed.reads 'teams.length'
   team_title:  ember.computed.reads 'team.title'
 
+
   # ### Initialization
   init_base: ->
-    @init_team()
-    @init_team_image()
-    @init_team_users()
-    @init_unassigned_users()
-    @init_table_data()
-    @set_all_data_loaded()
+    @set_loading 'all'
+    @init_manager().then =>
+      @init_team()
+      @init_team_image()
+      @init_team_users()
+      @init_unassigned_users()
+      @init_table_data()
+      @reset_loading 'all'
+
+  init_manager: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      manager = @get('manager')
+      model   = @get('model')
+      manager.set_space(model)
+      manager.initialize().then =>
+        resolve()
 
   init_table_data: ->
     team_users       = @get('team_users')

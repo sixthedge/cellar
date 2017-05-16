@@ -1,7 +1,9 @@
 partial 'components/helpers/headers/space'
 partial 'components/helpers/headers/roster'
 
-if all_data_loaded
+if loading.all
+  component '__loader/base'
+else
   if has_selected_users
     if has_selected_assigned_users
       .btn-group.is-right.spacing__margin-bottom--1

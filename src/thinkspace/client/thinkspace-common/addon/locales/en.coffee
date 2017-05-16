@@ -324,6 +324,8 @@ export default {
             team_set:
               save: 'Team set saved successfully.'
               destroy: 'Team set removed successfully.'
+              explode: 'Team changes saved successfully.'
+              revert: 'Team changes reverted successfully.'
             team_user:
               save: 'Team member saved successfully.'
               destroy: 'Team member removed successfully.'

@@ -38,12 +38,21 @@ export default base_component.extend arr_helpers,
 
   # ### Initialization
   init_base: ->
-    @set_query_param()
-    @init_team()
-    @init_selected_users()
-    #@init_unassigned_users()
-    @init_table_data()
-    @set_all_data_loaded()
+    @set_loading 'all'
+    @init_manager().then =>
+      @set_query_param()
+      @init_team()
+      @init_selected_users()
+      @init_table_data()
+      @reset_loading 'all'
+
+  init_manager: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      manager = @get('manager')
+      model   = @get('model')
+      manager.set_space(model)
+      manager.initialize().then =>
+        resolve()
 
   ## Now used to init row/student Ember Objects
   init_table_data: ->

@@ -23,7 +23,7 @@ export default base_component.extend selectable_mixin,
 
   empty:    ember.computed.empty 'teams'
 
-  has_selected_users: ember.computed.notEmpty 'selected_rows'
+  has_selected_users:          ember.computed.notEmpty 'selected_rows'
   highlighted_users:           ember.computed 'results.@each', -> @get('results').mapBy('id')
   has_selected_assigned_users: ember.computed.notEmpty 'selected_assigned_users'
   selected_assigned_users:     ember.computed.filterBy 'selected_rows', 'has_team'
@@ -38,8 +38,18 @@ export default base_component.extend selectable_mixin,
 
   # ### Initialization
   init_base: ->
-    @init_table_data()
-    @set_all_data_loaded()
+    @set_loading 'all'
+    @init_manager().then =>
+      @init_table_data()
+      @reset_loading 'all'
+
+  init_manager: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      manager = @get('manager')
+      model   = @get('model')
+      manager.set_space(model)
+      manager.initialize().then =>
+        resolve()
 
   init_table_data: ->
     users   = @get('users')
@@ -83,8 +93,10 @@ export default base_component.extend selectable_mixin,
     options = {}
     options.users = selected_users.mapBy 'model'
 
+    @set_loading 'all'
     manager.create_team(options).then (team) =>
       @get_app_route().transitionTo(ns.to_r('team_builder', 'builder'), space, {queryParams: {team_id: team.id}})
+      @reset_loading 'all'
 
   goto_teams_edit: (team) ->
     space = @get('manager.space')
@@ -107,9 +119,18 @@ export default base_component.extend selectable_mixin,
       @set('results', val)
 
     explode: ->
+      @set_loading 'all'
       @get('manager').explode().then =>
-        @set 'explode_success', true
+        @init_table_data()
+        @reset_loading 'all'
+        @totem_messages.api_success source: @, model: @get('team_set'), action: 'explode', i18n_path: ns.to_o('team_set', 'explode')
+        , (error) => 
+          totem_messages.api_failure error, source: @, model: @get('team_set'), action: 'explode'
 
     revert: ->
+      @set_loading 'all'
       @get('manager').revert_transform().then =>
-        @set 'revert_success', true
+        @reset_loading 'all'
+        @totem_messages.api_success source: @, model: @get('team_set'), action: 'revert', i18n_path: ns.to_o('team_set', 'revert')
+        , (error) => 
+          totem_messages.api_failure error, source: @, model: @get('team_set'), action: 'revert'
