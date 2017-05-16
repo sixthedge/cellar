@@ -27,7 +27,10 @@ export default base.extend
       first_name:  [totem_changeset.vpresence(presence: true, message: 'You must enter a first name')]
       last_name:   [totem_changeset.vpresence(presence: true, message: 'You must enter a last name')]
       email:       [totem_changeset.vpresence(presence: true, message: 'You must enter an email address'), totem_changeset.vemail()]
-      password:    [totem_changeset.vpresence(presence: true, message: 'You must enter a password')]
+      password:    [
+        totem_changeset.vpresence(presence: true, message: 'You must enter a password'),
+        totem_changeset.vlength(min: 8, message: 'Your password must be at least 8 characters long.')
+      ]
       roles:       [totem_changeset.vpresence(presence: true, message: 'You must select your role')]
     @set_debug_changeset(changeset)
     changeset.set('email', @get('email')) if @get('has_token') and @get('email')
