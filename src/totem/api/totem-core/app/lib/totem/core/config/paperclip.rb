@@ -20,7 +20,8 @@ module Totem
               bucket:            get_bucket,
               secret_access_key: get_secret_access_key,
              },
-             s3_protocol: :https
+             s3_protocol: :https,
+             url: ':s3_domain_url'
           }
         end
 
