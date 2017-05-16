@@ -1,0 +1,47 @@
+///*------------------------------------*\
+//    #TOTEM-MESSAGES
+//\*------------------------------------*/
+
+.totem-message {
+  position:    fixed;
+  bottom:      0;
+  left:        0;
+  height:      $top-bar-height;
+  line-height: $top-bar-height;
+  width:       100%;
+  z-index:     5000;
+
+  a {
+    font-weight:   $font-weight--regular;
+    color:         $color-black-base;
+    font-size:     12px;
+    margin-left:   .5rem;
+    border-bottom: 1px dotted $color-black-base;
+  }
+
+  >.icon {
+    position: absolute;
+    right:    $spacing-unit;
+    top:      1rem;
+  }
+
+  &:hover { cursor: pointer; }
+}
+
+.totem-message--success {
+  background-color: $color-green-light;
+  border-top: 1px solid $color-green-base;
+}
+
+.totem-message--error {
+  background-color: $color-red-light;
+  border-top: 1px solid $color-red-base;
+}
+
+.totem-message__text-container {
+  @extend .group;
+
+  max-width: $max-width;
+  margin:    0 auto;
+  padding:   0 $spacing-unit;
+}
