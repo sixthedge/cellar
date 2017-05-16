@@ -4,7 +4,7 @@
       h1.text--inline-block Hello, #{session.user.first_name}!
       = if can.create
         .btn-group.is-right
-          link-to 'new' class='btn btn--primary is-right' tabindex='0'
+          link-to 'new' class='btn btn--primary is-right' tabindex='0' role='button'
             | + New Space
       p Here's an overview of what's happening in your spaces.
       

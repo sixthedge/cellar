@@ -1,7 +1,7 @@
 .grid__container--flex
   .grid__col--4of4
     .main-content__header
-      h1.text--inline-block Create a new Space
+      h1.text--inline-block Create a new space
       p Let's get a few details down. You can dd more settings after you create your space.
 
 .grid__container--flex.spacing__margin-bottom--4
@@ -13,9 +13,9 @@
       / label Which institution do you belong to?
 
       .btn-group
-        button.btn.btn--primary{action 'submit'}
+        button.btn.btn--primary{action 'submit'} role='button'
           | Create Space
 
-        link-to 'index' class='btn'
+        link-to 'index' class='btn' role='button'
           | Cancel
 
