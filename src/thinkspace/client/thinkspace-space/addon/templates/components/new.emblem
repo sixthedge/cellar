@@ -1,12 +1,21 @@
-h1 New Space
+.grid__container--flex
+  .grid__col--4of4
+    .main-content__header
+      h1.text--inline-block Create a new space
+      p Let's get a few details down. You can dd more settings after you create your space.
 
-label Title
-component '__changeset/input' value=changeset.title changeset=changeset attribute='title' display_errors=true
+.grid__container--flex.spacing__margin-bottom--4
+  .grid__col--3of4.grid__mobile--full-width
+    form{action 'submit' on='submit'}
+      .forms__field-wrapper
+        component '__changeset/input' changeset=changeset value=changeset.title attribute='space_name'  label='Space Name' display_errors=true
 
-label Which institution do you belong to?
+      / label Which institution do you belong to?
 
-link-to 'index' class='btn'
-  | Back
+      .btn-group
+        button.btn.btn--primary{action 'submit'} role='button'
+          | Create Space
 
-.btn{action 'submit'}
-  | Submit
+        link-to 'index' class='btn' role='button'
+          | Cancel
+
