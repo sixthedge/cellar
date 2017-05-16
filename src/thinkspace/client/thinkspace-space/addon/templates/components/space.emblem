@@ -35,9 +35,9 @@ li.tile__container
     .tile__sub-caption Fall 2016
     div.group
       span.tile__info.is-left 
-        if model.owners
-          each owner in model.owners
-            span = owner.display_name
+        if has_owners
+          each model.owners as |owner|
+            span #{owner.display_name}
         else
           span No Instructors
       .tile__status.tile__status--live.is-right Live
