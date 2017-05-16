@@ -14,6 +14,11 @@ branches:
     - feature/travis-client
 before_install:
   - gem install bundler
+  - curl https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash
+  - nvm install 6.9.1
+  - nvm use 6.9.1
+  - npm install -g ember-cli@2.9.1
+  - npm install -g bower@1.8.0
   - cd $APP_LOCAL_DIR
 install:
   - echo Installing API to $APP_INSTALL_API_DIR
