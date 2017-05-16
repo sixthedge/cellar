@@ -22,19 +22,17 @@ export default base.extend
   focusIn: (e) ->
     picker = @get_date_picker()
     picker.open()
-    e.stopPropagation()
 
   click: (e) ->
     picker = @get_date_picker()
     picker.open()
-    e.stopPropagation()
-    e.preventDefault()
 
   didInsertElement: ->
     $input          = @$('.ts-picker_input')
     options         = @get('date_options') or {}
     options.onClose = (=> @select_date())
     $input.pickadate(options)
+    @set_date_picker $input.pickadate('picker')
     @set_date()
 
   # ### Date setters
@@ -50,5 +48,6 @@ export default base.extend
     @sendAction 'select', date
 
   # ### Helpers
-  get_date_picker:      -> @$('.ts-picker_input').pickadate('picker')
+  set_date_picker:      (picker) -> @set 'picker', picker
+  get_date_picker:      -> @get 'picker'
   get_date_picker_date: -> @get_date_picker().get('select')

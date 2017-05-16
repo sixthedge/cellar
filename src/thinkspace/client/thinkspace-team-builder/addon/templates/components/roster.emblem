@@ -1,16 +1,24 @@
 partial 'components/helpers/headers/space'
 partial 'components/helpers/headers/roster'
 
-if all_data_loaded
+if loading.all
+  component '__loader/base'
+else
   if has_selected_users
     if has_selected_assigned_users
       .btn-group.is-right.spacing__margin-bottom--1
         component '__modal/confirmation' modal_partial='components/roster/modals/create/modal' modal_reveal_partial='components/roster/modals/create/action' assigned_users=selected_assigned_users class='btn__component text--inline-block'
-        component '__modal/confirmation' modal_partial='components/roster/modals/add/modal' modal_reveal_partial='components/roster/modals/add/action' assigned_users=selected_assigned_users class='btn__component text--inline-block'
+        if has_selected_all_assigned_users
+          .btn{action 'remove_from_team'}
+            | Remove from team 
+        else
+          unless empty
+            component '__modal/confirmation' modal_partial='components/roster/modals/add/modal' modal_reveal_partial='components/roster/modals/add/action' assigned_users=selected_assigned_users class='btn__component text--inline-block'
     else
       .btn-group.is-right.spacing__margin-bottom--1
         .btn.btn--primary{action 'create_team'}
           | Create team with selected   
-        component '__dropdown' collection=teams display_property='title' text='Add to existing team' selected=selected_team select_action='add_to_team' action_receiver=this class='is-right' 
+        unless empty
+          component '__dropdown' collection=teams display_property='title' text='Add to existing team' selected=selected_team select_action='add_to_team' action_receiver=this class='is-right' 
 
   component '__table' rows=rows columns=columns

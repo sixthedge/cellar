@@ -22,13 +22,10 @@ export default base.extend
   focusIn: (e) ->
     picker = @get_time_picker()
     picker.open()
-    e.stopPropagation()
 
   click: (e) ->
     picker = @get_time_picker()
     picker.open()
-    e.stopPropagation()
-    e.preventDefault()
 
   didInsertElement: ->
     $input          = @get_picker_input()

@@ -117,5 +117,5 @@ export default ember.ArrayProxy.extend range,
     current_page = @get_current_page() || 0
     per_page     = @get_per_page() || 0
     start_index  = ((current_page - 1) * per_page)
-    end_index    = (per_page * current_page) - 1
+    end_index    = per_page * current_page
     [start_index, end_index]

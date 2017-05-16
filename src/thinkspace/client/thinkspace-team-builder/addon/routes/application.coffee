@@ -7,8 +7,3 @@ export default base.extend
   manager: ember.inject.service()
 
   model: (params) -> @tc.find_record_with_message ns.to_p('space'), params.space_id
-
-  afterModel: (model) ->
-    manager = @get('manager')
-    manager.set_space(model)
-    manager.initialize()
