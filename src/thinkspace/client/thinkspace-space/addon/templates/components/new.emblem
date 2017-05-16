@@ -11,7 +11,7 @@
       .forms__label-summary Typically people use their course name.
       component '__changeset/input' value=changeset.title changeset=changeset attribute='title' display_errors=true
 
-    label Which institution do you belong to?
+    / label Which institution do you belong to?
 
     .btn-group
       button.btn.btn--primary{action 'submit'}
