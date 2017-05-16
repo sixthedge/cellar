@@ -10,7 +10,7 @@
       .icon.icon--16.icon--actionable.icon__trash--black.vertical-align--baseline tabindex='0' click='delete' title="Delete"
   .spacing__margin-left--2
     if is_correct
-      .text__font-size--12.text--bold.text__color--green
+      .text__font-size--12.text--bold.text__color--green.text__lh--24
         .icon.icon--16.icon__checkmark--green.spacing__margin-right--half
         | Correct choice
     else
