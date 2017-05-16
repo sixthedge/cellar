@@ -1,4 +1,4 @@
 if message_present
-  each messages as |message|
-    if message.visible
-      component 'message' model=message
+  if show_message
+    component 'message' model=first_message remove='remove_message'
+

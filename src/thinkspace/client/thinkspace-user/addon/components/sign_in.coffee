@@ -35,6 +35,9 @@ export default base.extend
         @get('session').authenticate(@get('authenticator'), data).then =>
           @reset_loading('authenticating')
           @totem_messages.info "You're signed in!"
+          @totem_messages.info "Sign in successful! 1"
+          @totem_messages.info "Sign in successful! 2"
+          @totem_messages.info "Sign in successful! 3"
         , (error) =>
           changeset.show_errors_off()
           @reset_loading('authenticating')

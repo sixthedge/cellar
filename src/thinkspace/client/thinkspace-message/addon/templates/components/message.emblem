@@ -2,7 +2,5 @@ div class={:totem-message message_class}
   .totem-message__text-container
     .icon.icon--32.totem-icon__checkmark--black.spacing__margin-right--1
     .text__font-size--14.text--bold.text--inline-block
-      if is_debug
-        = model.timestamp
       = model.message
   .icon.icon--24.icon__cross--black
