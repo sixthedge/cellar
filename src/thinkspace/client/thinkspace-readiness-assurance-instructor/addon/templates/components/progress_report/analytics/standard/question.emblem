@@ -21,7 +21,7 @@
           each most_picked as |choice|
             component 'progress_report/analytics/choices/picked' model=choice
       else
-        span Not enough data yet.
+        span.text__font-size--12.text__font-style--italic Not enough data yet.
 
   if is_expanded
     .rat-report__drawer-container

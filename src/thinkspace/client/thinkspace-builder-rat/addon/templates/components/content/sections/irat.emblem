@@ -13,9 +13,10 @@ fieldset.forms__section.spacing__margin-bottom--4
   else
     div class={:bordered-panel :bordered-panel--active}
       .forms__field-wrapper
-        label You have no questions
+        label Your RAT is empty
         .forms__label-summary Add a new question to start off your RAT.
-      .btn.btn--primary click='create'
+      button.btn.btn--primary click='create' role='button'
+        .icon.icon--16.icon__plus--white.spacing__margin-right--half
         | New Question
 
     
