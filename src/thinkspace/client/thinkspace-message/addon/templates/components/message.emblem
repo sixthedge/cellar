@@ -1,6 +1,8 @@
-.dialogue.dialogue--red class={model.type is_debug:debug-on}
-  h1 #{type_header}
-  p
-    if is_debug
-      = model.timestamp
-    = model.message
+.totem-message.totem-message--success class={model.type is_debug:debug-on}
+  .totem-message__text-container
+    .icon.icon--32.totem-icon__checkmark--black.spacing__margin-right--1
+    .text__font-size--14.text--bold.text--inline-block
+      if is_debug
+        = model.timestamp
+      = model.message
+  .icon.icon--24.icon__cross--black

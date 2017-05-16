@@ -1,6 +1,4 @@
 if message_present
-  .grid__container--flex.spacing__margin-top--2
-    .grid__col--4of4
-      each messages as |message|
-        if message.visible
-          component 'message' model=message
+  each messages as |message|
+    if message.visible
+      component 'message' model=message
