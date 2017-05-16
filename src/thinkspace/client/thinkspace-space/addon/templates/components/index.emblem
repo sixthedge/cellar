@@ -2,10 +2,10 @@
   .grid__col--4of4
     .main-content__header
       h1.text--inline-block Hello, #{session.user.first_name}!
-      .btn-group.is-right
-        / = if can.create
-        link-to 'new' class='btn btn--primary is-right' tabindex='0'
-          | + New Space
+      = if can.create
+        .btn-group.is-right
+          link-to 'new' class='btn btn--primary is-right' tabindex='0'
+            | + New Space
       p Here's an overview of what's happening in your spaces.
       
 
