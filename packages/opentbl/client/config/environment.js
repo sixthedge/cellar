@@ -75,12 +75,14 @@ module.exports = function(environment) {
   var app_pub_sub_socketio_client_cdn = process.env['APP_PUBSUB_SIO_CLIENT_CDN'] || 'https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js';
   var app_totem_uploader              = process.env['APP_TOTEM_UPLOADER']        || 'false';
   var app_rollbar_access_token        = process.env['APP_ROLLBAR_ACCESS_TOKEN']  || null;
+  var app_totem_autofill              = process.env['APP_TOTEM_AUTOFILL']        || false;
   var app_deploy_target               = process.env['APP_DEPLOY_TARGET'];
 
   ENV.totem.api_host                    = app_api_host;
   ENV.totem.asset_path                  = app_asset_path;
   ENV.totem.pub_sub.socketio_url        = app_pub_sub_socketio_url;
   ENV.totem.pub_sub.socketio_client_cdn = app_pub_sub_socketio_client_cdn;
+  ENV.totem.autofill                    = app_totem_autofill;
   ENV.totem.uploader                    = {s3: (app_totem_uploader == 'true')};
   ENV.totem.rollbar                     = {access_token: app_rollbar_access_token};
 
@@ -91,7 +93,6 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS         = true;
 
-    ENV.totem.autofill        = true;
     ENV.contentSecurityPolicy = {
       "default-src": "* localhost:* 0.0.0.0:* 'unsafe-eval' 'unsafe-inline' data:",
       "script-src": "* localhost:* 0.0.0.0:* 'unsafe-eval' 'unsafe-inline' data:",
