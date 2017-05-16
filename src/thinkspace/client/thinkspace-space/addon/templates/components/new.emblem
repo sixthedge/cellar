@@ -6,17 +6,16 @@
 
 .grid__container--flex.spacing__margin-bottom--4
   .grid__col--3of4.grid__mobile--full-width
-    .forms__field-wrapper
-      label Space Name
-      .forms__label-summary Typically people use their course name.
-      component '__changeset/input' value=changeset.title changeset=changeset attribute='title' display_errors=true
+    form{action 'submit' on='submit'}
+      .forms__field-wrapper
+        component '__changeset/input' changeset=changeset value=changeset.title attribute='space_name'  label='Space Name' display_errors=true
 
-    / label Which institution do you belong to?
+      / label Which institution do you belong to?
 
-    .btn-group
-      button.btn.btn--primary{action 'submit'}
-        | Create Space
+      .btn-group
+        button.btn.btn--primary{action 'submit'}
+          | Create Space
 
-      link-to 'index' class='btn'
-        | Cancel
+        link-to 'index' class='btn'
+          | Cancel
 
