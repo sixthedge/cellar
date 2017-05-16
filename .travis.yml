@@ -11,6 +11,7 @@ rvm:
 branches:
   only:
     - development
+    - feature/travis-client
 before_install:
   - gem install bundler
   - cd $APP_LOCAL_DIR
