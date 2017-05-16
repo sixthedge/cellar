@@ -18,6 +18,7 @@ module Totem
               access_key_id:     get_access_key,
               bucket:            get_bucket,
               secret_access_key: get_secret_access_key,
+              region:            get_region
              },
              s3_protocol: :https
           }
@@ -39,6 +40,7 @@ module Totem
         def self.get_access_key;        ::Rails.application.secrets.aws.dig('s3', 'paperclip', 'access_key'); end
         def self.get_bucket;            ::Rails.application.secrets.aws.dig('s3', 'paperclip', 'bucket_name'); end
         def self.get_secret_access_key; ::Rails.application.secrets.aws.dig('s3', 'paperclip', 'secret_access_key'); end
+        def self.region;                ::Rails.application.secrets.aws.dig('s3', 'paperclip', 'region'); end
 
       end
     end
