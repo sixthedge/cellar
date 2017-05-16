@@ -23,10 +23,12 @@ export default base_component.extend selectable_mixin,
 
   empty:    ember.computed.empty 'teams'
 
-  has_selected_users:          ember.computed.notEmpty 'selected_rows'
-  highlighted_users:           ember.computed 'results.@each', -> @get('results').mapBy('id')
-  has_selected_assigned_users: ember.computed.notEmpty 'selected_assigned_users'
-  selected_assigned_users:     ember.computed.filterBy 'selected_rows', 'has_team'
+  has_selected_users:              ember.computed.notEmpty 'selected_rows'
+  highlighted_users:               ember.computed 'results.@each', -> @get('results').mapBy('id')
+  has_selected_assigned_users:     ember.computed.notEmpty 'selected_assigned_users'
+  selected_assigned_users:         ember.computed.filterBy 'selected_rows', 'has_team'
+  has_selected_all_assigned_users: ember.computed 'selected_rows.@each.has_team', ->
+    @get('selected_rows').every (row) -> row.get('has_team')
 
   columns: ember.computed 'manager', 'model', ->
     [
@@ -109,8 +111,15 @@ export default base_component.extend selectable_mixin,
       @get('selected_rows').forEach (row) =>
         user = row.get('model')
         manager.add_to_team(team.id, user)
-      manager.save_transform().then =>
-        @refresh()
+      manager.save_transform()
+
+    remove_from_team: ->
+      manager = @get('manager')
+      @get('selected_rows').forEach (row) =>
+        user    = row.get('model')
+        team_id = row.get('team_id')
+        manager.remove_from_team(team_id, user)
+      manager.save_transform()
 
     create_team: ->
       @process_create_team()
