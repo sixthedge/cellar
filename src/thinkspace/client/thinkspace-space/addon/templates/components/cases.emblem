@@ -5,7 +5,7 @@ if all_data_loaded
         .spacing__margin-bottom--1.text__align--center
           img src='/assets/images/illustrations/illustrations__empty__cases.svg' alt="No Cases" title="No Cases" style='max-width:200px;'
         .text__align--center
-          h2.spacing__margin-bottom--half Looks like there's no exercises yet
+          h2.spacing__margin-bottom--half Looks like there are no exercises yet
           if model.can.update
             p.spacing__margin-top--0.text__font-size--14 Click on the New Exercise button to create one.
           else
