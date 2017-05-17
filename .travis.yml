@@ -19,11 +19,9 @@ before_install:
 install:
   - ruby -r $APP_TRAVIS_RB -e "Travis.install"
 before_script:
+  - gem install dpl
   - ruby -r $APP_TRAVIS_RB -e "Travis.before_script"
 script:
   - ruby -r $APP_TRAVIS_RB -e "Travis.script"
-before_deploy:
-  - gem install dpl
-  - ruby -R $APP_TRAVIS_RB -e "Travis.before"
-after_deploy:
-  - ruby -R $APP_TRAVIS_RB -e "Travis.after_deploy"
+after_script:
+  - ruby -R $APP_TRAVIS_RB -e "Travis.deploy"
