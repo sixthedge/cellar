@@ -7,13 +7,13 @@ unless model.can.update
       .text__font-size--14.text--bold Locked
       .text__font-size--12 Exercise is locked by instructor.
 
-  // Not Started
+  // Not Started - Not possible
   .grid__container.spacing__margin-bottom--1
     .icon.icon--42.spacing__margin-right--1.is-left
       img src='/assets/images/icons/exercise-types/icons__exercise-type__not-started.svg' alt="Not Started" title="Exercise has not been started" 
     .text--inline-block
       .text__font-size--14.text--bold Not Started
-      .text__font-size--12 You have not opened this exercise.
+      .text__font-size--12 You have not opened any activity.
 
   // In Progress
   .grid__container.spacing__margin-bottom--1
@@ -23,12 +23,20 @@ unless model.can.update
       .text__font-size--14.text--bold In Progress
       .text__font-size--12 Last save May 15, 2017 at 3:00pm
 
+  // Waiting
+  .grid__container.spacing__margin-bottom--1
+    .icon.icon--42.spacing__margin-right--1.is-left
+      img src='/assets/images/icons/exercise-types/icons__exercise-type__waiting.svg' alt="Waiting" title="Exercise is waiting on next activity" 
+    .text--inline-block
+      .text__font-size--14.text--bold Waiting on next activity
+      .text__font-size--12 Opens on May 20, 2017 at 3:00pm.
+
   // Submitted
   .grid__container.spacing__margin-bottom--1
     .icon.icon--42.spacing__margin-right--1.is-left
       img src='/assets/images/icons/exercise-types/icons__exercise-type__submitted.svg' alt="Submitted" title="Exercise has been submitted" 
     .text--inline-block
-      .text__font-size--14.text--bold Submitted!
+      .text__font-size--14.text--bold All Complete!
       .text__font-size--12 Submitted on May 15, 2017 at 3:00pm
 
   // Past-Due/Read-only
@@ -36,8 +44,8 @@ unless model.can.update
     .icon.icon--42.spacing__margin-right--1.is-left
       img src='/assets/images/icons/exercise-types/icons__exercise-type__read-only.svg' alt="Past Due" title="Exercise is past due" 
     .text--inline-block
-      .text__font-size--14.text--bold Past Due
-      .text__font-size--12 You did not submit on time.
+      .text__font-size--14.text--bold Read Only
+      .text__font-size--12 You can not edit this exercise.
   hr
 
 label.spacing__margin-bottom--0 Exercise Type
