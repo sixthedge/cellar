@@ -1,4 +1,5 @@
 unless model.can.update
+  .text__font-size--12.text--bold.spacing__margin-bottom--half Exercise Status
   // Locked
   .grid__container.spacing__margin-bottom--1
     .icon.icon--42.spacing__margin-right--1.is-left
