@@ -11,7 +11,7 @@ class Travis
           commands = [
             'echo Installing API to $APP_INSTALL_API_DIR',
             'cd $APP_LOCAL_DIR',
-            './install.sh --package opentbl/api --install $APP_INSTALL_API_DIR --platform thinkspace',
+            '$APP_LOCAL_DIR/install.sh --package opentbl/api --install $APP_INSTALL_API_DIR --platform thinkspace',
             'mkdir -p $APP_INSTALL_API_DIR/vendor/src/thinkspace/api',
             'mkdir -p $APP_INSTALL_API_DIR/vendor/src/totem/api',
             'mkdir -p $APP_INSTALL_API_DIR/.git',
