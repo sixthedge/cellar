@@ -1,95 +1,105 @@
 PATH
-  remote: ../../cellar/src/thinkspace/api/thinkspace-authorization
+  remote: ../../../src/thinkspace/api/thinkspace-authorization
   specs:
     thinkspace-authorization (0.2.0)
       cancancan (~> 1.15)
 
 PATH
-  remote: ../../cellar/src/thinkspace/api/thinkspace-builder
+  remote: ../../../src/thinkspace/api/thinkspace-builder
   specs:
     thinkspace-builder (0.2.0)
       aasm
 
 PATH
-  remote: ../../cellar/src/thinkspace/api/thinkspace-casespace
+  remote: ../../../src/thinkspace/api/thinkspace-casespace
   specs:
     thinkspace-casespace (0.2.0)
       aasm
 
 PATH
-  remote: ../../cellar/src/thinkspace/api/thinkspace-common
+  remote: ../../../src/thinkspace/api/thinkspace-common
   specs:
     thinkspace-common (0.2.0)
       smarter_csv
 
 PATH
-  remote: ../../cellar/src/thinkspace/api/thinkspace-importer
+  remote: ../../../src/thinkspace/api/thinkspace-importer
   specs:
     thinkspace-importer (0.2.0)
 
 PATH
-  remote: ../../cellar/src/thinkspace/api/thinkspace-peer-assessment
+  remote: ../../../src/thinkspace/api/thinkspace-peer-assessment
   specs:
     thinkspace-peer-assessment (0.2.0)
 
 PATH
-  remote: ../../cellar/src/thinkspace/api/thinkspace-pub-sub
+  remote: ../../../src/thinkspace/api/thinkspace-pub-sub
   specs:
     thinkspace-pub-sub (0.2.0)
 
 PATH
-  remote: ../../cellar/src/thinkspace/api/thinkspace-readiness-assurance
+  remote: ../../../src/thinkspace/api/thinkspace-readiness-assurance
   specs:
     thinkspace-readiness-assurance (0.2.0)
 
 PATH
-  remote: ../../cellar/src/thinkspace/api/thinkspace-report
+  remote: ../../../src/thinkspace/api/thinkspace-report
   specs:
     thinkspace-report (0.2.0)
 
 PATH
-  remote: ../../cellar/src/thinkspace/api/thinkspace-resource
+  remote: ../../../src/thinkspace/api/thinkspace-resource
   specs:
     thinkspace-resource (0.2.0)
       paperclip
 
 PATH
-  remote: ../../cellar/src/thinkspace/api/thinkspace-team
+  remote: ../../../src/thinkspace/api/thinkspace-seed
+  specs:
+    thinkspace-seed (0.2.0)
+
+PATH
+  remote: ../../../src/thinkspace/api/thinkspace-team
   specs:
     thinkspace-team (0.2.0)
 
 PATH
-  remote: ../../cellar/src/thinkspace/api
+  remote: ../../../src/thinkspace/api/thinkspace-test
+  specs:
+    thinkspace-test (0.2.0)
+
+PATH
+  remote: ../../../src/thinkspace/api
   specs:
     thinkspace (0.2.0)
       aasm
       totem
 
 PATH
-  remote: ../../cellar/src/totem/api/totem-authentication-session
+  remote: ../../../src/totem/api/totem-authentication-session
   specs:
     totem-authentication-session (0.5.0)
       totem (= 0.5.0)
 
 PATH
-  remote: ../../cellar/src/totem/api/totem-authorization-cancan
+  remote: ../../../src/totem/api/totem-authorization-cancan
   specs:
     totem-authorization-cancan (0.5.0)
       totem (= 0.5.0)
 
 PATH
-  remote: ../../cellar/src/totem/api/totem-core
+  remote: ../../../src/totem/api/totem-core
   specs:
     totem-core (0.5.0)
 
 PATH
-  remote: ../../cellar/src/totem/api/totem-pub-sub
+  remote: ../../../src/totem/api/totem-pub-sub
   specs:
     totem-pub-sub (0.5.0)
       totem (= 0.5.0)
 
 PATH
-  remote: ../../cellar/src/totem/api/vendor/active_model_serializers-0.10.2
+  remote: ../../../src/totem/api/vendor/active_model_serializers-0.10.2
   specs:
     active_model_serializers (0.10.2)
       actionpack (>= 4.1, < 6)
@@ -98,7 +108,7 @@ PATH
       railties (>= 4.1, < 6)
 
 PATH
-  remote: ../../cellar/src/totem/api
+  remote: ../../../src/totem/api
   specs:
     totem (0.5.0)
       totem-core (= 0.5.0)
@@ -342,7 +352,7 @@ DEPENDENCIES
   simplecov
   slim (= 3.0.7)
   smarter_csv (= 1.1.4)
-  spreadsheet
+  spreadsheet (= 1.1.4)
   thin
   thinkspace (= 0.2.0)!
   thinkspace-authorization (= 0.2.0)!
@@ -355,12 +365,17 @@ DEPENDENCIES
   thinkspace-readiness-assurance (= 0.2.0)!
   thinkspace-report (= 0.2.0)!
   thinkspace-resource (= 0.2.0)!
+  thinkspace-seed (= 0.2.0)!
   thinkspace-team (= 0.2.0)!
+  thinkspace-test (= 0.2.0)!
   totem (= 0.5.0)!
   totem-authentication-session (= 0.5.0)!
   totem-authorization-cancan (= 0.5.0)!
   totem-core (= 0.5.0)!
   totem-pub-sub (= 0.5.0)!
+
+RUBY VERSION
+   ruby 2.3.1p112
 
 BUNDLED WITH
    1.14.6

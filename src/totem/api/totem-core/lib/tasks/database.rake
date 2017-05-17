@@ -19,7 +19,6 @@ namespace :totem do
     task :reset, [:test_data_seed_name] => [:environment] do |t, args|
       ENV['TOTEM_TEST_DATA_SEED_NAME'] = args.test_data_seed_name || ''
       unless Rails.env.test?
-        db_namespace['clobber_db'].invoke
         db_namespace['install:all'].invoke
         db_namespace['migrate:all'].invoke
       end
@@ -32,7 +31,6 @@ namespace :totem do
     task :soft_reset, [:test_data_seed_name] => [:environment] do |t, args|
       ENV['TOTEM_TEST_DATA_SEED_NAME'] = args.test_data_seed_name || ''
       unless Rails.env.test?
-        db_namespace['clobber_db'].invoke
         db_namespace['install:all'].invoke
       end
       Rake::Task['db:drop'].invoke

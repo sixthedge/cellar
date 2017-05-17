@@ -12,3 +12,9 @@ test/dummy/.sass-cache
 thinkspace-common/lib/tasks/files/*
 node_modules/
 bower_components/
+
+# Rails API
+log/
+tmp/
+.env-production
+.env-staging
