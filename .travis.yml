@@ -7,21 +7,22 @@ env:
   - APP_SRC_DIR=$TRAVIS_BUILD_DIR/src
   - APP_LOCAL_DIR=$TRAVIS_BUILD_DIR/local
   - APP_TRAVIS_RB=$APP_LOCAL_DIR/travis.rb
+  - secure: TuLaq14SARxOxgEapGdXybuxiWIyOMJhsRRFrZ5YVNe4d8QvNeZCpWGGeyZSDWVckWzuCXBMhOC9S7U39PA+WI/sg7p7a+jexXsG8UwXt8q5ydNWNUYqQYg5PYs5iZVP3kRzFCS+z97Ujg4kopZvW1d8Sx3wIelJAl9NQYu1J0UXTNN17iG5aaxuwIVw0AuTNW8NWh2M3GojXERawhEtCKTZKNbqlEkDuPf+7iicROlUXAnAWCe2q89naehTvq4uUIyQCiXa2AcE+aYx4VQxR+JoSbYy6Kt6+ZyK0GBXq4zgS8zrZsYqE/y8/3vztTNZatCfRtUYbeF9qqU7jnP5a5Fp+8pHye0iF0hwQLrspLUQGdTzE1CgRhR7aN/0VCK+65tpr/kzMZk9Ud/kk3ioSzg5B+Y3bfFUespfgey4EeWQRnx7psG1HZyVzl/ipH0YsS7kz2zhcHkitaNiZrvWJQRNv5YNZkwVBB/oo5zqJ5VINjwK4Hi5JtLkZeguoSv6KEfkdZ+yvtKzaE4t3sO8XZzagkQq7KEmRqAXjZEVpOecxmCXX/0pEdmR8uUAgToGv2GecHT5b3qcQUNRkGf7jkwkHG+U8F9URgZ4FyUKch6rYOVYAWicTMBzVaT7LOwTvRgvn4WDuBp73vfOcWfrpNkHjdbyT9hA59wUYEPSWRo=
 rvm:
-  - 2.3.1
+- 2.3.1
 branches:
   only:
-    - feature/travis-merge
+  - feature/travis-merge
 before_install:
-  - gem install bundler
-  - gem install activesupport
-  - ruby -r $APP_TRAVIS_RB -e "Travis.before_install"
+- gem install bundler
+- gem install activesupport
+- ruby -r $APP_TRAVIS_RB -e "Travis.before_install"
 install:
-  - ruby -r $APP_TRAVIS_RB -e "Travis.install"
+- ruby -r $APP_TRAVIS_RB -e "Travis.install"
 before_script:
-  - gem install dpl
-  - ruby -r $APP_TRAVIS_RB -e "Travis.before_script"
+- gem install dpl
+- ruby -r $APP_TRAVIS_RB -e "Travis.before_script"
 script:
-  - ruby -r $APP_TRAVIS_RB -e "Travis.script"
+- ruby -r $APP_TRAVIS_RB -e "Travis.script"
 after_script:
-  - ruby -r $APP_TRAVIS_RB -e "Travis.deploy"
+- ruby -r $APP_TRAVIS_RB -e "Travis.deploy"
