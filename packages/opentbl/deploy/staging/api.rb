@@ -9,7 +9,7 @@ class Travis
 
         def self.install
           local_dir = ENV['APP_LOCAL_DIR']
-          api_dir   = ENV['APP_API_DIR']
+          api_dir   = ENV['APP_INSTALL_API_DIR']
           puts `echo Installing API to $APP_INSTALL_API_DIR`
           Dir.chdir(local_dir)
           puts `./install.sh --package opentbl/api --install $APP_INSTALL_API_DIR --platform thinkspace`
@@ -25,7 +25,6 @@ class Travis
 
         def self.deploy
           puts `echo Deploying OpenTBL::Staging...`
-
         end
 
       end
