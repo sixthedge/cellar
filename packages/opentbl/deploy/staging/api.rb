@@ -20,7 +20,7 @@ class Travis
             'echo Bundling with $APP_BUNDLE_SRC',
             'bundle install'
           ]
-          commands.each { |c| puts "Running: #{c}" }
+          commands.each { |c| `#{c}` }
         end
 
       end
