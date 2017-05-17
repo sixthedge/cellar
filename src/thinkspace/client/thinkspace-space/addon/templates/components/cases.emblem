@@ -1,4 +1,16 @@
 if all_data_loaded 
+  unless model.active_assignments
+    .grid__container--flex
+      .grid__container--centered.spacing__pad-top--2.spacing__pad-bottom--4
+        .spacing__margin-bottom--1.text__align--center
+          img src='/assets/images/illustrations/illustrations__empty__cases.svg' alt="No Cases" title="No Cases" style='max-width:200px;'
+        .text__align--center
+          h2.spacing__margin-bottom--half Looks like there's no exercises yet
+          if model.can.update
+            p.spacing__margin-top--0.text__font-size--14 Click on the New Exercise button to create one.
+          else
+            p.spacing__margin-top--0.text__font-size--14 You'll be able to access them here once they're released. 
+
   .grid__container--flex.spacing__margin-bottom--4
     .grid__col--3of4.grid__mobile--full-width
       if model.assignments
@@ -7,8 +19,7 @@ if all_data_loaded
           ul.tile__list.spacing__margin-bottom--4
             each model.active_assignments as |case|
               component 'case' model=case
-        else
-          h1 No active cases.
+
 
       if can.update
         .space-content_container.spacing__margin-bottom--4
