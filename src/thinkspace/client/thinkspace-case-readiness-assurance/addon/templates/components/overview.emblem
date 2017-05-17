@@ -7,7 +7,6 @@ component '__case/external/header' model=model
     if model.can.update
       component '__case/states' model=model assignment_type=assignment_type
     component '__case/instructions' model=model
-    hr.grid__container--content-width
     component '__case/progress' model=model
 
   .grid__col--1of4.grid__mobile--full-width

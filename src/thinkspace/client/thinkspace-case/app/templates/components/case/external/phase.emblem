@@ -7,9 +7,9 @@ li.phase-list__item
     
   .grid__container.spacing__margin-bottom--1
     if model.can.update
-      .tag.tag--pill.spacing__margin-right--1 Active
+      .tag.tag--pill.tag__exercise-status--locked.spacing__margin-right--1 Locked
     else
-      .tag.tag--pill.spacing__margin-right--1 Not Started
+      .tag.tag--pill.tag__exercise-status--locked.spacing__margin-right--1 Locked
     .text__font-size--12.text--inline-block 
       | Due <strong>May 23rd, 2017</strong> at <strong>3:00pm</strong>
 

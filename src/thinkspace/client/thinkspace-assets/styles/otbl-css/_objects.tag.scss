@@ -15,3 +15,24 @@
 .tag--pill {
   border-radius: 10px;
 }
+
+.tag__exercise-status--locked {
+  color:            $color-black-base;
+  background-color: #D1D4DA;
+}
+
+.tag--gray {
+  background-color: $color-gray-base;
+}
+
+.tag--blue {
+  background-color: $color-blue-base;
+}
+
+.tag--green {
+  background-color: $color-green-base;
+}
+
+.tag--red {
+  background-color: $color-red-base;
+}

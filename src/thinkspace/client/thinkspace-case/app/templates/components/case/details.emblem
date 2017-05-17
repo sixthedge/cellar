@@ -1,10 +1,43 @@
 unless model.can.update
-  .grid__container.spacing__margin-bottom--2
+  // Locked
+  .grid__container.spacing__margin-bottom--1
     .icon.icon--42.spacing__margin-right--1.is-left
-      img src='/assets/images/icons/exercise-types/otbl-icons__exercise-type__submitted.svg' alt="Submitted" title="Exercise has been submitted" 
-    .text--inline-block.spacing__pad-top--half
+      img src='/assets/images/icons/exercise-types/icons__exercise-type__locked.svg' alt="Locked" title="Exercise is locked" 
+    .text--inline-block
+      .text__font-size--14.text--bold Locked
+      .text__font-size--12 Exercise is locked by instructor.
+
+  // Not Started
+  .grid__container.spacing__margin-bottom--1
+    .icon.icon--42.spacing__margin-right--1.is-left
+      img src='/assets/images/icons/exercise-types/icons__exercise-type__not-started.svg' alt="Not Started" title="Exercise has not been started" 
+    .text--inline-block
+      .text__font-size--14.text--bold Not Started
+      .text__font-size--12 You have not opened this exercise.
+
+  // In Progress
+  .grid__container.spacing__margin-bottom--1
+    .icon.icon--42.spacing__margin-right--1.is-left
+      img src='/assets/images/icons/exercise-types/icons__exercise-type__in-progress.svg' alt="In Progress" title="Exercise is in progress" 
+    .text--inline-block
       .text__font-size--14.text--bold In Progress
-      .text__font-size--14 Last save May 15, 2017 at 3:00pm
+      .text__font-size--12 Last save May 15, 2017 at 3:00pm
+
+  // Submitted
+  .grid__container.spacing__margin-bottom--1
+    .icon.icon--42.spacing__margin-right--1.is-left
+      img src='/assets/images/icons/exercise-types/icons__exercise-type__submitted.svg' alt="Submitted" title="Exercise has been submitted" 
+    .text--inline-block
+      .text__font-size--14.text--bold Submitted!
+      .text__font-size--12 Submitted on May 15, 2017 at 3:00pm
+
+  // Past-Due/Read-only
+  .grid__container.spacing__margin-bottom--1
+    .icon.icon--42.spacing__margin-right--1.is-left
+      img src='/assets/images/icons/exercise-types/icons__exercise-type__read-only.svg' alt="Past Due" title="Exercise is past due" 
+    .text--inline-block
+      .text__font-size--14.text--bold Past Due
+      .text__font-size--12 You did not submit on time.
   hr
 
 label.spacing__margin-bottom--0 Exercise Type

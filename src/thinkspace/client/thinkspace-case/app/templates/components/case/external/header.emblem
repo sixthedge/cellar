@@ -11,10 +11,6 @@
             | View Exercise
           button.btn
             | Edit Exercise
-      else 
-        .btn-group.is-right
-          link-to-external 'phases.show' model phase class='btn btn--primary'
-            | Start Exercise
       .text__font-size--14.text--bold.text__color--gray = model.friendly_due_at
 
     component 'navigation/subnav' model=model

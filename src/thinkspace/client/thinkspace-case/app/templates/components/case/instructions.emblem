@@ -1,4 +1,4 @@
-.spacing__margin-bottom--2
+.spacing__margin-bottom--4
   h2.spacing__margin-bottom--1 Exercise Overview
   if model.instructions
     p.spacing__margin-top--0.text__font-size--14== model.instructions
