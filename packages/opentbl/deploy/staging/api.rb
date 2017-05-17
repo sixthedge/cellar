@@ -3,13 +3,14 @@ class Travis
     class Staging
       class Api
 
+        def self.local_dir; ENV['APP_LOCAL_DIR'];     end
+        def self.api_dir; ENV['APP_INSTALL_API_DIR']; end
+
         def self.before_install
           puts "Opentbl::Staging::Api before_install..."
         end
 
         def self.install
-          local_dir = ENV['APP_LOCAL_DIR']
-          api_dir   = ENV['APP_INSTALL_API_DIR']
           puts `echo Installing API to $APP_INSTALL_API_DIR`
           Dir.chdir(local_dir)
           puts `./install.sh --package opentbl/api --install $APP_INSTALL_API_DIR --platform thinkspace`
