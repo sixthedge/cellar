@@ -7,7 +7,7 @@
         link-to-external 'home' class='nav-list__link'
           | Spaces
       li.nav-list__item
-        a.nav-list__link click='toggle_support'
+        a.nav-list__link href='mailto:support@opentbl.com'
           | Support
    
   nav.top-bar__nav.is-right click='toggle_users'

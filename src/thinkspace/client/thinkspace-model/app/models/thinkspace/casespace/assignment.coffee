@@ -34,9 +34,6 @@ export default ta.Model.extend resource_mixin, ta.totem_data, ta.add(
   
   sync_rat_assessments: ember.computed.bool 'settings.rat.sync'
 
-  rat_obs: ember.observer 'sync_rat_assessments', ->
-    console.log('[ASSIGNMENT] rat changing ', @get('sync_rat_assessments'))
-
   ttz: ember.inject.service()
 
   totem_data_config: ability: true, metadata: true
@@ -158,7 +155,5 @@ export default ta.Model.extend resource_mixin, ta.totem_data, ta.add(
 
   set_sync_assessment: (value) ->
     settings = @get('settings')
-    console.log('[set_sync_assessment] ', value, settings)
     settings.rat = {} unless ember.isPresent(settings.rat)
     ember.set(settings.rat, 'sync', value)
-    console.log('[set_sync_assessment] ', @get('settings'))

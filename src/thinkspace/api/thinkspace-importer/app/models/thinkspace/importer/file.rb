@@ -3,7 +3,7 @@ require 'csv'
 module Thinkspace
   module Importer
     class File < ActiveRecord::Base
-      has_attached_file                 :attachment
+      has_attached_file :attachment, s3_permissions: :private
       validates_attachment_content_type :attachment, content_type: %w(text/csv text/plain application/octet-stream application/vnd.ms-excel)
       before_save                       :set_settings_will_change
 
@@ -22,6 +22,10 @@ module Thinkspace
 
       def url
         custom_url || attachment.url
+      end
+
+      def is_private?
+        Array.wrap(attachment.options[:s3_permissions]).include?(:private)
       end
 
       # ### CSV processing/helpers
