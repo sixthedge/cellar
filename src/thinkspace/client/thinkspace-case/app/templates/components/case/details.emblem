@@ -1,10 +1,11 @@
-.grid__container.spacing__margin-bottom--2
-  .icon.icon--42.spacing__margin-right--1.is-left
-    img src='/assets/images/icons/exercise-types/otbl-icons__exercise-type__submitted.svg' alt="Submitted" title="Exercise has been submitted" 
-  .text--inline-block.spacing__pad-top--half
-    .text__font-size--14.text--bold In Progress
-    .text__font-size--14 Last save May 15, 2017 at 3:00pm
-hr
+unless model.can.update
+  .grid__container.spacing__margin-bottom--2
+    .icon.icon--42.spacing__margin-right--1.is-left
+      img src='/assets/images/icons/exercise-types/otbl-icons__exercise-type__submitted.svg' alt="Submitted" title="Exercise has been submitted" 
+    .text--inline-block.spacing__pad-top--half
+      .text__font-size--14.text--bold In Progress
+      .text__font-size--14 Last save May 15, 2017 at 3:00pm
+  hr
 
 label.spacing__margin-bottom--0 Exercise Type
 .text__font-size--14.spacing__margin-bottom--1 = model.assignment_type.title

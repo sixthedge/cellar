@@ -1,5 +1,5 @@
-unless model.can.update
-  h2 Inside the Exercise
-  ul.clear-list
-    each model.active_phases as |phase|
-      component '__case/external/phase' model=phase assignment=model
+/ unless model.can.update
+h2 Inside the Exercise
+ul.clear-list
+  each model.active_phases as |phase|
+    component '__case/external/phase' model=phase assignment=model

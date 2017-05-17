@@ -6,12 +6,16 @@ li.phase-list__item
       = model.title
     
   .grid__container.spacing__margin-bottom--1
-    .tag.tag--pill Not Started
-    .text__font-size--12.text--inline-block.spacing__margin-left--1 
+    if model.can.update
+      .tag.tag--pill.spacing__margin-right--1 Active
+    else
+      .tag.tag--pill.spacing__margin-right--1 Not Started
+    .text__font-size--12.text--inline-block 
       | Due <strong>May 23rd, 2017</strong> at <strong>3:00pm</strong>
 
-  link-to-external 'phases.show' assignment model (query-params query_id='none') class='btn btn--primary btn--mobile-full position__absolute--desktop position--top-right' 
-    | Open Activity
+  unless model.can.update
+    link-to-external 'phases.show' assignment model (query-params query_id='none') class='btn btn--primary btn--mobile-full position__absolute--desktop position--top-right' 
+      | Open Activity
 
 
 

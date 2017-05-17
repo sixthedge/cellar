@@ -1,4 +1,4 @@
-.dialogue.dialogue--green
+.dialogue.dialogue--green.spacing__margin-bottom--2
   h1 Case is live
   p This case is available to all your students.
 
