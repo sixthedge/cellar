@@ -24,4 +24,4 @@ before_script:
 script:
   - ruby -r $APP_TRAVIS_RB -e "Travis.script"
 after_script:
-  - ruby -R $APP_TRAVIS_RB -e "Travis.deploy"
+  - ruby -r $APP_TRAVIS_RB -e "Travis.deploy"
