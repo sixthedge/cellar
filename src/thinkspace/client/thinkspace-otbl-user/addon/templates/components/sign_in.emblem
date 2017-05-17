@@ -30,7 +30,8 @@
 
     hr
     .text__font-size--12.text__color--gray 
-      | ©2017 All Rights Reserved. OpenTBL is a registered trademark of Sixth Edge. <a href='#'>Privacy</a> and <a href='#'>Terms</a>
+      component 'terms'
+
 
   .text__font-size--14.text__align--center 
     | If you need help, contact us at <a href="mailto:support@opentbl.com">support@opentbl.com</a>.

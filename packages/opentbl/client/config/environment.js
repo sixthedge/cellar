@@ -78,6 +78,11 @@ module.exports = function(environment) {
   var app_totem_autofill              = process.env['APP_TOTEM_AUTOFILL']        || 'false';
   var app_deploy_target               = process.env['APP_DEPLOY_TARGET'];
 
+  // URLs
+  var app_privacy_url = process.env['APP_URLS_PRIVACY'] || null;
+  var app_terms_url   = process.env['APP_URLS_TERMS']   || null;
+  var app_ferpa_url   = process.env['APP_URLS_FERPA']   || null;
+
   ENV.totem.api_host                    = app_api_host;
   ENV.totem.asset_path                  = app_asset_path;
   ENV.totem.pub_sub.socketio_url        = app_pub_sub_socketio_url;
@@ -85,6 +90,7 @@ module.exports = function(environment) {
   ENV.totem.autofill                    = app_totem_autofill == 'true';
   ENV.totem.uploader                    = {s3: (app_totem_uploader == 'true')};
   ENV.totem.rollbar                     = {access_token: app_rollbar_access_token};
+  ENV.totem.urls                        = {privacy: app_privacy_url, terms: app_terms_url, ferpa: app_ferpa_url};
 
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER             = true;

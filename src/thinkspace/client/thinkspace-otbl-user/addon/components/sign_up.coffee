@@ -1,8 +1,11 @@
-import ember from 'ember'
-import base  from 'thinkspace-user/components/sign_up'
+import ember  from 'ember'
+import config from 'totem-config/config'
+import base   from 'thinkspace-user/components/sign_up'
 
 export default base.extend
   # # Properties
+  terms_url: config.urls.terms
+  
   # ## Radio options  
   role: null
   role_options:
