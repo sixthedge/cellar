@@ -1,15 +1,16 @@
 if all_data_loaded 
   unless model.active_assignments
-    .grid__container--flex
-      .grid__container--centered.spacing__pad-top--2.spacing__pad-bottom--4
-        .spacing__margin-bottom--1.text__align--center
-          img src='/assets/images/illustrations/illustrations__empty__cases.svg' alt="No Cases" title="No Cases" style='max-width:200px;'
-        .text__align--center
-          h2.spacing__margin-bottom--half Looks like there are no exercises yet
-          if model.can.update
-            p.spacing__margin-top--0.text__font-size--14 Click on the New Exercise button to create one.
+    .illustration-msg__container
+      .illustration-msg.illustration-msg--center.illustration-msg--img-top
+        .illustration-msg__img-container.illustration-msg__img--200
+          img src='/assets/images/illustrations/illustrations__empty__cases.svg' alt="No Exercises" title="No Exercises" 
+        .illustration-msg__text-container
+          h2 Looks like there are no exercises yet
+          if can.update
+            p 
+              | Click on the <strong>New Exercise</strong> button to create one.
           else
-            p.spacing__margin-top--0.text__font-size--14 You'll be able to access them here once they're released. 
+            p You'll be able to access them here once they're released.
 
   .grid__container--flex.spacing__margin-bottom--4
     .grid__col--3of4.grid__mobile--full-width
