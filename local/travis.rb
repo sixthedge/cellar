@@ -50,7 +50,7 @@ class Travis
   def self.after_deploy;   process_hook('after_deploy');   end
   def self.dotenv;         get_dotenv;                     end
 
-  def validate
+  def self.validate
     envs = []
     deploys = Travis::Parser.new.deploys
     deploys.each do |package, environments|
