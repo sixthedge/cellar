@@ -111,9 +111,12 @@ class Travis
     deploys  = Travis::Parser.new.deploys
     deploys.each do |package, environments|
       environments.each do |environment, options|
-        file    = get_file(package, environment, '.env')
-        command = ". #{file}"
-        commands.push(command)
+        encrypted = get_file(package, environment, '.env.enc')
+        decrypted = ".env-#{environment}"
+        decrypt   = "openssl aes-256-cbc -K $encrypted_c1bb17deeea4_key -iv $encrypted_c1bb17deeea4_iv -in #{encrypted} -out #{decrypted} -d"
+        commands.push(decrypt)
+        source    = ". #{decrypted}"
+        commands.push(source)
       end
     end
     puts commands.join(' && ')

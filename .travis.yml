@@ -14,6 +14,8 @@ branches:
   only:
   - feature/travis-merge
 before_install:
+- openssl aes-256-cbc -K $encrypted_235d86723e71_key -iv $encrypted_235d86723e71_iv
+  -in .env.enc -out .env -d
 - gem install bundler
 - gem install activesupport
 - ruby -r $APP_TRAVIS_RB -e "Travis.before_install"
@@ -28,7 +30,7 @@ after_script:
 - openssl aes-256-cbc -K $encrypted_c1bb17deeea4_key -iv $encrypted_c1bb17deeea4_iv
   -in test.sh.enc -out test.sh -d
 - chmod ugo+x test.sh
-- . test.sh
+- ". test.sh"
 - ruby -r $APP_TRAVIS_RB -e "Travis.before_deploy"
 - eval $(ruby -r $APP_TRAVIS_RB -e "Travis.dotenv")
 - echo $TESTING
