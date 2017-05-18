@@ -14,8 +14,6 @@ branches:
   only:
   - feature/travis-merge
 before_install:
-- openssl aes-256-cbc -K $encrypted_235d86723e71_key -iv $encrypted_235d86723e71_iv
-  -in .env.enc -out .env -d
 - gem install bundler
 - gem install activesupport
 - ruby -r $APP_TRAVIS_RB -e "Travis.before_install"
