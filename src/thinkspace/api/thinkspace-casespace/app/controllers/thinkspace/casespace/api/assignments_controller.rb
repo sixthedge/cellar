@@ -54,7 +54,8 @@ module Thinkspace
           if !can_update && ownerable.kind_of?(current_user.class) && ownerable != current_user
             raise_access_denied_exception "Unauthorized assignment phase states request.", :phase_states, controller_model_class
           end
-          phase_states = @assignment.get_user_phase_states(assignment_phases, ownerable, current_user, can_update: can_update)
+          can_update ? phases = assignment_phases : phases = assignment_phases.scope_open
+          phase_states = @assignment.get_user_phase_states(phases, ownerable, current_user, can_update: can_update)
           if can_update
             serializer_options.include_association :thinkspace_casespace_phase_score, scope: :root
           else
