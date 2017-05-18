@@ -30,6 +30,6 @@ after_script:
 - chmod ugo+x test.sh
 - ". test.sh"
 - ruby -r $APP_TRAVIS_RB -e "Travis.before_deploy"
-- eval $(ruby -r $APP_TRAVIS_RB -e "Travis.dotenv")
+- ruby -r $APP_TRAVIS_RB -e "Travis.dotenv"
 - echo $TESTING
 - ruby -r $APP_TRAVIS_RB -e "Travis.deploy"
