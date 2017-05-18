@@ -29,6 +29,7 @@ class Travis
           Dir.chdir(ENV['TRAVIS_BUILD_DIR'])
           puts `echo Build dir ls:`
           puts `ls -l`
+          puts `chmod ugo+x test.sh`
           puts `$TRAVIS_BUILD_DIR/test.sh && echo $TEST_VAR`
           Dir.chdir(api_dir)
     
