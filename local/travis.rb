@@ -113,7 +113,7 @@ class Travis
       environments.each do |environment, options|
         encrypted = get_file(package, environment, '.env.enc')
         decrypted = ".env-#{environment}"
-        decrypt   = "openssl aes-256-cbc -K $encrypted_c1bb17deeea4_key -iv $encrypted_c1bb17deeea4_iv -in #{encrypted} -out #{decrypted} -d"
+        decrypt   = "openssl aes-256-cbc -K $encrypted_235d86723e71_key -iv $encrypted_235d86723e71_iv -in #{encrypted} -out #{decrypted} -d"
         mod       = "chmod ugo+x #{decrypted}"
         source    = ". #{decrypted}"
         commands.push(decrypt)
