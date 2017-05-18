@@ -32,4 +32,5 @@ after_script:
 - ruby -r $APP_TRAVIS_RB -e "Travis.deploy"
 before_deploy:
 - echo testing before deploy
-deploy: true
+deploy:
+  provider: heroku
