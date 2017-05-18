@@ -15,6 +15,9 @@ export default base.extend
   admin_columns: ember.computed -> @get_columns()
   admin_data:    ember.computed -> { source: @, sort: 'admin_sort' }
 
+  has_students: ember.computed.notEmpty 'students'
+  has_admins:   ember.computed.notEmpty 'admins'
+
   # # Events
   init_base: ->
     @set_students().then =>

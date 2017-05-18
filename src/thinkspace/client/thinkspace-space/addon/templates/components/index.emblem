@@ -2,43 +2,30 @@
   .grid__col--4of4
     .main-content__header
       h1.text--inline-block Hello, #{session.user.first_name}!
-      / = if can.create
-      = if true
+      = if can.create
         .btn-group.is-right
           link-to 'new' class='btn btn--primary is-right' tabindex='0' role='button'
             .icon.icon--16.icon__plus--white.spacing__margin-right--half
             | New Space
       p Here's an overview of what's happening in your spaces.
-      
 
-// If no spaces
-.illustration-msg__container
-  .illustration-msg.illustration-msg--center.illustration-msg--img-top
-    .illustration-msg__img-container.illustration-msg__img--200
-      img src='/assets/images/illustrations/illustrations__empty__spaces.svg' alt="No spaces" title="No Spaces" 
-    .illustration-msg__text-container
-    // If instructor type of role. 
-      if model.can.update
-        h2 Let's create a space
-        p Click on the button above to create a space for your course. 
-      else
-        h2 You have no spaces
-        p Once you're invited to a space you'll be able to access it here. 
-
-//else
-.grid__container--flex.spacing__margin-bottom--4
-  .grid__col--3of4.grid__mobile--full-width
-    h2 Recent Spaces
-    ul.tile__list
-      each model as |space|
-        component 'space' model=space
-
-/ .grid__container--flex
-/   .grid__col--4of4
-/     .footnote
-/       if model.can.update
-/         p.spacing__margin-top--0.spacing__margin-bottom--0 Use the <strong>progress report</strong> to keep up with your students.
-/         a Learn about exercise
-/       else
-/         p.spacing__margin-top--0.spacing__margin-bottom--0 Need help using OpenTBL? Checkout our support guides.
-/         a Learn how to get started with OpenTBL
+if has_spaces
+  .grid__container--flex.spacing__margin-bottom--4
+    .grid__col--3of4.grid__mobile--full-width
+      h2 Recent Spaces
+      ul.tile__list
+        each model as |space|
+          component 'space' model=space
+else
+  .illustration-msg__container
+    .illustration-msg.illustration-msg--center.illustration-msg--img-top
+      link-to 'new'
+        .illustration-msg__img-container.illustration-msg__img--200
+          img src='/assets/images/illustrations/illustrations__empty__spaces.svg' alt="No spaces" title="No Spaces" 
+      .illustration-msg__text-container
+        if can.create
+          h2 Let's create a space
+          p Click on the button above to create a space for your course. 
+        else
+          h2 You have no spaces
+          p Once you're invited to a space you'll be able to access it here.
