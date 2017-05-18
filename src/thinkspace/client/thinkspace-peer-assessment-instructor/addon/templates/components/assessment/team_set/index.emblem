@@ -24,5 +24,4 @@
 .grid__container--flex
   .grid__col--4of4
     .footnote
-      p.spacing__margin-top--0.spacing__margin-bottom--0 Sending results will only send it to those <strong>teams who have been approved.</strong> 
-      a Learn about approving teams
+      p.spacing__margin-top--0.spacing__margin-bottom--0 <strong>Note:</strong> Sending results will only send it to those teams who have been approved.

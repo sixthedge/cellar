@@ -16,9 +16,9 @@ a class=modal_reveal_anchor_class_names data-open=modal_id
           component '__datetime_picker' value=date select='select'
 
         .btn-group
-          button.btn.btn--primary{action 'confirm'}
+          button.btn.btn--primary{action 'confirm'} role='button'
             | Set Date
-          button.btn{action 'close'}
+          button.btn{action 'close'} role='button'
             | Cancel
             
     else

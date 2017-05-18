@@ -1,12 +1,12 @@
 / Question label
 .forms__field-wrapper
-  label Question Label
+  label.spacing__margin-bottom--0 Question Label
   .forms__label-summary This is the question the student will see above the scale.
   component '__changeset/input' value=model.changeset.label
 
 / Scale range 
 .forms__field-wrapper
-  label Scale range
+  label.spacing__margin-bottom--0 Scale range
   .forms__label-summary Set the minimum and maximum ends of the scale
   // Temp selects until we get ts-dropdown working (12/20)
   .dropdown__container
@@ -25,7 +25,7 @@
         =model.points_changeset.errors.firstObject.validation.firstObject
 / End point labels
 .forms__field-wrapper
-  label End point labels (optional)
+  label.spacing__margin-bottom--0 End point labels (optional)
   .forms__label-summary Set the minimum and maximum ends of the scale
   = points_min
   component '__changeset/input' value=scale_label_min
@@ -35,7 +35,7 @@
 hr
 
 .btn-group
-  button.btn.btn--primary click='update'
+  button.btn.btn--primary click='update' role='button'
     | Update Question
-  button.btn.btn-small click='edit'
+  button.btn.btn-small click='edit' role='button'
     | Cancel
