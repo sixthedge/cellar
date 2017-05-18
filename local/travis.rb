@@ -98,7 +98,7 @@ class Travis
     "travis/#{package}/#{environment}/#{server}".classify
   end
 
-  def self.get_packages_dir; "#{cellar_root}/packages"
+  def self.get_packages_dir; "#{cellar_root}/packages"; end
   def self.get_path(package, environment)
     "#{get_packages_dir}/#{package}/deploy/#{environment}"
   end
