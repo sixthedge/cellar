@@ -26,13 +26,8 @@ class Travis
 
         def self.deploy
           puts `echo Deploying OpenTBL::Staging...`
-          Dir.chdir(ENV['TRAVIS_BUILD_DIR'])
-          puts `echo Build dir ls:`
-          puts `chmod ugo+x $TRAVIS_BUILD_DIR/test.sh`
-          puts `ls -l`
-          puts `$TRAVIS_BUILD_DIR/test.sh && echo test-var is $TEST_VAR`
+          puts `echo test var $TEST_VAR`
           Dir.chdir(api_dir)
-    
           #puts `dpl --provider=heroku --api-key=$HEROKU_API_KEY --app=opentbl-staging --skip_cleanup=true`
         end
 
