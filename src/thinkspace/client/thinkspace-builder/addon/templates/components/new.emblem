@@ -27,6 +27,6 @@
           .loader.loader--logo
           .text__font-size--14.text--bold Loading...
 
-      .footnote
-        p.spacing__margin-top--0.spacing__margin-bottom--0 Need a crash course in exercise types?
-        a Read about exercise types.
+      / .footnote
+      /   p.spacing__margin-top--0.spacing__margin-bottom--0 Need a crash course in exercise types?
+      /   a Read about exercise types.

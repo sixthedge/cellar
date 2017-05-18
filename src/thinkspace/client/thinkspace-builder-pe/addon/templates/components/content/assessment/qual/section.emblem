@@ -1,6 +1,6 @@
 fieldset.forms__section.spacing__margin-bottom--4
   h2.text--inline-block Qualitative Section
-  .btn.btn--primary.is-right click='create'
+  button.btn.btn--primary.is-right click='create' role='button'
     .icon.icon--16.icon__plus--white.spacing__margin-right--half
     | New Question
 

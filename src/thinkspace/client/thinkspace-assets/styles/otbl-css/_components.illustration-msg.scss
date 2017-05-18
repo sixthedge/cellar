@@ -1,0 +1,50 @@
+///*------------------------------------*\
+//    #ILLUSTRATION-MESSAGE
+//\*------------------------------------*/
+
+.illustration-msg__container {
+  display: block;
+  width: 100%;
+  padding: 2rem 0 4rem;
+}
+
+.illustration-msg {
+  max-width: 500px;
+}
+
+.illustration-msg--center {
+  margin: 0 auto;
+}
+
+
+
+// image positions
+.illustration-msg--img-right {
+
+}
+
+.illustration-msg--img-top {
+  text-align: center;
+
+  .illustration-msg__img-container {
+    margin-bottom: 1rem;
+  }
+}
+
+// image sizes
+.illustration-msg__img--200 {
+  >img {
+    max-width: 200px;
+  }
+}
+
+.illustration-msg__text-container {
+  >h2 {
+    margin-bottom: .5rem;
+  }
+
+  >p {
+    font-size:  14px;
+    margin-top: 0;
+  }
+}
