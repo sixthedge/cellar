@@ -26,8 +26,10 @@ class Travis
 
         def self.deploy
           puts `echo Deploying OpenTBL::Staging...`
-          puts `echo test var $TEST_VAR -- $TEST_VAR_2`
           Dir.chdir(api_dir)
+          puts `openssl aes-256-cbc -K $encrypted_c1bb17deeea4_key -iv $encrypted_c1bb17deeea4_iv -in $TRAVIS_BUILD_DIR/test.sh.enc -out test.sh -d`
+          puts `. test.sh && echo $TEST_VAR zz`
+          puts `echo $TEST_VAR --`
           #puts `dpl --provider=heroku --api-key=$HEROKU_API_KEY --app=opentbl-staging --skip_cleanup=true`
         end
 

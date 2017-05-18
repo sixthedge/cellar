@@ -1,1 +1,0 @@
-export TEST_VAR=zzz
