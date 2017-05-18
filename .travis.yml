@@ -7,6 +7,7 @@ env:
   - APP_SRC_DIR=$TRAVIS_BUILD_DIR/src
   - APP_LOCAL_DIR=$TRAVIS_BUILD_DIR/local
   - APP_TRAVIS_RB=$APP_LOCAL_DIR/travis.rb
+  - APP_PACKAGES_DIR=$TRAVIS_BUILD_DIR/packages
   - secure: nEpD0KwF7iJXkiy0gH3ctL5FDP2h8GIPZwC1BYsBvd025TwJWc9l0xkqPFGNqJkMjBIHYYWW1wl1sT2GFnLrMHVn9j3SeOBpK4BvgBw4+x5u1mNs5NNVLfjy+7W2Law92Ou+kGjfogcbnooyhLBkiz/idIJKtBOLiQiQ+kB5PUetQvLVDFKlqIwTQgcegIdjW7Grrhb87q+a37HNBs51iNnrcxdtXhiatQp6S5IO5z+U81Thd2SAIXNX+zdQwo0ZUgmObZNevZ6D4GRTerrdwEAh2sd7rroRG1VO7Xsn3O/RJnKHuaaQkv3wTux9sH8ROrZzxDXAEAEOnaAEXYz9Lidw7MKg90ALk1nDz2JPSDSni1X/B7L31LmAfUqKpbWNktC8vdmSwoFLkqqC3+Bq/RWzEOak47pfHMDm3/L231+AkcT8JdkQBRApJE3Vknr5crHZCYLK42lDlyWhdku+2KHOtP13fxd18Vkh0NRNFopGsSCvsF3Nj+CS1fHFs6Lb1eM98oaANoExCft6cHygns7NNtGt4ZlRO6SSO+0MmvKkyY9vgAbPKlgU0C4V1YthP/ZmxYmJjPRJPD6S7nN2HupMd5glze9RbOyNoCrfljbq9KFaqiTKE5qckSwQZ3+FxauxgIEiMr4gBLe80RyCknIwZljutSKV4U6138aT+CE=
 rvm:
 - 2.3.1
@@ -15,8 +16,8 @@ branches:
   - feature/travis-merge
 before_install:
 - openssl aes-256-cbc -K $encrypted_b03839862a2d_key -iv $encrypted_b03839862a2d_iv
-  -in $TRAVIS_BUILD_DIR/packages/env.tar.enc -out $TRAVIS_BUILD_DIR/packages/env.tar -d
-- tar xvf env.tar
+  -in $APP_PACKAGES_DIR/env.tar.enc -out $APP_PACKAGES_DIR/env.tar -d
+- tar xvf $env.tar
 - gem install bundler
 - gem install activesupport
 - ruby -r $APP_TRAVIS_RB -e "Travis.before_install"
