@@ -1,7 +1,16 @@
 if all_data_loaded
-  .grid__container--flex.flex__justify--between
-    if teams.length
+  if has_teams
+    .grid__container--flex.flex__justify--between
       each teams as |team|
         component 'helpers/team' model=team space=model abstract=abstract class='grid__col--49 grid__mobile--full-width spacing__margin-bottom--1' highlighted_users=highlighted_users
-    else
-      h2 you have no teams yet. use the team builder button to find students and create a team.
+  else
+    .illustration-msg__container
+      .illustration-msg.illustration-msg--center.illustration-msg--img-top
+        .illustration-msg__img-container.illustration-msg__img--200
+          img src='/assets/images/illustrations/illustrations__empty__teams.svg' alt="No Cases" title="No Cases" 
+        .illustration-msg__text-container
+          h2 You'll need to make some teams 
+          p 
+            | Use the <strong>Student View</strong> to select students and add them to teams. 
+else
+  component '__loader/base'

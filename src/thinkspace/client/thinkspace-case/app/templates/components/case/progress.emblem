@@ -2,4 +2,4 @@
 h2 Inside the Exercise
 ul.clear-list
   each model.active_phases as |phase|
-    component '__case/external/phase' model=phase assignment=model
+    component '__case/external/phase' model=phase assignment=model phase_states=phase_states

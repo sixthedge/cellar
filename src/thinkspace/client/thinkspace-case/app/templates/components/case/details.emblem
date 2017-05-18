@@ -1,52 +1,57 @@
 unless model.can.update
-  .text__font-size--12.text--bold.spacing__margin-bottom--half Exercise Status
-  // Locked
-  .grid__container.spacing__margin-bottom--1
-    .icon.icon--42.spacing__margin-right--1.is-left
-      img src='/assets/images/icons/exercise-types/icons__exercise-type__locked.svg' alt="Locked" title="Exercise is locked" 
-    .text--inline-block
-      .text__font-size--14.text--bold Locked
-      .text__font-size--12 Exercise is locked by instructor.
-
-  // Not Started - Not possible
-  .grid__container.spacing__margin-bottom--1
-    .icon.icon--42.spacing__margin-right--1.is-left
-      img src='/assets/images/icons/exercise-types/icons__exercise-type__not-started.svg' alt="Not Started" title="Exercise has not been started" 
-    .text--inline-block
-      .text__font-size--14.text--bold Not Started
-      .text__font-size--12 You have not opened any activity.
+  if is_locked
+    .text__font-size--12.text--bold.spacing__margin-bottom--half Exercise Status
+    // Locked
+    .grid__container.spacing__margin-bottom--1
+      .icon.icon--42.spacing__margin-right--1.is-left
+        img src='/assets/images/icons/exercise-types/icons__exercise-type__locked.svg' alt="Locked" title="Exercise is locked" 
+      .text--inline-block
+        .text__font-size--14.text--bold Locked
+        .text__font-size--12 Exercise is locked by instructor.
 
   // In Progress
-  .grid__container.spacing__margin-bottom--1
-    .icon.icon--42.spacing__margin-right--1.is-left
-      img src='/assets/images/icons/exercise-types/icons__exercise-type__in-progress.svg' alt="In Progress" title="Exercise is in progress" 
-    .text--inline-block
-      .text__font-size--14.text--bold In Progress
-      .text__font-size--12 Last save May 15, 2017 at 3:00pm
+  if is_in_progress
+    .grid__container.spacing__margin-bottom--1
+      .icon.icon--42.spacing__margin-right--1.is-left
+        img src='/assets/images/icons/exercise-types/icons__exercise-type__in-progress.svg' alt="In Progress" title="Exercise is in progress" 
+      .text--inline-block
+        .text__font-size--14.text--bold In Progress
 
   // Waiting
-  .grid__container.spacing__margin-bottom--1
-    .icon.icon--42.spacing__margin-right--1.is-left
-      img src='/assets/images/icons/exercise-types/icons__exercise-type__waiting.svg' alt="Waiting" title="Exercise is waiting on next activity" 
-    .text--inline-block
-      .text__font-size--14.text--bold Waiting on next activity
-      .text__font-size--12 Opens on May 20, 2017 at 3:00pm.
+  if is_waiting
+    .grid__container.spacing__margin-bottom--1
+      .icon.icon--42.spacing__margin-right--1.is-left
+        img src='/assets/images/icons/exercise-types/icons__exercise-type__waiting.svg' alt="Waiting" title="Exercise is waiting on next activity" 
+      .text--inline-block
+        .text__font-size--14.text--bold Waiting on next activity
+        if next_due.friendly_unlock_at
+          .text__font-size--12 Opens on #{next_due.friendly_unlock_at}
 
   // Submitted
-  .grid__container.spacing__margin-bottom--1
-    .icon.icon--42.spacing__margin-right--1.is-left
-      img src='/assets/images/icons/exercise-types/icons__exercise-type__submitted.svg' alt="Submitted" title="Exercise has been submitted" 
-    .text--inline-block
-      .text__font-size--14.text--bold All Complete!
-      .text__font-size--12 Submitted on May 15, 2017 at 3:00pm
+  if is_completed
+    .grid__container.spacing__margin-bottom--1
+      .icon.icon--42.spacing__margin-right--1.is-left
+        img src='/assets/images/icons/exercise-types/icons__exercise-type__submitted.svg' alt="Submitted" title="Exercise has been submitted" 
+      .text--inline-block
+        .text__font-size--14.text--bold All Complete!
 
   // Past-Due/Read-only
-  .grid__container.spacing__margin-bottom--1
-    .icon.icon--42.spacing__margin-right--1.is-left
-      img src='/assets/images/icons/exercise-types/icons__exercise-type__read-only.svg' alt="Past Due" title="Exercise is past due" 
-    .text--inline-block
-      .text__font-size--14.text--bold Read Only
-      .text__font-size--12 You can not edit this exercise.
+  if is_read_only
+    .grid__container.spacing__margin-bottom--1
+      .icon.icon--42.spacing__margin-right--1.is-left
+        img src='/assets/images/icons/exercise-types/icons__exercise-type__read-only.svg' alt="Past Due" title="Exercise is past due" 
+      .text--inline-block
+        .text__font-size--14.text--bold Read Only
+        .text__font-size--12 You can not edit this exercise.
+
+  // Not Started - Not possible
+  / .grid__container.spacing__margin-bottom--1
+  /   .icon.icon--42.spacing__margin-right--1.is-left
+  /     img src='/assets/images/icons/exercise-types/icons__exercise-type__not-started.svg' alt="Not Started" title="Exercise has not been started" 
+  /   .text--inline-block
+  /     .text__font-size--14.text--bold Not Started
+  /     .text__font-size--12 You have not opened any activity.
+
   hr
 
 label.spacing__margin-bottom--0 Exercise Type
@@ -57,4 +62,5 @@ if model.can.update
   .text__font-size--14.spacing__margin-bottom--1 = team_set.title
 else
   label.spacing__margin-bottom--0 Team
-  .text__font-size--14.spacing__margin-bottom--1 = team.title
+  each teams as |team|
+    .text__font-size--14.spacing__margin-bottom--1 = team.title

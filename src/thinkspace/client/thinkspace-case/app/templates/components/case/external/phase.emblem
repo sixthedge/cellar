@@ -7,27 +7,21 @@ li.phase-list__item
     
   .grid__container.spacing__margin-bottom--1
     // Instructor sees the unlock date
-    if model.can.update
-      .text__font-size--12.text--inline-block.spacing__margin-right--1 
-        | <strong>Unlocks:</strong> May 22rd, 2017 at 3:00pm
+    if assignment.can.update
+      if phase_state.friendly_unlock_at
+        .text__font-size--12.text--inline-block.spacing__margin-right--1 
+          | <strong>Unlocks:</strong> #{phase_state.friendly_unlock_at}
+      if phase_state.friendly_release_at
+        .text__font-size--12.text--inline-block.spacing__margin-right--1 
+          | <strong>Release at:</strong> #{phase_state.friendly_release_at}
     else
-      // Locked
-      .tag.tag--pill.tag__exercise-status--locked.spacing__margin-right--1 Locked
+      component '__case/external/phase/phase_state' model=phase_state phase=model
 
-      // In Progress
-      .tag.tag--pill.tag--blue.spacing__margin-right--1 In Progress
-
-      // Complete
-      .tag.tag--pill.tag--green.spacing__margin-right--1 Submitted
-
-      // Past Due
-      .tag.tag--pill.tag--red.spacing__margin-right--1 Past Due
-
-    .text__font-size--12.text--inline-block 
-      | <strong>Due:</strong> May 23rd, 2017 at 3:00pm
+    .text__font-size--12.text--inline-block
+      | <strong>Due:</strong> #{phase_state.friendly_due_at}
 
   // Instructor should not see the button
-  unless model.can.update
+  unless assignment.can.update
     link-to-external 'phases.show' assignment model (query-params query_id='none') class='btn btn--primary btn--mobile-full position__absolute--desktop position--top-right' 
       | Open Activity
 
