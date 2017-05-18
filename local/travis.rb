@@ -108,15 +108,16 @@ class Travis
   end
 
   def self.get_dotenv
-    files   = []
-    deploys = Travis::Parser.new.deploys
+    commands = []
+    deploys  = Travis::Parser.new.deploys
     deploys.each do |package, environments|
       environments.each do |environment, options|
-        file = get_file(package, environment, '.env')
-        files.push(file)
+        file    = get_file(package, environment, '.env')
+        command = ". #{file}"
+        commands.push(command)
       end
     end
-    files.join(' - ')
+    commands.join(' && ')
   end
 
   def self.commit_message; ENV['TRAVIS_COMMIT_MESSAGE'] || '[deploy opentbl/staging/api] [deploy opentbl/staging/client]'; end
