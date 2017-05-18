@@ -29,8 +29,9 @@ class Travis
           Dir.chdir(ENV['TRAVIS_BUILD_DIR'])
           puts `echo Build dir ls:`
           puts `ls -l`
-          puts `source test.sh && echo $TEST_VAR`
+          puts `$TRAVIS_BUILD_DIR/test.sh && echo $TEST_VAR`
           Dir.chdir(api_dir)
+    
           #puts `dpl --provider=heroku --api-key=$HEROKU_API_KEY --app=opentbl-staging --skip_cleanup=true`
         end
 
