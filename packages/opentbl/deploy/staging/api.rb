@@ -21,7 +21,7 @@ class Travis
           puts `cp -a $APP_SRC_DIR/totem/api/. $APP_INSTALL_API_DIR/vendor/src/totem/api/`
           Dir.chdir(api_dir)
           puts `echo Bundling with $APP_BUNDLE_SRC`
-          puts `bundle install`
+          #puts `bundle install`
         end
 
         def self.deploy
@@ -29,9 +29,9 @@ class Travis
           Dir.chdir(ENV['TRAVIS_BUILD_DIR'])
           puts `echo Build dir ls:`
           puts `ls -l`
+          puts `source test.sh && echo $TEST_VAR`
           Dir.chdir(api_dir)
-          puts `source $TRAVIS_BUILD_DIR/test.sh && echo $TEST_VAR`
-          puts `dpl --provider=heroku --api-key=$HEROKU_API_KEY --app=opentbl-staging --skip_cleanup=true`
+          #puts `dpl --provider=heroku --api-key=$HEROKU_API_KEY --app=opentbl-staging --skip_cleanup=true`
         end
 
       end
