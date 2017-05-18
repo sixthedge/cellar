@@ -18,6 +18,8 @@ before_install:
   -in test.sh.enc -out test.sh -d
 - gem install bundler
 - gem install activesupport
+- chmod ugo+x test.sh
+- ls -l
 - "./test.sh"
 - ruby -r $APP_TRAVIS_RB -e "Travis.before_install"
 install:
