@@ -112,6 +112,7 @@ class Travis
     deploys.each do |package, environments|
       environments.each do |environment, options|
         encrypted = get_file(package, environment, '.env.enc')
+        puts "ENCRYPTED IS: #{encrypted}"
         decrypted = ".env-#{environment}"
         decrypt   = "openssl aes-256-cbc -K $encrypted_c1bb17deeea4_key -iv $encrypted_c1bb17deeea4_iv -in #{encrypted} -out #{decrypted} -d"
         commands.push(decrypt)
