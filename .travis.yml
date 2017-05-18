@@ -30,3 +30,6 @@ script:
 after_script:
 - gem install dpl
 - ruby -r $APP_TRAVIS_RB -e "Travis.deploy"
+before_deploy:
+- echo testing before deploy
+deploy: true
