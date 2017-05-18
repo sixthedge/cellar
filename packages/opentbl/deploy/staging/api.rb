@@ -28,7 +28,7 @@ class Travis
           puts `echo Deploying OpenTBL::Staging...`
           Dir.chdir(api_dir)
           puts 'ls -l'
-          puts `dpl --provider=heroku --api-key=$HEROKU_API_KEY --app=opentbl-staging --skip-cleanup`
+          puts `dpl --provider=heroku --api-key=$HEROKU_API_KEY --app=opentbl-staging --skip_cleanup=true`
         end
 
       end
