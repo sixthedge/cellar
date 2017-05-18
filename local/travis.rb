@@ -51,7 +51,14 @@ class Travis
   def self.dotenv;         get_dotenv;                     end
 
   def validate
-    raise "Testing error"
+    envs = []
+    deploys = Travis::Parser.new.deploys
+    deploys.each do |package, environments|
+      environments.each do |environment, options|
+        envs.push(environment)
+      end
+    end
+    raise "You have specified more than one deploy environment, this is currently not possible."
   end
 
   # # Helpers
