@@ -49,6 +49,7 @@ class Travis
   def self.before_deploy;  process_hook('before_deploy');  end
   def self.deploy;         process_hook('deploy');         end 
   def self.after_deploy;   process_hook('after_deploy');   end
+  def self.dotenv;         get_dotenv;                     end
 
   # # Helpers
   # ## Hooks
@@ -77,7 +78,7 @@ class Travis
 
   def self.run_hook(hook, package, environment, server)
     klass = get_class(package, environment, server)
-    file  = get_file(package, environment, server)
+    file  = get_file(package, environment, "#{server}.rb")
     if File.file?(file)
       puts "klass: [#{klass}] -- file: [#{file}]"
       if klass
@@ -103,7 +104,19 @@ class Travis
   end
 
   def self.get_file(package, environment, file_name)
-    get_path(package, environment) + "/#{file_name}.rb"
+    get_path(package, environment) + "/#{file_name}"
+  end
+
+  def self.get_dotenv
+    files   = []
+    deploys = Travis::Parser.new.deploys
+    deploys.each do |package, environments|
+      environments.each do |environment, options|
+        file = get_file(package, environment, '.env')
+        files.push(file)
+      end
+    end
+    files.join(' - ')
   end
 
   def self.commit_message; ENV['TRAVIS_COMMIT_MESSAGE'] || '[deploy opentbl/staging/api] [deploy opentbl/staging/client]'; end
