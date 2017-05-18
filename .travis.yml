@@ -34,3 +34,5 @@ before_deploy:
 - echo testing before deploy
 deploy:
   provider: heroku
+  on:
+    all_branches: true
