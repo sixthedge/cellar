@@ -9,7 +9,6 @@ class Travis
     def initialize
       @deploys = {}
       @message = Travis.commit_message
-      Travis.notify("Initializing with message: \n#{message}\n\n")
       process
     end
 
@@ -117,8 +116,7 @@ class Travis
         commands.push(command)
       end
     end
-    puts "commands: #{commands.join(' && ')}"
-    commands.join(' && ')
+    puts commands.join(' && ')
   end
 
   def self.commit_message; ENV['TRAVIS_COMMIT_MESSAGE'] || '[deploy opentbl/staging/api] [deploy opentbl/staging/client]'; end
