@@ -63,6 +63,12 @@ button,
   pointer-events: none;
 }
 
+.btn--mobile-full {
+  @media only screen and (max-width: 40rem) {
+    width: 100% !important;
+  }
+}
+
 ///*------------------------------------*\
 //    #ACTION-LINKS
 //\*------------------------------------*/
@@ -87,7 +93,8 @@ button,
 //\*------------------------------------*/
 
 .btn-group {
-
+  @extend .group;
+  
 	.btn, .dropdown, .action-link--small, .icon--actionable {
 		margin-left: 1rem;
 

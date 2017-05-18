@@ -87,6 +87,13 @@ module Thinkspace; module Casespace; module Concerns; module SerializerOptions; 
   # ###
 
   # show
+  def self.ability_assignment(controller, record, ownerable)
+    abilities                     = {}
+    abilities[:gradebook]         = controller.current_ability.can?(:update, record)
+    abilities[:manage_resources]  = controller.current_ability.can?(:update, record)
+    abilities
+  end
+
   def self.metadata_assignment(controller, record, ownerable); record.serializer_metadata(ownerable, controller.get_serializer_options); end
 
 end; end; end; end; end

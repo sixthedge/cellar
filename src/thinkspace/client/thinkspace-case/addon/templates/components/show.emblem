@@ -11,7 +11,7 @@ if model.is_pubsub
 
   .grid__col--1of4.grid__mobile--full-width
     if phase_states_loaded
-      component '__case/details' model=model
+      component '__case/details' model=model teams=teams team_set=team_set
 
 .grid__container--flex
   .grid__col--4of4

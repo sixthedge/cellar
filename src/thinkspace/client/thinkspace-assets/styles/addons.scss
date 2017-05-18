@@ -103,7 +103,11 @@
 - File-upload..........Styles for file input type.
 - Loaders..............Loader styles. 
 - Totem-messages.......Styles for totem messages around the app. 
+<<<<<<< HEAD
+- Phase-list...........Styles for phase list shown on case show page.
+=======
 - Illustration-msg.....Styles for illustration + message combo. 
+>>>>>>> 2db6e53f9aae0357e2e06766acff042d14b9b52a
 */
 
 @import "otbl-css/components.top-bar";
@@ -134,6 +138,7 @@
 @import "otbl-css/_components.file-upload";
 @import "otbl-css/_components.loaders";
 @import "otbl-css/_components.totem-messages";
+@import "otbl-css/_components.phase-list";
 @import "otbl-css/_components.illustration-msg";
 
 /*

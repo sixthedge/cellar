@@ -1,13 +1,15 @@
 if rm.ready
   .grid__container--flex
     .grid__col--3of4.grid__mobile--full-width
+      
       // Example of an exercise status message
-      .grid__container
-        .icon.icon--64.spacing__margin-right--1.is-left
-          img src='/assets/images/icons/exercise-types/otbl-icons__exercise-type__submitted.svg' alt="Submitted" title="Exercise has been submitted" 
-        .text--inline-block.spacing__pad-top--half
-          .text__font-size--14.text--bold This activity has been submitted
-          .text__font-size--14 You have successfully submitted this activity. You can still view it but will not be able to edit. 
+      / .grid__container
+      /   .icon.icon--64.spacing__margin-right--1.is-left
+      /     img src='/assets/images/icons/exercise-types/icons__exercise-type__submitted.svg' alt="Submitted" title="Exercise has been submitted" 
+      /   .text--inline-block.spacing__pad-top--half
+      /     .text__font-size--14.text--bold This activity has been submitted
+      /     .text__font-size--14 You have successfully submitted this activity. You can still view it but will not be able to edit.
+       
       h4= rm.assessment.title
       component 'questions' rm=rm chat='chat' chat_close='chat_close'
 

@@ -1,17 +1,17 @@
 component '__case/external/header' model=model
-if model.is_pubsub
-  mount 'thinkspace-message-pubsub'
+/ if model.is_pubsub
+/   mount 'thinkspace-message-pubsub'
 
 .grid__container--flex.spacing__margin-bottom--4
   .grid__col--3of4.grid__mobile--full-width.grid__col--primary
     if model.can.update
       component '__case/states' model=model assignment_type=assignment_type
     component '__case/instructions' model=model
-    component '__case/progress' model=model
+    component '__case/progress' model=model phase_states=all_phase_states
 
   .grid__col--1of4.grid__mobile--full-width
     if phase_states_loaded
-      component '__case/details' model=model
+      component '__case/details' model=model teams=teams team_set=team_set phase_states=all_phase_states
 
 / .grid__container--flex
 /   .grid__col--4of4

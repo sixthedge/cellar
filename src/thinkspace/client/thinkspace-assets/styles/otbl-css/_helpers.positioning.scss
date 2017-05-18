@@ -21,3 +21,16 @@
 .vertical-align--baseline {
   vertical-align: baseline !important;
 }
+
+.position__absolute--desktop {
+  position: absolute;
+
+  @media only screen and (max-width: 40rem) {
+    position: initial;
+  }
+}
+
+.position--top-right {
+  top:   0;
+  right: 0;
+}

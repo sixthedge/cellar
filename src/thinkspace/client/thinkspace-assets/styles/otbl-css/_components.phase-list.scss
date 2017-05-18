@@ -1,0 +1,14 @@
+///*------------------------------------*\
+//    #PHASE-LIST
+//\*------------------------------------*/
+
+.phase-list__item {
+  position:      relative;
+  margin-bottom: 1rem;
+  max-width:     $max-width--content;
+  border-bottom: $border--thin;
+
+  @media only screen and (max-width: 40rem) {
+    padding-bottom: 1rem;
+  }
+}
