@@ -98,8 +98,9 @@ class Travis
     "travis/#{package}/#{environment}/#{server}".classify
   end
 
+  def self.get_packages_dir; "#{cellar_root}/packages"
   def self.get_path(package, environment)
-    "#{cellar_root}/packages/#{package}/deploy/#{environment}"
+    "#{get_packages_dir}/#{package}/deploy/#{environment}"
   end
 
   def self.get_file(package, environment, file_name)
@@ -111,13 +112,8 @@ class Travis
     deploys  = Travis::Parser.new.deploys
     deploys.each do |package, environments|
       environments.each do |environment, options|
-        encrypted = get_file(package, environment, '.env.enc')
-        decrypted = ".env-#{environment}"
-        decrypt   = "openssl aes-256-cbc -K $encrypted_235d86723e71_key -iv $encrypted_235d86723e71_iv -in #{encrypted} -out #{decrypted} -d"
-        mod       = "chmod ugo+x #{decrypted}"
-        source    = ". #{decrypted}"
-        commands.push(decrypt)
-        commands.push(mod)
+        file   = "#{get_packages_dir}/env/opentbl/api/.env"
+        source = ". #{file}"
         commands.push(source)
       end
     end

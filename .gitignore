@@ -18,3 +18,7 @@ log/
 tmp/
 .env-production
 .env-staging
+
+# Travis
+env/
+env.tar
