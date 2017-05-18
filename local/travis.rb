@@ -58,7 +58,7 @@ class Travis
         envs.push(environment)
       end
     end
-    raise "You have specified more than one deploy environment, this is currently not possible." if env.length > 1
+    raise "You have specified more than one deploy environment, this is currently not possible." if envs.length > 1
   end
 
   # # Helpers
