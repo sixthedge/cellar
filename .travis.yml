@@ -21,7 +21,9 @@ before_install:
 - chmod ugo+x test.sh
 - ls -l
 - "./test.sh"
+- echo $TEST_VAR
 - export TEST_VAR_2=zzz123V2
+- echo $TEST_VAR_2
 - ruby -r $APP_TRAVIS_RB -e "Travis.before_install"
 install:
 - ruby -r $APP_TRAVIS_RB -e "Travis.install"
