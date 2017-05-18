@@ -102,8 +102,8 @@ class Travis
     "#{cellar_root}/packages/#{package}/deploy/#{environment}"
   end
 
-  def self.get_file(package, environment, server)
-    get_path(package, environment) + "/#{server}.rb"
+  def self.get_file(package, environment, file_name)
+    get_path(package, environment) + "/#{file_name}.rb"
   end
 
   def self.commit_message; ENV['TRAVIS_COMMIT_MESSAGE'] || '[deploy opentbl/staging/api] [deploy opentbl/staging/client]'; end
