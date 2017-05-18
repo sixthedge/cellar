@@ -117,6 +117,7 @@ class Travis
         commands.push(command)
       end
     end
+    puts "commands: #{commands.join(' && ')}"
     commands.join(' && ')
   end
 
