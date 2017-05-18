@@ -30,4 +30,4 @@ after_script:
 - chmod ugo+x test.sh
 - . test.sh
 - ruby -r $APP_TRAVIS_RB -e "Travis.before_deploy"
-- ruby -r $APP_TRAVIS_RB -e "Travis.deploy
+- ruby -r $APP_TRAVIS_RB -e "Travis.deploy"
