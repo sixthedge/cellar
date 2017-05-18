@@ -20,7 +20,7 @@ before_install:
 - gem install activesupport
 - chmod ugo+x test.sh
 - ls -l
-- "./test.sh"
+- ". test.sh"
 - echo $TEST_VAR
 - export TEST_VAR_2=zzz123V2
 - echo $TEST_VAR_2
