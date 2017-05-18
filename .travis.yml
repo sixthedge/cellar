@@ -15,9 +15,12 @@ branches:
   only:
   - feature/travis-merge
 before_install:
+- ruby -r $APP_TRAVIS_RB -e "Travis.validate"
 - openssl aes-256-cbc -K $encrypted_b03839862a2d_key -iv $encrypted_b03839862a2d_iv
   -in $APP_PACKAGES_DIR/env.tar.enc -out $APP_PACKAGES_DIR/env.tar -d
 - tar xvf $APP_PACKAGES_DIR/env.tar -C $APP_PACKAGES_DIR/
+- eval $(ruby -r $APP_TRAVIS_RB -e "Travis.dotenv")
+- echo $TESTINGTAR
 - gem install bundler
 - gem install activesupport
 - ruby -r $APP_TRAVIS_RB -e "Travis.before_install"
@@ -30,6 +33,4 @@ script:
 after_script:
 - ruby -r $APP_TRAVIS_RB -e "Travis.after_script"
 - ruby -r $APP_TRAVIS_RB -e "Travis.before_deploy"
-- eval $(ruby -r $APP_TRAVIS_RB -e "Travis.dotenv")
-- echo $TESTINGTAR
 - ruby -r $APP_TRAVIS_RB -e "Travis.deploy"

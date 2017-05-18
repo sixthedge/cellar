@@ -50,6 +50,10 @@ class Travis
   def self.after_deploy;   process_hook('after_deploy');   end
   def self.dotenv;         get_dotenv;                     end
 
+  def validate
+    raise "Testing error"
+  end
+
   # # Helpers
   # ## Hooks
   def self.process_hook(hook)
@@ -112,16 +116,18 @@ class Travis
     deploys  = Travis::Parser.new.deploys
     deploys.each do |package, environments|
       environments.each do |environment, options|
-        file   = "#{get_packages_dir}/env/opentbl/api/.env"
-        source = ". #{file}"
-        commands.push(source)
+        file   = "#{get_packages_dir}/env/#{package}/#{environment}/.env"
+        if File.file?(file)
+          source = ". #{file}"
+          commands.push(source)
+        end
       end
     end
     puts commands.join(' && ')
   end
 
   def self.commit_message; ENV['TRAVIS_COMMIT_MESSAGE'] || '[deploy opentbl/staging/api] [deploy opentbl/staging/client]'; end
-  def self.cellar_root; ENV['TRAVIS_BUILD_DIR'] || '..'; end
+  def self.cellar_root;    ENV['TRAVIS_BUILD_DIR']      || '..'; end
 
   # ## Messaging
   def self.notify(message); puts("#{message}"); end
