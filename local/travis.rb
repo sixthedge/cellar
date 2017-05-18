@@ -45,6 +45,7 @@ class Travis
   def self.install;        process_hook('install');        end
   def self.before_script;  process_hook('before_script');  end
   def self.script;         process_hook('script');         end
+  def self.after_script;   process_hook('after_script');   end
   def self.before_deploy;  process_hook('before_deploy');  end
   def self.deploy;         process_hook('deploy');         end 
   def self.after_deploy;   process_hook('after_deploy');   end

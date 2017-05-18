@@ -31,6 +31,10 @@ class Travis
           #puts `dpl --provider=heroku --api-key=$HEROKU_API_KEY --app=opentbl-staging --skip_cleanup=true`
         end
 
+        def self.env_file_path
+          
+        end
+
       end
     end
   end
