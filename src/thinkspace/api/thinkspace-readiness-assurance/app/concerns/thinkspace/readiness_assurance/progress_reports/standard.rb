@@ -1,16 +1,66 @@
 module Thinkspace; module ReadinessAssurance; module ProgressReports
 class Standard < Base
-  attr_accessor :report, :results, :json
+  attr_accessor :report, :results, :json, :json_justifications
 
   # ### Querying
   def query_column; 'attempt_values'; end
 
-  # TODO: Why does this use `metadata` and not `userdata` for the jsonb_each?
-  # TODO: Determine if using `answers` here is too overzealous for streaming.
   def query_json
-    joined_response_ids = response_ids.join(',')
-    query = "SELECT t1.id, REPLACE(t1.value::text, '\"', '') AS choice, COUNT(t1.value) AS total FROM (SELECT key AS id, value->0 AS value FROM thinkspace_readiness_assurance_responses t, jsonb_each((t.answers)::jsonb) WHERE t.id IN (#{joined_response_ids})) t1 GROUP BY t1.id, t1.value;"
-    @assessment.class.connection.select_all(query)
+    joined_response_ids = query_response_ids.join(',')
+    query = %{
+      SELECT  t2.id,
+              t2.choice,
+              t2.ownerables,
+              cardinality(t2.ownerables) AS total
+      FROM    (
+        SELECT   t1.id, 
+                 t1.value            AS choice,
+                 array_agg(t1.obj)   AS ownerables 
+        FROM     ( 
+                        SELECT u.key       AS id, 
+                               u.value->>0 AS value,
+                               json_build_object('ownerable_id', t.ownerable_id, 'ownerable_type', t.ownerable_type, 'justification', t.justifications->u.key)::jsonb AS obj
+                        FROM   thinkspace_readiness_assurance_responses t, 
+                               jsonb_each((t.answers)::jsonb) u
+                        WHERE  t.id IN (#{joined_response_ids})) t1 
+        GROUP BY t1.id, t1.value) t2
+      GROUP BY t2.id, t2.choice, t2.ownerables;
+    }
+    query_typed(query)
+  end
+  
+  def query_json_justifications
+    joined_response_ids = query_response_ids.join(',')
+    query               = %{
+      SELECT  t1.id             AS id,
+              t1.answer         AS choice,
+              array_agg(t1.obj) AS justifications
+      FROM      ( 
+                      SELECT 
+                             u.key                     AS id, 
+                             (t.answers::jsonb)->u.key AS answer,
+                             json_build_object('value', u.value->>0, 'ownerable_id', t.ownerable_id, 'ownerable_type', t.ownerable_type) AS obj
+                             
+                      FROM   thinkspace_readiness_assurance_responses t, 
+                             jsonb_each((t.justifications)::jsonb) u
+                      WHERE  t.id IN (#{joined_response_ids})) t1 
+      GROUP BY t1.id, t1.answer;
+    }
+    query_typed(query)
+  end
+
+  def query_response_ids
+    response_ids.empty? ? r_ids = [0] : r_ids = response_ids
+    r_ids
+  end
+
+  def query_typed(query)
+    # http://stackoverflow.com/questions/25331778/getting-typed-results-from-activerecord-raw-sql
+    pg                  = ActiveRecord::Base.connection
+    results             = pg.execute(query)
+    @type_map         ||= PG::BasicTypeMapForResults.new(pg.raw_connection)
+    results.type_map    = @type_map
+    results.to_a
   end
 
   # ### Default HWIA values
@@ -46,24 +96,39 @@ class Standard < Base
 
   def parse_responses
     return if @responses.empty?
-    @json = query_json
+    @json                = query_json
+    #@json_justifications = query_json_justifications
     parse_json_to_results
+    #parse_justifications_to_results
     parse_aggregate_results
   end
 
   def parse_json_to_results
+    pp @json
     @json.each do |q|
-      id      = q['id']
-      choice  = q['choice']
-      total   = q['total']
-      choices = @results[id]['choices']
-      # Cast to string as the choice 'id' may be a UUID.
-      value   = choices.find {|i| i.with_indifferent_access['id'].to_s == choice }
+      id         = q['id']
+      choice     = q['choice']
+      total      = q['total']
+      ownerables = q['ownerables']
+      choices    = @results[id]['choices']
+      value      = choices.find {|i| i.with_indifferent_access['id'].to_s == choice.to_s } # Cast to string as the choice 'id' may be a UUID.
       next unless value.present?
       value['total']         = total
+      value['ownerables']    = ownerables
       @results[id]['total'] += total # Aggregate number of selected.
     end
   end
+
+  # def parse_justifications_to_results
+  #   @json_justifications.each do |question|
+  #     id      = question['id']
+  #     choice  = question['choice']
+  #     choices = @results[id]['choices']
+  #     value   = choices.find {|i| i.with_indifferent_access['id'].to_s == choice.to_s } # Cast to string as the choice 'id' may be a UUID.
+  #     next unless value.present?
+  #     value['justifications'] = question['justifications']
+  #   end
+  # end
 
   def parse_aggregate_results
     @results.each do |id, data|
@@ -74,7 +139,7 @@ class Standard < Base
   end
 
   def parse_report
-    @report['completed'] = responses_count
+    @report['completed'] = completed_responses_count
     @report['total']     = all_ownerables_count
     @report['average']   = report_average
     @report['results']   = flatten_results
@@ -82,8 +147,8 @@ class Standard < Base
 
   # ### Choice helpers
   def add_percentages_to_choice(id, data, choice)
-    total_responses = data['total'].to_f || 0.0
-    total_selected  = choice['total'].to_f || 0.0
+    total_responses  = data['total'].to_f   || 0.0
+    total_selected   = choice['total'].to_f || 0.0
     (total_responses == 0.0) ? decimal = 0.0 : decimal = (total_selected / total_responses)
     choice['percentages'] = percentages_from_decimal(decimal)
   end

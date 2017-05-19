@@ -36,3 +36,5 @@
               .text__font-size--12.text--bold.text--inline-block #{choice.label}
               .text__font-size--12.spacing__margin-left--24 
                 | <strong>#{choice.total}</strong> Teams
+            each choice.ownerables as |ownerable|
+              li #{ownerable.ownerable_type} - #{ownerable.ownerable_id} - #{ownerable.justification}

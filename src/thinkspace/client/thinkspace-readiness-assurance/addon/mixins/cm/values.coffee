@@ -11,8 +11,8 @@ export default ember.Mixin.create
 
   add_message: ->
     message = @get('message')
-    @rm.save_chat(@qid, message).then =>
-      return
+    if message
+      @rm.save_chat(@qid, message).then => return
 
   format_messages: ->
     messages = @get(@chat_path) or []
