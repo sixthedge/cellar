@@ -54,10 +54,11 @@ class Standard < Base
   def parse_json_to_results
     @json.each do |q|
       id      = q['id']
-      choice  = q['choice'].to_i # Cast to int as the choices id value is Fixnum.
+      choice  = q['choice']
       total   = q['total']
       choices = @results[id]['choices']
-      value   = choices.find {|i| i.with_indifferent_access['id'] == choice }
+      # Cast to string as the choice 'id' may be a UUID.
+      value   = choices.find {|i| i.with_indifferent_access['id'].to_s == choice }
       next unless value.present?
       value['total']         = total
       @results[id]['total'] += total # Aggregate number of selected.
