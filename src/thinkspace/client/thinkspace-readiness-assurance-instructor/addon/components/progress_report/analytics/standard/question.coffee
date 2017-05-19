@@ -40,7 +40,7 @@ export default base.extend
 
   update_most_picked: ->
     choices     = @get('choices')
-    sorted      = choices.sortBy('total')
+    sorted      = choices.sortBy('total').reverse()
     most_picked = [sorted.shift(), sorted.shift()]
     @set('most_picked', most_picked)
 
