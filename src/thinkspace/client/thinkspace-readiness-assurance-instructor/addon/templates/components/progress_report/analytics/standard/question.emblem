@@ -11,7 +11,7 @@
       .rat-report__bar-graph
         component 'progress_report/analytics/standard/percentages' assessment=assessment data=data
       .rat-report__overview-avg
-        .rat-report__overview-avg-number #{correct_total}
+        .rat-report__overview-avg-number #{correct_percentage}
         .rat-report__overview-avg-label % Correct
 
     .rat-report__top-picks
