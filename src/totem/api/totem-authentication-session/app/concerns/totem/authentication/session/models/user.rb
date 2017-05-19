@@ -92,9 +92,11 @@ module Totem
                 self.send method, value if self.respond_to?(method)
               end
             end
+            self.state = 'active' if self.respond_to?(:state) && !self.active?
             self.save
             self
           end
+
 
         end
       end
