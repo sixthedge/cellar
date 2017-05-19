@@ -13,5 +13,3 @@ fieldset.forms__section.spacing__margin-bottom--4
     .btn.btn--primary click='create'
       .icon.icon--16.icon__plus--white.spacing__margin-right--half
       | New Scale
-  else
-    h1 empty

@@ -1,12 +1,12 @@
 /Question label
 .forms__field-wrapper
-  label Question Label
+  label.spacing__margin-bottom--0 Question Label
   .forms__label-summary This is the question the student will see above the scale.
   component '__changeset/input' value=model.changeset.label changeset=model.changeset attribute='label'
 
 / Feedback type
 .forms__field-wrapper
-  label Feedback Type
+  label.spacing__margin-bottom--0 Feedback Type
   .forms__label-summary This will let the system know where to place this response when it creates the results page.
   
   // Temp select until we get ts-dropdown working (12/20)
@@ -19,7 +19,7 @@
 
 hr
 .btn-group
-  button.btn.btn--primary click='update'
+  button.btn.btn--primary click='update' role='button'
     | Update Question
-  button.btn click='edit'
+  button.btn click='edit' role='button'
     | Cancel

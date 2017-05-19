@@ -1,6 +1,6 @@
 .dialogue.dialogue--green.spacing__margin-bottom--2
   h1 Case is live
-  p This case is available to all your students.
+  p.spacing__margin-bottom--2 This case is available to all your students.
 
   button.btn{action 'set_drafting'}
     | Set to draft

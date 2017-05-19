@@ -9,7 +9,7 @@
 
 if template.is_balance
   .forms__field-wrapper
-    label How many points per member for total points
+    label.spacing__margin-bottom--0 How many points per member for total points
     .forms__label-summary 
       | i.e. 10 points x 5 peers = 50 total points to distribute
     component '__changeset/input' value=step.assessment_changeset.points_per_member changeset=step.assessment_changeset attribute='points_per_member' display_errors=true class='forms__input--50'

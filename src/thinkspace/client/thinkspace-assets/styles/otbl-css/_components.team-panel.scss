@@ -57,7 +57,8 @@
   vertical-align: middle;
 
   &.is-highlighted {
-    border: 2px solid yellow;
+    background-color: $color-yellow-med !important;
+    font-weight:      $font-weight--bold;
   }
 
   &:nth-child(2n) {

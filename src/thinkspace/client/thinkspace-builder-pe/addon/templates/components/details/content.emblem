@@ -8,7 +8,7 @@ component '__changeset/input' value=step.changeset.title changeset=step.changese
 component '__changeset/text_area' value=step.changeset.instructions changeset=step.changeset attribute='instructions' label='Exercise overview/instructions' summary='Students will see this before they start the exercise. The overview is a good place to provide context before they go into the exercise'
 
 .forms__field-wrapper
-  label  
+  label.spacing__margin-bottom--0
     | Choose a team set
   .forms__label-summary
     | This will use team distribution

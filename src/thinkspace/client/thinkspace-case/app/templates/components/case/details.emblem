@@ -1,6 +1,6 @@
 unless model.can.update
-  if is_locked
-    .text__font-size--12.text--bold.spacing__margin-bottom--half Exercise Status
+  .text__font-size--12.text--bold.spacing__margin-bottom--half Exercise Status
+  if is_locked 
     // Locked
     .grid__container.spacing__margin-bottom--1
       .icon.icon--42.spacing__margin-right--1.is-left
