@@ -2,6 +2,10 @@ mount 'thinkspace-toolbar'
 .main-content
   component '__case/external/header' model=model
 
+  .main-content__sub-header.mobile-spacing__margin-bottom--1
+    h2.text--inline-block Progress Report
+    p Keep track of student and team progress during the exercise. 
+
   .grid__container--flex.spacing__margin-bottom--4
     .grid__col--4of4
       .panel-table__heading.grid__mobile--hidden
@@ -13,42 +17,62 @@ mount 'thinkspace-toolbar'
           .panel-table__heading-item Transition Event
       
       if ready
-        .panel-table__item.grid__container--flex
-          .grid__col--2of4.grid__mobile--full-width
-            link-to 'progress_report.irat' class='grid__col--1of3 grid__mobile--full-width mobile-spacing__margin-bottom--1'
-              | <strong> Individual</strong> <br>RAT
-            .grid__col--1of3.grid__mobile-col--1of2
-              .text--bold.text__font-size--18.is-left #{overview.irat.completed}
-              .text__font-size--14.text__lh--2.is-left
-                | /#{overview.irat.total}
+        / .panel-table__item.grid__container--flex
+        /   .grid__col--2of4.grid__mobile--full-width
+        /     link-to 'progress_report.irat' class='grid__col--1of3 grid__mobile--full-width mobile-spacing__margin-bottom--1'
+        /       | <strong> Individual</strong> <br>RAT
+        /     .grid__col--1of3.grid__mobile-col--1of2
+        /       .text--bold.text__font-size--18.is-left #{overview.irat.completed}
+        /       .text__font-size--14.text__lh--2.is-left
+        /         | /#{overview.irat.total}
 
-            .grid__col--1of3.grid__mobile-col--1of2
-              .text--bold.text__font-size--14.is-left.text__color--green.text__lh--2 #{overview.irat.state}
-          .grid__col--2of4.grid__mobile--full-width
-            .grid__col--2of4
-              label.text__font-size--12 Opens:
-              .text__font-size--14 #{overview.irat.release_at}
-            .grid__col--2of4
-              label.text__font-size--12 Closes:
-              .text__font-size--14 #{overview.irat.due_at}
+        /     .grid__col--1of3.grid__mobile-col--1of2
+        /       .text--bold.text__font-size--14.is-left.text__color--green.text__lh--2 #{overview.irat.state}
+        /   .grid__col--2of4.grid__mobile--full-width
+        /     .grid__col--2of4
+        /       label.text__font-size--12 Opens:
+        /       .text__font-size--14 #{overview.irat.release_at}
+        /     .grid__col--2of4
+        /       label.text__font-size--12 Closes:
+        /       .text__font-size--14 #{overview.irat.due_at}
 
-        .panel-table__item.grid__container--flex
-          .grid__col--2of4.grid__mobile--full-width
-            link-to 'progress_report.trat' class='grid__col--1of3 grid__mobile--full-width mobile-spacing__margin-bottom--1'
-              | <strong> Team</strong> <br>RAT
-            .grid__col--1of3.grid__mobile-col--1of2
-              .text--bold.text__font-size--18.is-left #{overview.trat.completed}
-              .text__font-size--14.text__lh--2.is-left
-                | /#{overview.trat.total}
-            .grid__col--1of3.grid__mobile-col--1of2
-              .text--bold.text__font-size--14.is-left.text__color--green.text__lh--2 #{overview.trat.state}
-          .grid__col--2of4.grid__mobile--full-width
-            .grid__col--2of4
-              label.text__font-size--12 Opens:
-              .text__font-size--14 #{overview.trat.release_at}
-            .grid__col--2of4
-              label.text__font-size--12 Closes:
-              .text__font-size--14 #{overview.trat.due_at}
+        .tile__container
+          link-to 'progress_report.irat' class='tile__item spacing__pad-top--1 spacing__pad-bottom--1' tabindex='0'
+            .grid__col--2of4.grid__mobile--full-width
+              .grid__col--1of3.text--bold.is-left.tile__name
+                | iRAT
+              .grid__col--1of3.grid__mobile-col--1of2
+                .text__lh--2.text__font-size--14.text__color--black.is-left
+                  | <strong>#{overview.irat.completed}</strong> of <strong>#{overview.irat.total} students</strong>
+              .grid__col--1of3.grid__mobile-col--1of2
+                .text--bold.text__font-size--14.is-left.text__color--green.text__lh--2 #{overview.irat.state}
+            .grid__col--2of4.grid__mobile--full-width
+              .grid__col--2of4.text__color--black
+                label.text__font-size--12 Opens:
+                .text__font-size--14 #{overview.irat.release_at}
+              .grid__col--2of4.text__color--black
+                label.text__font-size--12.text__color--black Closes:
+                .text__font-size--14 #{overview.irat.due_at}
+
+        .tile__container
+          link-to 'progress_report.trat' class='tile__item spacing__pad-top--1 spacing__pad-bottom--1' tabindex='0'
+            .grid__col--2of4.grid__mobile--full-width
+              .grid__col--1of3.text--bold.is-left.tile__name
+                | tRAT
+              .grid__col--1of3.grid__mobile-col--1of2
+                .text__lh--2.text__font-size--14.text__color--black.is-left
+                  | <strong>#{overview.trat.completed}</strong> of <strong>#{overview.trat.total} teams</strong>
+              .grid__col--1of3.grid__mobile-col--1of2
+                .text--bold.text__font-size--14.is-left.text__color--green.text__lh--2 #{overview.trat.state}
+            .grid__col--2of4.grid__mobile--full-width
+              .grid__col--2of4.text__color--black
+                label.text__font-size--12 Opens:
+                .text__font-size--14 #{overview.trat.release_at}
+              .grid__col--2of4.text__color--black
+                label.text__font-size--12.text__color--black Closes:
+                .text__font-size--14 #{overview.trat.due_at}
+
+
         
   / .grid__container--flex.flex__justify--between.spacing__margin-bottom--4
   /   .grid__col--49
