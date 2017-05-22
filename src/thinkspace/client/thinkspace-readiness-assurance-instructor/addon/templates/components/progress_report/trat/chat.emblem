@@ -1,0 +1,4 @@
+if ready
+  h1 #{progress_report}
+else 
+  component '__loader/base'

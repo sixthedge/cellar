@@ -1,0 +1,9 @@
+.grid__container--flex.spacing__margin-bottom--4
+  .grid__col--4of4
+    if ready
+      if is_ifat
+        .text--bold.text__font-size--14.text__color--gray.spacing__margin-bottom--1 IFAT Enabled
+        component 'progress_report/analytics/ifat' model=assessment
+      else
+        .text--bold.text__font-size--14.text__color--gray.spacing__margin-bottom--1 Standard
+        component 'progress_report/analytics/standard' model=assessment
