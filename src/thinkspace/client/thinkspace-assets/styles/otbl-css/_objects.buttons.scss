@@ -65,7 +65,9 @@ button,
 
 .btn--mobile-full {
   @media only screen and (max-width: 40rem) {
-    width: 100% !important;
+    width:       100% !important;
+    line-height: 2.5rem;
+    height:      2.5rem;
   }
 }
 
@@ -101,6 +103,13 @@ button,
 		&:first-child {
 			margin-left: 0;
 		}
+
+    &.btn--mobile-full {
+      @media only screen and (max-width: 40rem) {
+        margin-left: 0;
+        margin-top: 1rem;
+      }
+    }
 	}
 
   >.btn__component {
