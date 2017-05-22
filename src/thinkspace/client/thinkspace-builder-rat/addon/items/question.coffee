@@ -24,22 +24,24 @@ export default ember.Object.extend array_helpers,
 
   get_choice_by_id: (id) -> @get('choice_items').findBy 'id', id
 
-  save: ->
+  persist: ->
     new ember.RSVP.Promise (resolve, reject) =>
       manager = @get('manager')
       type    = @get('type')
       @validate().then (valid) =>
         if valid
           @changeset_save().then =>
+            console.log('answer is ', @get('answer'))
             manager.set_question_answer(type, @get('id'), @get_choice_by_id(@get('answer')))
-            manager.save_model(type)
+            # manager.save_assessment(type).then =>
+            #   console.log('assessement was saved, model is ', @get('model'))
+            #   @init()
             resolve(true)
         else
           resolve(false)
 
   select_answer: (choice) ->
     @get('changeset').set('answer', choice.get('model.id'))
-    #@process_choices(@get('choice_items'))
 
   validate: ->
     new ember.RSVP.Promise (resolve, reject) =>
@@ -92,6 +94,7 @@ export default ember.Object.extend array_helpers,
 
   init: ->
     @_super()
+    console.log('calling init')
     @create_changeset()
     @update_choice_items()
 
@@ -117,14 +120,29 @@ export default ember.Object.extend array_helpers,
 
   delete_choice_from_item: (type, item_id, choice) ->
     item = @get('manager').get_item_by_id(type, item_id)
+    @set('changeset.answer', null) if @get('changeset.answer') == choice.id
     @get('changeset.choices').removeObject(choice)
     @update_choice_items()
 
   update_choice_items: ->
     choice_items = ember.makeArray()
+    cur_items    = @get('choice_items')
     items        = @get('changeset.choices')
+    answer       = @get('changeset.answer')
+
+    console.log('calling update_choice_items with answer ', answer)
+
     if ember.isPresent(items)
       items.forEach (item, index) =>
-        item = @create_choice_item(item, index)
-        choice_items.pushObject(item)
+        if ember.isPresent(cur_items)
+          choice_obj = cur_items.filter((cur_item) -> cur_item.get('id') == item.id).get('firstObject')
+
+        if ember.isPresent(choice_obj)
+          choice_obj.set('model', item)
+          choice_obj.set('index', index)
+          choice_obj.set('answer', answer)
+          choice_items.pushObject(choice_obj)
+        else
+          choice_items.pushObject(@create_choice_item(item, index))
+
     @set('choice_items', choice_items)

@@ -18,7 +18,13 @@ export default step.extend
   builder: ember.inject.service()
   manager: ember.inject.service()
 
+  model: ember.computed.reads 'builder.model'
+
+  irat_phase: ember.computed.reads 'manager.irat_phase'
+  trat_phase: ember.computed.reads 'manager.trat_phase'
+
   create_changeset: ->
+    console.log('changeset underlying obj is ', @get('model'))
     model     = @get('model')
     changeset = totem_changeset.create model
     changeset.set 'show_errors', true
@@ -26,15 +32,23 @@ export default step.extend
 
   ## API Methods
 
+  manager_load_obs: ember.observer 'manager_loaded', ->
+    if @get('manager_loaded') then @reset_loading('all')
+
   initialize: ->
+    # model = @get('builder.model')
+    # @set 'model', model
+    # @query_assessments().then (assessments) =>
+    #   @set('assessments', assessments)
+    #   @init_assessments()
+    #   @query_phases().then =>
+    #     @create_changeset()
+    #     @set_all_data_loaded()
     model = @get('builder.model')
-    @set 'model', model
-    @query_assessments().then (assessments) =>
-      @set('assessments', assessments)
-      @init_assessments()
-      @query_phases().then =>
-        @create_changeset()
-        @set_all_data_loaded()
+    @set('model', model)
+    @set_loading('all')
+    @create_changeset()
+
 
   query_phases: ->
     new ember.RSVP.Promise (resolve, reject) =>
@@ -50,34 +64,6 @@ export default step.extend
         @set('trat_phase', results.trat)
         resolve()
 
-  query_assessments: ->
-    new ember.RSVP.Promise (resolve, reject) =>
-      model = @get('model')
-
-      query =
-        id: model.get('id')
-        componentable_type: ns.to_p('ra:assessment')
-      options =
-        action: 'phase_componentables'
-        model: ns.to_p('ra:assessment')
-
-      tc.query_action(ns.to_p('assignment'), query, options).then (assessments) =>
-        resolve(assessments)
-      , (error) => reject error
-
-  init_assessments: ->
-    assessments = @get('assessments')
-    manager     = @get('manager')
-
-    irat = assessments.findBy 'is_irat', true
-    trat = assessments.findBy 'is_trat', true
-
-    @set('irat_assessment', irat)
-    @set('trat_assessment', trat)
-
-    manager.set_assessment('irat', irat)
-    manager.set_assessment('trat', trat)
-
   save: ->
     new ember.RSVP.Promise (resolve, reject) =>
       changeset = @get('changeset')
@@ -85,6 +71,11 @@ export default step.extend
         resolve(model)
       , (error) => reject(error)
 
-  select_release_at: (date) -> @get('changeset').set 'release_at', date
-  select_due_at:     (date) -> @get('changeset').set 'due_at', date
+  select_release_at: (date) -> 
+    console.log('trying to call select_release_at')
+    @get('changeset').set 'release_at', date
+
+  select_due_at:     (date) -> 
+    console.log('trying to call select_due_at')
+    @get('changeset').set 'due_at', date
 

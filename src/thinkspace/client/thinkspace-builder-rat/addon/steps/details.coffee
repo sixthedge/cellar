@@ -28,15 +28,15 @@ export default step.extend
       instructions: [vpresence]
     @set 'changeset', changeset
 
-
   initialize: ->
     model = @get('builder.model')
     @set 'model', model
     @create_changeset()
+    @set_loading('all')
     @load_assignment_data().then (assignment) =>
       @query_team_sets().then (team_sets) =>
         @initialize_team_set().then (team_set) =>
-          @set_all_data_loaded()
+          @reset_loading('all')
 
   save: ->
     new ember.RSVP.Promise (resolve, reject) =>

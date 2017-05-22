@@ -31,6 +31,11 @@ export default base.extend ta.add(
       arr.pushObject(question)
     arr
 
+  remove_question_answers: ->
+    questions = @get('questions')
+    questions.forEach (question) =>
+      delete question.answer
+
   get_question_ids: -> @get('questions').mapBy 'id'
 
   get_question_by_id: (id) -> @get('questions').findBy 'id', id

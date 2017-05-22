@@ -2,7 +2,9 @@ import ember          from 'ember'
 import ns             from 'totem/ns'
 import totem_messages from 'totem-messages/messages'
 import array_helpers  from 'thinkspace-common/mixins/helpers/common/array'
+import totem_scope from 'totem/scope'
 import uuid from 'thinkspace-common/mixins/helpers/common/uuid'
+import tc from 'totem/cache'
 
 ###
 # # manager.coffee
@@ -13,6 +15,9 @@ export default ember.Service.extend array_helpers, uuid,
   ## Assessments
   irat:       null
   trat:       null
+  ## Phases
+  irat_phase: null
+  trat_phase: null
   ## Assignment
   model:      null
 
@@ -22,6 +27,66 @@ export default ember.Service.extend array_helpers, uuid,
     {id: 3, label: 'Choice 3'},
     {id: 4, label: 'Choice 4'}
   ]
+
+  loading: null
+  set_loading:      (type) -> @set("loading.#{type}", true)
+  reset_loading:    (type) -> @set("loading.#{type}", false)
+
+  initialize: (model) ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      @set('model', model)
+      @set('loading', new Object)
+      @set_loading('all')
+      @init_assessments().then =>
+        @reset_loading('all')
+        resolve()
+
+  init_assessments: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      model = @get('model')
+
+      query =
+        id: model.get('id')
+        componentable_type: ns.to_p('ra:assessment')
+      options =
+        action: 'phase_componentables'
+        model: ns.to_p('ra:assessment')
+
+      tc.query_action(ns.to_p('assignment'), query, options).then (assessments) =>
+        irat = assessments.findBy 'is_irat', true
+        trat = assessments.findBy 'is_trat', true
+
+        promises = 
+          irat: @query_assessment_answers('irat', irat)
+          trat: @query_assessment_answers('trat', trat)
+
+        ember.RSVP.hash(promises).then (assessments_with_answers) =>
+          @set_assessment('irat', assessments_with_answers.irat)
+          @set_assessment('trat', assessments_with_answers.trat)
+          resolve()
+
+  ## Needed to get the assessment to serialize its answers
+  query_assessment_answers: (type, assessment) ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      assessment.get('authable').then (phase) =>
+        @set_phase(type, phase)
+
+        query =
+          ids: ember.makeArray(assessment.get('id'))
+          model: phase
+          auth:
+            authable_id:   phase.get('id')
+            authable_type: 'Thinkspace::Casespace::Phase'
+
+        options = 
+          action: 'assessment'
+          verb:   'POST'
+          model:  ns.to_p('ra:assessment')
+          single: true
+
+        tc.query_action(ns.to_p("ra:#{type}"), query, options).then (result) =>
+          resolve(result)
+
 
   get_default_choices: -> @duplicate_array(@get('default_choices'))
   get_items: (type)    -> @get_assessment(type).get('questions')
@@ -34,14 +99,22 @@ export default ember.Service.extend array_helpers, uuid,
     console.info "[rat:builder] Assessment set to: #{type}: #{assessment}"
     @set("#{type}", assessment)
 
+  set_phase: (type, phase) ->
+    console.info "[rat:builder] Phase set to : #{type}: #{phase}"
+    @set("#{type}_phase", phase)
+
   ## Expects 'irat' or 'trat'
   get_assessment: (type) -> @get("#{type}")
 
-  ## TODO refactor this to 'save_assessment' or something similar
-  save_model: (type) ->
-    model = @get_assessment(type)
-    model.save().then =>
-      totem_messages.api_success source: @, model: model, action: 'update', i18n_path: ns.to_o('ra:assessment', 'save')
+  save_assessment: (type) ->
+    assessment = @get_assessment(type)
+    ## Make sure we're not persisting answers as part of the questions column
+    assessment.remove_question_answers()
+    assessment.save().then (saved_assessment) =>
+      #@set_assessment(type, saved_assessment)
+      @query_assessment_answers(type, saved_assessment).then (result) =>
+        console.log('will ember data handle this result...? ', @get_assessment('irat'), result)
+        totem_messages.api_success source: @, model: assessment, action: 'update', i18n_path: ns.to_o('ra:assessment', 'save')
 
   get_new_question_item: (type, title, choices) ->
     item =
@@ -51,25 +124,31 @@ export default ember.Service.extend array_helpers, uuid,
       answer:   null
 
   get_item_by_id: (type, id) -> @get_items(type).findBy 'id', id
-  get_next_id:    (type) -> @uuid()
+  get_next_id:    (type) -> 
+    assessment = @get_assessment(type)
+    assessment.get('')
+
+
+
+    @uuid()
 
   add_question_item: (type) ->
     item = @get_new_question_item(type)
     item.new = true
     @get_items(type).pushObject(item)
-    @save_model(type)
+    @save_assessment(type)
 
   add_choice_to_item: (type, id) ->
     item   = @get_item_by_id(type, id)
     choice = @get_new_choice(item)
 
     item.choices.pushObject(choice)
-    @save_model(type)
+    @save_assessment(type)
 
   delete_choice_from_item: (type, id, choice) ->
     item = @get_item_by_id(type, id)
     item.choices.removeObject(choice)
-    @save_model(type)
+    @save_assessment(type)
 
   duplicate_question_item: (type, item) ->
     items = @get_items(type)
@@ -81,7 +160,7 @@ export default ember.Service.extend array_helpers, uuid,
     new_item.id = @get_next_id(type)
     items.insertAt add_at, new_item
 
-    @save_model(type)
+    @save_assessment(type)
 
   get_new_choice: (item, changeset_choices) ->
     choices        = if ember.isPresent(changeset_choices) then changeset_choices else item.choices
@@ -93,8 +172,12 @@ export default ember.Service.extend array_helpers, uuid,
 
   delete_question_item: (type, item) ->
     items = @get_items(type)
-    items.removeObject(item)
-    @save_model(type)
+    console.log('removing item ', item, items.get('length'))
+    rem_item = items.findBy 'id', item.id
+    console.log('finding rem_item to remove ', rem_item)
+    items.removeObject(rem_item)
+    console.log('now its ', items.get('length'))
+    @save_assessment(type)
 
   reorder_item: (type, item, offset) ->
     items = @get_items(type)
@@ -114,7 +197,7 @@ export default ember.Service.extend array_helpers, uuid,
     return if add_at > length - 1
     items.removeAt(index)
     items.insertAt(add_at, item)
-    @save_model(type)
+    @save_assessment(type)
 
   get_answer_by_id: (type, id) ->
     items = @get_items(type)

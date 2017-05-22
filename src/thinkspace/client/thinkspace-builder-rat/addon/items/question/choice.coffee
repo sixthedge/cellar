@@ -17,8 +17,9 @@ export default ember.Object.extend
 
   id:      ember.computed.reads 'model.id'
   label:   ember.computed.reads 'model.label'
+  #answer: ember.computed.reads 'model.answer'
 
-  is_answer: ember.computed 'id', 'answer', -> parseInt(@get('id')) == parseInt(@get('answer'))
+  is_answer: ember.computed 'id', 'answer', 'model', -> parseInt(@get('id')) == parseInt(@get('answer'))
 
   init: ->
     @_super()
@@ -47,6 +48,4 @@ export default ember.Object.extend
         resolve(changeset.get('isValid'))
 
   rollback: -> @get('changeset').rollback()
-
-  save: ->
-    @get('changeset').save()
+  save:     -> @get('changeset').save()

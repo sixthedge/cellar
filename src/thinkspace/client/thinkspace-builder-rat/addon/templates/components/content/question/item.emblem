@@ -1,5 +1,8 @@
-div class={:bordered-panel is_editing:bordered-panel--active}
-  if is_editing
-    component 'content/question/item/edit' model=model show='toggle_is_editing' type=type
-  else
-    component 'content/question/item/show' model=model reorder='reorder' edit='toggle_is_editing' type=type
+if loading.update
+  component '__loader/base'
+else
+  div class={:bordered-panel is_editing:bordered-panel--active}
+    if is_editing
+      component 'content/question/item/edit' model=model show='toggle_is_editing' type=type update='update_question'
+    else
+      component 'content/question/item/show' model=model reorder='reorder' edit='toggle_is_editing' type=type

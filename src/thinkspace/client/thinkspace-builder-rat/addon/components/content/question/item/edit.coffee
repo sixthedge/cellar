@@ -22,18 +22,14 @@ export default base.extend
     @set('cur_answer', choice.get('id'))
     @get('model').select_answer(choice)
 
-  update_model: -> 
-    @get('model').save().then (success) =>
-      @get('manager').save_model(@get('type')) if success
-
   actions:
     toggle_show: ->
       @get('model').changeset_rollback().then =>
         @sendAction('show', false)
 
     update: -> 
-      @sendAction('show', false)
-      @update_model()
+      @sendAction('update')
+      #@update_model()
 
     add_choice:             -> @get('model').add_choice_to_item(@get('type'), @get('model.id'))
     delete_choice: (choice) -> @get('model').delete_choice_from_item(@get('type'), @get('model.id'), choice)

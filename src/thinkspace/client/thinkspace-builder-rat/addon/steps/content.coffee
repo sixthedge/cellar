@@ -24,46 +24,21 @@ export default step.extend
   model: ember.computed.reads 'builder.model'
 
   sync_assessments: ember.computed.reads 'model.sync_rat_assessments'
+  irat_assessment:  ember.computed.reads 'manager.irat'
+  trat_assessment:  ember.computed.reads 'manager.trat'
+  manager_loaded:   false
+
+  cur_irat_question_items: null
+  cur_trat_question_items: null
 
   irat_type: 'irat'
   trat_type: 'trat'
 
+  manager_load_obs: ember.observer 'manager_loaded', ->
+    if @get('manager_loaded') then @reset_loading('all')
+
   initialize: ->
-    @reset_all_data_loaded()
-
-    promises = 
-      assessments: @query_assessments()
-
-    @rsvp_hash_with_set(promises, @).then (results) =>
-      @init_assessments()
-
-  query_assessments: ->
-    new ember.RSVP.Promise (resolve, reject) =>
-      model = @get('model')
-
-      query =
-        id: model.get('id')
-        componentable_type: ns.to_p('ra:assessment')
-      options =
-        action: 'phase_componentables'
-        model: ns.to_p('ra:assessment')
-
-      tc.query_action(ns.to_p('assignment'), query, options).then (assessments) =>
-        resolve(assessments)
-      , (error) => reject error
-
-  init_assessments: ->
-    assessments = @get('assessments')
-    manager     = @get('manager')
-
-    irat = assessments.findBy 'is_irat', true
-    trat = assessments.findBy 'is_trat', true
-
-    @set('irat_assessment', irat)
-    @set('trat_assessment', trat)
-
-    manager.set_assessment('irat', irat)
-    manager.set_assessment('trat', trat)
+    @set_loading('all')
 
   toggle_assessment_sync: (val) ->
     model = @get('model')
@@ -74,10 +49,27 @@ export default step.extend
         @set('assessments', assessments)
         @init_assessments()
 
-  irat_question_items: ember.computed 'irat_assessment.questions_with_answers.@each', ->
-    items = @get('irat_assessment.questions_with_answers')
-    if ember.isPresent(items)
-      @create_question_item(@get('irat_type'), item) for item in items
+  irat_question_items: ember.computed 'irat_assessment.questions_with_answers.length', ->
+    items     = @get('irat_assessment.questions_with_answers')
+    cur_items = @get('cur_irat_question_items')
+    arr       = ember.makeArray()
+    cur_item_ids = if ember.isPresent(cur_items) then cur_items.mapBy('id') else ember.makeArray()
+
+    items.forEach (item) =>
+      if ember.isPresent(cur_items)
+        question_obj = cur_items.filter((cur_item) -> cur_item.get('id') == item.id).get('firstObject')
+
+      if ember.isPresent(question_obj)
+        #console.log('question_obj found with item ', item)
+        console.log('recomputing irat_question_items with item ', item)
+        question_obj.set('model', item)
+        question_obj.set('answer', item.answer)
+        arr.pushObject(question_obj)
+      else
+        arr.pushObject(@create_question_item(@get('irat_type'), item))
+
+    @set('cur_irat_question_items', arr)
+    arr
 
   trat_question_items: ember.computed 'trat_assessment.questions_with_answers.@each', ->
     items = @get('trat_assessment.questions_with_answers')
@@ -106,7 +98,6 @@ export default step.extend
 
       ember.RSVP.all(promises).then (valids) =>
         resolve(!valids.contains(false))
-
 
   save: ->
     new ember.RSVP.Promise (resolve, reject) =>

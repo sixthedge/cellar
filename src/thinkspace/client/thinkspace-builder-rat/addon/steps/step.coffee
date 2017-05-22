@@ -9,9 +9,10 @@ import common_helper   from 'thinkspace-common/mixins/helpers/common/all'
 ###
 export default ember.Object.extend common_helper,
 
-  all_data_loaded: false
+  loading: null
+  set_loading:      (type) -> @set("loading.#{type}", true)
+  reset_loading:    (type) -> @set("loading.#{type}", false)
 
-  set_all_data_loaded: -> 
-    @set('all_data_loaded', true)
-  reset_all_data_loaded: -> 
-    @set('all_data_loaded', false)
+  init: ->
+    @_super()
+    @set('loading', new Object)
