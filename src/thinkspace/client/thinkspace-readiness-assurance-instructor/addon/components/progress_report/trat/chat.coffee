@@ -41,6 +41,7 @@ export default base.extend
           row = ember.Object.create
             title: team_user.team.title
             id:    team_user.team.id
+            room:  team_user.team.room
           rows.pushObject(row)
         @set('team_rows', rows)
         @set('rms', rms)
