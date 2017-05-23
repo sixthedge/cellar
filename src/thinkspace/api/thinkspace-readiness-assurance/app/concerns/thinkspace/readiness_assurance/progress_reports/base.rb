@@ -61,7 +61,7 @@ class Base
     rounded    = percentage_round_from_decimal(decimal)
     HashWithIndifferentAccess.new(decimal: decimal, rounded: rounded)
   end
-  def percentage_round_from_decimal(decimal); (decimal.to_f * 100.0).round(2); end
+  def percentage_round_from_decimal(decimal); (decimal.to_f * 100.0).round(0); end
 
   # ### Report/results helpers
   def report_average
@@ -81,6 +81,8 @@ class Base
   # ### Helpers
   def response_ids; @responses.pluck(:id); end
   def responses_count; @responses.count; end
+  def completed_responses; @responses.where(ownerable: @completed_ownerables); end
+  def completed_responses_count; completed_responses.count; end
   def all_ownerables_count; @all_ownerables.count; end
   def completed_ownerables_count; @completed_ownerables.count; end
 
