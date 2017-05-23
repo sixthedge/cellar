@@ -7,10 +7,9 @@ component '__changeset/input' value=step.changeset.title changeset=step.changese
 
 component '__changeset/text_area' value=step.changeset.instructions changeset=step.changeset attribute='instructions' display_errors=true label='Exercise overview/instructions' summary='Students will see this before they start the exercise. The overview is a good place to provide context before they go into the exercise'
 
+component '__changeset/input' value=step.irat_changeset.title changeset=step.irat_changeset attribute='title' display_errors=true label='iRAT Exercise Title'
+component '__changeset/input' value=step.trat_changeset.title changeset=step.trat_changeset attribute='title' display_errors=true label='tRAT Exercise Title'
+
 .forms__field-wrapper
   label.spacing__margin-bottom--0
-    | Choose a team set
-  .forms__label-summary
-    | This will use team distribution
-
-  component '__dropdown' collection=team_sets display_property='title' text=selected_team_set.title selected=selected_team_set select_action='select_team_set' action_receiver=this
+    | Using default team set (#{selected_team_set.title})

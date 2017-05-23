@@ -17,26 +17,105 @@ export default step.extend
   route_path: 'details'
 
   builder: ember.inject.service()
+  manager: ember.inject.service()
 
-  create_changeset: ->
-    model     = @get('model')
-    vpresence = totem_changeset.vpresence(presence: true)
-    vlength   = totem_changeset.vlength(min: 4)
+  create_changesets: ->
+    model      = @get('model')
+    vpresence  = totem_changeset.vpresence(presence: true)
+    vlength    = totem_changeset.vlength(min: 4)
+    irat_phase = @get('irat_phase')
+    trat_phase = @get('trat_phase')
 
     changeset = totem_changeset.create model,
       title:        [vpresence, vlength]
       instructions: [vpresence]
+    
+    irat_changeset = totem_changeset.create(irat_phase)
+    trat_changeset = totem_changeset.create(trat_phase)
+
+    @set 'irat_changeset', irat_changeset
+    @set 'trat_changeset', trat_changeset
     @set 'changeset', changeset
 
 
   initialize: ->
     model = @get('builder.model')
     @set 'model', model
-    @create_changeset()
     @load_assignment_data().then (assignment) =>
       @query_team_sets().then (team_sets) =>
         @initialize_team_set().then (team_set) =>
-          @set_all_data_loaded()
+          @query_assessments().then (assessments) =>
+            @set('assessments', assessments)
+            @init_assessments()
+            @query_phases().then =>
+              @create_changesets()
+              @init_phase_titles()
+              @set_all_data_loaded()
+
+  init_phase_titles: ->
+    @init_phase_title('irat', @get('irat_phase'))
+    @init_phase_title('trat', @get('trat_phase'))
+
+  init_phase_title: (type, phase) -> @set("#{type}_changeset.title", '') unless ember.isPresent(phase.get('title'))
+
+  persist_phase_titles: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      @persist_phase_title('irat', @get('irat_phase'))
+      @persist_phase_title('trat', @get('trat_phase'))
+      @get('irat_changeset').save().then =>
+        @get('trat_changeset').save().then =>
+          resolve()
+
+  persist_phase_title: (type, phase) ->
+    changeset = @get("#{type}_changeset")
+    unless ember.isPresent(changeset.get('title'))
+      changeset.set('title', @get_default_phase_title(type))
+
+  get_default_phase_title: (type) -> 
+    suffix = if type == 'irat' then 'iRAT' else 'tRAT'
+    return @get('changeset.title') + ' - ' + suffix
+
+  query_assessments: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      model = @get('model')
+
+      query =
+        id: model.get('id')
+        componentable_type: ns.to_p('ra:assessment')
+      options =
+        action: 'phase_componentables'
+        model: ns.to_p('ra:assessment')
+
+      tc.query_action(ns.to_p('assignment'), query, options).then (assessments) =>
+        resolve(assessments)
+      , (error) => reject error
+
+  init_assessments: ->
+    assessments = @get('assessments')
+    manager     = @get('manager')
+
+    irat = assessments.findBy 'is_irat', true
+    trat = assessments.findBy 'is_trat', true
+
+    @set('irat_assessment', irat)
+    @set('trat_assessment', trat)
+
+    manager.set_assessment('irat', irat)
+    manager.set_assessment('trat', trat)
+
+  query_phases: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      irat_assessment = @get('irat_assessment')
+      trat_assessment = @get('trat_assessment')
+
+      promises =
+        irat: irat_assessment.get('authable')
+        trat: trat_assessment.get('authable')
+
+      ember.RSVP.hash(promises).then (results) =>
+        @set('irat_phase', results.irat)
+        @set('trat_phase', results.trat)
+        resolve()
 
   save: ->
     new ember.RSVP.Promise (resolve, reject) =>
@@ -44,9 +123,10 @@ export default step.extend
       @validate().then (valid) =>
         if valid
           changeset.save().then =>
-            @get('model').save().then (saved_model) =>
-              resolve(saved_model)
-            , (error) => reject(error)
+            @persist_phase_titles().then =>
+              @get('model').save().then (saved_model) =>
+                resolve(saved_model)
+              , (error) => reject(error)
 
   validate: ->
     new ember.RSVP.Promise (resolve, reject) =>

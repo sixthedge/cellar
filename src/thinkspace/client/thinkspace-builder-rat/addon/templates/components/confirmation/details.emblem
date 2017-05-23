@@ -21,5 +21,13 @@
     else
       = model.instructions
 
+  label iRAT Exercise Title
+  p.text__font-size--14.spacing__margin-top--0
+    = step.irat_changeset.title
+
+  label tRAT Exercise Title
+  p.text__font-size--14.spacing__margin-top--0
+    = step.trat_changeset.title
+
   label Team Set
-  p.text__font-size--14.spacing__margin-top--0 = step.selected_team_set.title
+  p.text__font-size--14.spacing__margin-top--0 Using default team set
