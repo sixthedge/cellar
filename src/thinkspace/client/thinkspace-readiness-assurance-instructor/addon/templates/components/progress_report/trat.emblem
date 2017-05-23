@@ -28,7 +28,7 @@ mount 'thinkspace-toolbar'
   .menu-bar
     ul.menu-bar__list
       li.menu-bar__item
-        link-to 'progress_report.trat' class='menu-bar__link' tabindex='0'
+        link-to 'progress_report.trat.index' class='menu-bar__link' tabindex='0'
           | Question View
       li.menu-bar__item
         link-to 'progress_report.trat.chat' class='menu-bar__link' tabindex='0'
