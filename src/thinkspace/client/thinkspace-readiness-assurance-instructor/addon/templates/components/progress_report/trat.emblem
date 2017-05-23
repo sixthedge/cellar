@@ -12,7 +12,7 @@ mount 'thinkspace-toolbar'
         h1.text--inline-block Team RAT
         .text__font-size--14.text--bold.text__color--gray = model.friendly_due_at
 
-  .grid__container--flex
+  .grid__container--flex.spacing__margin-bottom--2
     .grid__col--4of4
       .analytics-panel
         .analytics-panel__item
@@ -24,12 +24,14 @@ mount 'thinkspace-toolbar'
         .analytics-panel__item
           label Questions <50%: 
           .analytics-panel__data #{progress_report.concerns.length}
-      hr
-  .grid__container--flex
-    .grid__col--4of4
-      link-to 'progress_report.trat'
-        | Question View
-      link-to 'progress_report.trat.chat'
-        | Team Chat
+
+  .menu-bar
+    ul.menu-bar__list
+      li.menu-bar__item
+        link-to 'progress_report.trat' class='menu-bar__link' tabindex='0'
+          | Question View
+      li.menu-bar__item
+        link-to 'progress_report.trat.chat' class='menu-bar__link' tabindex='0'
+          | Team Chat
   if ready
     outlet
