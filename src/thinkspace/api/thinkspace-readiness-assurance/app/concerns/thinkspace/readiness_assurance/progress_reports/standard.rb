@@ -1,6 +1,6 @@
 module Thinkspace; module ReadinessAssurance; module ProgressReports
 class Standard < Base
-  attr_accessor :report, :results, :json, :json_justifications
+  attr_accessor :report, :results, :json
 
   # ### Querying
   def query_column; 'attempt_values'; end
@@ -25,26 +25,6 @@ class Standard < Base
                         WHERE  t.id IN (#{joined_response_ids})) t1 
         GROUP BY t1.id, t1.value) t2
       GROUP BY t2.id, t2.choice, t2.ownerables;
-    }
-    query_typed(query)
-  end
-  
-  def query_json_justifications
-    joined_response_ids = query_response_ids.join(',')
-    query               = %{
-      SELECT  t1.id             AS id,
-              t1.answer         AS choice,
-              array_agg(t1.obj) AS justifications
-      FROM      ( 
-                      SELECT 
-                             u.key                     AS id, 
-                             (t.answers::jsonb)->u.key AS answer,
-                             json_build_object('value', u.value->>0, 'ownerable_id', t.ownerable_id, 'ownerable_type', t.ownerable_type) AS obj
-                             
-                      FROM   thinkspace_readiness_assurance_responses t, 
-                             jsonb_each((t.justifications)::jsonb) u
-                      WHERE  t.id IN (#{joined_response_ids})) t1 
-      GROUP BY t1.id, t1.answer;
     }
     query_typed(query)
   end
@@ -97,14 +77,11 @@ class Standard < Base
   def parse_responses
     return if @responses.empty?
     @json                = query_json
-    #@json_justifications = query_json_justifications
     parse_json_to_results
-    #parse_justifications_to_results
     parse_aggregate_results
   end
 
   def parse_json_to_results
-    pp @json
     @json.each do |q|
       id         = q['id']
       choice     = q['choice']
@@ -118,17 +95,6 @@ class Standard < Base
       @results[id]['total'] += total # Aggregate number of selected.
     end
   end
-
-  # def parse_justifications_to_results
-  #   @json_justifications.each do |question|
-  #     id      = question['id']
-  #     choice  = question['choice']
-  #     choices = @results[id]['choices']
-  #     value   = choices.find {|i| i.with_indifferent_access['id'].to_s == choice.to_s } # Cast to string as the choice 'id' may be a UUID.
-  #     next unless value.present?
-  #     value['justifications'] = question['justifications']
-  #   end
-  # end
 
   def parse_aggregate_results
     @results.each do |id, data|
