@@ -15,8 +15,9 @@ export default base.extend
   question:        ember.computed.reads 'model'
   progress_report: ember.computed.reads 'am.data_values.progress_report'
 
-  correct_total: ember.computed.reads 'correct.total'
-  correct_label: ember.computed.reads 'correct.label'
+  correct_total:      ember.computed.reads 'correct.total'
+  correct_label:      ember.computed.reads 'correct.label'
+  correct_percentage: ember.computed.reads 'correct.percentages.rounded'
 
   has_most_picked: ember.computed.gte 'data.total', 2
   
@@ -39,7 +40,7 @@ export default base.extend
 
   update_most_picked: ->
     choices     = @get('choices')
-    sorted      = choices.sortBy('total')
+    sorted      = choices.sortBy('total').reverse()
     most_picked = [sorted.shift(), sorted.shift()]
     @set('most_picked', most_picked)
 

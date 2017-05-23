@@ -1,5 +1,5 @@
 .forms__field-wrapper
-  label #{model.model.label}
+  label.spacing__margin-bottom--0 #{model.model.label}
   .forms__label-summary #{model.model.feedback_type}
 hr
 .grid__container

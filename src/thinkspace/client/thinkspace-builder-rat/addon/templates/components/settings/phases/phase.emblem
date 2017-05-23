@@ -1,9 +1,9 @@
 .forms__field-wrapper
-  label Release date
+  label.spacing__margin-bottom--0 Release date
   .forms__label-summary Choose the date and time this exercise will be made available to students
   component '__datetime_picker' value=changeset.unlock_at select='select_unlock_at'
       
 .forms__field-wrapper
-  label Due date
+  label.spacing__margin-bottom--0 Due date
   .forms__label-summary Set the due date and time for this exercise. After this date, the exercise will be read-only.
   component '__datetime_picker' value=changeset.due_at select='select_due_at'

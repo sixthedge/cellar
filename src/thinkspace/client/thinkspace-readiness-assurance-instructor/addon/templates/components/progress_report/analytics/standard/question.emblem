@@ -11,7 +11,7 @@
       .rat-report__bar-graph
         component 'progress_report/analytics/standard/percentages' assessment=assessment data=data
       .rat-report__overview-avg
-        .rat-report__overview-avg-number #{correct_total}
+        .rat-report__overview-avg-number #{correct_percentage}
         .rat-report__overview-avg-label % Correct
 
     .rat-report__top-picks
@@ -36,3 +36,5 @@
               .text__font-size--12.text--bold.text--inline-block #{choice.label}
               .text__font-size--12.spacing__margin-left--24 
                 | <strong>#{choice.total}</strong> Teams
+              ul.basic-list.basic-list--thin-dividers.basic-list--left-border.spacing__margin-top--half
+                component 'progress_report/analytics/choices/ownerables' model=choice class='basic-list__item spacing__margin-left--24'

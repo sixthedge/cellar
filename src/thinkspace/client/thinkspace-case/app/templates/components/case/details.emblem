@@ -57,10 +57,11 @@ unless model.can.update
 label.spacing__margin-bottom--0 Exercise Type
 .text__font-size--14.spacing__margin-bottom--1 = model.assignment_type.title
 
-if model.can.update
-  label.spacing__margin-bottom--0 Team set
-  .text__font-size--14.spacing__margin-bottom--1 = team_set.title
-else
-  label.spacing__margin-bottom--0 Team
-  each teams as |team|
-    .text__font-size--14.spacing__margin-bottom--1 = team.title
+//Commenting out team info featuer for now
+/ if model.can.update
+/   label.spacing__margin-bottom--0 Team set
+/   .text__font-size--14.spacing__margin-bottom--1 = team_set.title
+/ else
+/   label.spacing__margin-bottom--0 Team
+/   each teams as |team|
+/     .text__font-size--14.spacing__margin-bottom--1 = team.title

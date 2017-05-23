@@ -1,6 +1,6 @@
 .dialogue
   h1 Exercise is in draft mode
-  p This case can only be seen by instructors or teaching assistants.
+  p.spacing__margin-bottom--2 This case can only be seen by instructors or teaching assistants.
 
   .btn-group
     button.btn.btn--primary{action 'set_active'}

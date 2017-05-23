@@ -2,5 +2,5 @@ each choices as |choice|
   .bar-graph__item-container
     .bar-graph__bar-container
       .bar-graph__bar style="height: #{choice.percentages.rounded}%; background-color: #{choice.background_color}; display: inline-block;"
-        .bar-graph__bar-value #{correct.percentages.rounded}%
+        .bar-graph__bar-value #{choice.percentages.rounded}%
     .bar-graph__item-label #{choice.label}
