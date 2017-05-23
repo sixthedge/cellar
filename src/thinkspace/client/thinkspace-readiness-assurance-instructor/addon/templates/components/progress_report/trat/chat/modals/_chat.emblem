@@ -16,4 +16,4 @@
               .chat__item-time = msg.time
             .text--regular.text__font-size--12 = msg.message
     else
-      .text__font-style--italic No chat.
+      .text__font-style--italic.text__font-size--14 Students have not started their discussion.
