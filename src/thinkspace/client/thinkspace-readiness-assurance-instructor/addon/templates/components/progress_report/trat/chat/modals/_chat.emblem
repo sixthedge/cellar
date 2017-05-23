@@ -1,9 +1,9 @@
 .grid__container.grid__container--centered
   .bordered-panel.bordered-panel--shadow.bordered-panel--mobile
     .text__font-size--12.text--bold Team Chat for:
-    .tag.spacing__margin-bottom--half Team Name
+    .tag.spacing__margin-bottom--half #{ownerable.full_name}
     hr
-    .text__font-size--14 1. Question Label
+    .text__font-size--14 #{qm.qn} - #{qm.question}
     hr
 
     if chat_messages
