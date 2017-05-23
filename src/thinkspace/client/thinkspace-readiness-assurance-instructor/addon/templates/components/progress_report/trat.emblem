@@ -10,14 +10,9 @@ mount 'thinkspace-toolbar'
           link-to 'progress_report' model class='breadcrumbs__link'
             | Progress Report
         h1.text--inline-block Team RAT
-        .btn-group.is-right
-          button.btn.btn--primary
-            | Start tRAT
-          button.btn
-            | Set Timer
         .text__font-size--14.text--bold.text__color--gray = model.friendly_due_at
 
-  .grid__container--flex
+  .grid__container--flex.spacing__margin-bottom--2
     .grid__col--4of4
       .analytics-panel
         .analytics-panel__item
@@ -29,13 +24,14 @@ mount 'thinkspace-toolbar'
         .analytics-panel__item
           label Questions <50%: 
           .analytics-panel__data #{progress_report.concerns.length}
-      hr
-  .grid__container--flex.spacing__margin-bottom--4
-    .grid__col--4of4
-      if ready
-        if is_ifat
-          .text--bold.text__font-size--14.text__color--gray.spacing__margin-bottom--1 IFAT Enabled
-          component 'progress_report/analytics/ifat' model=assessment
-        else
-          .text--bold.text__font-size--14.text__color--gray.spacing__margin-bottom--1 Standard
-          component 'progress_report/analytics/standard' model=assessment
+
+  .menu-bar
+    ul.menu-bar__list
+      li.menu-bar__item
+        link-to 'progress_report.trat.index' class='menu-bar__link' tabindex='0'
+          | Question View
+      li.menu-bar__item
+        link-to 'progress_report.trat.chat' class='menu-bar__link' tabindex='0'
+          | Team Chat
+  if ready
+    outlet

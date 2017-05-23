@@ -1,0 +1,4 @@
+if ready
+  component '__table' rows=team_rows columns=team_columns data=team_data server=false
+else 
+  component '__loader/base'

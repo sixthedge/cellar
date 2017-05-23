@@ -19,6 +19,7 @@ a class=modal_reveal_anchor_class_names data-open=modal_id
         p.modal__description = description
 
     if show_close
-      button.modal__close.close-button data-close='' aria-label="Close modal"
-        i.im.im-close
+      .position--top-right--22.position__absolute
+        .icon.icon--actionable.icon--24.icon__cross--black.modal__close.close-button data-close='' aria-label="Close modal"
+      / button.modal__close.close-button data-close='' aria-label="Close modal"
 

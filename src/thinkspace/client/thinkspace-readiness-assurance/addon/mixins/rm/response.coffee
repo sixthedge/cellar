@@ -22,3 +22,10 @@ export default ember.Mixin.create
         resolve()
       , (error) =>
         reject(error)
+
+  get_response_ownerable: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      @response.get('ownerable').then (ownerable) =>
+        resolve(ownerable)
+      , (error) => reject(error)
+    , (error) => reject(error)

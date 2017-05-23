@@ -57,6 +57,8 @@ export default ember.Mixin.create
     @save_error     = false
     @current_user   = totem_scope.get_current_user()
     @title          = options.title or options.username or  'unknown'
+    @ownerable_id   = options.ownerable_id   || ''
+    @ownerable_type = options.ownerable_type || ''
     @is_admin       = options.admin or false
     @save_to_server = not (options.save_response == false)
 
