@@ -96,6 +96,12 @@ button,
 
 .btn-group {
   @extend .group;
+
+  &.btn-group--mobile-full {
+    @media only screen and (max-width: 40rem) {
+        float: initial !important;
+      }
+  }
   
 	.btn, .dropdown, .action-link--small, .icon--actionable {
 		margin-left: 1rem;
