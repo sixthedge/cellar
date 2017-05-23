@@ -16,7 +16,7 @@
     button.btn.btn-small.btn--mobile-full role='button'
       | Import file
 
-.switch.is-left.spacing__margin-right--2
+.switch.is-left.spacing__margin-right--2.spacing__margin-bottom--1
   input name='team_view' type='checkbox' 
   link-to 'roster' model class='switch__label switch__label--off'
     | Students
