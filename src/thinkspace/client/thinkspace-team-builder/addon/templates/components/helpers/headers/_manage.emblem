@@ -11,10 +11,11 @@
     if explode_success
       .dialogue.dialogue--green.spacing__margin-bottom--2
         h5 Your changes have been saved.
-
-  .btn-group.is-right
-    .btn.btn-small
-      | Import file
+        
+  // Commenting out file importation feature for now
+  / .btn-group.is-right
+  /   .btn.btn-small
+  /     | Import file
 
 .switch.is-left.spacing__margin-right--2
   input name='team_view' type='checkbox' 

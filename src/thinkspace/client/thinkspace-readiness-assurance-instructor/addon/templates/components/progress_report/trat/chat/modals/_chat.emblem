@@ -1,0 +1,8 @@
+if chat_messages
+  each chat_messages as |msg|
+    .ts-ra_admin-summary-chat-header
+      |#{msg.time} -- #{msg.name}
+    .ts-ra_admin-summary-chat-message
+      pre= msg.message
+else
+  | No chat.

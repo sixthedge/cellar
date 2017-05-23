@@ -110,7 +110,7 @@ export default ember.Mixin.create
   get_trat_response_managers: ->
     new ember.RSVP.Promise (resolve, reject) =>
       rms = @get_data_value('trat_response_managers')
-      return resolve(rms) if ember.isPresent(rms)
+      return resolve(rms) if ember.isPresent(rms)        
       @get_trat_assessment().then (assessment) =>
         @get_trat_team_users().then (team_users) =>
           @load_trat_responses().then =>
@@ -120,25 +120,28 @@ export default ember.Mixin.create
                 team_id = response.get('ownerable_id')
                 data    = team_users.find (data) => data.team.id == team_id
                 @error "Team [id: #{team_id}] not found in team data."  unless data
+                team_id    = data.team.id
                 room       = data.team.room
                 title      = data.team.title
                 room_users = data.users
                 rm         = @get_response_manager()
                 promises.push(
                   rm.init_manager
-                    assessment: assessment
-                    response:   response
-                    room:       room
-                    room_users: room_users
-                    title:      title
-                    readonly:   true
-                    admin:      true
-                    trat:       true
+                    assessment:     assessment
+                    response:       response
+                    room:           room
+                    room_users:     room_users
+                    title:          title
+                    ownerable_id:   team_id
+                    ownerable_type: 'thinkspace/team/team'
+                    readonly:       true
+                    admin:          true
+                    trat:           true
                 )
-                ember.RSVP.all(promises).then (rms) =>
-                  sorted_rms = rms.sortBy 'title'
-                  @set_data_value 'trat_response_managers', sorted_rms
-                  resolve(sorted_rms)
+              ember.RSVP.all(promises).then (rms) =>
+                sorted_rms = rms.sortBy 'title'
+                @set_data_value 'trat_response_managers', sorted_rms
+                resolve(sorted_rms)
 
   get_response_manager: ->
     response_manager.create

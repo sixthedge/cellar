@@ -12,13 +12,14 @@ module Thinkspace; module ReadinessAssurance; module ControllerHelpers; module R
 
   def assignment_phases; assignment.thinkspace_casespace_phases.accessible_by(current_ability, :read); end
 
-  def team?(o=ownerable)
-    pp ownerable
-    team_ownerable?(o)
-  end
+  def team?(o=ownerable); team_ownerable?(o); end
   def team_ownerable?(record); record.is_a?(team_class); end
 
-  def phase_teams(phase); phase.thinkspace_team_teams.order(:title); end
+  def phase_teams(phase)
+    p_teams = phase.thinkspace_team_teams.order(:title)
+    a_teams = phase.thinkspace_casespace_assignment.thinkspace_team_teams.order(:title)
+    p_teams + a_teams
+  end
 
   def irat?; @assessment.irat?; end
   def trat?; @assessment.trat?; end
