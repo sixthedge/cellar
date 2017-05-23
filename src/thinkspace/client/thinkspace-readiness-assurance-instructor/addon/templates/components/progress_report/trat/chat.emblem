@@ -1,4 +1,4 @@
 if ready
-  h1 #{progress_report}
+  component '__table' rows=team_rows columns=team_columns data=team_data server=false
 else 
   component '__loader/base'
