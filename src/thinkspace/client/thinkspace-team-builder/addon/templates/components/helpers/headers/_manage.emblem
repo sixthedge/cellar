@@ -1,5 +1,5 @@
-.main-content__section-header.spacing__margin-bottom--2
-  h1.text--inline-block
+.main-content__sub-header.spacing__margin-bottom--2
+  h2.text--inline-block
     | Teams
   / p Create and manager your teams.
   if manager.has_transform
@@ -12,8 +12,8 @@
       .dialogue.dialogue--green.spacing__margin-bottom--2
         h5 Your changes have been saved.
 
-  .btn-group.is-right
-    .btn.btn-small
+  .btn-group.is-right.btn-group--mobile-full
+    button.btn.btn-small.btn--mobile-full role='button'
       | Import file
 
 .switch.is-left.spacing__margin-right--2

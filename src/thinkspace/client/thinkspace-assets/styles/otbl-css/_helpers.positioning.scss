@@ -34,3 +34,9 @@
   top:   0;
   right: 0;
 }
+
+// Horizontal scroll on overvlow
+.overflow-container--horizontal {
+  width: 100%;
+  overflow-x: scroll;
+}
