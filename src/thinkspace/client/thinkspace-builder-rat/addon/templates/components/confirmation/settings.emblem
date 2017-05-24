@@ -4,6 +4,38 @@
   link-to step.route_path model class='btn is-right spacing__margin-top--half' tabindex='0'
     | Edit settings
 
+  h3 Scoring
+  label Maximum points per question
+  p.text__font-size--14.spacing__margin-top--0 
+    = step.irat_assessment.settings.scoring.correct
+
+  label Points given for no answer
+  p.text__font-size--14.spacing__margin-top--0 
+    = step.irat_assessment.settings.scoring.no_answer
+
+  label Immediate Feedback (IFAT) enabled?
+  p.text__font-size--14.spacing__margin-top--0
+    if step.irat_assessment.settings.questions.ifat
+      | Yes
+    else
+      | No
+
+  if step.irat_assessment.settings.questions.ifat
+    label Number of attempts allowed
+    p.text__font-size--14.spacing__margin-top--0 
+      = step.irat_assessment.settings.scoring.attempted
+
+    label Number of points deducted per incorrect response
+    p.text__font-size--14.spacing__margin-top--0 
+      = step.irat_assessment.settings.scoring.incorrect_attempt
+
+  label Questions require justification?
+  p.text__font-size--14.spacing__margin-top--0
+    if step.irat_assessment.settings.questions.justification
+      | Yes
+    else
+      | No
+
   h3 iRAT Logistics
   label Release date
   p.text__font-size--14.spacing__margin-top--0 = step.irat_phase.friendly_unlock_at

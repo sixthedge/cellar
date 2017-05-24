@@ -3,6 +3,7 @@ import totem_changeset from 'totem/changeset'
 import ns              from 'totem/ns'
 import tc              from 'totem/cache'
 import step            from './step'
+import util            from 'totem/util'
 
 ###
 # # settings.coffee
@@ -23,12 +24,20 @@ export default step.extend
   irat_phase: ember.computed.reads 'manager.irat_phase'
   trat_phase: ember.computed.reads 'manager.trat_phase'
 
-  create_changeset: ->
-    console.log('changeset underlying obj is ', @get('model'))
-    model     = @get('model')
-    changeset = totem_changeset.create model
+  sync_assessments: ember.computed.reads 'model.sync_rat_assessments'
+  is_ifat:          ember.computed.reads 'irat_assessment.settings.questions.ifat'
+  is_req_just:      ember.computed.reads 'irat_assessment.settings.questions.justification'
+
+  create_changesets: ->
+    model           = @get('model')
+    irat_assessment = @get('irat_assessment')
+    changeset       = totem_changeset.create(model)
+    irat_changeset  = totem_changeset.create(irat_assessment)
+
     changeset.set 'show_errors', true
-    @set 'changeset', changeset
+    irat_changeset.set('show_errors', true)
+    @set('changeset', changeset)
+    @set('irat_changeset', irat_changeset)
 
   ## API Methods
 
@@ -36,46 +45,38 @@ export default step.extend
     if @get('manager_loaded') then @reset_loading('all')
 
   initialize: ->
-    # model = @get('builder.model')
-    # @set 'model', model
-    # @query_assessments().then (assessments) =>
-    #   @set('assessments', assessments)
-    #   @init_assessments()
-    #   @query_phases().then =>
-    #     @create_changeset()
-    #     @set_all_data_loaded()
-    model = @get('builder.model')
-    @set('model', model)
     @set_loading('all')
-    @create_changeset()
+    @create_changesets()
+    @reset_loading('all')
 
-
-  query_phases: ->
-    new ember.RSVP.Promise (resolve, reject) =>
-      irat_assessment = @get('irat_assessment')
-      trat_assessment = @get('trat_assessment')
-
-      promises =
-        irat: irat_assessment.get('authable')
-        trat: trat_assessment.get('authable')
-
-      ember.RSVP.hash(promises).then (results) =>
-        @set('irat_phase', results.irat)
-        @set('trat_phase', results.trat)
-        resolve()
+  process_changeset_strings: ->
+    changeset = @get('irat_changeset')
+    ## Ensure that any modifications made via text field are translated back to integers
+    changeset.set('settings.scoring.correct',           parseInt(changeset.get('settings.scoring.correct')))
+    changeset.set('settings.scoring.attempted',         parseInt(changeset.get('settings.scoring.attempted')))
+    changeset.set('settings.scoring.no_answer',         parseInt(changeset.get('settings.scoring.no_answer')))
+    changeset.set('settings.scoring.incorrect_attempt', parseInt(changeset.get('settings.scoring.incorrect_attempt')))
 
   save: ->
     new ember.RSVP.Promise (resolve, reject) =>
-      changeset = @get('changeset')
+      changeset      = @get('changeset')
+      irat_changeset = @get('irat_changeset')
+
       changeset.save().then (model) =>
-        resolve(model)
+        @process_changeset_strings()
+        irat_changeset.save().then (results) =>
+          @get('manager').save_model('irat').then =>
+            resolve(model)
+          , (error) => reject(error)
+        , (error) => reject(error)
       , (error) => reject(error)
 
-  select_release_at: (date) -> 
-    console.log('trying to call select_release_at')
-    @get('changeset').set 'release_at', date
+  toggle_is_ifat: (val) ->
+    @set('is_ifat', val=='true')
+    @get('irat_changeset').set('settings.questions.ifat', val=='true')
+  toggle_is_req_just: (val) -> 
+    @set('is_req_just', val=='true')
+    @get('irat_changeset').set('settings.questions.justification', val=='true')
 
-  select_due_at:     (date) -> 
-    console.log('trying to call select_due_at')
-    @get('changeset').set 'due_at', date
-
+  select_release_at: (date) -> @get('changeset').set 'release_at', date
+  select_due_at:     (date) -> @get('changeset').set 'due_at', date
