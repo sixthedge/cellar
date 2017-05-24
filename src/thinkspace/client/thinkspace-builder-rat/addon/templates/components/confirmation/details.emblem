@@ -20,14 +20,15 @@
       component '__changeset/errors' changeset=step.changeset attribute='instructions' errors_visible=true
     else
       = model.instructions
-
-  label iRAT Exercise Title
+  h3 Individual Activity Names
+  label iRAT Exercise Name
   p.text__font-size--14.spacing__margin-top--0
     = step.irat_changeset.title
 
-  label tRAT Exercise Title
+  label tRAT Exercise Name
   p.text__font-size--14.spacing__margin-top--0
     = step.trat_changeset.title
 
-  label Team Set
-  p.text__font-size--14.spacing__margin-top--0 Using default team set
+  // Hiding until use is able to create multiple team sets. 
+  / label Team Set
+  / p.text__font-size--14.spacing__margin-top--0 Using default team set

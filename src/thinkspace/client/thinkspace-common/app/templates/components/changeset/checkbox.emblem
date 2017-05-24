@@ -1,3 +1,4 @@
+//Leaving as comment in case we need to revert
 / if label: label.ts-validated-input_label= label
 
 / if viewonly
@@ -16,6 +17,6 @@ input.checkbox__input id=id type='checkbox' name=name value=value checked=checkb
 label.checkbox__label-container for=input_id
   .checkbox__label= label 
   if summary
-    .checkbox__label-sumary #{summary}
+    .checkbox__label-summary #{summary}
 
 component '__changeset/errors' changeset=changeset attribute=attribute show_errors=show_errors input_id=input_id error_class=error_class

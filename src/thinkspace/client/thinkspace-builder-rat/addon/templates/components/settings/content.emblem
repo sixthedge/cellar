@@ -21,7 +21,7 @@ if step.all_data_loaded
 
 
       .forms__field-wrapper
-        component '__changeset/checkbox' label='Give students Immediate Feedback (IFAT)' changeset=step.irat_changeset attribute='settings.questions.ifat' is_checked=step.irat_changeset.settings.questions.ifat save='toggle_is_ifat'
+        component '__changeset/checkbox' label='Give students Immediate Feedback (IFAT)' changeset=step.irat_changeset attribute='settings.questions.ifat' is_checked=step.irat_changeset.settings.questions.ifat save='toggle_is_ifat' summary='Students will be notified immediately whether the answer they chose is correct or not. You can allow them to have multiple attempts.'
 
       if step.is_ifat
         .forms__field-wrapper
@@ -39,7 +39,7 @@ if step.all_data_loaded
           span.text__font-size--12.text--bold.spacing__margin-left--half attempts
 
       .forms__field-wrapper
-        component '__changeset/checkbox' label='Require justifications for responses' changeset=step.irat_changeset attribute='settings.questions.justification' value=step.irat_changeset.settings.questions.justification save='toggle_is_req_just'
+        component '__changeset/checkbox' label='Require justifications for responses' changeset=step.irat_changeset attribute='settings.questions.justification' value=step.irat_changeset.settings.questions.justification save='toggle_is_req_just' summary='This will add a text area to each question where students and teams can justify their choice.'
   hr
   .forms__section
     h2.spacing__margin-bottom--0 Logistics
