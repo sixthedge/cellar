@@ -1,32 +1,49 @@
 .main-content__header
-  if step.all_data_loaded
-    h1 Readiness Assurance Settings
-
-    h2 Scoring
+  h1 Readiness Assurance Settings
+if step.all_data_loaded
+  .forms__section
+    h2.spacing__margin-bottom--0 Scoring
+    .forms__heading-summary.spacing__margin-top--0 Lets set how you'd like your exercise to be scored.  
     fieldset.forms__section
       .forms__field-wrapper
         label.spacing__margin-bottom--0 Maximum points awarded per question
-        component '__changeset/input' value=step.irat_changeset.settings.scoring.correct changeset=step.irat_changeset attribute='settings.scoring.correct' display_errors=true class='forms__input--50'
+        .forms__label-summary 
+          | Example: student gets it right on their first try. 
+        component '__changeset/input' value=step.irat_changeset.settings.scoring.correct changeset=step.irat_changeset attribute='settings.scoring.correct' display_errors=true class='forms__input--50 is-left'
+        span.text__font-size--12.text--bold.spacing__margin-left--half points 
 
       .forms__field-wrapper
-        label.spacing__margin-bottom--0 Number of attempts allowed
-        component '__changeset/input' value=step.irat_changeset.settings.scoring.attempted changeset=step.irat_changeset attribute='settings.scoring.attempted' display_errors=true class='forms__input--50'
+        label.spacing__margin-bottom--0 Points awarded for question left blank
+        .forms__label-summary 
+          | You can add a negative number if you'd like to deduct points.  
+        component '__changeset/input' value=step.irat_changeset.settings.scoring.no_answer changeset=step.irat_changeset attribute='settings.scoring.no_answer' display_errors=true class='forms__input--50 is-left'
+        span.text__font-size--12.text--bold.spacing__margin-left--half points 
 
 
       .forms__field-wrapper
-        label.spacing__margin-bottom--0 Points awarded for no answer
-        component '__changeset/input' value=step.irat_changeset.settings.scoring.no_answer changeset=step.irat_changeset attribute='settings.scoring.no_answer' display_errors=true class='forms__input--50'
-
-      component '__changeset/checkbox' label='Enable Immediate Feedback (IFAT)' changeset=step.irat_changeset attribute='settings.questions.ifat' is_checked=step.irat_changeset.settings.questions.ifat save='toggle_is_ifat'
+        component '__changeset/checkbox' label='Give students Immediate Feedback (IFAT)' changeset=step.irat_changeset attribute='settings.questions.ifat' is_checked=step.irat_changeset.settings.questions.ifat save='toggle_is_ifat'
 
       if step.is_ifat
         .forms__field-wrapper
+          label.spacing__margin-bottom--0 Number of attempts allowed
+          .forms__label-summary 
+            | Example: student leaves an answer blank.
+          component '__changeset/input' value=step.irat_changeset.settings.scoring.attempted changeset=step.irat_changeset attribute='settings.scoring.attempted' display_errors=true class='forms__input--50 is-left'
+          span.text__font-size--12.text--bold.spacing__margin-left--half attempts
+
+        .forms__field-wrapper
           label.spacing__margin-bottom--0 Number of points deducted per incorrect response
-          component '__changeset/input' value=step.irat_changeset.settings.scoring.incorrect_attempt changeset=step.irat_changeset attribute='settings.scoring.incorrect_attempt' display_errors=true class='forms__input--50'
+          .forms__label-summary 
+            | Example: student leaves an answer blank.
+          component '__changeset/input' value=step.irat_changeset.settings.scoring.incorrect_attempt changeset=step.irat_changeset attribute='settings.scoring.incorrect_attempt' display_errors=true class='forms__input--50 is-left'
+          span.text__font-size--12.text--bold.spacing__margin-left--half attempts
 
-      component '__changeset/checkbox' label='Require justifications for responses' changeset=step.irat_changeset attribute='settings.questions.justification' value=step.irat_changeset.settings.questions.justification save='toggle_is_req_just'
-
-    h2 Logistics
+      .forms__field-wrapper
+        component '__changeset/checkbox' label='Require justifications for responses' changeset=step.irat_changeset attribute='settings.questions.justification' value=step.irat_changeset.settings.questions.justification save='toggle_is_req_just'
+  hr
+  .forms__section
+    h2.spacing__margin-bottom--0 Logistics
+    .forms__heading-summary.spacing__margin-top--0 Set your release and due date logistics for your activities. 
     fieldset.forms__section
       
       h3 iRAT Logistics
@@ -35,5 +52,5 @@
       h3 tRAT Logistics
       component 'settings/phases/phase' model=step.trat_phase type='trat' step=step
 
-  else
-    component '__loader/base'
+else
+  component '__loader/base'
