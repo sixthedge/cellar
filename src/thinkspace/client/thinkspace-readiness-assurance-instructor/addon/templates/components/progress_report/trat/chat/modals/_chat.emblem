@@ -1,0 +1,19 @@
+.grid__container.grid__container--centered
+  .bordered-panel.bordered-panel--shadow.bordered-panel--mobile
+    .text__font-size--12.text--bold Team Chat for:
+    .tag.spacing__margin-bottom--half #{ownerable.full_name}
+    hr
+    .text__font-size--14 #{qm.qn} - #{qm.question}
+    hr
+
+    if chat_messages
+      each chat_messages as |msg|
+        .chat__item
+          .avatar.avatar--32.spacing__margin-right--1
+          .chat__item-content
+            .chat__item-author
+              .avatar__username #{msg.name}
+              .chat__item-time = msg.time
+            .text--regular.text__font-size--12 = msg.message
+    else
+      .text__font-style--italic.text__font-size--14 Students have not started their discussion.

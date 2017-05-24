@@ -28,3 +28,4 @@ export default base.extend
 
   actions:
     select: (id) -> @sendAction 'select', id
+    toggle_chat: -> @sendAction('toggle_chat')

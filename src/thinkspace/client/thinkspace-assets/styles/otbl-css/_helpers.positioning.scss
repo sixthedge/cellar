@@ -22,6 +22,10 @@
   vertical-align: baseline !important;
 }
 
+.position__absolute {
+  position: absolute;
+}
+
 .position__absolute--desktop {
   position: absolute;
 
@@ -35,8 +39,17 @@
   right: 0;
 }
 
+
 // Horizontal scroll on overvlow
 .overflow-container--horizontal {
-  width: 100%;
+  width:      100%;
   overflow-x: scroll;
+}
+
+// Ducktape solution for chat
+// To-do: fix the close button on reveal template
+.position--top-right--22 {
+  top:   22px;
+  right: 22px;
+
 }

@@ -173,6 +173,7 @@ module Totem
             user.sync_user_from_oauth_data(oauth_data)
             user.callback_created_from_oauth if user.respond_to?(:callback_created_from_oauth)
             set_current_user(user)
+            set_user_as_active(user)
             create_api_session(user)
           end
 
@@ -242,6 +243,11 @@ module Totem
             user_id = user.id
             raise SessionUserError, "Session user_id is blank."  if user_id.blank?
             user_id
+          end
+
+          def set_user_as_active(user)
+            user.state = 'active' if user.respond_to?(:state) && user.respond_to?(:active?) && !user.active?
+            user.save
           end
 
           # ###

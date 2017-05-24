@@ -1,0 +1,2 @@
+each sorted_ownerables as |ownerable|
+  component 'progress_report/analytics/choices/ownerable' model=ownerable class='basic-list__item spacing__margin-left--24'

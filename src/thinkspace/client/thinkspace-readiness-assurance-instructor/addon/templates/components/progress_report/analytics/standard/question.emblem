@@ -36,3 +36,5 @@
               .text__font-size--12.text--bold.text--inline-block #{choice.label}
               .text__font-size--12.spacing__margin-left--24 
                 | <strong>#{choice.total}</strong> Teams
+              ul.basic-list.basic-list--thin-dividers.basic-list--left-border.spacing__margin-top--half
+                component 'progress_report/analytics/choices/ownerables' model=choice class='basic-list__item spacing__margin-left--24'
