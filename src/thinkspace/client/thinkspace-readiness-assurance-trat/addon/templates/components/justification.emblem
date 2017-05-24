@@ -1,7 +1,7 @@
 .forms__field-wrapper.spacing__pad-top--1
   label.spacing__margin-bottom--half Please justify your answer
-  = textarea value=input_value disabled=justification_disabled class='spacing__margin-bottom--1'
+  = textarea value=input_value disabled=justification_disabled class='spacing__margin-bottom--0'
   if show_save
-    .btn-group.spacing__margin-bottom--1
+    .btn-group.spacing__margin-bottom--1.spacing__margin-top--1
       a.btn.btn--primary click='save' Save Justification
       a.btn click='cancel' Cancel
