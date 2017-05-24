@@ -1,0 +1,4 @@
+if chat_messages
+  button View Chat
+else
+  | N/A

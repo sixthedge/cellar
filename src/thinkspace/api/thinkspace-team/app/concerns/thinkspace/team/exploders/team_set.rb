@@ -44,7 +44,17 @@ module Thinkspace; module Team; module Exploders
     def user_class;     Thinkspace::Common::User;  end
 
     def get_assignments; @space.thinkspace_casespace_assignments.scope_upcoming; end # current or upcoming assignments
-    def assign_team_set_for_assignments(team_set); get_assignments.each { |assignment| team_set.assign_to_record(assignment) }; end
+
+    # Creates a TeamSetTeamable for all upcoming assignments & their phases
+    def assign_team_set_for_assignments(team_set)
+      get_assignments.each do |assignment| 
+        team_set.assign_to_record(assignment)
+        assignment.thinkspace_casespace_phases.each do |phase|
+          team_set.assign_to_record(phase)
+        end
+      end
+    end
+
     def get_new_id_for_team_id(id)
       delta_team = @delta[:teams].find { |t| t[:id] == id}
       return nil if delta_team.empty?

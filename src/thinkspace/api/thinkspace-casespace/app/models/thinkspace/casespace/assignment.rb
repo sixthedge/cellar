@@ -65,7 +65,6 @@ module Thinkspace
       def self.scope_open(ownerables=nil, tts=nil)
         (tts || timetable_scope(ownerables)).
         where_now('<=', :release_at).
-        where_now('>=', :due_at).
         with_scope.
         scope_active
       end

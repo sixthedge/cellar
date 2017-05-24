@@ -1,17 +1,17 @@
 .menu-bar
   ul.menu-bar__list
     li.menu-bar__item
-      link-to 'show' model class='menu-bar__link'
+      link-to 'show' model class='menu-bar__link' tabindex='0'
         | Overview
     if can.update
       li.menu-bar__item
-         link-to 'progress_report' model class='menu-bar__link'
+         link-to 'progress_report' model class='menu-bar__link' tabindex='0'
           | Progress Report
       li.menu-bar__item
-        link-to 'scores' model class='menu-bar__link'
+        link-to 'scores' model class='menu-bar__link' tabindex='0'
           | Scores
     else
       li.menu-bar__item
-        link-to 'scores' model class='menu-bar__link'
+        link-to 'scores' model class='menu-bar__link' tabindex='0'
           | Results
           

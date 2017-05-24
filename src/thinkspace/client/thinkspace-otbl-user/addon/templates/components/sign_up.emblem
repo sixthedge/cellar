@@ -43,3 +43,5 @@
 
   .text__font-size--14.text__align--center 
     | If you need help, contact us at <a href="mailto:support@opentbl.com">support@opentbl.com</a>.
+
+mount 'thinkspace-message'

@@ -11,6 +11,10 @@ export default ember.Mixin.create
 
   is_true_or_false: (val) -> val == true or val == false
 
+  is_for_ownerable: (id='', type='') ->
+    # ID may be a string in the case of a UUID.
+    (@ownerable_id.toString() == id.toString()) && (@ownerable_type.toString() == type.toString()) 
+
   stringify: (obj) -> JSON.stringify(obj)
 
   save_off_message: (model) -> console.info "Saving to the server is turned off (options.save_response == false).", model
