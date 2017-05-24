@@ -21,9 +21,9 @@ if step.all_data_loaded
 
 
       .forms__field-wrapper
-        component '__changeset/checkbox' label='Give students Immediate Feedback (IFAT)' changeset=step.irat_changeset attribute='settings.questions.ifat' is_checked=step.irat_changeset.settings.questions.ifat save='toggle_is_ifat' summary='Students will be notified immediately whether the answer they chose is correct or not. You can allow them to have multiple attempts.'
+        component '__changeset/checkbox' label='Give students Immediate Feedback (IFAT)' changeset=step.irat_changeset attribute='settings.questions.ifat' checked=step.irat_changeset.settings.questions.ifat save='toggle_is_ifat' summary='Students will be notified immediately whether the answer they chose is correct or not. You can allow them to have multiple attempts.'
 
-      if step.is_ifat
+      if step.irat_changeset.settings.questions.ifat
         .forms__field-wrapper
           label.spacing__margin-bottom--0 Number of attempts allowed
           .forms__label-summary 
@@ -38,8 +38,9 @@ if step.all_data_loaded
           component '__changeset/input' value=step.irat_changeset.settings.scoring.incorrect_attempt changeset=step.irat_changeset attribute='settings.scoring.incorrect_attempt' display_errors=true class='forms__input--50 is-left'
           span.text__font-size--12.text--bold.spacing__margin-left--half attempts
 
+      h1 step : [#{step.irat_changeset.settings.questions.justification}]
       .forms__field-wrapper
-        component '__changeset/checkbox' label='Require justifications for responses' changeset=step.irat_changeset attribute='settings.questions.justification' value=step.irat_changeset.settings.questions.justification save='toggle_is_req_just' summary='This will add a text area to each question where students and teams can justify their choice.'
+        component '__changeset/checkbox' label='Require justifications for responses' changeset=step.irat_changeset attribute='settings.questions.justification' checked=step.irat_changeset.settings.questions.justification save='toggle_is_req_just' summary='This will add a text area to each question where students and teams can justify their choice.'
   hr
   .forms__section
     h2.spacing__margin-bottom--0 Logistics

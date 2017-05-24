@@ -29,7 +29,7 @@ export default step.extend
     changeset       = totem_changeset.create(model)
     irat_changeset  = totem_changeset.create(irat_assessment)
 
-    changeset.set 'show_errors', true
+    changeset.set('show_errors', true)
     irat_changeset.set('show_errors', true)
     @set('changeset', changeset)
     @set('irat_changeset', irat_changeset)
@@ -111,13 +111,13 @@ export default step.extend
         , (error) => reject(error)
       , (error) => reject(error)
 
-  toggle_is_ifat: (val) ->
-    @set('is_ifat', val=='true')
-    @get('irat_changeset').set('settings.questions.ifat', val=='true')
-  toggle_is_req_just: (val) -> 
-    @set('is_req_just', val=='true')
-    @get('irat_changeset').set('settings.questions.justification', val=='true')
+  toggle_irat_changeset_property: (property) ->
+    changeset = @get('irat_changeset')
+    changeset.toggleProperty(property)
+    @propertyDidChange('irat_changeset')
+
+  toggle_is_ifat:     -> @toggle_irat_changeset_property('settings.questions.ifat')
+  toggle_is_req_just: -> @toggle_irat_changeset_property('settings.questions.justification')
 
   select_release_at: (date) -> @get('changeset').set 'release_at', date
   select_due_at:     (date) -> @get('changeset').set 'due_at', date
-
