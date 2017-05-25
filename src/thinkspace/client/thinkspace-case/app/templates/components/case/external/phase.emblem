@@ -1,4 +1,30 @@
-li.spacing__margin-bottom--1
-  link-to-external 'phases.show' assignment model (query-params query_id='none') class='text--bold'
-    = model.title
-  .text__font-size--12.text__font-style--italic 3 questions  - In progress
+li.phase-list__item
+  / link-to-external 'phases.show' assignment model (query-params query_id='none') class='text--bold'
+  /   = model.title
+  .grid__container  
+    .text--bold.text__lh--2.is-left
+      = model.title
+    
+  .grid__container.spacing__margin-bottom--1
+    // Instructor sees the unlock date
+    if assignment.can.update
+      if phase_state.friendly_unlock_at
+        .text__font-size--12.text--inline-block.spacing__margin-right--1 
+          | <strong>Unlocks:</strong> #{phase_state.friendly_unlock_at}
+      if phase_state.friendly_release_at
+        .text__font-size--12.text--inline-block.spacing__margin-right--1 
+          | <strong>Release at:</strong> #{phase_state.friendly_release_at}
+    else
+      component '__case/external/phase/phase_state' model=phase_state phase=model
+
+    .text__font-size--12.text--inline-block
+      | <strong>Due:</strong> #{phase_state.friendly_due_at}
+
+  // Instructor should not see the button
+  unless assignment.can.update
+    link-to-external 'phases.show' assignment model (query-params query_id='none') class='btn btn--primary btn--mobile-full position__absolute--desktop position--top-right' 
+      | Open Activity
+
+
+
+

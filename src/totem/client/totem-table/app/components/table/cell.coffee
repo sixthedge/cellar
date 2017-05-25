@@ -8,5 +8,6 @@ export default cell.extend
     col  = @get('column')
     row  = @get('row')
     prop = col.property
-    @set('value', row.get(prop))
+    if row.get? then value = row.get(prop) else value = row[prop]
+    @set('value', value)
     

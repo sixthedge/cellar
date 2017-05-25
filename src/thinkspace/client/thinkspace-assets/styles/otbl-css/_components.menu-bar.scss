@@ -43,8 +43,8 @@
 		border-bottom: 2px solid $color-blue-base;
 	}
 
-	&:hover {
-		color:         $color-black-base;
+	&:hover, &:focus {
+		color: $color-black-base;
 		border-bottom: $border--default;
 	}
 

@@ -5,51 +5,11 @@
     '  |
     link-to 'manage' model class='breadcrumbs__link'
       | Teams
-  if has_team_id
-    h1.text--inline-block New Team
-    .btn-group.is-right
-      .btn.btn-small.btn--primary{action 'finalize_team'}
-        | Create Team
-      .btn.btn-small{action 'cancel'}
-        | Cancel
 
-  else 
-    h1 Team Builder
-    p.text__font-size--14 Quickly build a team by typing in your student's name. You can add multiple by separating with a comma.
-
-if has_team_id
-  .forms__section.spacing__margin-bottom--2
-    .forms__field-wrapper
-      label Team name
-      = input value=team_title placeholder='Name your new team' 
-    .forms__field-wrapper
-      label.spacing__margin-bottom--0 Team color
-      .forms__label-summary Helps distinguish the teams
-      // Dropdown with color selections here
-      component '__color_picker' edit=false model=team select='select_color'
-
-  h3 Team members
-  //component '__table' columns=columns rows=rows
-
-  component '__table' columns=columns rows=rows delete_row='delete_row'
-
-
-else
-
-  component 'helpers/user_search' value=search_field results=results search_results='search_results' select='select_user' space=model 
-
-  if has_selected_users
-    .btn.btn-small{action 'create_team'}
-      | Create team with selected
-
-    .btn.btn-small.btn--disabled
-      | Add to existing team
-
-  br
-  br
-  br
-  br
-  br
-  ul
-    each selected_users as |user|
-      li = user.first_name
+  if loading.all
+    component '__loader/base'
+  else
+    if has_team_id
+      partial 'components/builder/create'
+    else
+      partial 'components/builder/team_builder'

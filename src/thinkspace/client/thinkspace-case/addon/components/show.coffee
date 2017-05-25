@@ -1,8 +1,9 @@
 import ember from 'ember'
 import ns    from 'totem/ns'
-import base  from 'thinkspace-base/components/base'
 import ta    from 'totem/ds/associations'
 import tc    from 'totem/cache'
+import util  from 'totem/util'
+import base  from 'thinkspace-base/components/base'
 
 export default base.extend
 
@@ -19,10 +20,12 @@ export default base.extend
 
   is_on_team: ember.computed.notEmpty 'team'
 
+  totem_data_config: ability: {ajax_source: true}, metadata: true
+
   init_base: ->
     @init_assignment_type().then =>
-      @init_phase_states().then =>
-        @init_teams().then =>
+      @init_teams().then =>
+        @init_phase_states().then =>
           assignment = @get('model')
           if assignment.get('is_pubsub')
             @totem_scope.authable(assignment)
@@ -38,11 +41,17 @@ export default base.extend
 
   init_phase_states: ->
     new ember.RSVP.Promise (resolve, reject) =>
-      @pm        = @get('phase_manager')
-      @pmap      = @get('phase_manager.map')
-      assignment = @get('model')
-      ownerable  = @get_ownerable()
-      @set('phase_states', @pmap.get_all(ownerable, assignment))
+      @pm              = @get('phase_manager')
+      @pmap            = @get('phase_manager.map')
+      assignment       = @get('model')
+      ownerable        = @get_ownerable()
+      all_phase_states = new Array
+      @get('teams').forEach (team) => all_phase_states.pushObject @pmap.get_all(team, assignment)
+      phase_states = @pmap.get_all(ownerable, assignment)
+      all_phase_states.pushObject(phase_states)
+      all_phase_states = util.flatten_array(all_phase_states).compact()
+      @set('all_phase_states', all_phase_states)
+      @set('phase_states', phase_states)
       @set('phase_states_loaded', true)
       resolve()
 

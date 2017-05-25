@@ -73,6 +73,7 @@ export default ember.Mixin.create
         ao_options = {url: url, data: query, verb: verb}
       else
         ao_options = {model: model_name, data: query, action: action, verb: verb, id: id}
+      
       @ajax.object(ao_options).then (payload) =>
         resolve(payload)
       , (error) => 

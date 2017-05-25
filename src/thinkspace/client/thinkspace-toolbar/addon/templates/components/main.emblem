@@ -7,7 +7,7 @@
         link-to-external 'home' class='nav-list__link'
           | Spaces
       li.nav-list__item
-        a.nav-list__link click='toggle_support'
+        a.nav-list__link href='mailto:support@opentbl.com'
           | Support
    
   nav.top-bar__nav.is-right click='toggle_users'
@@ -32,7 +32,7 @@ if user_expansion_visible
           a.account-panel__link.text__align--right click='toggle_users'
             .icon.icon--16.spacing__margin-right--half.icon__cross--black
             | Close Menu
-        li.account-panel__item
-          a.account-panel__link Account 
+        / li.account-panel__item
+        /   a.account-panel__link Account 
         li.account-panel__item
           a.account-panel__link click='sign_out' Log Out

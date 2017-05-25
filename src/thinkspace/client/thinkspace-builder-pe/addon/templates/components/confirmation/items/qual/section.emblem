@@ -1,4 +1,4 @@
-.forms__label--subtle.text--bold.spacing__margin-bottom--1.spacing__margin-top--1 Qualitative Section
+h3 Qualitative Section
 
 each model as |item index|
   component 'confirmation/items/qual/qual' model=item index=index

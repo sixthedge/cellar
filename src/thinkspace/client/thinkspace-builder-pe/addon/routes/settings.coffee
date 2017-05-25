@@ -5,12 +5,12 @@ import base  from 'thinkspace-base/routes/base'
 ###
 # # settings.coffee
 - Type: **Route**
-- Package: **ethinkspace-builder-pe**
+- Package: **thinkspace-builder-rat**
 ###
 export default base.extend
 
   # ## Services
-  # - `thinkspace-builder-pe/builder`
+  # - `thinkspace-builder-rat/builder`
   builder: ember.inject.service()
 
   # ## Methods

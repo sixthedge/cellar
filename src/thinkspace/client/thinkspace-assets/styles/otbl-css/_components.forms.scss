@@ -1,6 +1,7 @@
 ///*------------------------------------*\
 //    #FORMS
 //\*------------------------------------*/
+
 fieldset {
 	border:  none;
 	margin:  0;
@@ -180,6 +181,12 @@ textarea {
 
 .input-feedback--success {
 	color: $color-green-base;
+}
+
+.input-group {
+  input {
+    margin-bottom: 0 !important;
+  }
 }
 
 

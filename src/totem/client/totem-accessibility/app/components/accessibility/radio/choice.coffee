@@ -45,10 +45,11 @@ export default base.extend
       @send_changed()
 
   click: (event) ->
-    if @get('delay')
-      # Do not fire `click` on arrow key presses, delay it until a keypress.
-      if event.clientX != 0 and event.clientY != 0
-        @send_delayed()
-    else
-      @send_changed()
+    if event.target.nodeName == 'INPUT'
+      if @get('delay')
+        # Do not fire `click` on arrow key presses, delay it until a keypress.
+        if event.clientX != 0 and event.clientY != 0
+          @send_delayed()
+      else
+        @send_changed()
 

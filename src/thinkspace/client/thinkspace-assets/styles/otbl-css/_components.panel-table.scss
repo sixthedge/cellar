@@ -12,6 +12,10 @@
   font-size: .875rem;
   display: inline-block;
 
+  .accessibility--color-contrast & {
+    color: $color-gray-base--accessible;
+  }
+
 }
 
 .panel-table__item {

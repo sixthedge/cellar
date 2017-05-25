@@ -1,0 +1,12 @@
+.dialogue.dialogue--blue.grid__container--centered.dialogue--shadow
+  h1 Change Release Date
+  p This will update when students will be able to view the evaluation. 
+  .forms__field-wrapper
+    component '__datetime_picker' value=date
+
+  .btn-group
+    button.btn.btn--primary{action 'confirm'}
+      | Set Date
+    button.btn{action 'close'}
+      | Cancel
+      

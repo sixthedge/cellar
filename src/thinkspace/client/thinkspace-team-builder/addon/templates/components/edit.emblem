@@ -5,24 +5,28 @@
     '  |
     link-to 'manage' model class='breadcrumbs__link'
       | Teams
-  h1.text--inline-block
-    | Edit Team
+  unless loading.all
+    h1.text--inline-block
+      | Edit Team
 
-  .btn-group.is-right
-    button.btn.btn--primary{action 'save'}
-      | Update Team
-    button.btn{action 'cancel'}
-      | Cancel
+    .btn-group.is-right
+      button.btn.btn--primary{action 'save'}
+        | Update Team
+      button.btn{action 'cancel'}
+        | Cancel
 
-.forms__section.spacing__margin-bottom--2
-  .forms__field-wrapper
-    label Team name
-    = input value=team.title
-  .forms__field-wrapper
-    label.spacing__margin-bottom--0 Team color
-    .forms__label-summary Helps distinguish the teams
-    component '__color_picker' color=team.color edit=true select='select_color'
- 
-component 'edit/tables/assigned' register='register_assigned' remove_members='remove_selected_users' selected=selected_assigned_user_rows students=team_rows select='select_assigned' add_members='set_add_members' adding_members=adding_members class='spacing__margin-bottom--2'
-if adding_members
-  component 'edit/tables/unassigned' register='register_unassigned' cancel='cancel_adding_members' selected=selected_unassigned_user_rows add_selected='add_selected_users' students=unassigned_rows select='select_unassigned'
+if loading.all
+  component '__loader/base'
+else
+  .forms__section.spacing__margin-bottom--2
+    .forms__field-wrapper
+      label Team name
+      = input value=team_title
+    .forms__field-wrapper
+      label.spacing__margin-bottom--0 Team color
+      .forms__label-summary Helps distinguish the teams
+      component '__color_picker' color=team.color edit=true select='select_color'
+   
+  component 'edit/tables/assigned' register='register_assigned' remove_members='remove_selected_users' selected=selected_assigned_user_rows students=team_rows select='select_assigned' add_members='set_add_members' adding_members=adding_members class='spacing__margin-bottom--2'
+  if adding_members
+    component 'edit/tables/unassigned' register='register_unassigned' cancel='cancel_adding_members' selected=selected_unassigned_user_rows add_selected='add_selected_users' students=unassigned_rows select='select_unassigned'

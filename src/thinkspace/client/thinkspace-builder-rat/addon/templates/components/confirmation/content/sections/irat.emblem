@@ -1,0 +1,4 @@
+h3 Questions
+
+each questions as |question index|
+  component 'confirmation/content/items/question' model=question assessment=assessment index=index

@@ -1,0 +1,26 @@
+// Might need to hide the option to have different questions on the tRAT
+
+/ fieldset.forms__section.spacing__margin-bottom--4
+/   h2.text--inline-block.spacing__margin-top--0 tRAT Questions
+/   if display_questions
+/     .btn.is-right.btn--primary click='create'
+/       | New Question
+
+/ component '__changdeset/checkbox' label='Use different questions for the tRAT' value=sync_checked save='toggle_assessment_sync'
+
+/ if display_questions
+/   .forms__field-wrapper
+/     label  
+/       | iRAT and tRAT are currently not synced
+/     .forms__label-summary
+/       | Description...
+/ else
+/   .forms__field-wrapper
+/     label  
+/       | iRAT and tRAT are currently synced
+/     .forms__label-summary
+/       | Questions on your iRAT will also be posed in the tRAT
+
+/ if display_questions
+/   each question_items as |item|
+/     component 'content/question/item' model=item type=type

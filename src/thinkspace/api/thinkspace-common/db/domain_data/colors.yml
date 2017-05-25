@@ -8,10 +8,48 @@
   title: Berry Blue
   description: Color description
 - id: 3
-  color: f4eb42
-  title: Honeybee Yellow
+  color: 8D43AC
+  title: Purple Heart
   description: Color description
 - id: 4
-  color: 50f442
-  title: Lime Green
+  color: B10DC9
+  title: Vivid Mulberry
   description: Color description
+- id: 5
+  color: A63A50
+  title: English Red
+  description: Color description
+- id: 6
+  color: 477998
+  title: Queen Blue
+  description: Color description
+- id: 7
+  color: 696773
+  title: Dim Gray
+  description: Color description
+- id: 8
+  color: 00635D
+  title: Forest Green
+  description: Color description
+- id: 9
+  color: 324D32
+  title: Kombu Green
+  description: Color description
+- id: 10
+  color: 7C3832
+  title: Tuscan Red
+  description: Color description
+- id: 11
+  color: 474056
+  title: Purple Taupe
+  description: Color description
+- id: 12
+  color: 746923
+  title: Antique Bronze
+  description: Color description
+- id: 13
+  color: 944654
+  title: Magenta
+  description: Color description
+
+

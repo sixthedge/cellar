@@ -16,3 +16,4 @@ export default base.extend
   handle_click_cell:   'handle_click_cell'
 
   delete_row: 'delete_row'
+

@@ -11,27 +11,28 @@ export default ta.Model.extend resource_mixin, ta.totem_data, ta.add(
     ta.has_many   'phases', reads: {sort: 'position:asc'}
   ),
 
+  # # Attributes
   title:            ta.attr('string')
   description:      ta.attr('string')
   active:           ta.attr('boolean')
-  release_at:       ta.attr('date')
-  due_at:           ta.attr('date')
   instructions:     ta.attr('string')
   name:             ta.attr('string')
   template_id:      ta.attr('number')
   bundle_type:      ta.attr('string')
   state:            ta.attr('string')
   settings:         ta.attr()
-  included_options: ta.attr() # TODO: Remove in favor of included.records/options?
-  # ### TEMPORARY FOR NEW BUILDER
-  builder_version:     ta.attr('number')
-  builder_template_id: ta.attr('number')
+  # ## Timetable
+  release_at:       ta.attr('date')
+  due_at:           ta.attr('date')
 
-  is_pubsub:      ember.computed.bool 'settings.pub_sub'
-  is_active:      ember.computed.equal 'state', 'active'
-  is_inactive:    ember.computed.equal 'state', 'inactive'
-  has_due_at:     ember.computed.notEmpty 'due_at'
-  has_release_at: ember.computed.notEmpty 'release_at'
+  # # Computed properties
+  is_pubsub:            ember.computed.bool 'settings.pub_sub'
+  is_active:            ember.computed.equal 'state', 'active'
+  is_inactive:          ember.computed.equal 'state', 'inactive'
+  has_due_at:           ember.computed.notEmpty 'due_at'
+  has_release_at:       ember.computed.notEmpty 'release_at'
+  
+  sync_rat_assessments: ember.computed.bool 'settings.rat.sync'
 
   ttz: ember.inject.service()
 
@@ -64,25 +65,6 @@ export default ta.Model.extend resource_mixin, ta.totem_data, ta.add(
     abilities.update  = update
     abilities.clone   = update
     abilities.destroy = update
-
-  save_logistics: ->
-    new ember.RSVP.Promise (resolve, reject) =>
-      configuration =
-        release_at: @get('release_at')
-        due_at:     @get('due_at')
-
-      query =
-        id:     @get('id')
-        configuration: configuration
-        data: { attributes: {} }
-
-      options =
-        action: ''
-        verb:   'PATCH'
-
-      tc.query_action(ta.to_p('assignment'), query, options).then (saved_assignment) => 
-        resolve saved_assignment
-      , (error) => reject(error)
 
   # ### Phase position
   # => Assumes they've been updated via the phase model functions.
@@ -142,6 +124,12 @@ export default ta.Model.extend resource_mixin, ta.totem_data, ta.add(
   archived_phases: ember.computed 'phases.@each.state', ->
     ta.PromiseArray.create promise: @phase_state_promise('archived')
 
+  first_active_phase: ember.computed 'phases.@each.state', 'phases.@each.position', ->
+    promise  = new ember.RSVP.Promise (resolve, reject) =>
+      @get('active_phases').then (phases) =>
+        resolve(phases.get('firstObject'))
+    ta.PromiseObject.create promise: promise
+
   # ### Phase validity
   has_valid_phases: ember.computed.and 'has_no_phases_without_team_set', 'has_no_inactive_phases'
 
@@ -164,3 +152,8 @@ export default ta.Model.extend resource_mixin, ta.totem_data, ta.add(
   activate:   -> @model_state_change('activate')
   inactivate: -> @model_state_change('inactivate')
   archive:    -> @model_state_change('archive')
+
+  set_sync_assessment: (value) ->
+    settings = @get('settings')
+    settings.rat = {} unless ember.isPresent(settings.rat)
+    ember.set(settings.rat, 'sync', value)

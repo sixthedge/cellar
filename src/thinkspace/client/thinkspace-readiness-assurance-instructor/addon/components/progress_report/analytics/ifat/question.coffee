@@ -18,6 +18,7 @@ export default base.extend
   correct_total_choices: ember.computed.reads 'correct.total_choices'
   correct_label:         ember.computed.reads 'correct.label'
   correct_average:       ember.computed.reads 'correct.average'
+  has_most_picked:       ember.computed.gte 'correct_total', 1
 
   adjusted_order: ember.computed 'data', 'data.order', -> 
     order = @get('data.order') or 0
@@ -38,6 +39,13 @@ export default base.extend
     @set('data', data)
     @set('correct', correct)
     @set('choices', choices)
+    @update_most_picked()
+
+  update_most_picked: ->
+    choices     = @get('choices')
+    sorted      = choices.sortBy('total_choices').reverse()
+    most_picked = [sorted.shift(), sorted.shift()]
+    @set('most_picked', most_picked)
 
   set_is_expanded:    -> @set('is_expanded', true)
   reset_is_expanded:  -> @set('is_expanded', false)

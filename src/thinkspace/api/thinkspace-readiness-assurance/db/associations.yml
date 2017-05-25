@@ -4,7 +4,7 @@
     - {belongs_to: thinkspace/common/user, readonly: true}
     - {has_many: thinkspace/readiness_assurance/responses, dependent: destroy}
   serializers:
-    - attributes: [id, title, authable_type, authable_id, question_settings, ra_type]
+    - attributes: [id, title, authable_type, authable_id, question_settings, questions, settings, ra_type]
 
 - model: thinkspace/readiness_assurance/response
   delegate:

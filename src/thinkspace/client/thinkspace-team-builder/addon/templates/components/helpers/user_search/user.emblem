@@ -1,0 +1,4 @@
+.grid__container--flex.flex__justify--between
+  div = full_name
+  if is_selected
+    .icon.icon--16.icon__checkmark--green.spacing__margin-right--half

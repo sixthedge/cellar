@@ -28,6 +28,7 @@ module Thinkspace; module Team; module Exploders
       ActiveRecord::Base.transaction do
         create_team_set
         create_teams
+        generate_scaffold
         activate
         assign_team_set_for_assignments(@new_team_set)
         reconcile
@@ -43,10 +44,25 @@ module Thinkspace; module Team; module Exploders
     def user_class;     Thinkspace::Common::User;  end
 
     def get_assignments; @space.thinkspace_casespace_assignments.scope_upcoming; end # current or upcoming assignments
-    def assign_team_set_for_assignments(team_set); get_assignments.each { |assignment| team_set.assign_to_record(assignment) }; end
+
+    # Creates a TeamSetTeamable for all upcoming assignments & their phases
+    def assign_team_set_for_assignments(team_set)
+      get_assignments.each do |assignment| 
+        team_set.assign_to_record(assignment)
+        assignment.thinkspace_casespace_phases.each do |phase|
+          team_set.assign_to_record(phase)
+        end
+      end
+    end
+
+    def get_new_id_for_team_id(id)
+      delta_team = @delta[:teams].find { |t| t[:id] == id}
+      return nil if delta_team.empty?
+      delta_team[:new_id]
+    end
 
     # Creates the new team_set
-    def create_team_set; @new_team_set = team_set_class.create(title: @options[:title]); end
+    def create_team_set; @new_team_set = team_set_class.create(title: @options[:title], space_id: @base_team_set.space_id); end
 
     # Creates teams for the new team_set, based on the transform
     def create_teams
@@ -58,12 +74,19 @@ module Thinkspace; module Team; module Exploders
       end
     end
 
+    def generate_scaffold
+      @new_team_set.scaffold = @transform.deep_dup
+      @new_team_set.scaffold['teams'].each do |tobj|
+        tobj['id'] = get_new_id_for_team_id(tobj['id'])
+        tobj.delete('new')
+      end
+    end
+
     # Activates the new team_set, deactivates the old team_set and resets the transform
     def activate
-      @new_team_set.scaffold   = @transform.deep_dup
       @base_team_set.transform = {}
-      @base_team_set.undefault!
-      @new_team_set.make_default!
+      @base_team_set.reset_default
+      @new_team_set.set_default
     end
 
     # Reconciles the old team_set with the changes

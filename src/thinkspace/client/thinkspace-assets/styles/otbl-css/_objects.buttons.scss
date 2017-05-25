@@ -106,6 +106,12 @@ button,
   pointer-events: none;
 }
 
+.btn--mobile-full {
+  @media only screen and (max-width: 40rem) {
+    width: 100% !important;
+  }
+}
+
 ///*------------------------------------*\
 //    #ACTION-LINKS
 //\*------------------------------------*/
@@ -115,14 +121,24 @@ button,
   font-weight: $font-weight--bold;
 }
 
+.action-link--gray {
+  color: $color-gray-base;
+  transition: $transition-animation--color;
+  
+  &:hover, &:focus {
+    color: $color-blue-base;
+  }
+}
+
 
 ///*------------------------------------*\
 //    #BUTTON-GROUPS
 //\*------------------------------------*/
 
 .btn-group {
-
-	.btn, .dropdown, .action-link--small {
+  @extend .group;
+  
+	.btn, .dropdown, .action-link--small, .icon--actionable {
 		margin-left: 1rem;
 
 		&:first-child {
@@ -152,4 +168,14 @@ button,
       margin-right:               0;
     }
   }
+}
+
+// Button divider
+.btn--divider {
+  display:          inline-block;
+  height:           2rem;
+  width:            2px;
+  background-color: $color-gray-med;
+  vertical-align:   middle;
+  margin-left:      1rem;
 }

@@ -421,7 +421,7 @@
   updated_at: 2016-04-13 20:46:08.751267000 Z
 
 # Diagnostic Expert Path
-- id:
+- id: 17
   title: diagnostic-expert-path
   description: Diagnostic Expert Path
   value:
@@ -435,7 +435,7 @@
   preprocessors:
 
 # Diagnostic Path
-- id:
+- id: 18
   title: diagnostic-path
   description: ''
   value:
@@ -449,7 +449,7 @@
   preprocessors:
 
 # Readiness Assurance Component
-- id:
+- id: 19
   title: readiness-assurance
   description: Readiness Assurance
   value:

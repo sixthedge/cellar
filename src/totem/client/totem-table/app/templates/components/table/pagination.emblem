@@ -1,5 +1,4 @@
-.pagination__container.spacing__margin-bottom--1
-  .btn-group--conjoined.is-right
+.btn-group--conjoined
     button.btn.btn--square click='first' title='First Page'
       .icon.icon--16.icon__arrow-end--black.icon__arrow--left
     button.btn.btn--square click='prev' title='Previous Page'

@@ -7,7 +7,7 @@
   nav.top-bar__nav.is-right
     ul.nav-list
       li.nav-list__item
-        a.nav-list__link 
+        link-to-external 'spaces.show' space class='nav-list__link'
           | Exit Builder
 
 .main-content
@@ -27,6 +27,6 @@
           .loader.loader--logo
           .text__font-size--14.text--bold Loading...
 
-      .footnote
-        p.spacing__margin-top--0.spacing__margin-bottom--0 Need a crash course in exercise types?
-        a Read about exercise types.
+      / .footnote
+      /   p.spacing__margin-top--0.spacing__margin-bottom--0 Need a crash course in exercise types?
+      /   a Read about exercise types.

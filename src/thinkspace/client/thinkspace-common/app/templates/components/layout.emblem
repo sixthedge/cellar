@@ -1,22 +1,5 @@
 #application
   mount 'thinkspace-toolbar'
-
-  / Successful Totem message example
-  .totem-message.totem-message--success
-    .totem-message__text-container
-      .icon.icon--32.totem-icon__checkmark--black.spacing__margin-right--1
-      .text__font-size--14.text--bold.text--inline-block
-        | 1 Invite successfully sent! <a href='#'>Learn more.</a>
-    .icon.icon--24.icon__cross--black
-
-  / Error Totem message example
-  / .totem-message.totem-message--error
-  /   .totem-message__text-container
-  /     .icon.icon--32.totem-icon__warning--black.spacing__margin-right--1
-  /     .text__font-size--14.text--bold.text--inline-block
-  /       | Seems like there's an error. <a href='#'>Learn more.</a>
-  /   .icon.icon--24.icon__cross--black
-
+  mount 'thinkspace-message'
   .main-content
-    mount 'thinkspace-message'
     outlet

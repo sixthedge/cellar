@@ -122,7 +122,7 @@ class ApiMessages
     message = @get_options_message(options)
     queue   = options.queue
     return unless queue
-    @throw_error("Invalid status code message queue [#{queue}].") unless typeof(@app_msgs[queue]) == 'function'
+    @throw_error("Invalid status code message queue [#{queue}].") unless util.is_function(@app_msgs[queue])
     @app_msgs[queue](message, options.sticky)
 
   get_options_message: (options) ->
@@ -137,8 +137,18 @@ class ApiMessages
 
   get_options_user_message: (options) ->
     return options.user_message if options.user_message
-    response_json = options.error and options.error.responseJSON
+    error = options.error
+    return null if ember.isBlank(error)
+    errors  = @get_errors(error)
+    message = errors.user_message or errors.message
+    return @get_updated_message(message, options) if ember.isPresent(message)
+    response_json = options.error.responseJSON
     response_json and response_json.errors and response_json.errors.user_message
+
+  get_updated_message: (message, options) ->
+    append  = options.append_message or ''
+    prepend = options.prepend_message or ''
+    prepend + message + append
 
   get_i18n_message_path: (options) ->
     prefix = config.messages.i18n_path_prefix
@@ -185,7 +195,7 @@ class ApiMessages
 
   get_error_message: (options) ->
     message = ''
-    if typeof(options.fatal) == 'string' and options.fatal != ''
+    if util.is_string(options.fatal) and options.fatal != ''
       @app_msgs.fatal options.fatal
       message += "[fatal: #{options.fatal}] "
     source      = options.source and options.source.toString and options.source.toString()
@@ -193,7 +203,8 @@ class ApiMessages
     handler     = options.handler or 'unknown'
     error       = options.error
     if error
-      error_message = options.error_message or error.message or error.responseText or error.statusText
+      errors        = @get_errors(error)
+      error_message = errors.user_message or errors.message or error.message or error.responseText or error.statusText
       errors        = error.errors and @stringify(error.errors)
     message        += "[source: #{source}] "  if source
     message        += "[status-code: #{status_code}] [handler-name: #{handler}] "
@@ -215,11 +226,11 @@ class ApiMessages
     merged.message_array ?= []
     merged
 
-  # Status code from error object.
-  status_code_from_error: (error) ->
-    # The ember-data ActiveModelAdapter raises an 'InvalidError' on a '422' (e.g. model validation error).
-    error.status = 422 if error and (not error.status) and error.stack and util.starts_with(error.stack, 'InvalidError')
-    error and error.status
+  status_code_from_error: (error) -> @get_errors(error).status
+
+  get_errors: (error) -> if error and util.is_hash(error.errors) then error.errors else {}
+
+  is_unauthorized_access: (error) -> @get_errors(error).status == 423  # helper function
 
   # Throw Api Error.
   throw_error: (message, options=null) ->

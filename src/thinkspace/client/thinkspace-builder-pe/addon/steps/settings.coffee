@@ -33,9 +33,7 @@ export default step.extend
       changeset = @get('changeset')
       changeset.save()
       @get('model').save().then (saved_model) =>
-        @get('model').save_logistics().then (saved_model) =>
-          resolve(saved_model)
-        , (error) => reject(error)
+        resolve(saved_model)
       , (error) => reject(error)
 
   select_release_at: (date) -> @get('changeset').set 'release_at', date

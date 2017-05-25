@@ -1,6 +1,6 @@
 import ember from 'ember'
 import ns    from 'totem/ns'
-import base  from 'thinkspace-base/components/base'
+import base  from 'thinkspace-common/components/modal/base'
 
 export default base.extend
   # # Properties
@@ -9,29 +9,9 @@ export default base.extend
   # # Computed properties
   date:  ember.computed.reads 'model.release_at'
 
-  # # Events
-  didInsertElement: ->
-    modal = new Foundation.Reveal($('#change-date'))
-    @set('modal', modal)
-
-  # # Helpers
-  persist_release_date: ->
-    new ember.RSVP.Promise (resolve, reject) =>
-      model = @get('model')
-      date  = @get('date')
-      model.set('release_at', date)
-      model.save_logistics().then =>
-        resolve()
-
   actions:
-    select_release_at: (date) -> @set('date', date)
-
-    confirm: ->
-      @persist_release_date().then =>
-        @get('modal').close()
-      
-    deny: ->
+    confirm: -> 
       @send 'close'
-      @sendAction 'deny'
+      @sendAction 'select', @get('date')
 
-    close: -> @get('modal').close()
+    select: (date) -> @set 'date', date

@@ -59,9 +59,10 @@ module Thinkspace; module Common; module Concerns; module SerializerOptions; mod
   # ###
 
   def self.space_updater?(ownerable)
-    true # Default to true for now.
-    # return false unless ownerable.is_a?(Thinkspace::Common::User)
-    # Thinkspace::Common::SpaceUser.where(user_id: ownerable.id, role: [:owner, :update]).exists? # Only TA/instructors
+    return false unless ownerable.is_a?(Thinkspace::Common::User)
+    roles = ownerable.profile.with_indifferent_access.dig(:roles)
+    return false unless roles.present?
+    roles.include?('instructor')
   end
 
   # index

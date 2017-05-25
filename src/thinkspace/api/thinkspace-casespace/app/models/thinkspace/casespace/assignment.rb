@@ -65,7 +65,6 @@ module Thinkspace
       def self.scope_open(ownerables=nil, tts=nil)
         (tts || timetable_scope(ownerables)).
         where_now('<=', :release_at).
-        where_now('>=', :due_at).
         with_scope.
         scope_active
       end
@@ -233,6 +232,11 @@ module Thinkspace
             phase.delete_ownerable_data(ownerables)
           end
         end
+      end
+
+      def sync_rat
+        return false unless settings.present? && settings.dig('rat', 'sync').present?
+        return settings['rat']['sync']
       end
 
       # ###

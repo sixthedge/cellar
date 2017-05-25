@@ -1,0 +1,14 @@
+.dialogue.dialogue--blue.grid__container--centered.dialogue--shadow
+  h1 Are you sure you want to revert these changes?
+
+  p 
+    strong This will undo all changes made to your teams.
+
+  p: a Learn more abour reverting team changes
+
+  .btn-group
+    button.btn.btn--primary click='confirm'
+      | Revert Team Changes
+    button.btn click='deny'
+      | Cancel
+

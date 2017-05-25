@@ -1,0 +1,25 @@
+.spacing__margin-bottom--2
+  h2.text--inline-block Details
+
+  link-to step.route_path model class='btn is-right spacing__margin-top--half' tabindex='0'
+    | Edit details
+
+  label Exercise Name
+  p.text__font-size--14.spacing__margin-top--0
+    = step.changeset.errors.title
+    if has_title_error
+      br
+      component '__changeset/errors' changeset=step.changeset attribute='title' errors_visible=true
+    else
+      = model.title
+
+  label Instructions/Overview
+  p.text__font-size--14.spacing__margin-top--0
+    if has_instruction_error
+      br
+      component '__changeset/errors' changeset=step.changeset attribute='instructions' errors_visible=true
+    else
+      = model.instructions
+
+  label Team Set
+  p.text__font-size--14.spacing__margin-top--0 = step.selected_team_set.title

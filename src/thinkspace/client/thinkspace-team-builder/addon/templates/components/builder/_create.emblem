@@ -1,0 +1,21 @@
+h1.text--inline-block New Team
+.btn-group.is-right
+  .btn.btn-small.btn--primary{action 'finalize_team'}
+    | Create Team
+  .btn.btn-small{action 'cancel'}
+    | Cancel
+
+.forms__section.spacing__margin-bottom--2
+  .forms__field-wrapper
+    label Team name
+    = input value=team_title placeholder='Name your new team' 
+  .forms__field-wrapper
+    label.spacing__margin-bottom--0 Team color
+    .forms__label-summary Helps distinguish the teams
+    // Dropdown with color selections here
+    component '__color_picker' edit=false model=team select='select_color'
+
+h3 Team members
+//component '__table' columns=columns rows=rows
+
+component '__table' columns=columns rows=rows delete_row='delete_row'

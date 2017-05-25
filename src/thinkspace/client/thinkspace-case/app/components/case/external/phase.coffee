@@ -16,13 +16,19 @@ export default base.extend
   #   - [phase_manager](http://totem-docs.herokuapp.com/api/cellar/thinkspace/client/thinkspace-common/app/services/phase_manager.html)
   phase_manager: ember.inject.service()
 
+  phase_states: null
+  phase_state:  ember.computed 'phase_states', ->
+    phase_states = @get('phase_states')
+    return [] unless phase_states
+    phase_states.findBy('phase_id', parseInt(@get('model.id')))
+
   # ### Computed Properties
-  phase_states: ember.computed ->
-    phase = @get('model')
-    if @pm.has_active_addons()
-      @pmap.get_current_ownerable_phase_states(phase)
-    else
-      @pmap.get_current_user_phase_states(phase)
+  # phase_states: ember.computed ->
+  #   phase = @get('model')
+  #   if @pm.has_active_addons()
+  #     @pmap.get_current_ownerable_phase_states(phase)
+  #   else
+  #     @pmap.get_current_user_phase_states(phase)
 
   # ## Events
   init_base: ->

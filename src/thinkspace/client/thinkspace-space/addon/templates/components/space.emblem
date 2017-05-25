@@ -1,43 +1,12 @@
-/ li.primary-list_link
-
-/   .ts-grid_row: .small-12.ts-grid_columns.primary-list_link-item
-
-/     link-to 'show' model
-/       .small-12.medium-12.large-4.ts-grid_columns.primary-list_link-item
-/         h5.primary-list_link-item-title = model.title
-/         if model.owners
-/           each owner in model.owners
-/             h6.primary-list_link-item-heading = owner.display_name
-/         else
-/           h6.primary-list_link-item-heading Not available
-
-/       .small-6.medium-6.large-3.ts-grid_columns.primary-list_link-item
-/         h6.primary-list_link-item-heading Next Due At
-/         h5.primary-list_link-item-value
-/           if next_due_at
-/             = next_due_at_date
-/             .primary-list_line-item-ago
-/               small: |  (#{__moment-from-now next_due_at})
-/           else
-/             | n/a
-
-/       .small-6.medium-6.large-3.ts-grid_columns.primary-list_link-item
-/         h6.primary-list_link-item-heading Open Cases
-/         h5.primary-list_link-item-value = metadata.open
-
-/     / if has_actions
-/     /   .small-12.medium-12.large-2.ts-grid_columns.primary-list_link-item: .action-buttons.right
-/     /     component c_dropdown_split_button collection=dropdown_collection button_class='btn-small btn-default'
-
 li.tile__container
   link-to 'show' model class='tile__item'
     h1.tile__name = model.title
     .tile__sub-caption Fall 2016
     div.group
       span.tile__info.is-left 
-        if model.owners
-          each owner in model.owners
-            span = owner.display_name
+        if has_owners
+          each model.owners as |owner|
+            span #{owner.display_name}
         else
           span No Instructors
       .tile__status.tile__status--live.is-right Live

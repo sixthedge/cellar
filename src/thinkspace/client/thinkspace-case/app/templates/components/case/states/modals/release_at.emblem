@@ -1,13 +1,30 @@
-#change-date.reveal data-reveal='' data-overlay='true'
-  .dialogue.dialogue--blue.grid__container--centered.dialogue--shadow
-    h1 Change Release Date
-    p This will update when students will be able to view the evaluation. 
-    .forms__field-wrapper
-      component '__datetime_picker' value=date select='select_release_at'
+a class=modal_reveal_anchor_class_names data-open=modal_id
+  if modal_reveal_partial
+    button.btn Add release date
+  else
+    if modal_reveal_icon_class_names
+      i class=modal_reveal_icon_class_names
+    else
+      i.im.im-open
 
-    .btn-group
-      button.btn.btn--primary{action 'confirm'}
-        | Set Date
-      button.btn{action 'close'}
-        | Cancel
-        
+  div class=all_modal_class_names id=modal_id data-reveal='' data-overlay='true' data-close-on-click='true'
+    if modal_partial
+      .dialogue.dialogue--blue.grid__container--centered.dialogue--shadow
+        h1 Change Release Date
+        p This will update when students will be able to view the evaluation. 
+        .forms__field-wrapper
+          component '__datetime_picker' value=date select='select'
+
+        .btn-group
+          button.btn.btn--primary{action 'confirm'} role='button'
+            | Set Date
+          button.btn{action 'close'} role='button'
+            | Cancel
+            
+    else
+      if title
+        h4.ts-confirmation-modal_title = title
+      if subtitle
+        h5.ts-confirmation-modal_subtitle = subtitle
+      if description
+        p.ts-confirmation-modal_description = description

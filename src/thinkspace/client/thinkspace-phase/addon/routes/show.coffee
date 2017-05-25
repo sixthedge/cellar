@@ -9,10 +9,13 @@ export default base.extend
 
   queryParams: {query_id: {}}
 
-  model: (params) -> @tc.find_record_with_message ns.to_p('phase'), params.phase_id
+  model: (params, transition) ->
+    @tc.find_record_with_message(ns.to_p('phase'), params.phase_id).then (phase) =>
+      phase
+    , (error) => null
 
   afterModel: (phase, transition) ->
-    transition.abort() unless phase
+    return @transitionToExternal 'spaces.index' if ember.isBlank(phase)
     @hide_loading_outlet() if ember.isEqual(@get_phase(), phase) # Hide outlet if navigating to same phase.
     @current_models().set_current_models(phase: phase).then =>
       @get('phase_manager').set_all_phase_states().then =>

@@ -1,6 +1,10 @@
 = input value=value class='spacing__margin-bottom--1' placeholder='Search Students'
-
-ul.dropdown__list
-  each results as |user|
-    li.dropdown__item.dropdown__item--thick{action 'select' user}
-      = user.first_name
+if show_results
+  if no_results_found
+    h6 No results found
+  else
+    if has_results
+      h6 #{results.length} result(s) found
+  ul class={:dropdown__list has_results:is-open}
+    each results as |user|
+      component 'helpers/user_search/user' model=user selected_users=selected_users select='select'

@@ -57,6 +57,8 @@ export default ember.Mixin.create
     @save_error     = false
     @current_user   = totem_scope.get_current_user()
     @title          = options.title or options.username or  'unknown'
+    @ownerable_id   = options.ownerable_id   || ''
+    @ownerable_type = options.ownerable_type || ''
     @is_admin       = options.admin or false
     @save_to_server = not (options.save_response == false)
 
@@ -124,7 +126,7 @@ export default ember.Mixin.create
   init_question_managers: (options) ->
     qn    = 0
     @qids = []
-    for question in @assessment.get('questions')
+    for question in @assessment.get('question_settings')
       qn += 1
       qm = question_manager.create
         question_hash: question
@@ -184,7 +186,7 @@ export default ember.Mixin.create
       , (error) => reject(error)
 
   init_chat_managers: (options) ->
-    for question in @assessment.get('questions')
+    for question in @assessment.get('question_settings')
       cm = chat_manager.create
         question_hash: question
         rm:            @

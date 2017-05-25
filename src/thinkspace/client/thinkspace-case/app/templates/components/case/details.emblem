@@ -1,13 +1,67 @@
-label.spacing__margin-bottom--0 Release date
-.text__font-size--14.spacing__margin-bottom--1 = model.friendly_release_at
-label.spacing__margin-bottom--0 Due date
-.text__font-size--14.spacing__margin-bottom--1 = model.friendly_due_at
+unless model.can.update
+  .text__font-size--12.text--bold.spacing__margin-bottom--half Exercise Status
+  if is_locked 
+    // Locked
+    .grid__container.spacing__margin-bottom--1
+      .icon.icon--42.spacing__margin-right--1.is-left
+        img src='/assets/images/icons/exercise-types/icons__exercise-type__locked.svg' alt="Locked" title="Exercise is locked" 
+      .text--inline-block
+        .text__font-size--14.text--bold Locked
+        .text__font-size--12 Exercise is locked by instructor.
+
+  // In Progress
+  if is_in_progress
+    .grid__container.spacing__margin-bottom--1
+      .icon.icon--42.spacing__margin-right--1.is-left
+        img src='/assets/images/icons/exercise-types/icons__exercise-type__in-progress.svg' alt="In Progress" title="Exercise is in progress" 
+      .text--inline-block
+        .text__font-size--14.text--bold In Progress
+
+  // Waiting
+  if is_waiting
+    .grid__container.spacing__margin-bottom--1
+      .icon.icon--42.spacing__margin-right--1.is-left
+        img src='/assets/images/icons/exercise-types/icons__exercise-type__waiting.svg' alt="Waiting" title="Exercise is waiting on next activity" 
+      .text--inline-block
+        .text__font-size--14.text--bold Waiting on next activity
+        if next_due.friendly_unlock_at
+          .text__font-size--12 Opens on #{next_due.friendly_unlock_at}
+
+  // Submitted
+  if is_completed
+    .grid__container.spacing__margin-bottom--1
+      .icon.icon--42.spacing__margin-right--1.is-left
+        img src='/assets/images/icons/exercise-types/icons__exercise-type__submitted.svg' alt="Submitted" title="Exercise has been submitted" 
+      .text--inline-block
+        .text__font-size--14.text--bold All Complete!
+
+  // Past-Due/Read-only
+  if is_read_only
+    .grid__container.spacing__margin-bottom--1
+      .icon.icon--42.spacing__margin-right--1.is-left
+        img src='/assets/images/icons/exercise-types/icons__exercise-type__read-only.svg' alt="Past Due" title="Exercise is past due" 
+      .text--inline-block
+        .text__font-size--14.text--bold Read Only
+        .text__font-size--12 You can not edit this exercise.
+
+  // Not Started - Not possible
+  / .grid__container.spacing__margin-bottom--1
+  /   .icon.icon--42.spacing__margin-right--1.is-left
+  /     img src='/assets/images/icons/exercise-types/icons__exercise-type__not-started.svg' alt="Not Started" title="Exercise has not been started" 
+  /   .text--inline-block
+  /     .text__font-size--14.text--bold Not Started
+  /     .text__font-size--12 You have not opened any activity.
+
+  hr
+
 label.spacing__margin-bottom--0 Exercise Type
 .text__font-size--14.spacing__margin-bottom--1 = model.assignment_type.title
 
-if model.can.update
-  label.spacing__margin-bottom--0 Team set
-  .text__font-size--14.spacing__margin-bottom--1 = team_set.title
-else
-  label.spacing__margin-bottom--0 Team
-  .text__font-size--14.spacing__margin-bottom--1 = team.title
+//Commenting out team info featuer for now
+/ if model.can.update
+/   label.spacing__margin-bottom--0 Team set
+/   .text__font-size--14.spacing__margin-bottom--1 = team_set.title
+/ else
+/   label.spacing__margin-bottom--0 Team
+/   each teams as |team|
+/     .text__font-size--14.spacing__margin-bottom--1 = team.title

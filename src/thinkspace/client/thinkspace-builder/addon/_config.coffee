@@ -6,7 +6,7 @@ export default {
 
   engine:
     mount: 'builder'
-    external_routes: [{login: 'users.sign_in'}, 'pe.details']
+    external_routes: [{login: 'users.sign_in'}, 'pe.details', 'rat.details', 'spaces.show']
 
   ns:
     namespaces:

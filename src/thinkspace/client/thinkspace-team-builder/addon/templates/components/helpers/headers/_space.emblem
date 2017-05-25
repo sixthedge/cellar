@@ -1,0 +1,22 @@
+.grid__container--flex
+  .grid__col--4of4
+    .main-content__header
+      h1.text--inline-block = model.title
+
+      .btn-group.is-right
+        link-to-external 'builder.new' (query-params space_id=model.id) class='btn btn--primary' role='button'
+          .icon.icon--16.icon__plus--white.spacing__margin-right--half
+          | New Exercise
+
+    nav.menu-bar
+      ul.menu-bar__list
+        li.menu-bar__item
+          link-to-external 'spaces.show' model class="menu-bar__link"
+            | Home
+        li.menu-bar__item
+          link-to-external 'spaces.roster' model class="menu-bar__link"
+            | Roster
+        li.menu-bar__item
+          link-to 'manage' model class="menu-bar__link"
+            | Teams
+            

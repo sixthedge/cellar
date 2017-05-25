@@ -7,6 +7,10 @@ export default base.extend
   space:            null
   assignment_types: []
 
+  pe_title:  'Peer Evaluation'
+  rat_title: 'Readiness Assurance'
+
+
   # ### Computed properties
   has_assignment_types: ember.computed.notEmpty 'assignment_types'
 
@@ -41,4 +45,7 @@ export default base.extend
       options[ns.to_p('space')]           = @get('space')
       assignment = @tc.create_record ns.to_p('assignment'), options
       assignment.save().then =>
-        @get('thinkspace').transition_to_route('pe.details', assignment)
+        if assignment_type.get('title') == @get('pe_title')
+          @get('thinkspace').transition_to_route('pe.details', assignment)
+        else if assignment_type.get('title') == @get('rat_title')
+          @get('thinkspace').transition_to_route('rat.details', assignment)

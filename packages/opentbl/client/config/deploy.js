@@ -11,6 +11,9 @@ module.exports = function(deployTarget) {
       secretAccessKey: process.env['APP_DEPLOY_S3_SECRET_ACCESS_KEY'],
       bucket:          process.env['APP_DEPLOY_S3_BUCKET'],
       region:          process.env['APP_DEPLOY_S3_REGION']
+    },
+    'revision-data': {
+      scm: null
     }
   };
 

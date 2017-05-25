@@ -12,11 +12,13 @@ export default base.extend
 
   search_watcher: ember.observer 'value', ->
     value = @get('value')
-
     if ember.isEmpty(value)
       @set_results(null)
     else
       ember.run.debounce(@, @search, 250)
+
+  no_results_found: ember.computed 'value', 'results.length', -> ember.isPresent(@get('value')) && @get('results.length') == 0
+  has_results: ember.computed.reads 'results.length'
 
   set_results: (val) ->
     # @set('results', val)

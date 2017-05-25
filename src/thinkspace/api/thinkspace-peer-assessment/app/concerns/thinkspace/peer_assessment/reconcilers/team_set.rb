@@ -5,10 +5,10 @@ module Thinkspace; module PeerAssessment; module Reconcilers
     # ----------------------------------------
     #
     # The primary function of this object is to:
-    # - generate a new team_set and associated teams based on the transform of the provided team_set
-    # - make the new team_set the default team_set
-    # - re-assign any current or upcoming assignments to use the new default team_set
-    # - reconcile the new team_set with the current and upcoming assignments
+    # - generate a 'snapshot' (team_sets, review_sets, reviews) of the new team_set
+    # - reassign peer_assessment/team_sets to the new corresponding team
+    # - reset quantitative data and unlock the phase for any teams that have changed
+    # - notify all teams that need to re-submit their phase
 
 
     attr_reader :team_set, :options, :assessment, :assignment, :delta, :team_sets, :team_sets_by_team_id, :review_sets_by_team_set_id

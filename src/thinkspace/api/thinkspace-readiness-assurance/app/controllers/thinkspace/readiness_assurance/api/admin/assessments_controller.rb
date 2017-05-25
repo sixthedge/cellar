@@ -3,6 +3,15 @@ module Thinkspace
     module Api
       module Admin
         class AssessmentsController < ::Totem::Settings.class.thinkspace.authorization_api_controller
+          load_and_authorize_resource class: totem_controller_model_class, except: [:progress_report]
+
+          def update
+            @assessment.questions = params_root[:questions]
+            @assessment.settings  = params_root[:settings]
+            @assessment.answers   = params_root[:answers]
+            #@assessment.sync_assessments
+            controller_save_record(@assessment)
+          end
 
           def progress_report
             set_irat_assessment

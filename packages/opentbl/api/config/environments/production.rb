@@ -28,7 +28,7 @@ Rails.application.configure do
 
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = true
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
@@ -78,10 +78,10 @@ Rails.application.configure do
 
   config.cache_store = :dalli_store,
   (ENV["MEMCACHIER_SERVERS"] || "").split(","),
-    {:username => ENV["MEMCACHIER_USERNAME"],
-    :password => ENV["MEMCACHIER_PASSWORD"],
-    :failover => true,
-    :socket_timeout => 1.5,
+    {:username            => ENV["MEMCACHIER_USERNAME"],
+    :password             => ENV["MEMCACHIER_PASSWORD"],
+    :failover             => true,
+    :socket_timeout       => 1.5,
     :socket_failure_delay => 0.2
     }
 

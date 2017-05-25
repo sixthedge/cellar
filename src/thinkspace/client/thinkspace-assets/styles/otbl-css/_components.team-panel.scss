@@ -56,6 +56,11 @@
   font-size: .875rem;
   vertical-align: middle;
 
+  &.is-highlighted {
+    background-color: $color-yellow-med !important;
+    font-weight:      $font-weight--bold;
+  }
+
   &:nth-child(2n) {
     background-color: $color-gray-lists;
   }
