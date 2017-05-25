@@ -27,7 +27,7 @@ hr
 
     if is_not_balance
       button.btn click='duplicate'
-        .icon.icon--16.icon__clone--white.spacing__margin-right--half
+        .icon.icon--16.icon__clone--black.spacing__margin-right--half
         | Duplicate
         
   if is_not_balance

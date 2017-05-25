@@ -23,14 +23,26 @@
 
 .tag--gray {
   background-color: $color-gray-base;
+
+  .accessibility--color-contrast & {
+    background-color: $color-gray-base--accessible;
+  }
 }
 
 .tag--blue {
   background-color: $color-blue-base;
+
+  .accessibility--color-contrast & {
+    background-color: $color-blue-base--accessible;
+  }
 }
 
 .tag--green {
   background-color: $color-green-base;
+
+  .accessibility--color-contrast & {
+    background-color: $color-green-base--accessible;
+  }
 }
 
 .tag--red {

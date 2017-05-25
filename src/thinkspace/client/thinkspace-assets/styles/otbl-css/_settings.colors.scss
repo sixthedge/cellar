@@ -3,17 +3,23 @@
 //\*------------------------------------*/
 
 // Blue
-$color-blue-base: #12a6c7;
+$color-blue-base:  #129ebd;
 $color-blue-light: #E7F6F9;
-$color-blue-dark: darken($color-blue-base, 10%);
-//0e8099
+$color-blue-dark:  #0E7B93;
+
+// Blue 4.5:1
+$color-blue-base--accessible: #0e8099;
+$color-blue-dark--accessible: #0A596A;
+
 
 // Green
-$color-green-base: #5BBC61;
-
-$color-green-dark: #3b9040;
-$color-green-med: #91d295;
+$color-green-base:  #2bab3c;
+$color-green-dark:  #3b9040;
+$color-green-med:   #91d295;
 $color-green-light: #b6e1b8;
+
+// Green 4.5:1
+$color-green-base--accessible: #22872f;
 
 // Red
 $color-red-base: #ee6055;
@@ -30,13 +36,15 @@ $color-yellow-base: #fcb725;
 // Black
 $color-black-base:	#464646;
 
-
-
 // Gray
-$color-gray-base:  #a9aeb8;
-$color-gray-dark: darken($color-gray-base, 10%);
-$color-gray-med:   #EDEEF0;
-$color-gray-light: #fbfbff;
+$color-gray-dark:       #8d9199; 
+$color-gray-base:       #BBBDC2;
+$color-gray-med:        #D0D2D5;
+$color-gray-light:      #E3E4E6;
+$color-gray-background: #FBFBFF;
 
 // Off gray that works well with list items
 $color-gray-lists: #F7F7F7;
+
+// Gray 4.5:1
+$color-gray-base--accessible: #71747a;

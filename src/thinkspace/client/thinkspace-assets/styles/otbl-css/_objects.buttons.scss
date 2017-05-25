@@ -11,8 +11,8 @@ button,
 	text-align:       center;
 	vertical-align:   middle;
 	text-transform:   capitalize;
-	background-color: $color-gray-base;
-	color:            white;
+	background-color: $color-gray-light;
+	color:            $color-black-base;
 	border-radius:    $border-radius;
 	border:           none;
 	cursor:           pointer;
@@ -25,30 +25,73 @@ button,
 	transition:       background-color .29s ease-in-out 0s;
 
 	&:hover, &:focus {
-    background-color: darken($color-gray-base, 10%);
-    color:            white;
+    background-color: $color-gray-med;
+    color:            $color-black-base;
   }
   
   &:active {
-    background-color: darken($color-gray-base, 15%);
+    background-color: $color-gray-base;
+    color:            $color-black-base;
+  }
+
+  &:focus {
+    outline:        1px dotted $color-gray-dark;
+    outline-offset: -4px;
+  }
+
+  // Accessibility color
+  .accessibility--color-contrast & {
+    color: $color-black-base;
+    
+    &:hover, &:focus {
+      background-color: $color-gray-med;
+      color:            $color-black-base;
+    }
+    
+    &:active {
+      background-color: $color-gray-base;
+      color:            $color-black-base;
+    }
+  }
+}
+
+.btn--primary {
+	background-color: $color-blue-base;
+  color: white;
+
+	&:hover, &:focus {
+    background-color: darken($color-blue-base, 10%);
+    color: white;
   }
 
   &:focus {
     outline:        1px dotted white;
     outline-offset: -4px;
   }
-
-}
-
-.btn--primary {
-	background-color: $color-blue-base;
-
-	&:hover, &:focus {
-    background-color: darken($color-blue-base, 10%);
-  }
   
   &:active {
     background-color: darken($color-blue-base, 15%);
+  }
+
+  .accessibility--color-contrast & {
+    background-color: $color-blue-base--accessible;
+    color: white;
+
+      &:hover, &:focus {
+        background-color: darken($color-blue-base--accessible, 10%);
+        color: white;
+      }
+
+      &:focus {
+        outline:        1px dotted white;
+        outline-offset: -4px;
+      }
+      
+      &:active {
+        background-color: darken($color-blue-base--accessible, 15%);
+      }
+
+
   }
 }
 

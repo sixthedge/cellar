@@ -23,6 +23,11 @@
       margin:        0;
     }
   }
+
+  // Accessibility Colors
+  .accessibility--color-contrast & {
+    border-color: $color-gray-base--accessible;
+  }
 }
 
 .secondary-panel__header {
@@ -42,6 +47,11 @@
     font-size:   .75rem;
     font-weight: $font-weight--bold;
     color:       white;
+  }
+
+  // Accessibility Colors
+  .accessibility--color-contrast & {
+    background-color: $color-gray-base--accessible;
   }
 }
 

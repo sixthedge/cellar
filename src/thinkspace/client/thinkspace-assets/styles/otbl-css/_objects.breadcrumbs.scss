@@ -5,20 +5,34 @@
 
 .breadcrumbs {
   display: block;
-  color:   $color-gray-base;
+  color:   $color-gray-dark;
 }
 
 .breadcrumbs__link {
   font-weight: $font-weight--bold;
-  font-size: .875rem;
-  color: $color-gray-base;
-  transition: $transition-animation--color;
+  font-size:   .875rem;
+  color:       $color-gray-dark;
+  transition:  $transition-animation--color;
 
   &:hover, &:focus {
     color: $color-blue-base;
   }
 
+  &:focus {
+    outline:        1px dotted $color-blue-base;
+    outline-offset: 4px;
+  }
+
   &:active {
     color: $color-blue-dark;
+  }
+
+  // Accessibility colors
+  .accessibility--color-contrast & {
+    color: $color-gray-base--accessible;
+
+    &:hover, &:focus {
+      color:         $color-blue-base--accessible;
+    }
   }
 }

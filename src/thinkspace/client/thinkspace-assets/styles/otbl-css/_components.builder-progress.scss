@@ -28,7 +28,7 @@
 	font-size:      .875rem;
 	color:          $color-black-base;
 	font-weight:    $font-weight--regular;
-	border-bottom:  2px solid $color-gray-med;
+	border-bottom:  2px solid $color-gray-light;
 	padding:        .75rem 1rem;
 	text-transform: capitalize;
 	cursor:         pointer;
@@ -37,15 +37,27 @@
 	.builder-progress__item--is-currrent & {
 		color:       $color-blue-base;
 		font-weight: $font-weight--bold;
+
+		.accessibility--color-contrast & {
+			color: $color-blue-base--accessible;
+		}
 	}
 
 	&:hover {
-		background-color: $color-gray-med;
+		background-color: white;
 	}
 
 	>.icon {
 		margin-bottom: 2px;
 	}
+
+	.accessibility--color-contrast & {
+		color: $color-black-base;
+
+    &:hover, &:focus {
+      color: $color-blue-base--accessible;
+    }
+  }
 }
 
 

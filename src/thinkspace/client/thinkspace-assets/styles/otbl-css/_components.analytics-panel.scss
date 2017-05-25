@@ -17,8 +17,12 @@
   width: 33%;
 
   >label {
-    color:     $color-gray-base;
+    color:     $color-gray-dark;
     font-size: .75rem;
+
+    .accessibility--color-contrast & {
+      color: $color-gray-base--accessible;
+    }
   }
 }
 
