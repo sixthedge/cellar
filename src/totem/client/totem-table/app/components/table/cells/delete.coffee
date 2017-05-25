@@ -22,9 +22,6 @@ export default cell.extend
 
     component.delete_row(options)
     
-  init_base: ->
-    console.log('calling iwth data ', @get('data'), @get('column'))
-
   # actions:
   #   click: ->
   #     options = opt.create

@@ -17,6 +17,6 @@
           link-to-external 'spaces.roster' model class="menu-bar__link"
             | Roster
         li.menu-bar__item
-          link-to 'manage' model class="menu-bar__link"
+          link-to 'teams.manage' model class="menu-bar__link active"
             | Teams
             

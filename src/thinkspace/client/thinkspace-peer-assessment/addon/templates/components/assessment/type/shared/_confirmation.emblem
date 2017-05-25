@@ -26,4 +26,4 @@ ul.clear-list.grid__container--flex.flex__justify--between.spacing__margin-botto
   if is_disabled
     a.btn.btn--primary.is-disabled Submit Assessment
   else
-    component '__modal/confirmation' modal_partial='components/assessment/type/shared/submit/modal' modal_reveal_partial='components/assessment/type/shared/submit/action' confirm='submit'
+    component '__modal/confirmation' content_partial='components/assessment/type/shared/submit/modal' link_partial='components/assessment/type/shared/submit/action' confirm='submit'

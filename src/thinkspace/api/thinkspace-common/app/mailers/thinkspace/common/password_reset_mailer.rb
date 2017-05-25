@@ -6,7 +6,7 @@ module Thinkspace
       def instructions(password_reset)
         token   = password_reset.token
         @email  = password_reset.email
-        @url    = app_domain + password_reset_show_url(token)
+        @url    = password_reset_show_url(token)
         subject = 'Password Reset'
 
         mail(to: @email, subject: format_subject(subject))
@@ -16,7 +16,7 @@ module Thinkspace
         @email              = email
         @user               = Thinkspace::Common::User.find_by(email: email)
         @has_pending_invite = @user.inactive? if @user.present?
-        @url                = app_domain + password_reset_url
+        @url                = password_reset_url
         subject             = 'Password Reset'
 
         mail(to: @email, subject: format_subject(subject))
@@ -24,8 +24,8 @@ module Thinkspace
 
       private
 
-      def password_reset_show_url(token); "/users/password/reset/#{token}"; end
-      def password_reset_url; "/users/password/reset"; end
+      def password_reset_show_url(token); format_url("users/password/reset/#{token}"); end
+      def password_reset_url; format_url("users/password/reset"); end
 
     end
   end

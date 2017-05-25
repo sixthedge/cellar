@@ -11,7 +11,7 @@ module Thinkspace; module PeerAssessment
       raise "Cannot send a notification without a phase [#{@phase}]." unless @phase.present?
       raise "Cannot send a notification without an assignment [#{@assignment}]." unless @assignment.present?
 
-      @url    = app_domain + phases_show_url(@assignment, @phase)
+      @url    = phases_show_url(@assignment, @phase)
       subject = "The results of your peer evaluation #{@assignment.title} are now available"
       mail(to: @to.email, subject: format_subject(subject))
     end
@@ -25,7 +25,7 @@ module Thinkspace; module PeerAssessment
       raise "Cannot send a notification without a phase [#{@phase}]." unless @phase.present?
       raise "Cannot send a notification without an assignment [#{@assignment}]." unless @assignment.present?
 
-      @url    = app_domain + phases_show_url(@assignment, @phase)
+      @url    = phases_show_url(@assignment, @phase)
       subject = "Your evaluations for #{@assignment.title} are pending"
       mail(to: @to.email, subject: format_subject(subject))
     end
@@ -39,13 +39,13 @@ module Thinkspace; module PeerAssessment
       raise "Cannot send a notification without a phase [#{@phase}]." unless @phase.present?
       raise "Cannot send a notification without an assignment [#{@assignment}]." unless @assignment.present?
 
-      @url    = app_domain + phases_show_url(@assignment, @phase)
+      @url    = phases_show_url(@assignment, @phase)
       subject = "You must re-submit your peer evaluation #{@assignment.title}"
       mail(to: @to.email, subject: format_subject(subject))
     end
 
     def phases_show_url(assignment, phase)
-      "/cases/#{assignment.id}/phases/#{phase.id}?query_id=none"
+      format_url("cases/#{assignment.id}/phases/#{phase.id}?query_id=none")
     end
 
   end

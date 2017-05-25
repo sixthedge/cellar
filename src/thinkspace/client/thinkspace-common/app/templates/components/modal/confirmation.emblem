@@ -1,25 +1,5 @@
-a class=modal_reveal_anchor_class_names data-open=modal_id
-  if modal_reveal_partial
-    partial modal_reveal_partial
-  else
-    if modal_reveal_icon_class_names
-      i class=modal_reveal_icon_class_names
-    else
-      i.im.im-open
+a class=link_class_names data-open=modal_id
+  partial link_partial
 
   div class=all_modal_class_names id=modal_id data-reveal='' data-overlay='true' data-close-on-click='true'
-    if modal_partial
-      partial modal_partial
-    else
-      if title
-        h4.modal__title = title
-      if subtitle
-        h5.modal__subtitle = subtitle
-      if description
-        p.modal__description = description
-
-      .modal__actions
-        .modal__action.modal__confirm-action.btn.btn-small.btn-warning{action 'confirm'}
-          = confirm_text
-        .modal__action.modal__deny-action.btn.btn-small.btn-default{action 'deny'}
-          = deny_text
+    partial content_partial
