@@ -6,15 +6,9 @@ html {
 	font-family:             $font-family;
 	font-weight:             $font-weight--regular;
 	color:                   $color-black-base;
-	background-color:        $color-gray-background;
 	box-sizing:              border-box;
 	-webkit-font-smoothing:  antialiased;
 	-moz-osx-font-smoothing: grayscale;
-
-  &.accessibility--color-contrast {
-    background-color: white;
-  }
-
 
 }
 
@@ -22,4 +16,11 @@ html {
   box-sizing: inherit;
 }
 
-
+body {
+  height: 100vh;
+  background-color: $color-gray-background;
+  
+  &.accessibility--color-contrast {
+    background-color: white;
+  }
+}
