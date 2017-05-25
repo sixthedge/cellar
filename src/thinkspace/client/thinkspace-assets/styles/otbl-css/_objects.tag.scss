@@ -47,4 +47,8 @@
 
 .tag--red {
   background-color: $color-red-base;
+
+  .accessibility--color-contrast & {
+    background-color: $color-red-base--accessible;
+  }
 }

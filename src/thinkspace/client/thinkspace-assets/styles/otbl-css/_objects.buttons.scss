@@ -122,11 +122,20 @@ button,
 }
 
 .action-link--gray {
-  color: $color-gray-base;
+  color:      $color-gray-dark;
   transition: $transition-animation--color;
   
   &:hover, &:focus {
     color: $color-blue-base;
+  }
+
+  // Accessibility colors
+  .accessibility--color-contrast & {
+    color: $color-gray-base--accessible;
+
+    &:hover, &:focus {
+      color: $color-blue-base--accessible;
+    }
   }
 }
 
