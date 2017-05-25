@@ -8,9 +8,13 @@
 
 .panel-table__heading-item {
   font-weight: $font-weight--bold;
-  color: $color-gray-base;
+  color: $color-gray-dark;
   font-size: .875rem;
   display: inline-block;
+
+  .accessibility--color-contrast & {
+    color: $color-gray-base--accessible;
+  }
 
 }
 

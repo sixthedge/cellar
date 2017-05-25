@@ -21,6 +21,11 @@
 	background-color: $color-blue-base;
 	border-bottom:    1px solid darken($color-blue-base, 5%);
 	color:            white;
+	transition:       $transition-animation--background-color;
+
+	.accessibility--color-contrast & {
+    background-color: $color-blue-base--accessible;
+  }
 }
 
 .top-bar__info {
@@ -68,20 +73,31 @@
 	line-height:    $top-bar-height;
 	transition:     $transition-animation;
 
+	// Top Bar with White background
 	.top-bar--white & {
 		color: $color-black-base;
 
 		&:hover {
-			background-color: $color-gray-med;
+			background-color: $color-gray-light;
 			color:            $color-black-base;
 		}
 	}
 
+	// Top Bar is the main blue 
 	.top-bar--main & {
 		&:hover, &:focus {
 			background-color: lighten($color-blue-base, 5%);
 			color:            white;
 		}
+
+		.accessibility--color-contrast & {
+			color: white;
+
+    	&:hover, &:focus {
+				background-color: lighten($color-blue-base--accessible, 5%);
+				color:            white;
+			}
+    }
 	}
 }
 
@@ -168,7 +184,15 @@
 	transition:       $transition-animation--background-color;
 
 	&:hover, &:focus {
-		background-color: $color-gray-med;
+		background-color: $color-gray-lists;
+	}
+
+	.accessibility--color-contrast & {
+	  color: $color-black-base;
+
+	  &:hover, &:focus {
+	    color: $color-blue-dark--accessible;
+	  }
 	}
 }
 

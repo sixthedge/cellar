@@ -19,17 +19,32 @@
 .switch__label {
   font-size:   .875rem;
   font-weight: $font-weight--bold;
-  color:       $color-gray-base;
+  color:       $color-gray-dark;
   transition:  $transition-animation--color;
   cursor:      pointer;
+
+  // Accessibility colors
+  .accessibility--color-contrast & {
+    color: $color-gray-base--accessible;
+  }
 }
 
 .switch__label--on {
   color: $color-black-base;
+  
+  // Accessibility colors
+  .accessibility--color-contrast & {
+    color: $color-black-base;
+  }
 }
 
 .switch__label--off {
-  color: $color-gray-base;
+  color: $color-gray-dark;
+
+  // Accessibility colors
+  .accessibility--color-contrast & {
+    color: $color-gray-base--accessible;
+  }
 }
 
 .switch__slider {
