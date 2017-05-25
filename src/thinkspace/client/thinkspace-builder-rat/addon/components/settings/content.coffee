@@ -15,5 +15,5 @@ export default base.extend
     select_due_at:     (date) -> @get('step').select_due_at(date)
     select_unlock_at:  (date) -> @get('step').select_unlock_at(date)
 
-    toggle_is_ifat: (val)     -> @get('step').toggle_is_ifat(val)
-    toggle_is_req_just: (val) -> @get('step').toggle_is_req_just(val)
+    toggle_is_ifat:     -> @get('step').toggle_is_ifat()
+    toggle_is_req_just: -> @get('step').toggle_is_req_just()
