@@ -16,7 +16,7 @@ a tabindex='0' data-toggle=drop_id aria-controls=drop_id aria-expanded='false' c
   span
     = text
   span.spacing__margin-left--half
-    .icon.icon--16.icon__chevron--white 
+    .icon.icon--16.icon__chevron--black 
 
 / Position set by the 'list_width_class' (e.g. adding top|bottom|left|right does not work).
 ul.dropdown__list id=drop_id data-dropdown='' class=list_width_class tabindex='-1' 

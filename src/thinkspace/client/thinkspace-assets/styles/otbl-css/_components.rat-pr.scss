@@ -25,7 +25,7 @@
   vertical-align: middle;
   text-align:     center;
   font-weight:    $font-weight--bold;
-  color:          $color-gray-base;
+  color:          $color-gray-dark;
   font-size:      .875rem;
 
   .rat-report__overview-container:hover & {
@@ -60,7 +60,7 @@
 }
 
 .rat-report__overview-avg-label {
-  color:       $color-gray-base;
+  color:       $color-gray-dark;
   font-size:   10px;
   font-weight: 700;
 }

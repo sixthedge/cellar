@@ -12,7 +12,7 @@
   display:          inline-block;
   vertical-align:   middle;
   font-family:      $font-family;
-  color:            white;
+  color:            $color-black-base;
   cursor:           pointer;
   text-decoration:  none;
   border:           none;
@@ -28,16 +28,14 @@
   font-weight:      $font-weight--bold;
   transition:       $transition-animation--background-color;
   
-  background-color: $color-gray-base;
+  background-color: $color-gray-med;
 
   &:hover, &:focus {
-    background-color: darken($color-gray-base, 10%);
-    color: white;
+    background-color: $color-gray-base;
   }
   
   &:active {
     background-color: darken($color-gray-base, 15%);
-    color: white;
   }
 
   &:focus {

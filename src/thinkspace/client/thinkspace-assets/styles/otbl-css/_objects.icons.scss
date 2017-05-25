@@ -53,6 +53,10 @@
   background-image:  url('images/icons/otbl-icons_checkmark.svg');
 }
 
+.icon__chevron--black {
+  background-image: url('images/icons/otbl-icons_chevron-down.svg');
+}
+
 .icon__chevron--white {
   background-image: url('images/icons/otbl-icons_chevron-down--white.svg');
 }
@@ -69,8 +73,40 @@
   }
 }
 
+.icon__arrow--black {
+  background-image: url('images/icons/otbl-icons__arrow-up--black.svg');
+
+  &.icon__arrow--right {
+    transform: rotate(90deg);
+  }
+
+  &.icon__arrow--left {
+    transform: rotate(-90deg);
+  }
+
+  &.icon__arrow--down {
+    transform: rotate(180deg);
+  }
+}
+
 .icon__arrow--white {
   background-image: url('images/icons/otbl-icons_arrow-up--white.svg');
+
+  &.icon__arrow--right {
+    transform: rotate(90deg);
+  }
+
+  &.icon__arrow--left {
+    transform: rotate(-90deg);
+  }
+
+  &.icon__arrow--down {
+    transform: rotate(180deg);
+  }
+}
+
+.icon__arrow-end--black {
+  background-image: url('images/icons/otbl-icons__arrow-top--black.svg');
 
   &.icon__arrow--right {
     transform: rotate(90deg);

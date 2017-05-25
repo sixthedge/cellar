@@ -22,8 +22,8 @@
   font-weight:               $font-weight--bold;
 
   .counter-box--gray & {
-    border-color: $color-gray-base;
-    color:        $color-gray-base;
+    border-color: $color-gray-dark;
+    color:        $color-gray-dark;
   }
 
   .counter-box--green & {
@@ -57,8 +57,8 @@
   text-align:                 center;
 
   .counter-box--gray & {
-    background-color: $color-gray-base;
-    border-color:     $color-gray-base;
+    background-color: $color-gray-dark;
+    border-color:     $color-gray-dark;
   }
 
   .counter-box--green & {

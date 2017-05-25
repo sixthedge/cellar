@@ -6,7 +6,7 @@ select, .dropdown__anchor {
   display:          inline-block;
   vertical-align:   middle;
   font-family:      $font-family;
-  color:            white;
+  color:            $color-black-base;
   cursor:           pointer;
   text-decoration:  none;
   border:           none;
@@ -22,24 +22,23 @@ select, .dropdown__anchor {
   font-weight:      $font-weight--bold;
   transition:       $transition-animation;
   
-  background-color: $color-gray-base;
+  background-color: $color-gray-light;
 
   // Lets you add padding for some reason
   -webkit-appearance: none;
   -moz-appearance:    none;
 
   &:hover, &:focus {
-    background-color: darken($color-gray-base, 10%);
-    color:            white;
+    background-color: $color-gray-med;
+    color: $color-black-base;
   }
   
   &:active {
-    background-color: darken($color-gray-base, 15%);
-    color:            white;
+    background-color: $color-gray-base;
   }
 
   &:focus {
-    outline:        1px dotted white;
+    outline:        1px dotted $color-gray-dark;
     outline-offset: -4px;
   }
 
@@ -101,7 +100,7 @@ select, .dropdown__anchor {
   
 
   &:hover, &:focus {
-    background-color: $color-gray-med;
+    background-color: $color-gray-lists;
     color:            $color-blue-dark;
   }
 
