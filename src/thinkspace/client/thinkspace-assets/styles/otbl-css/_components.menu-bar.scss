@@ -3,7 +3,7 @@
 //\*------------------------------------*/
 
 .menu-bar {
-	border-bottom: 2px solid $color-gray-med;
+	border-bottom: 2px solid $color-gray-light;
 	height:        2rem;
 	margin-bottom: 2rem;
 
@@ -29,12 +29,12 @@
 
 .menu-bar__link {
 	display:         block;
-	border-bottom:   2px solid $color-gray-med;
+	border-bottom:   2px solid $color-gray-light;
 	height:          inherit;
 	text-decoration: none;
 	font-size:       .875rem;
 	font-weight:     $font-weight--bold;
-	color:           $color-gray-base;
+	color:           $color-gray-dark;
 	cursor:          pointer;
 	transition:      $transition-animation;
 
@@ -47,5 +47,19 @@
 		color: $color-black-base;
 		border-bottom: $border--default;
 	}
+
+	.accessibility--color-contrast & {
+    color: $color-gray-base--accessible;
+
+    &.active {
+    	color:               $color-blue-base--accessible;
+    	border-bottom: 2px solid $color-blue-base--accessible;
+    }
+
+    &:hover {
+    	color:         $color-black-base;
+    	border-bottom: $border--default;
+    }
+  }
 
 }

@@ -8,28 +8,21 @@ import arr_helpers    from 'thinkspace-common/mixins/helpers/common/array'
 export default base.extend arr_helpers,
 
   # ### Properties
-  space:    null
-  abstract: null
-  team_set: null
+  space:       null
+  abstract:    null
+  team_set:    null
+  initialized: false
 
   # ### Computed Properties
   has_transform: ember.computed.reads 'team_set.has_transform'
-
-  teams: ember.computed 'has_transform', 'transform.teams.@each', 'scaffold.teams.@each', ->
-    if @get('has_transform')
-      @get('team_set.transform.teams')
-    else
-      @get('team_set.scaffold.teams')
-
-  has_teams: ember.computed.notEmpty 'teams'
-  initialized: false
-
-  set_space: (space) -> @set('space', space) if ember.isPresent(space)
+  teams:         ember.computed 'has_transform', 'transform.teams.@each', 'scaffold.teams.@each', -> @get_teams()
+  has_teams:     ember.computed.notEmpty 'teams'
 
   # ### Initialization
+  # each route's component calls manager.initialize to avoid calling it in the application route
   initialize: ->
     new ember.RSVP.Promise (resolve, reject) =>
-      resolve() if @get('initialized')
+      return resolve() if @get('initialized')
       @reinitialize().then =>
         @set 'initialized', true
         resolve()
@@ -37,7 +30,7 @@ export default base.extend arr_helpers,
   reinitialize: ->
     new ember.RSVP.Promise (resolve, reject) =>
       space = @get('space')
-      resolve() unless ember.isPresent(space)
+      return resolve() unless ember.isPresent(space)
       @init_team_set().then (team_set) =>
         @init_abstract().then (abstract) =>
           @reconcile_assigned_users()
@@ -46,16 +39,16 @@ export default base.extend arr_helpers,
   init_team_set: ->
     new ember.RSVP.Promise (resolve, reject) =>
       space = @get('space')
-      resolve() unless ember.isPresent(space)
+      return resolve() unless ember.isPresent(space)
       space.get_default_team_set().then (team_set) =>
-        resolve() unless ember.isPresent(team_set)
+        return resolve() unless ember.isPresent(team_set)
         @set('team_set', team_set)
         resolve(team_set)
 
   init_abstract: ->
     new ember.RSVP.Promise (resolve, reject) =>
       team_set = @get('team_set')
-      resolve() unless ember.isPresent(team_set)
+      return resolve() unless ember.isPresent(team_set)
       params =
         id: team_set.get('id')
       options =
@@ -83,6 +76,14 @@ export default base.extend arr_helpers,
     return if @get('has_transform')
     team_set = @get('team_set')
     team_set.set('transform', ember.copy(team_set.get('scaffold'), true))
+
+  set_space: (space) -> @set('space', space) if ember.isPresent(space)
+
+  get_teams: -> 
+    if @get('has_transform')
+      @get('team_set.transform.teams')
+    else
+      @get('team_set.scaffold.teams')
 
   # ### Queries
   save_transform: ->
@@ -228,3 +229,4 @@ export default base.extend arr_helpers,
   # ### Private
   _debug: (message, args...) ->
     console.log "[tb/manager] #{message}", args...
+

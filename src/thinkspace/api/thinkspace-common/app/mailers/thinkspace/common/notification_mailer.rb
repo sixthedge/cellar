@@ -8,7 +8,7 @@ module Thinkspace
         @sender = inviter
         @space  = space_user.thinkspace_common_space
         @to     = space_user.thinkspace_common_user
-        @url    = app_domain + spaces_show_url(@space)
+        @url    = spaces_show_url(@space)
 
         raise "Cannot send an notification without a sender [#{@sender}]." unless @sender.present?
         raise "Cannot send an notification without an email [#{@to}]." unless @to.present?
@@ -24,7 +24,7 @@ module Thinkspace
         @to         = space_user.thinkspace_common_user
         @expires_in = (@to.activation_expires_at.to_datetime - DateTime.now).to_i + 1 # Add back in 'today'
         token       = @to.activation_token
-        @url        = app_domain + users_signup_url(token,@to.email,@space)
+        @url        = users_signup_url(token,@to.email,@space)
 
         raise "Cannot send an notification without a sender [#{@sender}]." unless @sender.present?
         raise "Cannot send an notification without an email [#{@to}]." unless @to.present?
@@ -39,7 +39,7 @@ module Thinkspace
         @status  = status
         @success = status.blank?
         @space   = space
-        @url     = app_domain + teams_roster_url(space)
+        @url     = teams_roster_url(space)
 
         raise "Cannot send an notification without an email [#{@to}]." unless @to.present?
         raise "Cannot send an notification without a valid space [#{@space}]." unless @space.present?
@@ -73,9 +73,9 @@ module Thinkspace
 
       private
 
-      def spaces_show_url(space); "spaces/#{space.id}"; end
-      def users_signup_url(token, email, space); "/users/sign_up?token=#{CGI.escape(token)}&email=#{CGI.escape(email)}&space=#{CGI.escape(space.title)}"; end
-      def teams_roster_url(space); "spaces/#{space.id}/teams/manage"; end
+      def spaces_show_url(space); format_url("spaces/#{space.id}"); end
+      def users_signup_url(token, email, space); format_url("users/sign_up?token=#{CGI.escape(token)}&email=#{CGI.escape(email)}&space=#{CGI.escape(space.title)}"); end
+      def teams_roster_url(space); format_url("spaces/#{space.id}/teams/manage"); end
 
     end
   end

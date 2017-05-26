@@ -1,6 +1,6 @@
 import ember  from 'ember'
 import column from 'totem-table/table/column'
-import base   from 'thinkspace-team-builder/components/edit/tables/base'
+import base   from 'thinkspace-team-builder/components/teams/edit/tables/base'
 
 ## Component to handle rendering and actions for the edit component's assigned users
 export default base.extend
@@ -13,8 +13,6 @@ export default base.extend
     ]
 
   actions:
-    add_members: -> @sendAction('add_members')
+    add_selected: -> @sendAction('add_selected')
 
-    remove_members: -> 
-      @sendAction('remove_members')
-      @reset_selected_rows()
+    cancel: -> @sendAction('cancel')

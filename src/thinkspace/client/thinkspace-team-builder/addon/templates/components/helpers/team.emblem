@@ -1,6 +1,6 @@
 .team-panel
   .team-panel__header style='background-color:##{model.color};'
-    link-to 'edit' space (query-params team_id=model.id) class='team-panel__link'
+    link-to 'teams.edit' space (query-params team_id=model.id) class='team-panel__link'
       .team-panel__name = model.title 
       .text__font-size--12.text__color--white #{count} team members
 

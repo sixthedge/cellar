@@ -44,14 +44,22 @@
 
 	.tile__item:hover &, .tile__item:focus & {
 		color: $color-blue-base;
+
+		.accessibility--color-contrast & {
+		  color: $color-blue-base--accessible;
+		}
 	}
 }
 
 .tile__sub-caption {
 	font-size:     .875rem;
 	font-weight:   $font-weight--bold;
-	color:         $color-gray-base;
+	color:         $color-gray-dark;
 	margin-bottom: 1rem;
+
+	.accessibility--color-contrast & {
+    color: $color-gray-base--accessible;
+  }
 }
 
 .tile__info {
@@ -72,8 +80,13 @@
 
 .tile__status--live {
 	background-color: $color-green-base;
+
+	.accessibility--color-contrast & {
+	  background-color: $color-green-base--accessible;
+	}
 }
 
 .tile__status--draft {
-	background-color: $color-gray-base;
+	background-color: $color-gray-med;
+	color: $color-black-base;
 }

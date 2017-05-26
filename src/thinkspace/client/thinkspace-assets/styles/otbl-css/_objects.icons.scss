@@ -16,6 +16,10 @@
   }
 }
 
+/**
+ * Icon Sizes
+ */
+
 .icon--16 {
   width:  16px;
   height: 16px;
@@ -46,9 +50,10 @@
   height: 64px;
 }
 
-.icon__cross--black {
-  background-image: url('images/icons/otbl-icons_cross--black.svg');
-}
+/**
+ * Icons
+ */
+
 
 // Clock
 .icon__clock--black {
@@ -56,11 +61,19 @@
 }
 
 // Clone
+.icon__clone--black {
+  background-image: url('images/icons/otbl-icons__clone--black.svg');
+}
+
 .icon__clone--white {
-  background-image: url('images/icons/otbl-icons__clone_white.svg');
+  background-image: url('images/icons/otbl-icons__clone--white.svg');
 }
 
 // Cross
+.icon__cross--black {
+  background-image: url('images/icons/otbl-icons_cross--black.svg');
+}
+
 .icon__cross--white {
   background-image: url('images/icons/otbl-icons_cross_white.svg');
 }
@@ -69,8 +82,14 @@
   background-image: url('images/icons/otbl-icons_cross.svg');
 }
 
+// Checkmark
 .icon__checkmark--green {
   background-image:  url('images/icons/otbl-icons_checkmark.svg');
+}
+
+// Chevron
+.icon__chevron--black {
+  background-image: url('images/icons/otbl-icons_chevron-down.svg');
 }
 
 .icon__chevron--white {
@@ -95,7 +114,9 @@
   }
 }
 
+
 // Arrow
+
 .icon__arrow--white {
   background-image: url('images/icons/otbl-icons_arrow-up--white.svg');
 
@@ -112,8 +133,13 @@
   }
 }
 
+
+.icon__arrow-end--black {
+  background-image: url('images/icons/otbl-icons__arrow-top--black.svg');
+}
+
 .icon__arrow--black {
-  background-image: url('images/icons/otbl-icons__arrow-up_black.svg');
+  background-image: url('images/icons/otbl-icons__arrow-up--black.svg');
 
   &.icon__arrow--right {
     transform: rotate(90deg);
@@ -135,6 +161,7 @@
 }
 
 // Arrow - Ends
+
 .icon__arrow-end--white {
   background-image: url('images/icons/otbl-icons_arrow-top--white.svg');
 
@@ -152,7 +179,7 @@
 }
 
 .icon__arrow-top--black {
-  background-image: url('images/icons/otbl-icons__arrow-top_black.svg');
+  background-image: url('images/icons/otbl-icons__arrow-top--black.svg');
 
   &.icon--actionable {
     &:hover, &:focus {
@@ -162,7 +189,7 @@
 }
 
 .icon__arrow-bottom--black {
-  background-image: url('images/icons/otbl-icons__arrow-top_black.svg');
+  background-image: url('images/icons/otbl-icons__arrow-top--black.svg');
   transform: rotate(180deg);
 
   &.icon--actionable {
@@ -195,6 +222,10 @@
 }
 
 // Plus
+.icon__plus--black {
+  background-image: url('images/icons/otbl-icons__plus--black.svg');
+}
+
 .icon__plus--white {
   background-image: url('images/icons/otbl-icons__plus--white.svg');
 }

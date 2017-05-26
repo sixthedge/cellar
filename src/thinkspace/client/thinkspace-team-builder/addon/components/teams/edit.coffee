@@ -164,7 +164,7 @@ export default base_component.extend arr_helpers,
       @get('manager').update_title_for_team(team, @get('team_title'))
       @get('manager').update_color_for_team(team, @get('selected_color.color'))
       @get('manager').save_transform().then =>
-        @get_app_route().transitionTo(ns.to_r('team_builder', 'manage'))
+        @get_app_route().transitionTo(ns.to_r('team_builder', 'teams.manage'))
 
     select_color: (color) -> @set 'selected_color', color
 
@@ -207,4 +207,4 @@ export default base_component.extend arr_helpers,
 
     cancel: ->
       @revert_team().then =>
-        @get_app_route().transitionTo(ns.to_r('team_builder', 'manage'))
+        @get_app_route().transitionTo(ns.to_r('team_builder', 'teams.manage'))

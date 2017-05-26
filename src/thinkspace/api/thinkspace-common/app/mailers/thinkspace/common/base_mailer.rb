@@ -12,6 +12,7 @@ module Thinkspace
       def app_domain; Rails.application.secrets.smtp['postmark']['domain']; end
       def prevent_delivery; mail.perform_deliveries = @user.can_email?;     end
       def format_subject(subject); '[OTBL] ' + subject;                     end
+      def format_url(url); app_domain + '/' + url;                          end
         
     end
   end

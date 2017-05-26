@@ -3,7 +3,7 @@ button tabindex='0' data-toggle=drop_id aria-controls=drop_id aria-expanded='fal
   span
     = text
   span.spacing__margin-left--half
-    .icon.icon--16.icon__chevron--white 
+    .icon.icon--16.icon__chevron--black 
 
 / Position set by the 'list_width_class' (e.g. adding top|bottom|left|right does not work).
 / Need dropdown-pane class here to make foundation work with the dropdown

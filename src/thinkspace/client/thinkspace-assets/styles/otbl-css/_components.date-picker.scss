@@ -57,27 +57,31 @@
   }
 
   .picker__button--clear, .picker__button--close {
-    background-color: $color-gray-base;
-    border: none;
+    background-color: $color-gray-light;
+    color:            $color-black-base;
+    border:           none;
 
     &:hover, &:focus {
-      background-color: darken($color-gray-base, 10%);
-      border: none;
+      background-color: $color-gray-med;
+      color:            $color-black-base;
+      border:           none;
     }
 
     &:active {
-      background-color: darken($color-gray-base, 15%);
-      border: none;
+      background-color: $color-gray-base;
+      color:            $color-black-base;
+      border:           none;
     }
 
     &:focus {
-      outline:        1px dotted white;
+      outline:        1px dotted $color-gray-dark;
       outline-offset: -4px;
     }
   }
 
   .picker__button--today {
     background-color: $color-blue-base;
+    color: white;
     border: none;
 
     &:hover, &:focus {
@@ -96,13 +100,13 @@
   }
 
   .picker__button--clear:before {
-    border-top-color: white;
+    border-top-color: $color-black-base;
   }
 
   .picker__button--close:before {
-    font-size: 1rem;
-    padding-top: 2px;
-    color: white;
+    font-size:   1rem;
+    padding-top: 1px;
+    color:       $color-black-base;
   }
 }
 

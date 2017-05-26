@@ -94,15 +94,27 @@
  */
 
 .text__color--gray {
-  color: $color-gray-base;
+  color: $color-gray-dark;
+
+  .accessibility--color-contrast & {
+    color: $color-gray-base--accessible;
+  }
 }
 
 .text__color--blue {
   color: $color-blue-base;
+
+  .accessibility--color-contrast & {
+    color: $color-blue-base--accessible;
+  }
 }
 
 .text__color--green {
   color: $color-green-base;
+
+  .accessibility--color-contrast & {
+    color: $color-green-base--accessible;
+  }
 }
 
 .text__color--red {

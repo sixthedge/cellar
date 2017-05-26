@@ -97,12 +97,12 @@ export default base_component.extend selectable_mixin,
 
     @set_loading 'all'
     manager.create_team(options).then (team) =>
-      @get_app_route().transitionTo(ns.to_r('team_builder', 'builder'), space, {queryParams: {team_id: team.id}})
+      @get_app_route().transitionTo(ns.to_r('team_builder', 'teams.builder'), space, {queryParams: {team_id: team.id}})
       @reset_loading 'all'
 
   goto_teams_edit: (team) ->
     space = @get('manager.space')
-    @get_app_route().transitionTo 'edit', space, {queryParams: {team_id: team.id }}
+    @get_app_route().transitionTo ns.to_r('team_builder', 'teams.edit'), space, {queryParams: {team_id: team.id }}
 
   actions:
     add_to_team: (team) ->

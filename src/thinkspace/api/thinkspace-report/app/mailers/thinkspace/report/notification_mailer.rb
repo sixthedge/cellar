@@ -13,7 +13,7 @@ class NotificationMailer < Thinkspace::Common::BaseMailer
     raise "Cannot send an notification without an email [#{@user.email}]." unless @user.email.present?
     raise "Cannot send an notification without a valid token [#{@token}]." unless @token.present?
 
-    @url = app_domain + reports_token_url(@report_token)
+    @url = reports_token_url(@report_token)
 
     subject = 'Your report is ready to download!'
     mail(to: @user.email, subject: format_subject(subject))
@@ -30,6 +30,6 @@ class NotificationMailer < Thinkspace::Common::BaseMailer
 
   private
 
-  def reports_token_url(report_token); "/reports/#{report_token.token}"; end
+  def reports_token_url(report_token); format_url("reports/#{report_token.token}"); end
 
 end; end; end
