@@ -1,5 +1,5 @@
-.main-content__section-header.spacing__margin-bottom--2
-  h1.text--inline-block
+.main-content__sub-header.spacing__margin-bottom--2
+  h2.text--inline-block
     | Teams
 
   unless loading.all
@@ -9,11 +9,12 @@
         component '__modal/confirmation' content_partial='components/teams/manage/modals/save/modal' link_partial='components/teams/manage/modals/save/action' assignments=manager.space.active_assignments confirm='explode' class='btn__component text--inline-block'
         component '__modal/confirmation' content_partial='components/teams/manage/modals/revert/modal' link_partial='components/teams/manage/modals/revert/action' assignments=manager.space.active_assignments confirm='revert' class='btn__component text--inline-block'
 
-  / .btn-group.is-right
-  /   .btn.btn-small
+  / .btn-group.is-right.btn-group--mobile-full
+  /   button.btn.btn-small.btn--mobile-full role='button'
   /     | Import file
 
-.switch.is-left.spacing__margin-right--2
+
+.switch.is-left.spacing__margin-right--2.spacing__margin-bottom--1
   input name='team_view' type='checkbox' 
   a class='switch__label switch__label--on'
     | Students

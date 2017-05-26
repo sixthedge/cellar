@@ -3,8 +3,8 @@
     .main-content__header
       h1.text--inline-block = model.title
 
-      .btn-group.is-right
-        link-to-external 'builder.new' (query-params space_id=model.id) class='btn btn--primary' role='button'
+      .btn-group.btn-group--mobile-full.is-right
+        link-to-external 'builder.new' (query-params space_id=model.id) class='btn btn--primary btn--mobile-full' role='button'
           .icon.icon--16.icon__plus--white.spacing__margin-right--half
           | New Exercise
 

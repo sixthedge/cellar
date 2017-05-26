@@ -1,11 +1,11 @@
 if all_data_loaded
   .grid__container.spacing__margin-bottom--4
-    .main-content__section-header
+    .main-content__sub-header.spacing__margin-bottom--2
       h2.text--inline-block Roster
-      .btn-group.is-right
-        link-to 'roster.import' class='btn btn--primary'
+      .btn-group.is-right.btn-group--mobile-full
+        link-to 'roster.import' class='btn btn--primary btn--mobile-full'
           | Import Roster
-        link-to 'roster.invite' class='btn'
+        link-to 'roster.invite' class='btn btn--mobile-full'
           | Invite User
 
     h3 Students
