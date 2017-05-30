@@ -2,8 +2,9 @@
   .top-bar__info.is-left
     .nav-list__logo
       img src='/assets/images/branding/otbl-logo_default.svg' alt="OpenTBL Logo" title="OpenTBL Logo"
-    .top-bar__info-item
-      | Building - #{model.friendly_title}
+    .top-bar__info-item.text__lh--1.text__align--left 
+      span Building - #{model.friendly_title}
+      .text--regular.text__color--gray All changes saved.
   nav.top-bar__nav.is-right
     ul.nav-list
       li.nav-list__item

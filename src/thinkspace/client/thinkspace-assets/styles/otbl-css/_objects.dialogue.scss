@@ -3,24 +3,36 @@
 //\*------------------------------------*/
 
 .dialogue {
-  padding:                    1rem;
-  border:                     $border--default;
-  border-left-width:          6px;
-  border-top-right-radius:    $border-radius;
-  border-bottom-right-radius: $border-radius;
-  background-color:           white;
-  max-width:                  $max-width--content;
-  margin-bottom:              1rem;
+  border:           2px solid $color-gray-med;
+  padding:          1rem;
+  border-radius:    $border-radius;
+  width:            100%;
+  margin-bottom:    1rem;
+  background-color: white;
 
   >h1 {
     font-size: 1.125rem;
     margin:    0 0 .5rem;
   }
 
-  >p {
+  p {
     font-size:  .875rem;
     margin-top: 0;
   }
+
+  a.link--dashed {
+    font-size:     .875rem;
+    border-bottom: 1px dotted $color-black-base;
+    color:         $color-black-base;
+
+    &:hover, &:focus {
+      color: $color-blue-dark;
+    }
+  }
+}
+
+.dialogue--no-border {
+  border: none;
 }
 
 .dialogue--green {
@@ -32,7 +44,9 @@
 }
 
 .dialogue--red {
-  border-color: $color-red-base;
+  background-color: $color-red-light;
+  border: none;
+
 }
 
 .dialogue--blue {

@@ -5,7 +5,13 @@ partial 'components/header'
       .main-content__header
         h1 Readiness Assurance Confirmation
         p Make sure everything looks fine
-
+      // Error message
+      .dialogue.dialogue--red
+        .icon.icon--32.totem-icon__warning--black.is-left
+        .text--inline-block.spacing__margin-left--1
+          .text__font-size--16.spacing__margin-bottom--0.text--bold Looks like something is missing
+          p Looks like you're missing the follwing things on your thing. 
+          a.link--dashed Learn more about this
       component 'confirmation/details'
       hr
       component 'confirmation/content'

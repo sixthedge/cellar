@@ -1,7 +1,15 @@
 .grid__container
   .spacing__pad-top--4.spacing__pad-bottom--4
         .otbl-logo.otbl-logo--80.grid__container--centered
-
+        
+// Error message
+.grid__container.grid__container--centered.grid__container--content-width.spacing__margin-bottom--2
+  .dialogue.dialogue--red
+    .icon.icon--32.totem-icon__warning--black.is-left
+    .spacing__margin-left--3
+      .text__font-size--16.spacing__margin-bottom--0.text--bold You're session timed out!
+      p There was no activity so we logged you out to keep your session secure. Log in to jump back in!
+      a.link--dashed Learn more about this
 .grid__container.spacing__margin-bottom--4
   .bordered-panel.bordered-panel--authentication.bordered-panel--shadow.bordered-panel--mobile.spacing__pad--2.grid__container--centered
     h1.text__font-size--18.spacing__margin-top--0.spacing__margin-bottom--0 Log in to OpenTBL

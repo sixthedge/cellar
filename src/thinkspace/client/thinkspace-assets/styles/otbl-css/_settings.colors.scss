@@ -23,7 +23,7 @@ $color-green-base--accessible: #22872f;
 
 // Red
 $color-red-base: #ee6055;
-$color-red-light: lighten($color-red-base, 20%);
+$color-red-light: lighten($color-red-base, 25%);
 
 // Red 4.5:1
 $color-red-base--accessible: #c44f46;
@@ -35,6 +35,7 @@ $color-rose-base: #c96480;
 // Yellow
 $color-yellow-med:  #FCD992;
 $color-yellow-base: #fcb725;
+$color-yellow-light: lighten($color-yellow-base, 35%);
 
 // Black
 $color-black-base:	#464646;

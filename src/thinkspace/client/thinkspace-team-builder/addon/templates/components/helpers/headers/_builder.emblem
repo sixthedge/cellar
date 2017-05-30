@@ -5,9 +5,12 @@
   if all_data_loaded
     if manager.has_transform
       .dialogue.dialogue--yellow.spacing__margin-bottom--2
-        h5 You have unsaved changes to your teams that will affect current assignments. Do you want to apply them now?
-        component '__modal/confirmation' content_partial='components/teams/manage/modals/save/modal' link_partial='components/teams/manage/modals/save/action' assignments=manager.space.active_assignments confirm='explode' class='btn__component text--inline-block'
-        component '__modal/confirmation' content_partial='components/teams/manage/modals/revert/modal' link_partial='components/teams/manage/modals/revert/action' assignments=manager.space.active_assignments confirm='revert' class='btn__component text--inline-block'
+        .icon.icon--32.totem-icon__warning--black.is-left
+        .text--inline-block.spacing__margin-left--1
+          .text__font-size--16.spacing__margin-bottom--0.text--bold Looks like there's changes
+          p You have unsaved changes to your teams that will affect current assignments. Do you want to apply them now?
+          component '__modal/confirmation' content_partial='components/teams/manage/modals/save/modal' link_partial='components/teams/manage/modals/save/action' assignments=manager.space.active_assignments confirm='explode' class='btn__component text--inline-block'
+          component '__modal/confirmation' content_partial='components/teams/manage/modals/revert/modal' link_partial='components/teams/manage/modals/revert/action' assignments=manager.space.active_assignments confirm='revert' class='btn__component text--inline-block'
 
   .btn-group.is-right
     / link-to 'teams.builder' model (query-params team_id=null)
