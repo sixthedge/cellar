@@ -172,17 +172,17 @@ export default base_component.extend arr_helpers,
   goto_team: (team) ->
     qp = {team_id: null}
     qp = {team_id: team.id} if ember.isPresent(team)
-    @get_app_route().transitionTo(ns.to_r('team_builder', 'builder'), @get('model'), {queryParams: qp}).then =>
+    @get_app_route().transitionTo(ns.to_r('team_builder', 'teams.builder'), @get('model'), {queryParams: qp}).then =>
       @set_query_param()
       @init_team()
       @init_table_data()
       @init_selected_users()
 
   goto_manage_route: ->
-    @get_app_route().transitionTo(ns.to_r('team_builder', 'manage'), @get('model'))
+    @get_app_route().transitionTo(ns.to_r('team_builder', 'teams.manage'), @get('model'))
 
   goto_roster_route: ->
-    @get_app_route().transitionTo(ns.to_r('team_builder', 'roster'), @get('model'))
+    @get_app_route().transitionTo(ns.to_r('team_builder', 'teams.roster'), @get('model'))
 
   actions:
     search_results: (users) ->
@@ -213,7 +213,7 @@ export default base_component.extend arr_helpers,
 
     cancel: ->
       @get('manager').remove_team_from_transform(@get('team')).then =>
-        @get_app_route().transitionTo(ns.to_r('team_builder', 'manage'))
+        @get_app_route().transitionTo(ns.to_r('team_builder', 'teams.manage'))
 
     remove_user: (user) ->
       team    = @get('team')

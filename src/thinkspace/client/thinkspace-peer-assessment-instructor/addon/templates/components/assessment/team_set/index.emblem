@@ -10,12 +10,12 @@
 
   .grid__col--2of4.grid__mobile--full-width
     .btn-group.is-right
-      component '__modal/confirmation' modal_partial='components/assessment/team_set/index/modals/send/modal' modal_reveal_partial='components/assessment/team_set/index/modals/send/action' model=progress_report.approved_team_sets confirm='send' modal_reveal_anchor_class_names='btn btn--primary' class='btn__component'
+      component '__modal/confirmation' content_partial='components/assessment/team_set/index/modals/send/modal' link_partial='components/assessment/team_set/index/modals/send/action' model=progress_report.approved_team_sets confirm='send' link_class_names='btn btn--primary' class='btn__component'
 
       if progress_report.all_teams_approved
         .spacing__margin-top--half.text__align--right.text--bold.text__font-size--14.text__color--green Ready to Send!
       else
-        component '__modal/confirmation' modal_partial='components/assessment/team_set/index/modals/approve_all/modal' modal_reveal_partial='components/assessment/team_set/index/modals/approve_all/action' model=progress_report.neutral_team_sets confirm='approve' modal_reveal_anchor_class_names='btn' class='btn__component'
+        component '__modal/confirmation' content_partial='components/assessment/team_set/index/modals/approve_all/modal' link_partial='components/assessment/team_set/index/modals/approve_all/action' model=progress_report.neutral_team_sets confirm='approve' link_class_names='btn' class='btn__component'
 .grid__container--flex.flex__justify--between
   each progress_report.team_sets as |team_set|
     component 'assessment/team_set/index/team_set' model=team_set assignment=assignment assessment=assessment progress_report=progress_report select='select_team_set' class='grid__col--49 grid__mobile--full-width spacing__margin-bottom--1'

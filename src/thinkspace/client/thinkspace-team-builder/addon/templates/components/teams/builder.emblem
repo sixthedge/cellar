@@ -3,13 +3,13 @@
     link-to-external 'spaces.show' model class='breadcrumbs__link'
       = model.title
     '  |
-    link-to 'manage' model class='breadcrumbs__link'
+    link-to 'teams.manage' model class='breadcrumbs__link'
       | Teams
 
   if loading.all
     component '__loader/base'
   else
     if has_team_id
-      partial 'components/builder/create'
+      partial 'components/teams/builder/create'
     else
-      partial 'components/builder/team_builder'
+      partial 'components/teams/builder/team_builder'

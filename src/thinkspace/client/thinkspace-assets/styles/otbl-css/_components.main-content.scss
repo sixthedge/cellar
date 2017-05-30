@@ -10,10 +10,13 @@
 }
 
 .main-content__header {
-	padding-top:   2rem;
+	@extend .group;
+	
+	position:      relative;
+	margin-top:    2rem;
 	margin-bottom: 2rem;
 
-	>h1 {
+	h1 {
 		font-size: 1.875rem;
 		margin:    0; 
 	}

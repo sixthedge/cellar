@@ -12,7 +12,7 @@
       component 'content/question/choice/edit' model=choice delete='delete_choice' select_answer='select_answer' answer=answer
 
   a{action 'add_choice'} class='btn' role='button' tabindex='0'
-    .icon.icon--16.icon__plus--white.spacing__margin-right--half
+    .icon.icon--16.icon__plus--black.spacing__margin-right--half
     | New Answer choice
 
 // Can delete this block after the new correct link is implemented

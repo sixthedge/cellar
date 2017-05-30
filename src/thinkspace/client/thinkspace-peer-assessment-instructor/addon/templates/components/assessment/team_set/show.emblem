@@ -12,7 +12,7 @@ if all_data_loaded
               button.btn.btn--primary click='toggle_approve'
                 | Reset Approvals
             else
-              component '__modal/confirmation' modal_partial='components/assessment/team_set/show/modals/approve/modal' modal_reveal_partial='components/assessment/team_set/show/modals/approve/action' model=ignored_ownerables modal_reveal_anchor_class_names='btn btn--primary' confirm='toggle_approve' class='btn__component'
+              component '__modal/confirmation' content_partial='components/assessment/team_set/show/modals/approve/modal' link_partial='components/assessment/team_set/show/modals/approve/action' model=ignored_ownerables link_class_names='btn btn--primary' confirm='toggle_approve' class='btn__component'
 
           button.btn click='select_team_set'
             | Go Back

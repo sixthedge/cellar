@@ -7,7 +7,7 @@ hr
     button.btn click='edit'
       | Edit question
     button.btn click='duplicate'
-      .icon.icon--16.icon__clone--white.spacing__margin-right--half
+      .icon.icon--16.icon__clone--black.spacing__margin-right--half
       | Duplicate
   
   .btn-group.is-right

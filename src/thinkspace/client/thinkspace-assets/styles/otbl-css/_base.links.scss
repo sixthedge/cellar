@@ -10,4 +10,13 @@ a {
   &:hover, &:focus {
     color: $color-blue-dark;
   }
+
+  // Accessibility Colors
+  .accessibility--color-contrast & {
+    color: $color-blue-base--accessible;
+
+    &:hover, &:focus {
+      color: $color-blue-dark--accessible;
+    }
+  }
 }

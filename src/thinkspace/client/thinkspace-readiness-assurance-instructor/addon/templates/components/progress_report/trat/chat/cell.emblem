@@ -1,1 +1,1 @@
-component '__modal/base' modal_partial='components/progress_report/trat/chat/modals/chat' modal_reveal_partial='components/progress_report/trat/chat/modals/button' chat_messages=chat_messages ownerable=ownerable qm=qm
+component '__modal/base' content_partial='components/progress_report/trat/chat/modals/chat' link_partial='components/progress_report/trat/chat/modals/button' chat_messages=chat_messages ownerable=ownerable qm=qm

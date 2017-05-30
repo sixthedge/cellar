@@ -201,7 +201,6 @@ totem_messages = ember.Object.extend
 
   # Determine messages to display.
   suppress_all_messages: (type) ->
-    console.log "TYPE:", type
     return false if type == 'error'
     config.messages.suppress_all == false
 

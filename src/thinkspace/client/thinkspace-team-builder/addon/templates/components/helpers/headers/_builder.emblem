@@ -6,27 +6,27 @@
     if manager.has_transform
       .dialogue.dialogue--yellow.spacing__margin-bottom--2
         h5 You have unsaved changes to your teams that will affect current assignments. Do you want to apply them now?
-        component '__modal/confirmation' modal_partial='components/manage/modals/save/modal' modal_reveal_partial='components/manage/modals/save/action' assignments=manager.space.active_assignments confirm='explode' class='btn__component text--inline-block'
-        component '__modal/confirmation' modal_partial='components/manage/modals/revert/modal' modal_reveal_partial='components/manage/modals/revert/action' assignments=manager.space.active_assignments confirm='revert' class='btn__component text--inline-block'
+        component '__modal/confirmation' content_partial='components/teams/manage/modals/save/modal' link_partial='components/teams/manage/modals/save/action' assignments=manager.space.active_assignments confirm='explode' class='btn__component text--inline-block'
+        component '__modal/confirmation' content_partial='components/teams/manage/modals/revert/modal' link_partial='components/teams/manage/modals/revert/action' assignments=manager.space.active_assignments confirm='revert' class='btn__component text--inline-block'
 
   .btn-group.is-right
-    link-to 'builder' model (query-params team_id=null)
-      .btn.btn-small.btn--primary
-        | Team Builder
+    / link-to 'teams.builder' model (query-params team_id=null)
+    /   .btn.btn-small.btn--primary
+    /     | Team Builder
     .btn.btn-small
       | Import file
 
 .switch.is-left.spacing__margin-right--2
   input name='team_view' type='checkbox' 
-  link-to 'roster' model class='switch__label switch__label--off'
+  link-to 'teams.roster' model class='switch__label switch__label--off'
     | Students
   if is_manage
-    link-to 'roster' model
+    link-to 'teams.roster' model
       .switch__slider.switch__slider--right
   else
-    link-to 'manage' model
+    link-to 'teams.manage' model
       .switch__slider.switch__slider--left
-  link-to 'manage' model class='switch__label switch__label--on'
+  link-to 'teams.manage' model class='switch__label switch__label--on'
     | Teams
 
 .forms__field-wrapper.forms__field-wrapper--med.forms__field-wrapper--inline
