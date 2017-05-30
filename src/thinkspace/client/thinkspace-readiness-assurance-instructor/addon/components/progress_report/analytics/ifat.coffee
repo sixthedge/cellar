@@ -7,3 +7,4 @@ export default base.extend
 
   # ### Computed properties
   assessment: ember.computed.reads 'model'
+  

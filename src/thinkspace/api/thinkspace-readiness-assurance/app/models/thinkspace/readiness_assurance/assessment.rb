@@ -48,7 +48,8 @@ module Thinkspace
       # ###
       # ### Question Helpers.
       # ###
-      def answer_for_question_id(id); answers.dig('correct', id); end
+      # The question_id may be passed in as an int, but they are stored as string.
+      def answer_for_question_id(id); answers.dig('correct', id.to_s); end
       def choices_for_question_id(id)
         question = question_for_id(id)
         return [] unless question.present?
