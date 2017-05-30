@@ -24,8 +24,8 @@ export default ember.Mixin.create
         steps.pushObject step
 
       @set 'steps', steps
-      @initialize_steps().then =>
-        @get('manager').initialize(@get('model')).then =>
+      @get('manager').initialize(@get('model')).then =>
+        @initialize_steps().then =>
           steps.forEach (step) =>
             step.set('manager_loaded', true)
           resolve()
@@ -43,8 +43,8 @@ export default ember.Mixin.create
 
       promises = []
       steps.forEach (step) => promises.pushObject(step.initialize()) if step.initialize?
-
-      ember.RSVP.Promise.all(promises).then => resolve()
+      ember.RSVP.Promise.all(promises).then => 
+        resolve()
 
   get_step: (id) -> @_get_step_from_id(id)
 

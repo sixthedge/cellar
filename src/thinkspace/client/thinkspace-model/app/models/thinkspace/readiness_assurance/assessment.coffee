@@ -8,7 +8,7 @@ export default base.extend ta.add(
   ),
 
   title:             ta.attr('string')
-  question_settings: ta.attr() # Used in the QuestionMangers, etc.  Contains questions + settings.
+  question_settings: ta.attr() # Used in the QuestionManagers, etc.  Contains questions + settings.
   authable_id:       ta.attr('number')
   authable_type:     ta.attr('string')
   ra_type:           ta.attr('string')
@@ -36,7 +36,6 @@ export default base.extend ta.add(
     questions.forEach (question) =>
       delete question.answer
 
-  get_question_ids: -> @get('questions').mapBy 'id'
-
+  get_question_ids:        -> @get('questions').mapBy 'id'
   get_question_by_id: (id) -> @get('questions').findBy 'id', id
   get_answer_by_id:   (id) -> @get("answers.correct.#{id}")

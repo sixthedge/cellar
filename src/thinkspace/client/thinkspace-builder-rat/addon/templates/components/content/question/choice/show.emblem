@@ -1,3 +1,4 @@
+//= model.is_answer
 if model.is_answer
   .text--bold.text__font-size--12.text__color--green
     .icon.icon--16.icon__checkmark--green.spacing__margin-right--half

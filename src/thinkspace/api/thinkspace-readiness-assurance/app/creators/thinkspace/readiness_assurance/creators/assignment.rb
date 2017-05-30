@@ -35,6 +35,7 @@ module Thinkspace; module ReadinessAssurance; module Creators
         authable: phase,
         settings: {
           ra_type: type,
+          next_id: 0,
           questions: {
             type:          'multiple_choice',
             random:        false,

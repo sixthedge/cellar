@@ -7,3 +7,6 @@
   label.spacing__margin-bottom--0 Due date
   .forms__label-summary Set the due date and time for this exercise. After this date, the exercise will be read-only.
   component '__datetime_picker' value=changeset.due_at select='select_due_at'
+
+  component '__changeset/errors' changeset=changeset attribute='due_at' errors_visible=true
+  component '__changeset/errors' changeset=changeset attribute='unlock_at' errors_visible=true

@@ -4,6 +4,9 @@
 each choice_items as |choice index|
   component 'content/question/choice/show' model=choice
 
+br
+component '__changeset/errors' changeset=model.changeset attribute='answer' errors_visible=true 
+
 hr
 .grid__container
   .btn-group.is-left

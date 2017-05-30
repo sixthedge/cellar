@@ -22,19 +22,23 @@ export default base.extend
     delete model.new if ember.isPresent(model.new)
 
   update_model: ->
-    console.log('model is ', @get('model'))
     @get('model').persist().then (valid) =>
       if valid
         @set_loading('update')
+        @send('toggle_is_editing', false)
         @get('manager').save_assessment(@get('type')).then =>
-          @send('toggle_is_editing', false)
+          @get('step').create_question_items(ember.makeArray(@get('model')))
           @reset_loading('update')
 
   actions:
     toggle_is_editing: (val) -> 
-      @get('model').init() if val
       @handle_new(val)
       @set('is_editing', val)
 
     update_question: ->
       @update_model()
+
+    delete: (type, item_obj) ->
+      @set_loading('update')
+      @get('step').delete_question_item(type, item_obj).then =>
+        @reset_loading('update')

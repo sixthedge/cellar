@@ -20,7 +20,7 @@ export default step.extend
   manager: ember.inject.service()
 
   model:           ember.computed.reads 'builder.model'
-  
+
   irat_phase:      ember.computed.reads 'manager.irat_phase'
   trat_phase:      ember.computed.reads 'manager.trat_phase'
   irat_assessment: ember.computed.reads 'manager.irat'
@@ -32,7 +32,7 @@ export default step.extend
     vlength    = totem_changeset.vlength(min: 4)
     irat_phase = @get('irat_phase')
     trat_phase = @get('trat_phase')
-
+    
     changeset = totem_changeset.create model,
       title:        [vpresence, vlength]
       instructions: [vpresence]
@@ -45,13 +45,12 @@ export default step.extend
     @set 'changeset', changeset
 
   initialize: ->
-    @set_loading('all')
-    @load_assignment_data().then (assignment) =>
-      @query_team_sets().then (team_sets) =>
-        @initialize_team_set().then (team_set) =>
-          @create_changesets()
-          @init_phase_titles()
-          @reset_loading('all')
+    new ember.RSVP.Promise (resolve, reject) =>
+      @set_loading('all')
+      @create_changesets()
+      @init_phase_titles()
+      @reset_loading('all')
+      resolve()
 
   init_phase_titles: ->
     @init_phase_title('irat', @get('irat_phase'))
@@ -93,40 +92,40 @@ export default step.extend
       changeset.validate().then =>
         resolve(changeset.get('isValid'))
 
-  load_assignment_data: ->
-    new ember.RSVP.Promise (resolve, reject) =>
-      params = 
-        id: @get('model.id')
-      options =
-        action: 'load'
-        model:  ta.to_p('assignment')
-      tc.query_action(ta.to_p('assignment'), params, options).then (assignment) =>
-        resolve assignment
+  # load_assignment_data: ->
+  #   new ember.RSVP.Promise (resolve, reject) =>
+  #     params = 
+  #       id: @get('model.id')
+  #     options =
+  #       action: 'load'
+  #       model:  ta.to_p('assignment')
+  #     tc.query_action(ta.to_p('assignment'), params, options).then (assignment) =>
+  #       resolve assignment
 
-  query_team_sets: ->
-    new ember.RSVP.Promise (resolve, reject) =>
-      @get('model').get(ta.to_p('space')).then (space) =>
-        space.get_default_team_set().then (team_set) =>
-          @set 'team_sets', ember.makeArray(team_set)
-          resolve()
+  # query_team_sets: ->
+  #   new ember.RSVP.Promise (resolve, reject) =>
+  #     @get('model').get(ta.to_p('space')).then (space) =>
+  #       space.get_default_team_set().then (team_set) =>
+  #         @set 'team_sets', ember.makeArray(team_set)
+  #         resolve()
 
-  select_team_set: (team_set) -> 
-    # TODO: This needs to be refactored to get the tRAT assessment, then get the authable for it.
-    @set 'selected_team_set', team_set
-    @get('model').get(ta.to_p('phases')).then (phases) =>
-      phase = phases.get('lastObject')
-      phase.set 'team_set_id', team_set.get('id')
-      phase.save()
+  # select_team_set: (team_set) -> 
+  #   # TODO: This needs to be refactored to get the tRAT assessment, then get the authable for it.
+  #   @set 'selected_team_set', team_set
+  #   @get('model').get(ta.to_p('phases')).then (phases) =>
+  #     phase = phases.get('lastObject')
+  #     phase.set 'team_set_id', team_set.get('id')
+  #     phase.save()
 
-  initialize_team_set: ->
-    new ember.RSVP.Promise (resolve, reject) =>
-      @get('model').get(ta.to_p('phases')).then (phases) =>
-        team_sets   = @get('team_sets')
-        phase       = phases.get('firstObject')
-        if ember.isPresent(phase.get('team_set_id')) 
-          team_set = team_sets.findBy 'id', phase.get('team_set_id').toString()
-          @set 'selected_team_set', team_set
-        else 
-          team_set = team_sets.get('firstObject')
-          @select_team_set team_set
-        resolve()
+  # initialize_team_set: ->
+  #   new ember.RSVP.Promise (resolve, reject) =>
+  #     @get('model').get(ta.to_p('phases')).then (phases) =>
+  #       team_sets   = @get('team_sets')
+  #       phase       = phases.get('firstObject')
+  #       if ember.isPresent(phase.get('team_set_id')) 
+  #         team_set = team_sets.findBy 'id', phase.get('team_set_id').toString()
+  #         @set 'selected_team_set', team_set
+  #       else 
+  #         team_set = team_sets.get('firstObject')
+  #         @select_team_set team_set
+  #       resolve()

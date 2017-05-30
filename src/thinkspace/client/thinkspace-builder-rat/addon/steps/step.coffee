@@ -9,10 +9,19 @@ import common_helper   from 'thinkspace-common/mixins/helpers/common/all'
 ###
 export default ember.Object.extend common_helper,
 
-  loading: null
-  set_loading:      (type) -> @set("loading.#{type}", true)
-  reset_loading:    (type) -> @set("loading.#{type}", false)
+  manager_loaded: false
+  loading:        null
+  set_loading:    (type) -> @set("loading.#{type}", true)
+  reset_loading:  (type) -> @set("loading.#{type}", false)
 
   init: ->
     @_super()
     @set('loading', new Object)
+    @set_loading('all')
+
+  initialize: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      resolve()
+
+  manager_load_obs: ember.observer 'manager_loaded', ->
+    if @get('manager_loaded') then @reset_loading('all')

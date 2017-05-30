@@ -1,15 +1,15 @@
-import ember           from 'ember'
-import util            from 'totem/util'
-import totem_changeset from 'totem/changeset'
-import choice_obj      from 'thinkspace-builder-rat/items/question/choice'
-import array_helpers   from 'thinkspace-common/mixins/helpers/common/array'
-
+import ember             from 'ember'
+import util              from 'totem/util'
+import totem_changeset   from 'totem/changeset'
+import choice_obj        from 'thinkspace-builder-rat/items/question/choice'
+import array_helpers     from 'thinkspace-common/mixins/helpers/common/array'
+import changeset_helpers from 'thinkspace-common/mixins/helpers/common/changeset'
 ###
 # # question.coffee
 # - Type: **Object**
 # - Package: **ethinkspace-builder-rat**
 ###
-export default ember.Object.extend array_helpers,
+export default ember.Object.extend array_helpers, changeset_helpers,
   # ### Properties
   model:         null
 
@@ -20,10 +20,21 @@ export default ember.Object.extend array_helpers,
   choices:  ember.computed.reads 'model.choices'
   answer:   ember.computed.reads 'model.answer'
 
-  create_choice_item: (item, index) -> choice_obj.create(model: item, index: index, answer: @get('answer'))
+  create_choice_item: (item, index) -> choice_obj.create(model: item, index: index, question: @)
 
-  get_choice_by_id: (id) -> @get('choice_items').findBy 'id', id
+  get_choice_by_id: (id)  -> @get('choice_items').findBy 'id', id
+  select_answer: (choice) -> @get('changeset').set('answer', choice.get('model.id'))
 
+  init: ->
+    @_super()
+    console.log('[QUESTION] initing')
+    @create_changeset()
+    @update_choice_items()
+
+
+  #######
+  ## Changeset Functionality
+  #######
   persist: ->
     new ember.RSVP.Promise (resolve, reject) =>
       manager = @get('manager')
@@ -31,30 +42,17 @@ export default ember.Object.extend array_helpers,
       @validate().then (valid) =>
         if valid
           @changeset_save().then =>
-            console.log('answer is ', @get('answer'))
-            manager.set_question_answer(type, @get('id'), @get_choice_by_id(@get('answer')))
-            # manager.save_assessment(type).then =>
-            #   console.log('assessement was saved, model is ', @get('model'))
-            #   @init()
+            manager.set_question_answer(type, @get('id'), @get('changeset.answer'))
             resolve(true)
         else
           resolve(false)
 
-  select_answer: (choice) ->
-    @get('changeset').set('answer', choice.get('model.id'))
-
   validate: ->
     new ember.RSVP.Promise (resolve, reject) =>
-      validities   = ember.makeArray()
-      choice_items = @get('choice_items')
+      changesets = ember.makeArray(@get('changeset')).concat(@get('choice_items').mapBy('changeset'))
 
-      validities.pushObject(@validate_changeset())
-
-      choice_items.forEach (choice) =>
-        validities.pushObject(choice.validate())
-
-      ember.RSVP.all(validities).then (valids) =>
-        resolve(!valids.contains(false))
+      @determine_validity(changesets).then (is_valid) =>
+        resolve(is_valid)
 
   changeset_save: ->
     new ember.RSVP.Promise (resolve, reject) =>
@@ -85,18 +83,6 @@ export default ember.Object.extend array_helpers,
         resolve()
       , (error) =>
         reject(error)
-
-  validate_changeset: ->
-    new ember.RSVP.Promise (resolve, reject) =>
-      changeset = @get('changeset')
-      changeset.validate().then =>
-        resolve(changeset.get('isValid'))
-
-  init: ->
-    @_super()
-    console.log('calling init')
-    @create_changeset()
-    @update_choice_items()
 
   create_changeset: ->
     model     = @get('model')
@@ -130,8 +116,6 @@ export default ember.Object.extend array_helpers,
     items        = @get('changeset.choices')
     answer       = @get('changeset.answer')
 
-    console.log('calling update_choice_items with answer ', answer)
-
     if ember.isPresent(items)
       items.forEach (item, index) =>
         if ember.isPresent(cur_items)
@@ -140,7 +124,7 @@ export default ember.Object.extend array_helpers,
         if ember.isPresent(choice_obj)
           choice_obj.set('model', item)
           choice_obj.set('index', index)
-          choice_obj.set('answer', answer)
+          choice_obj.set('question', @)
           choice_items.pushObject(choice_obj)
         else
           choice_items.pushObject(@create_choice_item(item, index))

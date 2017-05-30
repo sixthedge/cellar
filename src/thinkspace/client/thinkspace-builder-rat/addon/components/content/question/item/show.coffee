@@ -17,11 +17,10 @@ export default base.extend
     toggle_edit: ->
       @sendAction('edit', true)
 
-    duplicate: -> @get('manager').duplicate_question_item(@get('type'), @get('model.model'))
-
-    delete:    -> @get('manager').delete_question_item(@get('type'), @get('model.model'))
-
-    reorder_up:     -> @get('manager').reorder_item(@get('type'), @get('model.model'), -1)
-    reorder_down:   -> @get('manager').reorder_item(@get('type'), @get('model.model'), 1)
-    reorder_top:    -> @get('manager').reorder_item(@get('type'), @get('model.model'), 'top')
-    reorder_bottom: -> @get('manager').reorder_item(@get('type'), @get('model.model'), 'bottom')
+    duplicate:      -> @get('step').duplicate_question_item(@get('type'), @get('model.model'))
+    delete:         -> 
+      @sendAction('delete', @get('type'), @get('model.model'))
+    reorder_up:     -> @get('step').reorder_up(@get('type'), @get('model.model'))
+    reorder_down:   -> @get('step').reorder_down(@get('type'), @get('model.model'))
+    reorder_top:    -> @get('step').reorder_top(@get('type'), @get('model.model'))
+    reorder_bottom: -> @get('step').reorder_bottom(@get('type'), @get('model.model'))

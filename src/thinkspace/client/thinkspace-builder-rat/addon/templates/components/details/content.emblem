@@ -9,7 +9,7 @@
   component '__changeset/text_area' value=step.changeset.instructions changeset=step.changeset attribute='instructions' display_errors=true label='Exercise overview/instructions' summary='Students will see this before they start the exercise. The overview is a good place to provide context before they go into the exercise'
 
 .forms__section
-  h2.spacing__margin-bottom--0 Invidiual Activity Names
+  h2.spacing__margin-bottom--0 Individual Activity Names
   .forms__heading-summary.spacing__margin-top--0 You can change the names of the individual activies within the exercise if you don't like the default names. We won't feel bad, we promise.
   component '__changeset/input' value=step.irat_changeset.title changeset=step.irat_changeset attribute='title' display_errors=true label='iRAT Activity Title' 
   component '__changeset/input' value=step.trat_changeset.title changeset=step.trat_changeset attribute='title' display_errors=true label='tRAT Activity Title'

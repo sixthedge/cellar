@@ -12,3 +12,6 @@ export default base.extend
   model: null
 
   prefix: ember.computed.reads 'model.prefix'
+
+  init_base: ->
+    console.log('[choice/show] initing a component with model ', @get('model'), @get('model.answer'))

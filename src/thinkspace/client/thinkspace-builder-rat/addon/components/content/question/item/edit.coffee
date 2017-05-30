@@ -16,10 +16,8 @@ export default base.extend
 
   choice_items: ember.computed.reads 'model.choice_items'
   answer:       ember.computed.reads 'model.changeset.answer'
-  cur_answer:   null
 
   select_answer: (choice) ->
-    @set('cur_answer', choice.get('id'))
     @get('model').select_answer(choice)
 
   actions:
@@ -27,9 +25,7 @@ export default base.extend
       @get('model').changeset_rollback().then =>
         @sendAction('show', false)
 
-    update: -> 
-      @sendAction('update')
-      #@update_model()
+    update: -> @sendAction('update')
 
     add_choice:             -> @get('model').add_choice_to_item(@get('type'), @get('model.id'))
     delete_choice: (choice) -> @get('model').delete_choice_from_item(@get('type'), @get('model.id'), choice)

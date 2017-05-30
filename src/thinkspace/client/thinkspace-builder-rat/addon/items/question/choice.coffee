@@ -9,20 +9,21 @@ import totem_changeset from 'totem/changeset'
 ###
 export default ember.Object.extend
   # ### Properties
-  model:  null
-  index:  null
-  answer: null
+  model:    null
+  index:    null
+  question: null
   
   alphabet: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
   id:      ember.computed.reads 'model.id'
   label:   ember.computed.reads 'model.label'
-  #answer: ember.computed.reads 'model.answer'
+  answer:  ember.computed.reads 'question.changeset.answer'
 
   is_answer: ember.computed 'id', 'answer', 'model', -> parseInt(@get('id')) == parseInt(@get('answer'))
 
   init: ->
     @_super()
+    console.log('[CHOICE] initing')
     @init_prefix(@get('index'))
     @create_changeset()
 
@@ -38,6 +39,7 @@ export default ember.Object.extend
     model     = @get('model')
     vpresence = totem_changeset.vpresence(true)
     changeset = totem_changeset.create(model, label: [vpresence])
+
     @set('changeset', changeset)
 
   validate: ->

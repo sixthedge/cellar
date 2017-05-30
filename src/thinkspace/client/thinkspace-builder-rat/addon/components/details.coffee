@@ -10,6 +10,6 @@ export default base.extend
 
   # ## Actions
   actions:
-    next_step: -> @get('builder').transition_to_next_step(save: true)
+    next_step: -> @get('builder').transition_to_next_step(save: true, validation: true)
     exit: ->      @get('builder').transition_to_cases_show()
     
