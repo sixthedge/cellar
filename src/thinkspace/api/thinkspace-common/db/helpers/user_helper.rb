@@ -17,7 +17,7 @@ end
 
 def get_common_user(*args)
   options = args.extract_options!
-  @seed.model_class(:common, :user).find_by(options)
+  @seed.model_class(:common, :user).find_by(options.without(:profile))
 end
 
 def get_common_users_from_first_names(names)
