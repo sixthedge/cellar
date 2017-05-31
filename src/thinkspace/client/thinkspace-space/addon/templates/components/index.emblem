@@ -2,7 +2,7 @@
   .grid__col--4of4
     .main-content__header
       h1.text--inline-block Hello, #{session.user.first_name}!
-      = if can.create
+      if can.create
         .btn-group.is-right
           link-to 'new' class='btn btn--primary is-right' tabindex='0' role='button'
             .icon.icon--16.icon__plus--white.spacing__margin-right--half

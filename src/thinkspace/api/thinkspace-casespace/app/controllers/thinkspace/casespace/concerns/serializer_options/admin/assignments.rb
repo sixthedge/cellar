@@ -13,6 +13,7 @@ module Thinkspace
             end
 
             def create(serializer_options)
+              serializer_options.include_metadata
               serializer_options.ability_actions :gradebook, :manage_resources, scope: :root
             end
             def phase_order(serializer_options); end

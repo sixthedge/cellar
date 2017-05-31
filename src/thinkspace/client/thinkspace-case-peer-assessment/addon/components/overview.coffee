@@ -25,6 +25,8 @@ export default base.extend
   team:                 null
   phase_states_loaded:  false
 
+  header_options: ember.computed 'pa_team_set', -> { team_set: @get('pa_team_set') }
+
   # ### Events
   init_base: ->
     @set_phase_progress()
@@ -32,13 +34,14 @@ export default base.extend
     @init_abilities().then =>
       @init_assessment_phase().then =>
         @init_assessment().then =>
-          can_update = @get('model.can.update')
-          if can_update
-            @init_team_set().then =>
-              @init_pubsub()
-          else
-            @set_team().then =>
-              @init_pubsub()
+            can_update = @get('model.can.update')
+            if can_update
+              @init_team_set().then =>
+                @init_pubsub()
+            else
+              @set_team().then =>
+                @init_pa_team_set().then =>
+                  @init_pubsub()
 
   # ### Helpers
   set_phase_progress: ->
@@ -107,6 +110,22 @@ export default base.extend
       @totem_scope.authable(assignment)
       se = @get('server_events')
       se.join_assignment_with_current_user()
+
+  init_pa_team_set: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      assessment = @get('assessment')
+      query = @totem_scope.get_view_query(assessment, sub_action: 'team_set')['data']
+      query.id = query.id || assessment.get('id')
+      query.team_id = @get 'team.id'
+
+      options       = @totem_scope.get_view_query(assessment, sub_action: 'team_set')
+      options.verb  = 'GET'
+      options.model = ta.to_p('tbl:team_set')
+      @totem_scope.add_authable_to_query(options)
+
+      @tc.query_action(ta.to_p('tbl:assessment'), query, options).then (team_set) =>
+        @set 'pa_team_set', team_set
+        resolve(team_set)
 
   set_team: ->
     new ember.RSVP.Promise (resolve, reject) =>

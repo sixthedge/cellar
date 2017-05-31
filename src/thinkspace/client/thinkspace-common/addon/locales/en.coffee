@@ -316,6 +316,7 @@ export default {
               unignore: 'Review set unignored successfully.'
               unlock: 'Review set unlocked successfully.'
               remind: 'Reminder email sent successfully.'
+              submit: 'Peer evaluation submitted successfully.'
 
           team:
             team:

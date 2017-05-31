@@ -26,6 +26,8 @@ module Thinkspace; module PeerAssessment; module Api;
       case sub_action
       when :teams
         teams
+      when :team_set
+        team_set
       when :review_sets
         review_sets
       when :overview
@@ -58,6 +60,18 @@ module Thinkspace; module PeerAssessment; module Api;
       team = teams.first
       user_ids  = team.thinkspace_common_users.pluck(:id)
       controller_render(team)
+    end
+
+    def team_set
+      ownerable = totem_action_authorize.params_ownerable
+      team_id   = params[:team_id]
+      team      = Thinkspace::Team::Team.find(team_id)
+      access_denied "Team is invalid or not assigned to correct teamable." unless team.present?
+      phase = @assessment.authable
+      assignment = phase.thinkspace_casespace_assignment
+      access_denied "Ownerable is not a member of specified team" unless (Thinkspace::Team::Team.users_on_teams?(phase, ownerable, team) || Thinkspace::Team::Team.users_on_teams?(assignment, ownerable, team))
+      team_set   = Thinkspace::PeerAssessment::TeamSet.find_or_create_by(team_id: team_id, assessment_id: @assessment.id)
+      controller_render(team_set)
     end
 
     def review_sets

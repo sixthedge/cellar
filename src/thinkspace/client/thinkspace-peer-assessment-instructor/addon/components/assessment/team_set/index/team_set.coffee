@@ -17,6 +17,8 @@ export default base_component.extend
 
   incomplete_review_sets: ember.computed 'model.review_sets.@each.status', -> @get('progress_report').get_incomplete_review_sets_for_team_set(@get('model'))
 
+  has_incomplete_review_sets: ember.computed.notEmpty 'incomplete_review_sets'
+
   # ## Helpers
   state_change: (state) ->
     model           = @get 'model'

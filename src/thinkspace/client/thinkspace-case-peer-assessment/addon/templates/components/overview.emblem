@@ -1,4 +1,4 @@
-component '__case/external/header' model=model phase=model.first_active_phase
+component '__case/external/header' model=model phase=model.first_active_phase options=header_options
 if model.is_pubsub
   mount 'thinkspace-message-pubsub'
   

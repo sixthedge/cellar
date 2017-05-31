@@ -81,7 +81,8 @@ def find_or_create_casespace_user(*args)
   email      = options[:email]      || "#{user_first.downcase}@sixthedge.com"
   state      = options[:state]      || 'active'
   superuser  = options[:superuser]  || false
-  create_user(first_name: user_first, last_name: user_last, email: email, state: state, superuser: superuser)
+  profile    = options[:profile]    || {}
+  create_user(first_name: user_first, last_name: user_last, email: email, state: state, superuser: superuser, profile: profile)
 end
 
 def find_casespace_team(*args)
