@@ -50,6 +50,6 @@
     .main-content__header
       partial 'components/header/crumbs'
       h1.text--inline-block = model.title
-      .btn-group.is-right
-        link-to-external 'cases.show' model.assignment class='btn btn--primary'
+      .btn-group.btn-group--mobile-full.is-right
+        link-to-external 'cases.show' model.assignment class='btn btn--primary btn--mobile-full'
           | Back to Case

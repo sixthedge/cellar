@@ -9,8 +9,8 @@ if rm.ready
       /   .text--inline-block.spacing__pad-top--half
       /     .text__font-size--14.text--bold This activity has been submitted
       /     .text__font-size--14 You have successfully submitted this activity. You can still view it but will not be able to edit.
-       
-      h4= rm.assessment.title
+      .main-content__sub-header.spacing__margin-bottom--2 
+        h2.text--inline-block= rm.assessment.title
       component 'questions' rm=rm chat='chat' chat_close='chat_close'
 
     .grid__col--1of4.grid__mobile--full-width

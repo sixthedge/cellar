@@ -1,4 +1,4 @@
 hr
 .forms__field-wrapper.spacing__pad-top--1
   label.spacing__margin-bottom--half Please justify your answer
-  = textarea value=input_value disabled=justification_disabled
+  = textarea value=input_value disabled=justification_disabled class='spacing__margin-bottom--0'

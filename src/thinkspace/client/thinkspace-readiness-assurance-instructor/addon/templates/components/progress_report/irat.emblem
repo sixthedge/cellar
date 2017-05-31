@@ -9,13 +9,14 @@ mount 'thinkspace-toolbar'
           '  |
           link-to 'progress_report' model class='breadcrumbs__link'
             | Progress Report
-        h1.text--inline-block Individual RAT
-        .btn-group.is-right
-          button.btn.btn--primary
+        .main-content__section-header.is-left
+          h1.text--inline-block Individual RAT
+          .text__font-size--14.text--bold.text__color--gray = model.friendly_due_at
+        .btn-group.btn-group--mobile-full.is-right
+          button.btn.btn--primary.btn--mobile-full role='button'
             | Start iRAT
-          button.btn
+          button.btn.btn--mobile-full role='button'
             | Set Timer
-        .text__font-size--14.text--bold.text__color--gray = model.friendly_due_at
 
   .grid__container--flex
     .grid__col--4of4
