@@ -8,7 +8,7 @@ partial 'components/header'
       // Error message
       .dialogue.dialogue--red
         .icon.icon--32.totem-icon__warning--black.is-left
-        .text--inline-block.spacing__margin-left--1
+        .spacing__margin-left--3
           .text__font-size--16.spacing__margin-bottom--0.text--bold Looks like something is missing
           p Looks like you're missing the follwing things on your thing. 
           a.link--dashed Learn more about this
