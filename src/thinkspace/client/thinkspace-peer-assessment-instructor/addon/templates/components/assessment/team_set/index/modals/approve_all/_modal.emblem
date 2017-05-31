@@ -2,7 +2,7 @@
   h1 Approve all teams
   if model.length
     p
-      | You have <strong>#{model.length} team(s)</strong> who have not yet completed their evaluations. You must acknowledge that you want to ignore their evaluations to approve these teams.
+      | You have <strong>#{model.length} team(s)</strong> who have not yet been approved. You must acknowledge that you want to ignore any incomplete evaluations to approve these teams.
     p.text__font-style--italic Students who are ignored will not be used to calculate the total score for other members.
     hr
 

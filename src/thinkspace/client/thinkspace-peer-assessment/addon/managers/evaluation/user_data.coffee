@@ -130,6 +130,5 @@ export default ember.Mixin.create
     options.verb  = 'GET'
     options.model = model_type
     @totem_scope.add_authable_to_query(options)
-    console.log "options.model:", options.model
     options
 

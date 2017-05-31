@@ -54,7 +54,8 @@ module.exports = function(environment) {
     "messages": {
         "suppress_all": true,
         "loading_template": "totem_message_outlet/loading",
-        "i18n_path_prefix": "casespace.api.success."
+        "i18n_path_prefix": "casespace.api.success.",
+        "error_template": "components/error.emblem"
     },
     "stylized_platform_name": "OpenTBL",
     "grid": {

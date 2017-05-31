@@ -19,6 +19,7 @@ export default base.extend ta.add(),
   students_total: ember.computed.reads 'value.total.review_sets'
   teams_total:    ember.computed.reads 'value.total.team_sets'
 
+  all_teams_sent:     ember.computed 'team_sets.@each.state', -> @get('team_sets').every (team_set) -> team_set.state == 'sent'
   all_teams_approved: ember.computed 'team_sets.@each.state', -> @get('team_sets').every (team_set) -> team_set.state == 'approved'
 
   # ### Methods

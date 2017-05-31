@@ -12,5 +12,9 @@
           | Scores
     else
       li.menu-bar__item
-        link-to 'results' model class='menu-bar__link'
-          | Results
+        if options.team_set.is_sent
+          link-to 'results' model class='menu-bar__link'
+            | Results
+        else
+          a.menu-bar__link
+            | Results

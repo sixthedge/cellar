@@ -17,4 +17,4 @@
       /       | Start Exercise
       .text__font-size--14.text--bold.text__color--gray = model.friendly_due_at
 
-    component 'navigation/subnav' model=model
+    component 'navigation/subnav' model=model options=options
