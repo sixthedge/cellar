@@ -55,6 +55,19 @@ module Thinkspace
         qorder
       end
 
+      # ###
+      # ### Scoring
+      # ###
+      def rescore!(user)
+        raise "Cannot rescore without a valid user." unless user.present?
+        authable  = thinkspace_readiness_assurance_assessment.authable
+        processor = Thinkspace::Casespace::PhaseActions::Processor.new(authable, user, rescore: true)
+        klass     = processor.get_totem_settings_class('ra_auto_score')
+        scorer = klass.new(processor, ownerable, Hash.new)
+        scorer.process
+      end
+
+
       class QuestionIdError < StandardError; end
       class AssessmentNotFoundError < StandardError; end
       class FindOrCreateError < StandardError; end
