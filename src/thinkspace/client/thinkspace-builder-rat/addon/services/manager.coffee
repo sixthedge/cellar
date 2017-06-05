@@ -28,6 +28,17 @@ export default ember.Service.extend array_helpers,
     {id: 4, label: 'Choice 4'}
   ]
 
+  default_sync_options: {
+    questions: 'all',
+    answers:   'all',
+    settings: 
+      next_id: true
+      scoring:
+        only: ['correct', 'no_answer']
+      questions:
+        only: ['justification']
+  }
+
   loading: null
   set_loading:      (type) -> @set("loading.#{type}", true)
   reset_loading:    (type) -> @set("loading.#{type}", false)
@@ -65,6 +76,12 @@ export default ember.Service.extend array_helpers,
           @set_assessment('trat', assessments_with_answers.trat)
           resolve()
 
+  update_question: (type, question) ->
+    items = @get_items(type)
+    item = items.findBy('id', question.get('id'))
+    ember.set(item, 'choices', question.get('choices'))
+    ember.set(item, 'question', question.get('question'))
+
   ## Needed to get the assessment to serialize its answers
   query_assessment_answers: (type, assessment) ->
     new ember.RSVP.Promise (resolve, reject) =>
@@ -87,6 +104,31 @@ export default ember.Service.extend array_helpers,
         tc.query_action(ns.to_p("ra:#{type}"), query, options).then (result) =>
           resolve(result)
 
+  query_assessment_sync: (type, assessment, options) ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      phase = @get_phase(type)
+
+      options = unless ember.isPresent(options) then @get('default_sync_options') else options
+
+      query =
+        id: assessment.get('id')
+        model: assessment
+        data:
+          attributes:
+            options: options
+
+        auth:
+          authable_id: phase.get('id')
+          authable_type: 'Thinkspace::Casespace::Phase'
+
+      options =
+        action: 'sync'
+        verb: 'POST'
+        model: ns.to_p('ra:assessment')
+
+      tc.query_action(ns.to_p('ra:assessment'), query, options).then (result) =>
+        resolve()
+
   set_model: (model) ->
     console.info "[rat:builder] Model set to: model"
     @set('model', model)
@@ -99,6 +141,8 @@ export default ember.Service.extend array_helpers,
     console.info "[rat:builder] Phase set to : #{type}: #{phase}"
     @set("#{type}_phase", phase)
 
+  get_phase: (type) -> @get("#{type}_phase")
+
   save_assessment: (type) ->
     new ember.RSVP.Promise (resolve, reject) =>
       assessment = @get_assessment(type)
@@ -106,8 +150,9 @@ export default ember.Service.extend array_helpers,
       assessment.remove_question_answers()
       assessment.save().then (saved_assessment) =>
         @query_assessment_answers(type, saved_assessment).then (result) =>
-          totem_messages.api_success source: @, model: assessment, action: 'update', i18n_path: ns.to_o('ra:assessment', 'save')
-          resolve()
+          @query_assessment_sync(type, result).then =>
+            totem_messages.api_success source: @, model: assessment, action: 'update', i18n_path: ns.to_o('ra:assessment', 'save')
+            resolve()
 
   get_new_question_item: (type, title, choices) ->
     item =
@@ -133,13 +178,12 @@ export default ember.Service.extend array_helpers,
   add_question_item: (type) ->
     new ember.RSVP.Promise (resolve, reject) =>
       item = @get_new_question_item(type)
-      item.new = true
       @get_items(type).pushObject(item)
       assessment = @get_assessment(type)
 
       @increment_next_id(type)
       @save_assessment(type).then =>
-        resolve()
+        resolve(item)
 
   add_choice_to_item: (type, id) ->
     new ember.RSVP.Promise (resolve, reject) =>
@@ -187,7 +231,6 @@ export default ember.Service.extend array_helpers,
     sorted_choices = choices.sortBy 'id'
     last_id        = sorted_choices.get('lastObject.id')
     new_id         = last_id + 1
-
     choice         = {id: new_id, label: "Choice #{new_id}"}
 
   delete_question_item: (type, item) ->
@@ -195,6 +238,7 @@ export default ember.Service.extend array_helpers,
       items    = @get_items(type)
       rem_item = items.findBy 'id', item.id
       items.removeObject(rem_item)
+      @delete_question_answer(type, item.id)
       @save_assessment(type).then =>
         resolve()
 
@@ -220,6 +264,14 @@ export default ember.Service.extend array_helpers,
       items.insertAt(add_at, re_item)
       @save_assessment(type).then =>
         resolve()
+
+  delete_question_answer: (type, item_id) ->
+    item = @get_item_by_id(type, item_id)
+    assessment = @get_assessment(type)
+
+    answers         = if ember.isPresent(assessment.get('answers')) then assessment.get('answers') else {}
+    correct_answers = if ember.isPresent(answers) and ember.isPresent(answers.correct) then answers.correct else {}
+    delete correct_answers["#{item_id}"] if ember.isPresent(correct_answers["#{item_id}"])
 
   set_question_answer: (type, item_id, choice_id) ->
     ## Choice is an instance of the ember object 'thinkspace-builder-rat/addon/items/question/choice.coffee'

@@ -13,6 +13,8 @@ export default base.extend
 
   choice_items: ember.computed.reads 'model.choice_items'
 
+  display_index: ember.computed 'index', -> @get('index') + 1
+
   actions:
     toggle_edit: ->
       @sendAction('edit', true)

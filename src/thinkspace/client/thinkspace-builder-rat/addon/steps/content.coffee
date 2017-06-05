@@ -41,13 +41,15 @@ export default step.extend
       resolve()
 
   ## TODO: get this to support trats as well
-  create_question_items: (delta=[]) ->
+  create_question_items: (opts={}) ->
     irat_assessment = @get('irat_assessment')
-    questions       = irat_assessment.get('questions_with_answers') || ember.makeArray()
+    questions       = irat_assessment.get('questions') || ember.makeArray()
 
-    items = @get('irat_question_items') || ember.makeArray()
-    i_ids = items.mapBy('id')
-    d_ids = delta.mapBy('id')
+    items   = @get('irat_question_items') || ember.makeArray()
+    delta   = opts.delta || ember.makeArray()
+    new_ids = opts.new_ids || ember.makeArray()
+    i_ids   = items.mapBy('id')
+    d_ids   = delta.mapBy('id')
 
     questions.forEach (question) =>
       id = question.id
@@ -56,14 +58,13 @@ export default step.extend
         q_item = @create_question_item(@get('irat_type'), question)
         if d_ids.contains(id)
           cur_item = items.filter((item) -> item.get('id') == id).get('firstObject')
-          index = items.indexOf(cur_item)
+          index    = items.indexOf(cur_item)
           items.removeAt(index)
           items.insertAt(index, q_item)
         else
           items.pushObject(q_item)
 
       q_item = items.findBy('id', id)
-      q_item.set('changeset.answer', question.answer)
       items.removeObject(q_item)
       items.insertAt(i, q_item)
 
@@ -72,6 +73,9 @@ export default step.extend
 
     del = i_ids.filter ((id) -> !q_ids.contains(id))
     del.forEach (id) => items.removeObject(items.findBy('id', id))
+
+    new_ids.forEach (id) => items.findBy('id', id).set('is_new', true)
+
 
     @set('irat_question_items', items)
 
@@ -83,29 +87,6 @@ export default step.extend
       @query_assessments().then (assessments) =>
         @set('assessments', assessments)
         @init_assessments()
-
-  # irat_question_items: ember.computed 'irat_assessment.questions_with_answers.length', ->
-  #   items     = @get('irat_assessment.questions_with_answers')
-  #   cur_items = @get('cur_irat_question_items')
-  #   arr       = ember.makeArray()
-  #   cur_item_ids = if ember.isPresent(cur_items) then cur_items.mapBy('id') else ember.makeArray()
-
-  #   if ember.isPresent(items)
-  #     items.forEach (item) =>
-  #       if ember.isPresent(cur_items)
-  #         question_obj = cur_items.filter((cur_item) -> cur_item.get('id') == item.id).get('firstObject')
-
-  #       if ember.isPresent(question_obj)
-  #         #console.log('question_obj found with item ', item)
-  #         #console.log('recomputing irat_question_items with item ', item)
-  #         question_obj.set('model', item)
-  #         question_obj.set('answer', item.answer)
-  #         arr.pushObject(question_obj)
-  #       else
-  #         arr.pushObject(@create_question_item(@get('irat_type'), item))
-
-  #   @set('cur_irat_question_items', arr)
-  #   arr
 
   # trat_question_items: ember.computed 'trat_assessment.questions_with_answers.@each', ->
   #   items = @get('trat_assessment.questions_with_answers')
@@ -143,8 +124,8 @@ export default step.extend
   add_question_item: (type) ->
     manager = @get('manager')
     @set_loading('irat')
-    manager.add_question_item(type).then =>
-      @create_question_items()
+    manager.add_question_item(type).then (item) =>
+      @create_question_items({new_ids: [item.id]})
       @reset_loading('irat')
 
   delete_question_item: (type, item_obj) ->

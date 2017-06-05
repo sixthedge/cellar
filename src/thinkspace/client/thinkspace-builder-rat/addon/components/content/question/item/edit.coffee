@@ -15,7 +15,9 @@ export default base.extend
   default_text: 'Choose an answer'
 
   choice_items: ember.computed.reads 'model.choice_items'
-  answer:       ember.computed.reads 'model.changeset.answer'
+  answer:       ember.computed.reads 'model.answer_cs.answer'
+
+  display_index: ember.computed 'index', -> @get('index') + 1
 
   select_answer: (choice) ->
     @get('model').select_answer(choice)

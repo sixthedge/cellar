@@ -8,8 +8,8 @@ fieldset.forms__section.spacing__margin-bottom--4
         .icon.icon--16.icon__plus--white.spacing__margin-right--half
         | New Question
       .spacing__margin-bottom--2
-        each question_items as |item|
-          component 'content/question/item' model=item type=type step=step
+        each question_items as |item index|
+          component 'content/question/item' model=item index=index type=type step=step
       button.btn.btn--primary click='create'
         .icon.icon--16.icon__plus--white.spacing__margin-right--half
         | New Question

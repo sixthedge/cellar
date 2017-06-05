@@ -10,29 +10,24 @@ export default base.extend
 
   manager: ember.inject.service()
 
-  is_editing: ember.computed 'model', ->
-    model = @get('model.model')
-    if ember.isPresent(model.new)
-      true
-    else
-      false
+  is_editing: false
+  index:      null
+  is_new:     ember.computed.reads 'model.is_new'
 
-  handle_new: ->
-    model = @get('model.model')
-    delete model.new if ember.isPresent(model.new)
+  init_base: -> @set('is_editing', @get('is_new'))
 
   update_model: ->
     @get('model').persist().then (valid) =>
       if valid
         @set_loading('update')
         @send('toggle_is_editing', false)
+        @get('manager').update_question(@get('type'), @get('model'))
         @get('manager').save_assessment(@get('type')).then =>
           @get('step').create_question_items(ember.makeArray(@get('model')))
           @reset_loading('update')
 
   actions:
     toggle_is_editing: (val) -> 
-      @handle_new(val)
       @set('is_editing', val)
 
     update_question: ->

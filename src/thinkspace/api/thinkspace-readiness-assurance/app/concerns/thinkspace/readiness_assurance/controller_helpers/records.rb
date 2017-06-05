@@ -2,7 +2,6 @@ module Thinkspace; module ReadinessAssurance; module ControllerHelpers; module R
 
   def assignment
     @assignment ||= begin
-      puts 'trying to calc assignment???'
       access_denied "Authable is blank." if authable.blank?
       access_denied "Cannot read authable.", authable  unless can?(:read, authable)
       a = authable.is_a?(phase_class) ? authable.thinkspace_casespace_assignment : authable

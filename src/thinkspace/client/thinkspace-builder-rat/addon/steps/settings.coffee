@@ -29,33 +29,42 @@ export default step.extend changeset_helpers,
   trat_assessment:  ember.computed.reads 'manager.trat'
 
   sync_assessments: ember.computed.reads 'model.sync_rat_assessments'
-  is_ifat:          ember.computed.reads 'irat_assessment.settings.questions.ifat'
+  is_ifat:          ember.computed.reads 'trat_assessment.settings.questions.ifat'
   is_req_just:      ember.computed.reads 'irat_assessment.settings.questions.justification'
 
   create_changesets: ->
     model           = @get('model')
     irat_assessment = @get('irat_assessment')
+    trat_assessment = @get('trat_assessment')
 
     v_integer  = totem_changeset.vnumber({integer: true})
     v_positive = totem_changeset.vnumber({positive: true})
     v_presence = totem_changeset.vpresence(true)
 
-    changeset       = totem_changeset.create(model)
-    irat_changeset  = totem_changeset.create(irat_assessment)
+    changeset      = totem_changeset.create(model)
+    irat_changeset = totem_changeset.create(irat_assessment)
+    trat_changeset = totem_changeset.create(trat_assessment)
 
     scoring_changeset = totem_changeset.create(irat_assessment.get('settings.scoring'),
       correct:           [v_integer, v_presence, v_positive],
       no_answer:         [v_integer, v_presence],
+      #attempted:         [v_integer, v_presence, v_positive],
+      #incorrect_attempt: [v_integer, v_presence, v_positive]
+    )
+
+    trat_scoring_cs = totem_changeset.create(trat_assessment.get('settings.scoring'),
       attempted:         [v_integer, v_presence, v_positive],
       incorrect_attempt: [v_integer, v_presence, v_positive]
     )
 
-    @init_incorrect_attempt(scoring_changeset)
+    @init_incorrect_attempt(trat_scoring_cs)
 
     changeset.set('show_errors', true)
     irat_changeset.set('show_errors', true)
+    @set('trat_scoring_cs', trat_scoring_cs)
     @set('changeset', changeset)
     @set('irat_changeset', irat_changeset)
+    @set('trat_changeset', trat_changeset)
     @set('scoring_changeset', scoring_changeset)
 
   ## API Methods
@@ -74,11 +83,13 @@ export default step.extend changeset_helpers,
 
   save: ->
     new ember.RSVP.Promise (resolve, reject) =>
-      cs            = @get('changeset')
-      irat_cs       = @get('irat_changeset')
-      scoring_cs    = @get('scoring_changeset')
-      irat_phase_cs = @get('irat_phase_cs')
-      trat_phase_cs = @get('trat_phase_cs')
+      cs              = @get('changeset')
+      irat_cs         = @get('irat_changeset')
+      trat_cs         = @get('trat_changeset')
+      scoring_cs      = @get('scoring_changeset')
+      trat_scoring_cs = @get('trat_scoring_cs')
+      irat_phase_cs   = @get('irat_phase_cs')
+      trat_phase_cs   = @get('trat_phase_cs')
 
       ## Need to proceed by:
       ## => 1. Make sure that scoring_changeset is valid
@@ -86,33 +97,42 @@ export default step.extend changeset_helpers,
       ## => 3. execute the irat_changeset to persist changes to the assessment
       ## => 4. execute the changes to the phases(?)
 
-      validated_cs = [scoring_cs, irat_phase_cs, trat_phase_cs]
+      validated_cs = [scoring_cs, irat_phase_cs, trat_phase_cs, trat_scoring_cs]
       @determine_validity(validated_cs).then (step_valid) =>
         if step_valid
           scoring_cs.save().then =>
-            @persist_scoring()
-            irat_cs.save().then =>
-              irat_phase_cs.save().then =>
-                trat_phase_cs.save().then =>
-                  @persist_assignment_dates()
-                  cs.save().then =>
-                    resolve()
+            trat_scoring_cs.save().then =>
+              @persist_scoring()
+              irat_cs.save().then =>
+                trat_cs.save().then =>
+                  irat_phase_cs.save().then =>
+                    trat_phase_cs.save().then =>
+                      @persist_assignment_dates()
+                      cs.save().then =>
+                        @get('manager').query_assessment_sync('irat', @get('manager').get_assessment('irat')).then =>
+                          resolve()
 
   process_changeset_strings: ->
-    changeset = @get('irat_changeset')
+    irat_cs = @get('irat_changeset')
+    trat_cs = @get('trat_changeset')
     ## Ensure that any modifications made via text field are translated back to integers
-    changeset.set('settings.scoring.correct',           parseInt(changeset.get('settings.scoring.correct')))
-    changeset.set('settings.scoring.attempted',         parseInt(changeset.get('settings.scoring.attempted')))
-    changeset.set('settings.scoring.no_answer',         parseInt(changeset.get('settings.scoring.no_answer')))
-    changeset.set('settings.scoring.incorrect_attempt', parseInt(changeset.get('settings.scoring.incorrect_attempt')))
+    irat_cs.set('settings.scoring.correct',           parseInt(irat_cs.get('settings.scoring.correct')))
+    trat_cs.set('settings.scoring.attempted',         parseInt(trat_cs.get('settings.scoring.attempted')))
+    irat_cs.set('settings.scoring.no_answer',         parseInt(irat_cs.get('settings.scoring.no_answer')))
+    trat_cs.set('settings.scoring.incorrect_attempt', parseInt(trat_cs.get('settings.scoring.incorrect_attempt')))
 
   persist_scoring: ->
-    scoring_cs = @get('scoring_changeset')
-    irat_cs    = @get('irat_changeset')
+    scoring_cs      = @get('scoring_changeset')
+    trat_scoring_cs = @get('trat_scoring_cs')
+    irat_cs         = @get('irat_changeset')
+    trat_cs         = @get('trat_changeset')
     irat_cs.set('settings.scoring.correct', scoring_cs.get('correct'))
-    irat_cs.set('settings.scoring.attempted', scoring_cs.get('attempted'))
+    #irat_cs.set('settings.scoring.attempted', scoring_cs.get('attempted'))
     irat_cs.set('settings.scoring.no_answer', scoring_cs.get('no_answer'))
-    irat_cs.set('settings.scoring.incorrect_attempt', scoring_cs.get('incorrect_attempt') * -1)
+    #irat_cs.set('settings.scoring.incorrect_attempt', scoring_cs.get('incorrect_attempt') * -1)
+    trat_cs.set('settings.scoring.attempted', trat_scoring_cs.get('attempted'))
+    trat_cs.set('settings.scoring.incorrect_attempt', trat_scoring_cs.get('incorrect_attempt') * -1)
+
     @process_changeset_strings()
 
   persist_assignment_dates: ->
@@ -126,25 +146,26 @@ export default step.extend changeset_helpers,
     changeset.set('release_at', unlock_at)
     changeset.set('due_at',     due_at)
 
-  toggle_irat_changeset_property: (property) ->
-    changeset = @get('irat_changeset')
+  toggle_rat_changeset_property: (type, property) ->
+    #changeset = @get('irat_changeset')
+    changeset = @get("#{type}_changeset")
     changeset.toggleProperty(property)
-    @propertyDidChange('irat_changeset')
+    @propertyDidChange('trat_changeset')
 
   ## When we toggle the visibility of the ifat-dependent fields, we want to make sure we aren't validating changes to fields that aren't present
   reset_changeset_values: (path) ->
-    scoring_cs = @get('scoring_changeset')
-    irat_cs    = @get('irat_changeset')
-    reset      = irat_cs.get("#{path}")
+    scoring_cs = @get('trat_scoring_cs')
+    trat_cs    = @get('trat_changeset')
+    reset      = trat_cs.get("#{path}")
     if !reset
-      scoring_cs.set('attempted',         irat_cs.get('settings.scoring.attempted'))
-      scoring_cs.set('incorrect_attempt', irat_cs.get('settings.scoring.incorrect_attempt'))
+      scoring_cs.set('attempted',         trat_cs.get('settings.scoring.attempted'))
+      scoring_cs.set('incorrect_attempt', trat_cs.get('settings.scoring.incorrect_attempt') * -1)
 
   toggle_is_ifat:     -> 
-    @toggle_irat_changeset_property('settings.questions.ifat')
+    @toggle_rat_changeset_property('trat', 'settings.questions.ifat')
     @reset_changeset_values('settings.questions.ifat')
 
-  toggle_is_req_just: -> @toggle_irat_changeset_property('settings.questions.justification')
+  toggle_is_req_just: -> @toggle_rat_changeset_property('irat', 'settings.questions.justification')
 
   select_release_at: (date) -> @get('changeset').set 'release_at', date
   select_due_at:     (date) -> @get('changeset').set 'due_at', date

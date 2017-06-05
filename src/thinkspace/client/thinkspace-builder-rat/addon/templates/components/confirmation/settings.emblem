@@ -15,19 +15,19 @@
 
   label Immediate Feedback (IFAT) enabled?
   p.text__font-size--14.spacing__margin-top--0
-    if step.irat_assessment.settings.questions.ifat
+    if step.trat_assessment.settings.questions.ifat
       | Yes
     else
       | No
 
-  if step.irat_assessment.settings.questions.ifat
+  if step.trat_assessment.settings.questions.ifat
     label Number of attempts allowed
     p.text__font-size--14.spacing__margin-top--0 
-      = step.irat_assessment.settings.scoring.attempted
+      = step.trat_assessment.settings.scoring.attempted
 
     label Number of points deducted per incorrect response
     p.text__font-size--14.spacing__margin-top--0 
-      = step.irat_assessment.settings.scoring.incorrect_attempt
+      = display_incorrect
 
   label Questions require justification?
   p.text__font-size--14.spacing__margin-top--0

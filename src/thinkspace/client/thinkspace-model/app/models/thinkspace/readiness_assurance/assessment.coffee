@@ -27,8 +27,9 @@ export default base.extend ta.add(
     arr       = ember.makeArray()
 
     questions.forEach (question) =>
-      question.answer = if ember.isPresent(answers) and ember.isPresent(answers.correct) and ember.isPresent(answers.correct[question.id]) then answers.correct[question.id]  else null
-      arr.pushObject(question)
+      obj = ember.merge({}, question)
+      obj.answer = if ember.isPresent(answers) and ember.isPresent(answers.correct) and ember.isPresent(answers.correct[question.id]) then answers.correct[question.id]  else null
+      arr.pushObject(obj)
     arr
 
   remove_question_answers: ->

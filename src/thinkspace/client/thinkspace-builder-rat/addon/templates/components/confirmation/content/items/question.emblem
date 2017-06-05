@@ -4,4 +4,4 @@ each choice_items as |choice|
   component 'confirmation/content/items/choice' model=choice
 
 br
-component '__changeset/errors' changeset=model.changeset attribute='answer' errors_visible=true 
+component '__changeset/errors' changeset=model.answer_cs attribute='answer' errors_visible=true 

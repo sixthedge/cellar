@@ -48,6 +48,7 @@ Thinkspace::ReadinessAssurance::Engine.routes.draw do
         member do
           post :teams
           post :view
+          post :sync
         end
         collection do
           post :trat_overview

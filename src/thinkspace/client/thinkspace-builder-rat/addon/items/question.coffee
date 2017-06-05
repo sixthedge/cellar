@@ -18,19 +18,25 @@ export default ember.Object.extend array_helpers, changeset_helpers,
   id:       ember.computed.reads 'model.id'
   question: ember.computed.reads 'model.question'
   choices:  ember.computed.reads 'model.choices'
-  answer:   ember.computed.reads 'model.answer'
+  answer:   null
+  is_new:   false
 
   create_choice_item: (item, index) -> choice_obj.create(model: item, index: index, question: @)
 
   get_choice_by_id: (id)  -> @get('choice_items').findBy 'id', id
-  select_answer: (choice) -> @get('changeset').set('answer', choice.get('model.id'))
+  select_answer: (choice) -> @get('answer_cs').set('answer', choice.get('model.id'))
 
   init: ->
     @_super()
-    console.log('[QUESTION] initing')
+    @init_answer()
     @create_changeset()
     @update_choice_items()
 
+  init_answer: ->
+    manager = @get('manager')
+    irat    = manager.get_assessment(@get('type'))
+    ans     = irat.get_answer_by_id(@get('id'))
+    @set('answer', ans)
 
   #######
   ## Changeset Functionality
@@ -42,25 +48,26 @@ export default ember.Object.extend array_helpers, changeset_helpers,
       @validate().then (valid) =>
         if valid
           @changeset_save().then =>
-            manager.set_question_answer(type, @get('id'), @get('changeset.answer'))
+            manager.set_question_answer(type, @get('id'), @get('answer_cs.answer'))
             resolve(true)
         else
           resolve(false)
 
   validate: ->
     new ember.RSVP.Promise (resolve, reject) =>
-      changesets = ember.makeArray(@get('changeset')).concat(@get('choice_items').mapBy('changeset'))
-
+      changesets = ember.makeArray(@get('changeset')).concat(ember.makeArray(@get('answer_cs'))).concat(@get('choice_items').mapBy('changeset'))
       @determine_validity(changesets).then (is_valid) =>
         resolve(is_valid)
 
   changeset_save: ->
     new ember.RSVP.Promise (resolve, reject) =>
       choice_items = @get('choice_items')
+      answer_cs    = @get('answer_cs')
       changeset    = @get('changeset')
 
       promises = ember.makeArray()
       promises.pushObject(changeset.save())
+      promises.pushObject(answer_cs.save())
       choice_items.forEach (choice) =>
         promises.pushObject(choice.save())
 
@@ -72,10 +79,12 @@ export default ember.Object.extend array_helpers, changeset_helpers,
   changeset_rollback: ->
     new ember.RSVP.Promise (resolve, reject) =>
       choice_items = @get('choice_items')
+      answer_cs    = @get('answer_cs')
       changeset    = @get('changeset')
 
       promises = ember.makeArray()
       promises.pushObject(changeset.rollback())
+      promises.pushObject(answer_cs.rollback())
       choice_items.forEach (choice) =>
         promises.pushObject(choice.rollback())
       ember.RSVP.all(promises).then =>
@@ -91,11 +100,15 @@ export default ember.Object.extend array_helpers, changeset_helpers,
     choices   = @duplicate_array(@get('model.choices'))
     changeset = totem_changeset.create(model,
       question: [vpresence],
-      answer:   [vpresence],
       choices:  [vpresence]
     )
 
+    answer_cs = totem_changeset.create(@,
+      answer: [vpresence]
+    )
+
     changeset.set('choices', choices)
+    @set('answer_cs', answer_cs)
     @set('changeset', changeset)
 
   add_choice_to_item: (type, item_id) ->
@@ -114,7 +127,7 @@ export default ember.Object.extend array_helpers, changeset_helpers,
     choice_items = ember.makeArray()
     cur_items    = @get('choice_items')
     items        = @get('changeset.choices')
-    answer       = @get('changeset.answer')
+    answer       = @get('answer_cs.answer')
 
     if ember.isPresent(items)
       items.forEach (item, index) =>
@@ -125,6 +138,7 @@ export default ember.Object.extend array_helpers, changeset_helpers,
           choice_obj.set('model', item)
           choice_obj.set('index', index)
           choice_obj.set('question', @)
+          choice_obj.init_prefix()
           choice_items.pushObject(choice_obj)
         else
           choice_items.pushObject(@create_choice_item(item, index))

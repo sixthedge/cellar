@@ -17,17 +17,17 @@ export default ember.Object.extend
 
   id:      ember.computed.reads 'model.id'
   label:   ember.computed.reads 'model.label'
-  answer:  ember.computed.reads 'question.changeset.answer'
+  answer:  ember.computed.reads 'question.answer_cs.answer'
 
   is_answer: ember.computed 'id', 'answer', 'model', -> parseInt(@get('id')) == parseInt(@get('answer'))
 
   init: ->
     @_super()
-    console.log('[CHOICE] initing')
     @init_prefix(@get('index'))
     @create_changeset()
 
   init_prefix: (i) ->
+    i = @get('index') unless ember.isPresent(i)
     prefix = i%26
     prefix = @get('alphabet')[prefix]
     suffix = Math.floor(i/26)

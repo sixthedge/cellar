@@ -25,21 +25,21 @@ else
 
 
       .forms__field-wrapper
-        component '__changeset/checkbox' label='Give students Immediate Feedback (IFAT)' changeset=step.irat_changeset attribute='settings.questions.ifat' checked=step.irat_changeset.settings.questions.ifat save='toggle_is_ifat' summary='Students will be notified immediately whether the answer they chose is correct or not. You can allow them to have multiple attempts.'
+        component '__changeset/checkbox' label='Give students Immediate Feedback (IFAT)' changeset=step.trat_changeset attribute='settings.questions.ifat' checked=step.trat_changeset.settings.questions.ifat save='toggle_is_ifat' summary='Students will be notified immediately whether the answer they chose is correct or not. You can allow them to have multiple attempts.'
 
-      if step.irat_changeset.settings.questions.ifat
+      if step.trat_changeset.settings.questions.ifat
         .forms__field-wrapper
           label.spacing__margin-bottom--0 Number of attempts allowed
           .forms__label-summary 
             | Example: student leaves an answer blank.
-          component '__changeset/input' value=step.scoring_changeset.attempted changeset=step.scoring_changeset attribute='attempted' display_errors=true class='forms__input--50 is-left'
+          component '__changeset/input' value=step.trat_scoring_cs.attempted changeset=step.trat_scoring_cs attribute='attempted' display_errors=true class='forms__input--50 is-left'
           span.text__font-size--12.text--bold.spacing__margin-left--half attempts
 
         .forms__field-wrapper
           label.spacing__margin-bottom--0 Number of points deducted per incorrect response
           .forms__label-summary 
             | Example: student leaves an answer blank.
-          component '__changeset/input' value=step.scoring_changeset.incorrect_attempt changeset=step.scoring_changeset attribute='incorrect_attempt' display_errors=true class='forms__input--50 is-left'
+          component '__changeset/input' value=step.trat_scoring_cs.incorrect_attempt changeset=step.trat_scoring_cs attribute='incorrect_attempt' display_errors=true class='forms__input--50 is-left'
           span.text__font-size--12.text--bold.spacing__margin-left--half points
 
       .forms__field-wrapper

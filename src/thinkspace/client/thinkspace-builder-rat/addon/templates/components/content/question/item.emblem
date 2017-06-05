@@ -3,6 +3,6 @@ if loading.update
 else
   div class={:bordered-panel is_editing:bordered-panel--active}
     if is_editing
-      component 'content/question/item/edit' model=model step=step show='toggle_is_editing' type=type update='update_question'
+      component 'content/question/item/edit' model=model index=index step=step show='toggle_is_editing' type=type update='update_question'
     else
-      component 'content/question/item/show' model=model step=step reorder='reorder' edit='toggle_is_editing' type=type delete='delete'
+      component 'content/question/item/show' model=model index=index step=step reorder='reorder' edit='toggle_is_editing' type=type delete='delete'

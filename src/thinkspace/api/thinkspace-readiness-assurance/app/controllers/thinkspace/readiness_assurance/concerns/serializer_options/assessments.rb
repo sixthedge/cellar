@@ -14,6 +14,8 @@ module Thinkspace; module ReadinessAssurance; module Concerns; module Serializer
     show(serializer_options)
   end
 
+  def sync(serializer_options); end
+
   def view(serializer_options)
     serializer_options.remove_all_except(
       :thinkspace_readiness_assurance_assessment,
