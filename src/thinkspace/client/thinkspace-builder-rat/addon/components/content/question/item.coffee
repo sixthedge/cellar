@@ -23,6 +23,7 @@ export default base.extend
         @send('toggle_is_editing', false)
         @get('manager').update_question(@get('type'), @get('model'))
         @get('manager').save_assessment(@get('type')).then =>
+          @get('model').set('is_new', false)
           @get('step').create_question_items(ember.makeArray(@get('model')))
           @reset_loading('update')
 

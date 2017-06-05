@@ -76,7 +76,6 @@ export default step.extend
 
     new_ids.forEach (id) => items.findBy('id', id).set('is_new', true)
 
-
     @set('irat_question_items', items)
 
   toggle_assessment_sync: (val) ->
