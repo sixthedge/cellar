@@ -1,3 +1,5 @@
 .forms__field-wrapper
   label Upload your file
-  component '__file_upload/input' changed='files_changed'
+  .btn-group
+    component '__file_upload/input' changed='files_changed' class='btn__component'
+    button.btn Cancel

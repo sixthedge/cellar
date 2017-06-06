@@ -155,7 +155,7 @@ button,
       }
   }
   
-	.btn, .dropdown, .action-link--small, .icon--actionable {
+	.btn, .dropdown, .action-link--small, .icon--actionable, .btn__component {
 		margin-left: 1rem;
 
 		&:first-child {
@@ -172,7 +172,6 @@ button,
 
   >.btn__component {
     display: inline-block;
-    margin-left: 1rem;
   }
 }
 
