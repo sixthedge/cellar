@@ -13,7 +13,7 @@ module Thinkspace; module PeerAssessment
       state :ignored
 
       event :ignore do
-        transitions from: [:neutral, :submitted], to: :ignored, after: :complete_phase_for_ownerable
+        transitions from: [:neutral, :submitted], to: :ignored, after: :lock_phase_for_ownerable
       end
 
       event :unignore do
@@ -80,6 +80,11 @@ module Thinkspace; module PeerAssessment
     def unlock_phase_for_ownerable
       phase_state = get_phase_state
       phase_state.unlock_phase!
+    end
+
+    def lock_phase_for_ownerable
+      phase_state = get_phase_state
+      phase_state.lock_phase!
     end
 
     def unlock_phase_and_notify(notify=true)
