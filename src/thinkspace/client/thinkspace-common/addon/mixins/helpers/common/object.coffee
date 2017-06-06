@@ -20,3 +20,7 @@ export default ember.Mixin.create
     for k, v of obj
       a.push v
     a
+
+  # returns whether or not an object is blank (has no keys)
+  is_empty_object: (obj) ->
+    ember.keys(obj).length == 0

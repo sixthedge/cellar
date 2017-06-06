@@ -33,14 +33,13 @@ module Thinkspace; module PeerAssessment
       thinkspace_peer_assessment_review_sets.scope_ignored.each { |review_set| review_set.unignore! if review_set.may_unignore? }
     end
 
-    def reset_quantitative_data
-      thinkspace_peer_assessment_review_sets.each { |review_set| review_set.reset_quantitative_data }
+    def reset_quantitative_data(notify=false)
+      thinkspace_peer_assessment_review_sets.each { |review_set| review_set.reset_quantitative_data(notify) }
     end
 
     def notify_results_unlocked
-      assessment = get_assessment
       self.thinkspace_peer_assessment_review_sets.each do |review_set|
-        Thinkspace::PeerAssessment::AssessmentMailer.notify_results_unlocked(assessment, review_set.ownerable).deliver_now
+        Thinkspace::PeerAssessment::AssessmentMailer.notify_results_unlocked(review_set).deliver_now
       end
     end
     handle_asynchronously :notify_results_unlocked

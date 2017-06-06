@@ -8,17 +8,17 @@ li.phase-list__item
   .grid__container.spacing__margin-bottom--1
     // Instructor sees the unlock date
     if assignment.can.update
-      if phase_state.friendly_unlock_at
+      if model.friendly_unlock_at
         .text__font-size--12.text--inline-block.spacing__margin-right--1 
-          | <strong>Unlocks:</strong> #{phase_state.friendly_unlock_at}
-      if phase_state.friendly_release_at
+          | <strong>Unlocks:</strong> #{model.friendly_unlock_at}
+      if model.friendly_release_at
         .text__font-size--12.text--inline-block.spacing__margin-right--1 
-          | <strong>Release at:</strong> #{phase_state.friendly_release_at}
+          | <strong>Release at:</strong> #{model.friendly_release_at}
     else
       component '__case/external/phase/phase_state' model=phase_state phase=model
 
     .text__font-size--12.text--inline-block
-      | <strong>Due:</strong> #{phase_state.friendly_due_at}
+      | <strong>Due:</strong> #{model.friendly_due_at}
 
   // Instructor should not see the button
   unless assignment.can.update
