@@ -22,6 +22,7 @@ module Thinkspace; module PeerAssessment; module Api; module Admin;
     def unlock
       access_denied_state_error :unlock unless @review_set.may_unlock?
       @review_set.unlock!
+      @review_set.unlock_phase_and_notify
       controller_render(@review_set)
     end
 

@@ -17,4 +17,5 @@
             | Results
         else
           a.menu-bar__link
+            .icon.icon--16.icon__lock--black.spacing__margin-right--half
             | Results
