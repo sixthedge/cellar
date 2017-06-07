@@ -27,8 +27,11 @@ export default base_component.extend
         model:  ns.to_p('tbl:team_set')
       @totem_messages.show_loading_outlet()
       @tc.query_action(ns.to_p('tbl:assessment'), query, options).then (team_sets) =>
+        @totem_messages.api_success source: @, model: assessment, action: 'approve', i18n_path: ns.to_o('tbl:assessment', 'approve')
         progress_report.process_team_sets(team_sets)
         @totem_messages.hide_loading_outlet()
+      , (error) =>
+          @totem_messages.api_failure error, source: @, model: assessment
 
     approve: ->
       assessment      = @get 'assessment'
@@ -42,4 +45,7 @@ export default base_component.extend
         model:  ns.to_p('tbl:team_set')
 
       @tc.query_action(ns.to_p('tbl:assessment'), query, options).then (team_sets) =>
+        @totem_messages.api_success source: @, model: assessment, action: 'approve_team_sets', i18n_path: ns.to_o('tbl:assessment', 'approve_team_sets')
         progress_report.process_team_sets(team_sets)
+      , (error) =>
+          @totem_messages.api_failure error, source: @, model: assessment

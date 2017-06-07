@@ -23,10 +23,11 @@ ul.clear-list.grid__container--flex.flex__justify--between.spacing__margin-botto
 
 .grid__container.spacing__margin-bottom--4.text__align--center 
   hr
-  .btn{action 'transition_to_first'} style='display:inline-block'
-    | Back to Evaluation
+  .btn-group
+    .btn.spacing__margin-right--1{action 'transition_to_first'}
+      | Back to Evaluation
 
-  if is_disabled
-    a.btn.btn--primary.is-disabled Submit Assessment
-  else
-    component '__modal/confirmation' content_partial='components/assessment/type/shared/submit/modal' link_partial='components/assessment/type/shared/submit/action' confirm='submit'
+    if is_disabled
+      a.btn.btn--primary.is-disabled Submit Assessment
+    else
+      component '__modal/confirmation' content_partial='components/assessment/type/shared/submit/modal' link_partial='components/assessment/type/shared/submit/action' confirm='submit' class='btn__component'

@@ -308,15 +308,21 @@ export default {
               save: 'Tag saved successfully.'
               destroy: 'Tag removed successfully.'
           peer_assessment:
+            assessment:
+              approve: 'Results sent successfully.'
+              approve_team_sets: 'All teams approved successfully'
             review:
-              save: 'Review saved successfully.'
+              save: 'Evaluation saved successfully.'
             review_set:
-              save: 'Reviews saved successfully.'
-              ignore: 'Review set ignored successfully.'
-              unignore: 'Review set unignored successfully.'
-              unlock: 'Review set unlocked successfully.'
+              save: 'Evaluations saved successfully.'
+              ignore: 'Evaluations ignored successfully.'
+              unignore: 'Evaluations unignored successfully.'
+              unlock: 'Evaluations unlocked successfully. The student will be notified.'
               remind: 'Reminder email sent successfully.'
               submit: 'Peer evaluation submitted successfully.'
+            team_set:
+              approve: 'Team evaluations approved successfully.'
+              unapprove: 'Team evaluations unapproved successfully.'
 
           team:
             team:

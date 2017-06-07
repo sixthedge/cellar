@@ -70,7 +70,11 @@ export default base_component.extend
       action: state
       verb:   'PUT'
 
-    @tc.query_action(ns.to_p('tbl:team_set'), query, options).then (review_set) => @update_progress_report(review_set)
+    @tc.query_action(ns.to_p('tbl:team_set'), query, options).then (review_set) => 
+      @totem_messages.api_success source: @, model: model, action: state, i18n_path: ns.to_o('tbl:team_set', state)
+      @update_progress_report(review_set)
+    , (error) =>
+          @totem_messages.api_failure error, source: @, model: model
 
   update_progress_report: (review_set) ->
     progress_report = @get_progress_report()
