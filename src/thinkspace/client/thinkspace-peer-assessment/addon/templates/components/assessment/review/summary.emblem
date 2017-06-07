@@ -1,4 +1,4 @@
-.bordered-panel click='edit_team_member'
+.bordered-panel.thinkspace-pe-conf_summary click='edit_team_member'
   .grid__container
     .avatar.avatar--32.is-left.spacing__margin-right--2
     .text--inline-block
