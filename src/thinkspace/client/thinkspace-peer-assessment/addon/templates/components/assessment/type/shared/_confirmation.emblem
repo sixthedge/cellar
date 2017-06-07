@@ -22,7 +22,10 @@ ul.clear-list.grid__container--flex.flex__justify--between.spacing__margin-botto
     component 'assessment/review/summary' manager=manager model=review assessment=model class='grid__col--49 grid__mobile--full-width'
 
 .grid__container.spacing__margin-bottom--4.text__align--center 
-  hr 
+  hr
+  .btn{action 'transition_to_first'} style='display:inline-block'
+    | Back to Evaluation
+
   if is_disabled
     a.btn.btn--primary.is-disabled Submit Assessment
   else
