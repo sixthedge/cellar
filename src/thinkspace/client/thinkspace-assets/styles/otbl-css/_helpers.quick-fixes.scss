@@ -4,8 +4,6 @@
 
 .thinkspace-dropdown {
   border-radius:    $border-radius;
-
-
 }
 
 .thinkspace-dropdown_anchor {
@@ -63,6 +61,13 @@
 
   &:last-of-type {
     border-bottom: none;
+  }
+}
+
+.thinkspace-pe-conf_summary {
+  &:hover {
+    cursor: pointer;
+    border-color: $color-blue-base;
   }
 }
 
