@@ -206,10 +206,8 @@ export default ember.Service.extend array_helpers,
       items = @get_items(type)
       item  = items.findBy('id', item.id)
       index = items.indexOf(item)
-      console.log('[DUP] index is ', index)
       resolve() unless index > -1
       add_at = index + 1
-      console.log('[DUP] add_at is ', add_at)
       resolve() if add_at < 0
       new_item = ember.merge({}, item)
       new_item.id = @get_next_id(type)

@@ -1,8 +1,6 @@
 module Thinkspace
   module ReadinessAssurance
     class Assessment < ActiveRecord::Base
-      #after_save :sync_assessments
-
       def question_settings; merged_question_settings; end
       def ra_type; get_ra_type; end
       totem_associations
@@ -27,7 +25,7 @@ module Thinkspace
 
       def sync_assessments
         phase      = self.authable
-        assignment = Thinkspace::Casespace::Assignment.find(phase.assignment_id)
+        assignment = phase.thinkspace_casespace_assignment
 
         if assignment.sync_rat?
           assessments = Thinkspace::ReadinessAssurance::Assessment.where(authable: assignment.thinkspace_casespace_phases).without(self)
@@ -38,99 +36,8 @@ module Thinkspace
       end
 
       def sync(options)
-        phase      = self.authable
-        assignment = Thinkspace::Casespace::Assignment.find(phase.assignment_id)
-
-        scoring_keys  = ['correct', 'attempted', 'no_answer', 'incorrect_attempt']
-        question_keys = ['type', 'random', 'ifat', 'justification']
-
-        if assignment.sync_rat?
-          assessments = Thinkspace::ReadinessAssurance::Assessment.where(authable: assignment.thinkspace_casespace_phases).without(self)
-          assessments.each do |assessment|
-            ## Check for questions
-            if options['questions'].present?
-              assessment.questions = self.questions
-            end
-            if options['answers'].present?
-              assessment.answers = self.answers
-            end
-
-            if options['settings'].present?
-              if options['settings']['next_id'].present?
-                assessment.settings['next_id'] = self.settings['next_id']
-              end
-
-              if options['settings']['scoring'].present?
-                if options['settings']['scoring']['only'].present?
-                  keys = options['settings']['scoring']['only']
-
-                  keys.each do |key|
-                    if scoring_keys.include? key
-                      assessment.settings['scoring']["#{key}"] = self.settings['scoring']["#{key}"]
-                    end
-                  end
-
-                elsif options['settings']['scoring']['except'].present?
-                  keys = options['settings']['scoring']['only']
-
-                  obj = {}
-                  keys.each do |key|
-                    if scoring_keys.include? key
-                      obj["#{key}"] = assessment.settings['scoring']["#{key}"]
-                    end
-                  end
-                  assessment.settings['scoring'] = self.settings['scoring']
-                  obj.each do |key, value|
-                    assessment.settings['scoring']["#{key}"] = value
-                  end
-
-                end
-              end
-
-              if options['settings']['questions'].present?
-                if options['settings']['questions']['only'].present?
-                  keys = options['settings']['questions']['only']
-
-                  keys.each do |key|
-                    if question_keys.include? key
-                      assessment.settings['questions']["#{key}"] = self.settings['scoring']["#{key}"]
-                    end
-                  end
-
-                elsif options['settings']['questions']['except'].present?
-                  keys = options['settings']['questions']['except']
-
-                  obj = {}
-                  keys.each do |key|
-                    if question_keys.include? key
-                      obj["#{key}"] = assessment.settings['questions']["#{key}"]
-                    end
-                  end
-
-                  assessment.settings['questions'] = self.settings['questions']
-                  obj.each do |key, value|
-                    assessment.settings['questions']["#{key}"] = value
-                  end
-
-                end
-              end
-              assessment.save
-            end
-
-          end
-
-          ## We care about three columns for sync purposes
-          ## => 1. :questions
-          ## => 2. :answers
-          ## => 3. :settings
-          ## questions and answers should always be synced if we're syncing at all
-          ## settings is a little more complicated.
-          ## certain settings keys should not be modified - ie 'ra_type', others should only be modified conditionally
-
-        end
+        Thinkspace::ReadinessAssurance::Sync::Assessment.new(options, self).sync
       end
-
-
 
       def get_settings; self.settings || Hash.new; end
       def get_ra_type;  get_settings['ra_type']; end

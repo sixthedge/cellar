@@ -139,34 +139,11 @@ export default step.extend
       @create_question_items()
       @reset_loading('irat')
 
-  reorder_up: (type, item_obj) ->
+  reorder_question_item: (type, item_obj, offset) ->
     manager = @get('manager')
     @set_loading('irat')
-    manager.reorder_item(type, item_obj, -1).then =>
+    manager.reorder_item(type, item_obj, offset).then =>
       @create_question_items()
       @reset_loading('irat')
     , (error) =>
       @reset_loading('irat')
-
-  reorder_down: (type, item_obj) ->
-    manager = @get('manager')
-    @set_loading('irat')
-    manager.reorder_item(type, item_obj, 1).then =>
-      @create_question_items()
-      @reset_loading('irat')
-    , (error) =>
-      @reset_loading('irat')
-
-  reorder_top: (type, item_obj) ->
-    manager = @get('manager')
-    @set_loading('irat')
-    manager.reorder_item(type, item_obj, 'top').then =>
-      @reset_loading('irat')
-      @create_question_items()
-
-  reorder_bottom: (type, item_obj) ->
-    manager = @get('manager')
-    @set_loading('irat')
-    manager.reorder_item(type, item_obj, 'bottom').then =>
-      @reset_loading('irat')
-      @create_question_items()

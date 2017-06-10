@@ -45,22 +45,18 @@ export default step.extend changeset_helpers,
     irat_changeset = totem_changeset.create(irat_assessment)
     trat_changeset = totem_changeset.create(trat_assessment)
 
-    scoring_changeset = totem_changeset.create(irat_assessment.get('settings.scoring'),
+    scoring_changeset = totem_changeset.create irat_assessment.get('settings.scoring'),
       correct:           [v_integer, v_presence, v_positive],
       no_answer:         [v_integer, v_presence],
-      #attempted:         [v_integer, v_presence, v_positive],
-      #incorrect_attempt: [v_integer, v_presence, v_positive]
-    )
 
-    trat_scoring_cs = totem_changeset.create(trat_assessment.get('settings.scoring'),
+    trat_scoring_cs = totem_changeset.create trat_assessment.get('settings.scoring'),
       attempted:         [v_integer, v_presence, v_positive],
       incorrect_attempt: [v_integer, v_presence, v_positive]
-    )
 
     @init_incorrect_attempt(trat_scoring_cs)
 
-    changeset.set('show_errors', true)
-    irat_changeset.set('show_errors', true)
+    changeset.show_errors_on()
+    irat_changeset.show_errors_on()
     @set('trat_scoring_cs', trat_scoring_cs)
     @set('changeset', changeset)
     @set('irat_changeset', irat_changeset)
@@ -127,9 +123,7 @@ export default step.extend changeset_helpers,
     irat_cs         = @get('irat_changeset')
     trat_cs         = @get('trat_changeset')
     irat_cs.set('settings.scoring.correct', scoring_cs.get('correct'))
-    #irat_cs.set('settings.scoring.attempted', scoring_cs.get('attempted'))
     irat_cs.set('settings.scoring.no_answer', scoring_cs.get('no_answer'))
-    #irat_cs.set('settings.scoring.incorrect_attempt', scoring_cs.get('incorrect_attempt') * -1)
     trat_cs.set('settings.scoring.attempted', trat_scoring_cs.get('attempted'))
     trat_cs.set('settings.scoring.incorrect_attempt', trat_scoring_cs.get('incorrect_attempt') * -1)
 
@@ -147,7 +141,6 @@ export default step.extend changeset_helpers,
     changeset.set('due_at',     due_at)
 
   toggle_rat_changeset_property: (type, property) ->
-    #changeset = @get('irat_changeset')
     changeset = @get("#{type}_changeset")
     changeset.toggleProperty(property)
     @propertyDidChange('trat_changeset')

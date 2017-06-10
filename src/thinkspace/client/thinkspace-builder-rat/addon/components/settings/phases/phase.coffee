@@ -30,10 +30,9 @@ export default base.extend
     model     = @get('model')
     vpresence = totem_changeset.vpresence(true)
 
-    changeset = totem_changeset.create(model,
+    changeset = totem_changeset.create model,
       due_at:    [v_comparison({initial_val: model.get('unlock_at'), val: 'unlock_at', message: 'Release date must be set before the due date', type: 'gt'})],
       unlock_at: [v_comparison({initial_val: model.get('due_at'),    val: 'due_at',    message: 'Release date must be set before the due date', type: 'lt'})]
-    )
     changeset.set('configuration', null) # No configuration changes are made here.
     @set('changeset', changeset)
 

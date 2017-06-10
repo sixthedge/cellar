@@ -16,7 +16,7 @@ export default base.extend
       title: [vlength]
     )
 
-    changeset.set('show_errors', true)
+    changeset.show_errors_on()
     @set('changeset', changeset)
 
   actions:

@@ -98,14 +98,12 @@ export default ember.Object.extend array_helpers, changeset_helpers,
     vpresence = totem_changeset.vpresence(true)
 
     choices   = @duplicate_array(@get('model.choices'))
-    changeset = totem_changeset.create(model,
+    changeset = totem_changeset.create model,
       question: [vpresence],
       choices:  [vpresence]
-    )
 
-    answer_cs = totem_changeset.create(@,
+    answer_cs = totem_changeset.create @,
       answer: [vpresence]
-    )
 
     changeset.set('choices', choices)
     @set('answer_cs', answer_cs)
