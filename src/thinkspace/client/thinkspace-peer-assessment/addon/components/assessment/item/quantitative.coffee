@@ -87,7 +87,7 @@ export default base_component.extend
         fillClass:   @get_slider_class('fill')
         handleClass: @get_slider_class('handle')
         onInit: => @slider_set_ruler()
-        onSlide: (position, value) => @slider_set_color(value); @slider_set_value(value)
+        onSlide: (position, value) => @slider_set_value(value)
         onSlideEnd: => @manager_save_review()
     if @get('points_descriptive_enabled')
       range_class = ".#{@get_slider_class('range')}"
