@@ -20,6 +20,10 @@ export default ta.Model.extend ta.add(
   draft_assignments:    ember.computed.filterBy 'assignments_due_at_asc', 'state', 'inactive'
   archived_assignments: ember.computed.filterBy 'assignments_due_at_asc', 'state', 'archived'
 
+  upcoming_active_assignments: ember.computed 'active_assignments.@each.due_at', ->
+    @get('active_assignments').filter (assignment) ->
+      assignment.get('due_at') > new Date()
+
   unlocked_team_sets: ember.computed 'team_sets', ->
     promise = new ember.RSVP.Promise (resolve, reject) =>
       @get('team_sets').then (team_sets) =>
