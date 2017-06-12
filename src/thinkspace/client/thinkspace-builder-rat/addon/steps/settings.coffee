@@ -122,9 +122,9 @@ export default step.extend changeset_helpers,
     trat_scoring_cs = @get('trat_scoring_cs')
     irat_cs         = @get('irat_changeset')
     trat_cs         = @get('trat_changeset')
-    irat_cs.set('settings.scoring.correct', scoring_cs.get('correct'))
-    irat_cs.set('settings.scoring.no_answer', scoring_cs.get('no_answer'))
-    trat_cs.set('settings.scoring.attempted', trat_scoring_cs.get('attempted'))
+    irat_cs.set('settings.scoring.correct',           scoring_cs.get('correct'))
+    irat_cs.set('settings.scoring.no_answer',         scoring_cs.get('no_answer'))
+    trat_cs.set('settings.scoring.attempted',         trat_scoring_cs.get('attempted'))
     trat_cs.set('settings.scoring.incorrect_attempt', trat_scoring_cs.get('incorrect_attempt') * -1)
 
     @process_changeset_strings()

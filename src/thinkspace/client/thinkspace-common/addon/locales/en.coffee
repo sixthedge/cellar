@@ -316,7 +316,9 @@ export default {
               unignore: 'Review set unignored successfully.'
               unlock: 'Review set unlocked successfully.'
               remind: 'Reminder email sent successfully.'
-
+          readiness_assurance:
+            assessment:
+              save: 'Readiness assurance assessment saved successfully.'
           team:
             team:
               save: 'Team saved successfully.'
@@ -334,7 +336,6 @@ export default {
               save: 'Forecast saved successfully.'
             response:
               save: 'Response saved successfully.'
-
 
 
 

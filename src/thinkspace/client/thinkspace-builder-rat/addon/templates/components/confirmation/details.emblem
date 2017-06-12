@@ -6,7 +6,6 @@
 
   label Exercise Name
   p.text__font-size--14.spacing__margin-top--0
-    = step.changeset.errors.title
     if has_title_error
       br
       component '__changeset/errors' changeset=step.changeset attribute='title' errors_visible=true

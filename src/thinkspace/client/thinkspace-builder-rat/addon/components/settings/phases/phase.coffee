@@ -15,6 +15,16 @@ export default base.extend
   is_irat: ember.computed.equal 'type', 'irat'
   is_trat: ember.computed.equal 'type', 'trat'
 
+  no_errors:  ember.computed.empty 'changeset.errors'
+  has_errors: ember.computed.not 'no_errors'
+
+  date_errors: ember.computed 'changeset.errors', ->
+    errors = @get('changeset.errors')
+    if ember.isPresent(errors.findBy('key', 'unlock_at'))
+      return errors.findBy('key', 'unlock_at').validation
+    else if ember.isPresent(errors.findBy('key', 'due_at'))
+      return errors.findBy('key', 'due_at').validation
+
   # # Events
   init_base: -> 
     @set_changeset()

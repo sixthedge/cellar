@@ -37,7 +37,6 @@ export default step.extend
     new ember.RSVP.Promise (resolve, reject) =>
       @set_loading('all')
       @create_question_items()
-
       resolve()
 
   ## TODO: get this to support trats as well
@@ -63,7 +62,6 @@ export default step.extend
           items.insertAt(index, q_item)
         else
           items.pushObject(q_item)
-
       q_item = items.findBy('id', id)
       items.removeObject(q_item)
       items.insertAt(i, q_item)
