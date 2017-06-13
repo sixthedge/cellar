@@ -19,6 +19,7 @@ export default ember.Object.extend
 
   init: ->
     @_super()
+    console.log('calling QUAL init')
     @create_changeset()
 
   create_changeset: ->

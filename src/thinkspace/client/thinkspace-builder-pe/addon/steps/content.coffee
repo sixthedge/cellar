@@ -20,10 +20,14 @@ export default step.extend
   builder: ember.inject.service()
   manager: ember.inject.service()
 
-  is_preview:          ember.computed.reads 'assessment.has_no_assessment_template'
-  is_editing_template: false
+  assessment_templates: ember.computed.reads 'manager.assessment_templates'
+  user_templates:       ember.computed.reads 'manager.user_templates'
+  assessment:           ember.computed.reads 'manager.assessment'
+  
+  is_preview:           ember.computed.reads 'assessment.has_no_assessment_template'
+  is_editing_template:  false
 
-  is_readonly: ember.computed.or 'is_preview', 'is_editing_template'
+  is_readonly:          ember.computed.or 'is_preview', 'is_editing_template'
 
   ## API Methods
 
@@ -52,19 +56,20 @@ export default step.extend
 
   initialize: ->
     @reset_all_data_loaded()
-    model = @get('builder.model')
-    @set 'model', model
 
-    promises = 
-      assessment_templates: @query_assessment_templates()
-      user_templates:       @query_user_templates()
-      assessment:           @query_assessment()
+    @create_changesets()
+    @init_template().then =>
+      @set_all_data_loaded()
 
-    @rsvp_hash_with_set(promises, @).then (results) =>
-      @create_changesets()
-      @set_manager_model()
-      @init_template().then =>
-        @set_all_data_loaded()
+  init_data: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      promises =
+        assessment_templates: @query_assessment_templates()
+        user_templates:       @query_user_templates()
+        assessment:           @query_assessment()
+
+      ember.RSVP.hash(promises).then (results) =>
+        resolve(results)
 
   validate: ->
     new ember.RSVP.Promise (resolve, reject) =>
@@ -72,6 +77,11 @@ export default step.extend
       assessment_changeset = @get('assessment_changeset')
       assessment_changeset.validate().then =>
         resolve(assessment_changeset.get('isValid'))
+
+  update_model: -> 
+    manager = @get('manager')
+    console.log('calling step update_model with manager ', manager)
+    manager.save_model()
 
   set_manager_model: ->
     ## Used to initialize the manager service's 'model' property to an assessment if present.
@@ -132,7 +142,7 @@ export default step.extend
       @reset_is_editing_template()
 
   reset_is_preview: -> @set 'is_preview', false
-  set_is_preview: -> @set 'is_preview', true
+  set_is_preview: ->   @set 'is_preview', true
 
   set_is_editing_template:   -> @set('is_editing_template', true)
   reset_is_editing_template: -> @set('is_editing_template', false)

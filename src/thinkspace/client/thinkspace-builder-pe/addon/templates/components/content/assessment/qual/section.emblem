@@ -5,6 +5,6 @@ fieldset.forms__section.spacing__margin-bottom--4
     | New Question
 
   each model as |item|
-    component 'content/assessment/qual/item' model=item
+    component 'content/assessment/qual/item' model=item step=step
   else
     h1 empty

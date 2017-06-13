@@ -41,6 +41,7 @@ export default ember.Mixin.create
 
   get_step_at_index: (index) -> @get('steps').objectAt(index)
 
+  get_model: -> @get('model')
 
   # ## Transitions
 

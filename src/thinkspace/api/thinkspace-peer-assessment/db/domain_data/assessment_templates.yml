@@ -110,8 +110,8 @@
   ownerable_id: 
   value:
     options: {}
-    quantitative: {}
-    qualitative: {}
+    quantitative: []
+    qualitative: []
   title: Blank Canvas
   description: Start fresh.
   state: system

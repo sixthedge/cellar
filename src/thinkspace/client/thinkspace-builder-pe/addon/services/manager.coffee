@@ -1,6 +1,8 @@
 import ember          from 'ember'
 import ns             from 'totem/ns'
 import totem_messages from 'totem-messages/messages'
+import qual_item      from 'thinkspace-builder-pe/items/qual'
+import quant_item     from 'thinkspace-builder-pe/items/quant'
 
 ###
 # # manager.coffee
@@ -8,15 +10,49 @@ import totem_messages from 'totem-messages/messages'
 # - Package: **ethinkspace-builder-pe**
 ###
 export default ember.Service.extend
-  model: null # assessment
+  model:       null # assessment
+  quant_items: null
+  qual_items:  null
+
+  builder: ember.inject.service()
+
+  steps: ember.computed.reads 'builder.steps'
+
+  initialize: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      promises = ember.makeArray()
+
+      steps    = @get('steps')
+      promises = {}
+
+      steps.forEach (step) =>
+        id                = step.get('id')
+        promises["#{id}"] = step.init_data()
+
+      ember.RSVP.hash(promises).then (results) =>
+        ## Each step's results are a key in the results hash
+        for step_id, obj of results
+          if ember.isPresent(obj)
+            ## If there are results from a particular step, set them to the manager
+            for key, value of obj
+              @set("#{key}", value)
+
+        @set_model(@get('assessment'))
+        @create_quant_items()
+        @create_qual_items()
+
+        resolve()
 
   # ### Model helpers
+
+  ## Model is set to the assessment
   set_model: (model) -> 
     console.info "[pa:builder] Model set to: ", model
     @set 'model', model
 
   save_model: ->
     model = @get 'model'
+    console.log('saving model ', model)
     model.save().then =>
       totem_messages.api_success source: @, model: model, action: 'update', i18n_path: ns.to_o('tbl:assessment', 'save')
     , (error) => @error(error)
@@ -80,12 +116,17 @@ export default ember.Service.extend
   # ### Shared helpers
   get_items_for_type: (type) ->
     model     = @get 'model'
+    console.log('[pe manager] model is ', model)
     model.get "#{type}_items"
 
   add_item: (type, item) ->
     items = @get_items_for_type type
     items.pushObject item
-    @save_model()
+    @save_model().then =>
+      if type == 'qual'
+        @create_qual_items()
+      else
+        @create_quant_items()
 
   delete_item: (type, item) ->
     items = @get_items_for_type type
@@ -125,6 +166,59 @@ export default ember.Service.extend
     @save_model()
 
   get_next_id: (type) ->
-    items = @get_items_for_type(type).sortBy('id')
-    id    = items.get('lastObject.id')
+    items = @get_items_for_type(type)
+    console.log('[pe] manager items are ', items)
+    return 1 unless ember.isPresent(items)
+    sorted_items = items.sortBy('id')
+    id           = sorted_items.get('lastObject.id')
     if ember.isPresent(id) then id = id + 1 else id = 1
+
+  create_quant_items: (opts={}) ->
+    assessment = @get('assessment')
+    quants = assessment.get('value.quantitative') || ember.makeArray()
+
+    items = @get('quant_items') || ember.makeArray()
+
+    i_ids = items.mapBy('id')
+    ## TODO: make sure that d_ids handles updates to questions
+    d_ids = ember.makeArray()
+
+    quants.forEach (quant) =>
+      id = quant.id
+      i = quants.indexOf(quant)
+
+      if !i_ids.contains(id) || (i_ids.contains(id) && d_ids.contains(id))
+        q_item = @create_quant_item(quant)
+        items.pushObject(q_item)
+
+    @set('quant_items', items)
+
+  create_qual_items: (opts={}) ->
+    assessment = @get('assessment')
+    quals = assessment.get('value.qualitative') || ember.makeArray()
+
+    items = @get('qual_items') || ember.makeArray()
+
+    i_ids = items.mapBy('id')
+    ## TODO: make sure that d_ids handles updates to questions
+    d_ids = ember.makeArray()
+
+    quals.forEach (qual) =>
+      id = qual.id
+      i = quals.indexOf(qual)
+
+      if !i_ids.contains(id) || (i_ids.contains(id) && d_ids.contains(id))
+        q_item = @create_qual_item(qual)
+        items.pushObject(q_item)
+
+    @set('qual_items', items)
+
+  create_qual_item: (item) ->
+    qual_item.create
+      model:      item
+      assessment: @get('assessment')
+
+  create_quant_item: (item) ->
+    quant_item.create
+      model:      item
+      assessment: @get('assessment')

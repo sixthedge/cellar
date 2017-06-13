@@ -14,18 +14,25 @@ export default base.extend
 
   value:    null
   template: null
+  manager: ember.inject.service()
 
-  quant_items:    ember.computed 'value.quantitative.@each', -> 
-    ## Create objects here instead of downstream
-    items = @get 'value.quantitative'
-    if ember.isPresent(items)
-      @create_quant_item(item) for item in items
+  # quant_items:    ember.computed 'value.quantitative.@each', -> 
+  #   ## Create objects here instead of downstream
+  #   items = @get 'value.quantitative'
+  #   console.log('[QUANT] recomputing quant_items')
 
-  qual_items:     ember.computed 'value.qualitative.@each', -> 
-    ## Create objects here instead of downstream
-    items = @get 'value.qualitative'
-    if ember.isPresent(items)
-      @create_qual_item(item) for item in items
+  #   if ember.isPresent(items)
+  #     @create_quant_item(item) for item in items
+
+  quant_items: ember.computed.reads 'manager.quant_items'
+  qual_items: ember.computed.reads 'manager.qual_items'
+
+  # qual_items:     ember.computed 'value.qualitative.@each', -> 
+  #   ## Create objects here instead of downstream
+  #   console.log('[QUAL] recomputing qual_items')
+  #   items = @get 'value.qualitative'
+  #   if ember.isPresent(items)
+  #     @create_qual_item(item) for item in items
 
   create_qual_item: (item) ->
     qual_item.create

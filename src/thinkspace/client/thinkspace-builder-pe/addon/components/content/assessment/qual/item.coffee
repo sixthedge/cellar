@@ -23,9 +23,10 @@ export default base.extend
     edit: (bool) -> @set('is_editing', bool)
     
     ## Bool passed by qual/item/edit component to indicate whether the changeset is 
-    update: -> 
-      @get('manager').save_model()
-      @send('edit', false)
+    update: ->
+      @get('manager').save_model().then =>
+        @send('edit', false)
+        @get('step').update_model()
       
     duplicate: ->
       item = @get('item')
