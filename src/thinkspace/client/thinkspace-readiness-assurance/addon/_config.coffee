@@ -15,6 +15,8 @@ export default {
       'ra:status':       'readiness_assurance'
       'ra:server_event': 'readiness_assurance'
       'ra:admin':        'readiness_assurance'
+      'ra:irat':         'readiness_assurance'
+      'ra:trat':         'readiness_assurance'
   
   query_params:
     'ra:assessment':    ownerable: true, authable: true

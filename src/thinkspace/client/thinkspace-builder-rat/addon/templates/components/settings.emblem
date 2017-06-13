@@ -1,6 +1,8 @@
 partial 'components/header'
 
-if step.all_data_loaded
+if step.loading.all
+  component '__loader/base'
+else
   .main-content
     .grid__container--flex.spacing__margin-bottom--4
       component 'settings/content' model=model step=step class='grid__col--3of4 grid__mobile--full-width'

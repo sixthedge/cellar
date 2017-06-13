@@ -24,46 +24,57 @@ export default step.extend
   model: ember.computed.reads 'builder.model'
 
   sync_assessments: ember.computed.reads 'model.sync_rat_assessments'
+  irat_assessment:  ember.computed.reads 'manager.irat'
+  trat_assessment:  ember.computed.reads 'manager.trat'
+
+  cur_irat_question_items: null
+  cur_trat_question_items: null
 
   irat_type: 'irat'
   trat_type: 'trat'
 
   initialize: ->
-    @reset_all_data_loaded()
-
-    promises = 
-      assessments: @query_assessments()
-
-    @rsvp_hash_with_set(promises, @).then (results) =>
-      @init_assessments()
-
-  query_assessments: ->
     new ember.RSVP.Promise (resolve, reject) =>
-      model = @get('model')
+      @set_loading('all')
+      @create_question_items()
+      resolve()
 
-      query =
-        id: model.get('id')
-        componentable_type: ns.to_p('ra:assessment')
-      options =
-        action: 'phase_componentables'
-        model: ns.to_p('ra:assessment')
+  ## TODO: get this to support trats as well
+  create_question_items: (opts={}) ->
+    irat_assessment = @get('irat_assessment')
+    questions       = irat_assessment.get('questions') || ember.makeArray()
 
-      tc.query_action(ns.to_p('assignment'), query, options).then (assessments) =>
-        resolve(assessments)
-      , (error) => reject error
+    items   = @get('irat_question_items') || ember.makeArray()
+    delta   = opts.delta || ember.makeArray()
+    new_ids = opts.new_ids || ember.makeArray()
+    i_ids   = items.mapBy('id')
+    d_ids   = delta.mapBy('id')
 
-  init_assessments: ->
-    assessments = @get('assessments')
-    manager     = @get('manager')
+    questions.forEach (question) =>
+      id = question.id
+      i  = questions.indexOf(question)
+      if !i_ids.contains(id) || (i_ids.contains(id) && d_ids.contains(id))
+        q_item = @create_question_item(@get('irat_type'), question)
+        if d_ids.contains(id)
+          cur_item = items.filter((item) -> item.get('id') == id).get('firstObject')
+          index    = items.indexOf(cur_item)
+          items.removeAt(index)
+          items.insertAt(index, q_item)
+        else
+          items.pushObject(q_item)
+      q_item = items.findBy('id', id)
+      items.removeObject(q_item)
+      items.insertAt(i, q_item)
 
-    irat = assessments.findBy 'is_irat', true
-    trat = assessments.findBy 'is_trat', true
+    q_ids = questions.mapBy('id')
+    i_ids = items.mapBy('id')
 
-    @set('irat_assessment', irat)
-    @set('trat_assessment', trat)
+    del = i_ids.filter ((id) -> !q_ids.contains(id))
+    del.forEach (id) => items.removeObject(items.findBy('id', id))
 
-    manager.set_assessment('irat', irat)
-    manager.set_assessment('trat', trat)
+    new_ids.forEach (id) => items.findBy('id', id).set('is_new', true)
+
+    @set('irat_question_items', items)
 
   toggle_assessment_sync: (val) ->
     model = @get('model')
@@ -74,15 +85,10 @@ export default step.extend
         @set('assessments', assessments)
         @init_assessments()
 
-  irat_question_items: ember.computed 'irat_assessment.questions_with_answers.@each', ->
-    items = @get('irat_assessment.questions_with_answers')
-    if ember.isPresent(items)
-      @create_question_item(@get('irat_type'), item) for item in items
-
-  trat_question_items: ember.computed 'trat_assessment.questions_with_answers.@each', ->
-    items = @get('trat_assessment.questions_with_answers')
-    if ember.isPresent(items)
-      @create_question_item(@get('trat_type'), item) for item in items
+  # trat_question_items: ember.computed 'trat_assessment.questions_with_answers.@each', ->
+  #   items = @get('trat_assessment.questions_with_answers')
+  #   if ember.isPresent(items)
+  #     @create_question_item(@get('trat_type'), item) for item in items
 
   create_question_item: (type, item) ->
     question_item.create
@@ -107,8 +113,35 @@ export default step.extend
       ember.RSVP.all(promises).then (valids) =>
         resolve(!valids.contains(false))
 
-
   save: ->
     new ember.RSVP.Promise (resolve, reject) =>
       @validate().then (validity) =>
         resolve(validity)
+
+  add_question_item: (type) ->
+    manager = @get('manager')
+    @set_loading('irat')
+    manager.add_question_item(type).then (item) =>
+      @create_question_items({new_ids: [item.id]})
+      @reset_loading('irat')
+
+  delete_question_item: (type, item_obj) ->
+    manager = @get('manager')
+    manager.delete_question_item(type, item_obj).then =>
+      @create_question_items()
+
+  duplicate_question_item: (type, item_obj) ->
+    manager = @get('manager')
+    @set_loading('irat')
+    manager.duplicate_question_item(type, item_obj).then =>
+      @create_question_items()
+      @reset_loading('irat')
+
+  reorder_question_item: (type, item_obj, offset) ->
+    manager = @get('manager')
+    @set_loading('irat')
+    manager.reorder_item(type, item_obj, offset).then =>
+      @create_question_items()
+      @reset_loading('irat')
+    , (error) =>
+      @reset_loading('irat')

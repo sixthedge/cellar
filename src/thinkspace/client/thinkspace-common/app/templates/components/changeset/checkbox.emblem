@@ -1,11 +1,7 @@
-if label: label.ts-validated-input_label= label
-
-if viewonly
-  if is_checked
-    i.checkbox.checked.fa.fa-check-square-o
-  else
-    i.checkbox.unchecked.fa.fa-square-o
-else
-  = input type='checkbox' checked=checkbox_value input_attributes=input_attributes
+input.checkbox__input id=id type='checkbox' name=name value=value checked=checked
+label.checkbox__label-container for=input_id
+  .checkbox__label= label 
+  if summary
+    .checkbox__label-summary #{summary}
 
 component '__changeset/errors' changeset=changeset attribute=attribute show_errors=show_errors input_id=input_id error_class=error_class

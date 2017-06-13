@@ -18,5 +18,5 @@ export default base.extend
 
   actions:
     create: ->
-      manager = @get('manager')
-      manager.add_question_item(@get('type'))
+      step = @get('step')
+      step.add_question_item(@get('type'))

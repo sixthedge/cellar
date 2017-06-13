@@ -13,17 +13,6 @@ export default base.extend
 
   prefix:     ember.computed.reads 'model.prefix'
   is_answer:  ember.computed.reads 'model.is_answer'
-  cur_answer: null
-
-  is_correct: ember.computed 'is_answer', 'cur_answer', ->
-    cur_answer = @get('cur_answer')
-    if @get('model.id') == cur_answer
-      return true
-    else
-      if ember.isEmpty(cur_answer)
-        return @get('is_answer')
-      else
-        return false
 
   actions:
     delete:        -> @sendAction('delete', @get('model.model'))

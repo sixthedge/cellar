@@ -9,19 +9,25 @@ export default function validateComparison(options = {}) {
 
     // We're trying to mirror the behavior of isNumber with our options as much as possible
     
-    let otherVal = get(changes, options['val']);
-    let thisVal  = newValue;
-    let type     = options['type'];
+    let initialVal = options['initial_val'];
+    let otherVal   = get(changes, options['val']);
+    let value      = initialVal;
+    let thisVal    = newValue;
+    let type       = options['type'];
 
-    if (type === 'is' && otherVal !== thisVal) {
+    if (ember.isPresent(otherVal)) {
+      value = otherVal;
+    }
+
+    if (type === 'is' && value !== thisVal) {
       return options.message;
-    } else if (type === 'lt' && thisVal >= otherVal) {
+    } else if (type === 'lt' && thisVal >= value) {
       return options.message;
-    } else if (type === 'lte' && thisVal > otherVal) {
+    } else if (type === 'lte' && thisVal > value) {
       return options.message;
-    } else if (type === 'gt' && thisVal <= otherVal) {
+    } else if (type === 'gt' && thisVal <= value) {
       return options.message;
-    } else if (type === 'gte' && thisVal < otherVal) {
+    } else if (type === 'gte' && thisVal < value) {
       return options.message;
     }
     return true;

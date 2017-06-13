@@ -319,11 +319,13 @@ export default {
               unignore: 'Evaluations unignored successfully.'
               unlock: 'Evaluations unlocked successfully. The student will be notified.'
               remind: 'Reminder email sent successfully.'
+          readiness_assurance:
+            assessment:
+              save: 'Readiness assurance assessment saved successfully.'
               submit: 'Peer evaluation submitted successfully.'
             team_set:
               approve: 'Team evaluations approved successfully.'
               unapprove: 'Team evaluations unapproved successfully.'
-
           team:
             team:
               save: 'Team saved successfully.'
@@ -341,7 +343,6 @@ export default {
               save: 'Forecast saved successfully.'
             response:
               save: 'Response saved successfully.'
-
 
 
 
