@@ -34,7 +34,7 @@ export default base.extend
 
   set_assignment_types: ->
     new ember.RSVP.Promise (resolve, reject) =>
-      @tc.find_all(ns.to_p('assignment_type')).then (assignment_types) =>
+      @tc.find_all(ns.to_p('assignment_type'), {reload: true}).then (assignment_types) =>
         @set('assignment_types', assignment_types.sortBy('title'))
         resolve()
 

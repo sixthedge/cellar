@@ -26,6 +26,8 @@ module Thinkspace; module PeerAssessment; module Api;
       case sub_action
       when :teams
         teams
+      when :team_set
+        team_set
       when :review_sets
         review_sets
       when :overview
@@ -60,6 +62,18 @@ module Thinkspace; module PeerAssessment; module Api;
       controller_render(team)
     end
 
+    def team_set
+      ownerable = totem_action_authorize.params_ownerable
+      team_id   = params[:team_id]
+      team      = Thinkspace::Team::Team.find(team_id)
+      access_denied "Team is invalid or not assigned to correct teamable." unless team.present?
+      phase = @assessment.authable
+      assignment = phase.thinkspace_casespace_assignment
+      access_denied "Ownerable is not a member of specified team" unless (Thinkspace::Team::Team.users_on_teams?(phase, ownerable, team) || Thinkspace::Team::Team.users_on_teams?(assignment, ownerable, team))
+      team_set   = Thinkspace::PeerAssessment::TeamSet.find_or_create_by(team_id: team_id, assessment_id: @assessment.id)
+      controller_render(team_set)
+    end
+
     def review_sets
       ownerable = totem_action_authorize.params_ownerable
       team_id   = params[:team_id]
@@ -85,7 +99,6 @@ module Thinkspace; module PeerAssessment; module Api;
       access_denied "No team set found for team_id [#{team.id}] and assessment_id [#{@assessment.id}]" unless team_set.present?
       # Ownerable_type and ID needed because of: https://github.com/rails/rails/issues/16983
       review_sets = Thinkspace::PeerAssessment::ReviewSet.where(team_set_id: team_set.id, ownerable_type: ownerable.class.name).scope_where_not_ownerable_ids(ownerable).scope_submitted
-      access_denied "No review sets found for team_set_id [#{team_set.id}]" unless review_sets.present?
       review_set_ids = review_sets.pluck(:id)
       reviews        = Thinkspace::PeerAssessment::Review.where(review_set_id: review_set_ids, reviewable: ownerable)
       json           = Thinkspace::PeerAssessment::Review.generate_anonymized_review_json(@assessment, reviews)

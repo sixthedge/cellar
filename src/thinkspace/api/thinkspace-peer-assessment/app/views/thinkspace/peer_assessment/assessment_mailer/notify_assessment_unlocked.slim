@@ -1,8 +1,15 @@
 == content_for :content do
   h1 style="font-size:18px; font-weight:700; color:#464646; margin-bottom:16px;" 
-    | Evaluations in #{@assignment.title} require re-submission
+    - if @completed
+      | Evaluations in #{@assignment.title} require re-submission
+    - else
+      | Evaluations in #{@assignment.title} may have changed
+
   p
-    | There were changes made to your team that require you to re-submit your peer evaluations in <strong>#{@assignment.title}</strong>. To access your evaluations, click the button below.
+    - if @completed
+      | There were changes made to your team that require you to re-submit your peer evaluations in <strong>#{@assignment.title}</strong>. To access your evaluations, click the button below.
+    - else
+      | There were changes made to your team that may have reset your scoring for your peer evaluations in <strong>#{@assignment.title}</strong>. To access your evaluations, click the button below.
 
   br
 

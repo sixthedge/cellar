@@ -1,22 +1,22 @@
 superuser:  &SUPERUSER [{first_name: superuser, last_name: RAS, superuser: true}]
 superusers: &SUPERUSERS [*SUPERUSER]
 
-iadmin_1: &IADMIN_1 {first_name: iadmin_1, last_name: 1IA, email: 'iadmin_1@sixthedge.com'}
-iadmin_2: &IADMIN_2 {first_name: iadmin_2, last_name: 2IA, email: 'iadmin_2@sixthedge.com'}
+iadmin_1: &IADMIN_1 {first_name: iadmin_1, last_name: 1IA, email: 'iadmin_1@sixthedge.com', profile: {roles: {instructor: true, student: false}}}
+iadmin_2: &IADMIN_2 {first_name: iadmin_2, last_name: 2IA, email: 'iadmin_2@sixthedge.com', profile: {roles: {instructor: true, student: false}}}
 
-owner_1: &OWNER_1 {first_name: owner_1, last_name: 0RA, email: 'owner_1@sixthedge.com', role: owner}
+owner_1: &OWNER_1 {first_name: owner_1, last_name: 0RA, email: 'owner_1@sixthedge.com', profile: {roles: {instructor: true, student: false}}, role: owner}
 
-read_1:  &READ_1  {first_name: read_1, last_name: 1RA, email: 'read_1@sixthedge.com', role: read}
-read_2:  &READ_2  {first_name: read_2, last_name: 2RA, email: 'read_2@sixthedge.com', role: read}
-read_3:  &READ_3  {first_name: read_3, last_name: 3RA, email: 'read_3@sixthedge.com', role: read}
+read_1:  &READ_1  {first_name: read_1, last_name: 1RA, email: 'read_1@sixthedge.com', profile: {roles: {instructor: false, student: true}}, role: read}
+read_2:  &READ_2  {first_name: read_2, last_name: 2RA, email: 'read_2@sixthedge.com', profile: {roles: {instructor: false, student: true}}, role: read}
+read_3:  &READ_3  {first_name: read_3, last_name: 3RA, email: 'read_3@sixthedge.com', profile: {roles: {instructor: false, student: true}}, role: read}
 
-read_4:  &READ_4  {first_name: read_4, last_name: 4RA, email: 'read_4@sixthedge.com', role: read}
-read_5:  &READ_5  {first_name: read_5, last_name: 5RA, email: 'read_5@sixthedge.com', role: read}
-read_6:  &READ_6  {first_name: read_6, last_name: 6RA, email: 'read_6@sixthedge.com', role: read}
+read_4:  &READ_4  {first_name: read_4, last_name: 4RA, email: 'read_4@sixthedge.com', profile: {roles: {instructor: false, student: true}}, role: read}
+read_5:  &READ_5  {first_name: read_5, last_name: 5RA, email: 'read_5@sixthedge.com', profile: {roles: {instructor: false, student: true}}, role: read}
+read_6:  &READ_6  {first_name: read_6, last_name: 6RA, email: 'read_6@sixthedge.com', profile: {roles: {instructor: false, student: true}}, role: read}
 
-read_7:  &READ_7  {first_name: read_7, last_name: 7RA, email: 'read_7@sixthedge.com', role: read}
-read_8:  &READ_8  {first_name: read_8, last_name: 8RA, email: 'read_8@sixthedge.com', role: read}
-read_9:  &READ_9  {first_name: read_9, last_name: 9RA, email: 'read_9@sixthedge.com', role: read}
+read_7:  &READ_7  {first_name: read_7, last_name: 7RA, email: 'read_7@sixthedge.com', profile: {roles: {instructor: false, student: true}}, role: read}
+read_8:  &READ_8  {first_name: read_8, last_name: 8RA, email: 'read_8@sixthedge.com', profile: {roles: {instructor: false, student: true}}, role: read}
+read_9:  &READ_9  {first_name: read_9, last_name: 9RA, email: 'read_9@sixthedge.com', profile: {roles: {instructor: false, student: true}}, role: read}
 
 owners:  &OWNERS  [*OWNER_1]
 

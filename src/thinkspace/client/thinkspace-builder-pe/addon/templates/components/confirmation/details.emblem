@@ -8,6 +8,6 @@
   p.text__font-size--14.spacing__margin-top--0 = model.title
 
   label Instructions/Overview
-  p.text__font-size--14.spacing__margin-top--0 = model.instructions
+  p.text__font-size--14.spacing__margin-top--0.white-space__pre-wrap = model.instructions
 
   // label Team Set

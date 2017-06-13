@@ -3,6 +3,7 @@ import ns    from 'totem/ns'
 import base  from 'thinkspace-base/components/base'
 import ta    from 'totem/ds/associations'
 import tc    from 'totem/cache'
+import util  from 'totem/util'
 
 ###
 # # overview.coffee
@@ -15,6 +16,7 @@ export default base.extend
   # - **thinkspace-common** 
   #   - [server_events](http://totem-docs.herokuapp.com/api/cellar/thinkspace/client/thinkspace-common/app/services/server_events.html)
   server_events: ember.inject.service()
+  phase_manager: ember.inject.service()
 
   #} totem_data_config: ability: true, metadata: {ajax_source: true}  # require metadata so completed count will be updated after a submit
 
@@ -25,9 +27,11 @@ export default base.extend
   team:                 null
   phase_states_loaded:  false
 
+  header_options: ember.computed 'pa_team_set', -> { team_set: @get('pa_team_set') }
+
   # ### Events
   init_base: ->
-    @set_phase_progress()
+    #@set_phase_progress()
     @init_assignment_type()
     @init_abilities().then =>
       @init_assessment_phase().then =>
@@ -38,26 +42,45 @@ export default base.extend
               @init_pubsub()
           else
             @set_team().then =>
-              @init_pubsub()
+              @init_pa_team_set().then =>
+                @init_phase_states().then =>
+                  @init_pubsub()
 
   # ### Helpers
-  set_phase_progress: ->
-    assignment = @get('model')
-    assignment.get(ns.to_p 'phases' ).then (phases) =>
-      phase_promises = phases.getEach(ns.to_p('phase_states'))
-      ember.RSVP.Promise.all(phase_promises).then =>
-        sorted_phases = phases.sortBy('position')
-        resume_phase  = sorted_phases.find (phase) -> phase.get('is_unlocked')
-        if resume_phase
-          @set 'resume_phase', resume_phase
-          @set 'is_in_progress', true  if resume_phase != sorted_phases.get('firstObject')
-        uncompleted_phase = phases.find (phase) -> phase.get('is_completed') != true
-        @set 'all_phases_completed', true unless uncompleted_phase
-        @set 'phase_states_loaded', true
-      , (error) =>
-        @totem_messages.api_failure error, source: @, model: ns.to_p('phase_states')
-    , (error) =>
-      @totem_messages.api_failure error, source: @, model: ns.to_p('phases')
+  # set_phase_progress: ->
+  #   assignment = @get('model')
+  #   assignment.get(ns.to_p 'phases' ).then (phases) =>
+  #     phase_promises = phases.getEach(ns.to_p('phase_states'))
+  #     ember.RSVP.Promise.all(phase_promises).then =>
+  #       sorted_phases = phases.sortBy('position')
+  #       resume_phase  = sorted_phases.find (phase) -> phase.get('is_unlocked')
+  #       if resume_phase
+  #         @set 'resume_phase', resume_phase
+  #         @set 'is_in_progress', true  if resume_phase != sorted_phases.get('firstObject')
+  #       uncompleted_phase = phases.find (phase) -> phase.get('is_completed') != true
+  #       @set 'all_phases_completed', true unless uncompleted_phase
+  #       @set 'phase_states_loaded', true
+  #     , (error) =>
+  #       @totem_messages.api_failure error, source: @, model: ns.to_p('phase_states')
+  #   , (error) =>
+  #     @totem_messages.api_failure error, source: @, model: ns.to_p('phases')
+
+  init_phase_states: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      @pm              = @get('phase_manager')
+      @pmap            = @get('phase_manager.map')
+      assignment       = @get('model')
+      team             = @get('team')
+      ownerable        = @get_ownerable()
+      all_phase_states = new Array
+      all_phase_states.pushObject @pmap.get_all(team, assignment)
+      phase_states = @pmap.get_all(ownerable, assignment)
+      all_phase_states.pushObject(phase_states)
+      all_phase_states = util.flatten_array(all_phase_states).compact()
+      @set('all_phase_states', all_phase_states)
+      @set('phase_states', phase_states)
+      @set('phase_states_loaded', true)
+      resolve()
 
   init_assignment_type: ->
     model = @get('model')
@@ -107,6 +130,28 @@ export default base.extend
       @totem_scope.authable(assignment)
       se = @get('server_events')
       se.join_assignment_with_current_user()
+
+  init_pa_team_set: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      assessment = @get('assessment')
+      query = @totem_scope.get_view_query(assessment, sub_action: 'team_set')['data']
+      query.id = query.id || assessment.get('id')
+      query.team_id = @get 'team.id'
+
+      options        = @totem_scope.get_view_query(assessment, sub_action: 'team_set')
+      options.verb   = 'GET'
+      options.model  = ta.to_p('tbl:team_set')
+      options.single = true
+      @totem_scope.add_authable_to_query(options)
+
+      @tc.query_action(ta.to_p('tbl:assessment'), query, options).then (team_set) =>
+        @set 'pa_team_set', team_set
+        resolve(team_set)
+
+  get_ownerable: ->
+    ownerable = @pm.get_active_addon_ownerable()
+    return ownerable if ember.isPresent(ownerable)
+    @pm.get_current_user()
 
   set_team: ->
     new ember.RSVP.Promise (resolve, reject) =>

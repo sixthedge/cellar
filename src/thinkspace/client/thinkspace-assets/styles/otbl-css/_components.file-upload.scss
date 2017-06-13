@@ -15,13 +15,18 @@
   @extend .btn;
 
   background-color: $color-blue-base;
+  color:            white;
+  margin-bottom:    0;
+  margin-left:      0 !important;
 
   &:hover, &:focus {
     background-color: darken($color-blue-base, 10%);
+    color:            white;
   }
   
   &:active {
     background-color: darken($color-blue-base, 15%);
+    color:            white;
   }
 
 }

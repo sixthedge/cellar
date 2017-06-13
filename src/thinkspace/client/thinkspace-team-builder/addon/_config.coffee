@@ -5,7 +5,7 @@ export default {
   env: env
 
   engine:
-    mount:           {as: 'thinkspace-team-builder', path: '/spaces/:space_id'}
+    mount:           {as: 'thinkspace-team-builder', path: '/spaces/:space_id/teams'}
     external_routes: [{login: 'users.sign_in'}, 'spaces.show', 'spaces.roster', 'builder.new']
 
   ns:

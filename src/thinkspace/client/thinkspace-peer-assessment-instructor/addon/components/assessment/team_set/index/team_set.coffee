@@ -17,6 +17,8 @@ export default base_component.extend
 
   incomplete_review_sets: ember.computed 'model.review_sets.@each.status', -> @get('progress_report').get_incomplete_review_sets_for_team_set(@get('model'))
 
+  has_incomplete_review_sets: ember.computed.notEmpty 'incomplete_review_sets'
+
   # ## Helpers
   state_change: (state) ->
     model           = @get 'model'
@@ -30,9 +32,13 @@ export default base_component.extend
       single: true
 
     @tc.query_action(ns.to_p('tbl:team_set'), query, options).then (team_set) =>
+      @totem_messages.api_success source: @, model: ns.to_p('tbl:team_set'), action: state, i18n_path: ns.to_o('tbl:team_set', state)
+
       team_set.get(ns.to_p('tbl:review_sets')).then (review_sets) =>
         progress_report.process_team_sets(team_set)
         progress_report.process_review_sets(team_set, review_sets)
+    , (error) =>
+          @totem_messages.api_failure error, source: @, model: ns.to_p('tbl:team_set')
 
   # ## Actions
   actions:

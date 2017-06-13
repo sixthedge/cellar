@@ -1,4 +1,4 @@
-component '__case/external/header' model=model phase=model.first_active_phase
+component '__case/external/header' model=model phase=model.first_active_phase options=header_options
 if model.is_pubsub
   mount 'thinkspace-message-pubsub'
   
@@ -7,11 +7,11 @@ if model.is_pubsub
     if model.can.update
       component '__case/states' model=model assignment_type=assignment_type
     component '__case/instructions' model=model
-    component '__case/progress' model=model
+    component '__case/progress' model=model phase_states=all_phase_states
 
   .grid__col--1of4.grid__mobile--full-width
     if phase_states_loaded
-      component '__case/details' model=model teams=teams team_set=team_set
+      component '__case/details' model=model teams=teams team_set=team_set phase_states=all_phase_states
 
 / .grid__container--flex
 /   .grid__col--4of4

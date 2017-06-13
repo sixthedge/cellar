@@ -2,20 +2,20 @@ import ember from 'ember'
 import ns    from 'totem/ns'
 import ajax  from 'totem/ajax'
 import base_component from 'thinkspace-base/components/base'
+import obj_helper from 'thinkspace-common/mixins/helpers/common/object'
 
 ###
 # # results.coffee
 - Type: **Component**
 - Package: **thinkspace-peer-assessment-results**
 ###
-export default base_component.extend
+export default base_component.extend obj_helper,
   # ## Properties
   # ### Internal Properties
   calculated_overview: null # Anonymized result from the server.
   assessment:          null
 
-  # ### Component paths
-  c_overview_type: ns.to_p 'tbl:overview', 'type', 'base'
+  overview_blank: ember.computed 'calculated_overview', -> @is_empty_object(@get('calculated_overview'))
 
   # ## Events
   init_base: ->

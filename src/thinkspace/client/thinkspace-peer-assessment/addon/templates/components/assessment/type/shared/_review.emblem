@@ -21,13 +21,17 @@
 
     .grid__container.grid__container--content-width.spacing__margin-bottom--4
       hr
-      a.btn click='previous' 
-        .tsi.tsi-left.icon-small.tsi-left-arrow-inverse
-        | Previous Member
+      .btn-group
+        a.btn click='previous' 
+          .tsi.tsi-left.icon-small.tsi-left-arrow-inverse
+          | Previous Member
 
-      a.btn.btn--primary.is-right click='next' 
-        | Next Member
-        .tsi.tsi-right.icon-small.tsi-right-arrow-inverse
+        a.btn.btn--primary.is-right click='next' 
+          | Next Member
+          .tsi.tsi-right.icon-small.tsi-right-arrow-inverse
+
+        a.btn.is-right click='confirmation'
+          | Review Summary
 
   .grid__col--1of4.grid__mobile--full-width
     if is_balance
