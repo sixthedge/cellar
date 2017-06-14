@@ -13,13 +13,6 @@ export default base_component.extend
   # ### View Properties
   classNames:       ['ts-componentable']
   has_team_members: true
-  
-  # ### Components Paths
-  c_item_quantitative: ns.to_p 'tbl:assessment', 'item', 'quantitative'
-  c_item_qualitative:  ns.to_p 'tbl:assessment', 'item', 'qualitative'
-  c_review_summary:    ns.to_p 'tbl:assessment', 'review', 'summary'
-  c_loader:            ns.to_p 'common', 'loader'
-  c_assessment:        ns.to_p 'tbl:assessment', 'type', 'base'
 
   # ## Events
   init: ->

@@ -52,9 +52,9 @@ module.exports = function(environment) {
         "log_trace": false
     },
     "messages": {
-        "suppress_all": true,
+        "suppress_all": false,
         "loading_template": "totem_message_outlet/loading",
-        "i18n_path_prefix": "casespace.api.success.",
+        "i18n_path_prefix": "api",
         "error_template": "components/error.emblem"
     },
     "stylized_platform_name": "OpenTBL",

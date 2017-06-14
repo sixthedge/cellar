@@ -152,8 +152,7 @@ totem_messages = ember.Object.extend
     if ember.isArray(message)
       @all_messages().pushObject @message_entry(type, msg, visible, sticky) for msg in message
     else
-      x = @message_entry(type, message, visible, sticky)
-      @all_messages().pushObject x
+      @all_messages().pushObject @message_entry(type, message, visible, sticky)
 
   remove_message: (message) ->
     if ember.isArray(message)
@@ -202,7 +201,7 @@ totem_messages = ember.Object.extend
   # Determine messages to display.
   suppress_all_messages: (type) ->
     return false if type == 'error'
-    config.messages.suppress_all == false
+    config.messages.suppress_all == true
 
   toString: -> 'totem_messages'
 

@@ -36,12 +36,6 @@ export default base_component.extend
 
   errors: ember.computed.reads 'manager.errors'
 
-  # ### Component Paths
-  c_item_quantitative: ta.to_p 'tbl:assessment', 'item', 'quantitative'
-  c_item_qualitative:  ta.to_p 'tbl:assessment', 'item', 'qualitative'
-  c_team:              ta.to_p 'tbl:assessment', 'team'
-  c_review_summary:    ta.to_p 'tbl:assessment', 'review', 'summary'
-
   # ## Actions
   actions:
     next:         -> @get('manager').set_reviewable_from_offset(1)

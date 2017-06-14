@@ -61,7 +61,6 @@ export default ember.Mixin.create
       return resolve() if @get('is_read_only') or @get('is_confirmation') or @get('is_review_read_only')
       model = @get 'review'
       model.save().then =>
-        @totem_messages.api_success source: @, model: model, action: 'update', i18n_path: ta.to_o('peer_assessment', 'review', 'save')
         resolve()
       , (error) =>
        @totem_messages.api_failure error, source: @, model: model, action: 'update'

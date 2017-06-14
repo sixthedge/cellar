@@ -1,6 +1,7 @@
 .main-content__header
   h1 Peer Evaluation Settings
 
+component '__task/errors' title='Looks like something is missing' model=step.changeset
 
 h2 Logistics
 fieldset.forms__section

@@ -1,6 +1,8 @@
 .main-content__header
 	h1 Peer Evaluation Content 
 
+component '__task/errors' title='Looks like something is missing' model=step.assessment_changeset
+
 .forms__field-wrapper.spacing__margin-bottom--2
   label.forms__label--subtle Using Template
   div.text--bold = template.title
@@ -12,7 +14,7 @@ if template.is_balance
     label.spacing__margin-bottom--0 How many points per member for total points
     .forms__label-summary 
       | i.e. 10 points x 5 peers = 50 total points to distribute
-    component '__changeset/input' value=step.assessment_changeset.points_per_member changeset=step.assessment_changeset attribute='points_per_member' display_errors=true class='forms__input--50'
+    component '__changeset/input' value=step.assessment_changeset.points_per_member changeset=step.assessment_changeset attribute='points_per_member' class='forms__input--50'
 
 component 'content/assessment/quant/section' model=quant_items is_balance=template.is_balance
 

@@ -48,3 +48,5 @@ export default ember.Mixin.create
         @addError(key, {value, validation}) for key, validation of validations
 
       toString: -> 'TotemChangeset'
+
+      has_errors: ember.computed.notEmpty 'errors'

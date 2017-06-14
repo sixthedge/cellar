@@ -129,6 +129,7 @@ class ApiMessages
     if options.allow_user_message
       message = @get_options_user_message(options)
       return message  if message
+    console.log "options", options
     i18n.message
       path:         @get_i18n_message_path(options)
       args:         @get_i18n_args(options)
@@ -152,6 +153,7 @@ class ApiMessages
 
   get_i18n_message_path: (options) ->
     prefix = config.messages.i18n_path_prefix
+    prefix = prefix + '.' if ember.isPresent(prefix)
     path   = options.i18n_path
     path   = prefix + path if (ember.isPresent(path) and ember.isPresent(prefix))
     return path if path

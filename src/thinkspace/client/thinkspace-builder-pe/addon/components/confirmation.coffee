@@ -11,7 +11,9 @@ export default base.extend
   # - `thinkspace-builder-pe/builder`
   builder: ember.inject.service()
 
-  step:    ember.computed.reads 'builder.current_step'
+  step:       ember.computed.reads 'builder.current_step'
+  steps:      ember.computed.reads 'builder.steps'
+  changesets: ember.computed.mapBy 'steps', 'changeset'
 
   # ## Actions
   actions:

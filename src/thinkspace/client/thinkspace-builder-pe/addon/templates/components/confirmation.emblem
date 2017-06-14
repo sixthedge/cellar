@@ -6,6 +6,8 @@ partial 'components/header'
         h1 Peer Evaluation Confirmation
         p Make sure everything looks fine
 
+      component '__task/errors' title='Looks like something is missing' model=changesets
+
       component 'confirmation/details'
       hr
       component 'confirmation/content'
