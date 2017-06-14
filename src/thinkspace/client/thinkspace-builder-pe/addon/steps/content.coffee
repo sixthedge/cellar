@@ -55,11 +55,8 @@ export default step.extend
     validations
 
   initialize: ->
-    @reset_all_data_loaded()
-
     @create_changesets()
-    @init_template().then =>
-      @set_all_data_loaded()
+    @init_template()
 
   init_data: ->
     new ember.RSVP.Promise (resolve, reject) =>

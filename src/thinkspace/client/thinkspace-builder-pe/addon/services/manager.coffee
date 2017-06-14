@@ -35,11 +35,13 @@ export default ember.Service.extend
           if ember.isPresent(obj)
             ## If there are results from a particular step, set them to the manager
             for key, value of obj
+              console.log("[manager init] setting #{key} to #{value}")
+
               @set("#{key}", value)
 
         @set_model(@get('assessment'))
-        @create_quant_items()
-        @create_qual_items()
+        @create_question_items('qual')
+        @create_question_items('quant')
 
         resolve()
 
@@ -123,10 +125,7 @@ export default ember.Service.extend
     items = @get_items_for_type type
     items.pushObject item
     @save_model().then =>
-      if type == 'qual'
-        @create_qual_items()
-      else
-        @create_quant_items()
+      @create_question_items(type)
 
   delete_item: (type, item) ->
     items = @get_items_for_type type
@@ -193,25 +192,62 @@ export default ember.Service.extend
 
     @set('quant_items', items)
 
-  create_qual_items: (opts={}) ->
+  create_question_items: (type, opts={}) ->
     assessment = @get('assessment')
-    quals = assessment.get('value.qualitative') || ember.makeArray()
+    questions  = assessment.get("value.#{type}itative") || ember.makeArray()
 
-    items = @get('qual_items') || ember.makeArray()
+    console.log('calling create_question_items with type, opts ', type, opts)
 
-    i_ids = items.mapBy('id')
+    items   = @get("#{type}_items") || ember.makeArray()
+    delta   = opts.delta || ember.makeArray()
+    new_ids = opts.new_ids || ember.makeArray()
+    i_ids   = items.mapBy('id')
     ## TODO: make sure that d_ids handles updates to questions
-    d_ids = ember.makeArray()
+    d_ids   = delta.mapBy('id')
 
-    quals.forEach (qual) =>
-      id = qual.id
-      i = quals.indexOf(qual)
+    console.log('d_ids are ', d_ids)
 
+    questions.forEach (question) =>
+      id = question.id
+      i  = questions.indexOf(question)
+
+      ## We need to create a new item if:
+      ## => 1. An id that is in the assessment's value column isn't in the current set of items
+      ## => 2. An id is in the delta ids (happens when an item is updated)
       if !i_ids.contains(id) || (i_ids.contains(id) && d_ids.contains(id))
-        q_item = @create_qual_item(qual)
-        items.pushObject(q_item)
+        q_item = @create_question_item(type, question)
+        ## If we identify an updated id, replace the existing item with a new one at the same index
+        if d_ids.contains(id)
+          console.log('found delta id ', id)
+          cur_item = items.filter((item) -> item.get('id') == id).get('firstObject')
+          index = items.indexOf(cur_item)
+          items.removeAt(index)
+          items.insertAt(index, q_item)
+        ## Otherwise, push a new item to the back of the array
+        else
+          items.pushObject(q_item)
 
-    @set('qual_items', items)
+      ## Not sure why we need this, but is present in builder-rat implementation
+      ## Leaving commented out until I know why (Dylan 6/13)
+      q_item = items.findBy('id', id)
+      items.removeObject(q_item)
+      items.insertAt(i, q_item)
+
+    q_ids = questions.mapBy('id')
+    i_ids = items.mapBy('id')
+
+    del = i_ids.filter ((id) -> !q_ids.contains(id))
+    del.forEach (id) => items.removeObject(items.findBy('id', id))
+      
+    new_ids.forEach (id) => items.findBy('id', id).set('is_new', true)
+
+    @set("#{type}_items", items)
+
+  create_question_item: (type, item) ->
+    if type == 'qual'
+      return @create_qual_item(item)
+    else if type == 'quant'
+      return @create_quant_item(item)
 
   create_qual_item: (item) ->
     qual_item.create

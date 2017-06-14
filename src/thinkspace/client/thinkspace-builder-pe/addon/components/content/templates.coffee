@@ -57,7 +57,6 @@ export default base.extend
         @set 'user_template_selected', assessment_template.get('is_user')
       else
         @set 'selected_template', @get('assessment_template_michaelsens')
-      @set_all_data_loaded()
 
   actions:
     select_assessment_template: (template) ->

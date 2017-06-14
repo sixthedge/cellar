@@ -1,14 +1,11 @@
 fieldset.forms__section
   h2 Peer Evaluation Template
-  if all_data_loaded
-    component '__accessibility/radio/group' value=selected_template options=template_options changed='select_assessment_template'
-    if is_user_templates_selected
-      if has_no_user_templates
-        p You have no saved templates.
-      else
-        component '__dropdown' collection=user_templates display_property='title' text='Choose a template' selected=selected_template select_action='select_assessment_template' action_receiver=this
-  else
-    component '__loader/base'
+  component '__accessibility/radio/group' value=selected_template options=template_options changed='select_assessment_template'
+  if is_user_templates_selected
+    if has_no_user_templates
+      p You have no saved templates.
+    else
+      component '__dropdown' collection=user_templates display_property='title' text='Choose a template' selected=selected_template select_action='select_assessment_template' action_receiver=this
   .btn-group
     button.btn.btn--primary{action 'confirm'}
       | Select Template

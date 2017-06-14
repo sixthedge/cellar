@@ -13,6 +13,7 @@ export default base.extend
   ## The raw json needed by the manager
   item: ember.computed.reads 'model.model'
   
+  type:       'qual'
   model:      null
   edit_mode:  null # content, settings, preview
   is_editing: false
@@ -25,16 +26,17 @@ export default base.extend
     ## Bool passed by qual/item/edit component to indicate whether the changeset is 
     update: ->
       @get('manager').save_model().then =>
+        @get('manager').create_question_items(@get('type'), {delta: ember.makeArray(@get('model'))})
         @send('edit', false)
-        @get('step').update_model()
+        # @get('step').update_model()
       
     duplicate: ->
       item = @get('item')
-      @get('manager').duplicate_item('qual', item.id, item)
+      @get('manager').duplicate_item(@get('type'), item.id, item)
 
     delete: ->
       item = @get('item')
-      @get('manager').delete_item('qual', item)
+      @get('manager').delete_item(@get('type'), item)
 
     reorder: (offset) ->
       item = @get('item')

@@ -2,7 +2,6 @@
   h1 Peer Evaluation Details
   p Time to create a new exercise!
 
-/ if step.all_data_loaded
 component '__changeset/input' value=step.changeset.title changeset=step.changeset attribute='title' label='Exercise name' summary='This is what your students will see it as'
 
 component '__changeset/text_area' value=step.changeset.instructions changeset=step.changeset attribute='instructions' label='Exercise overview/instructions' summary='Students will see this before they start the exercise. The overview is a good place to provide context before they go into the exercise'

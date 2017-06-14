@@ -25,4 +25,6 @@ export default ember.Object.extend common_helper,
     new ember.RSVP.Promise (resolve, reject) =>
       resolve()
 
-  
+  init: ->
+    @_super()
+    @set('model', @get('builder').get_model())
