@@ -1,7 +1,7 @@
 .main-content__header
 	h1 Peer Evaluation Content 
 
-component '__task/errors' title='Looks like something is missing' model=step.assessment_changeset
+component '__task/errors' title='Looks like something is missing' model=step.assessment_changeset show=builder.current_step_is_invalid
 
 .forms__field-wrapper.spacing__margin-bottom--2
   label.forms__label--subtle Using Template

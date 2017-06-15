@@ -15,25 +15,19 @@ export default base.extend
   default_text: 'Choose an answer'
 
   choice_items: ember.computed.reads 'model.choice_items'
-  answer:       ember.computed.reads 'model.changeset.answer'
-  cur_answer:   null
+  answer:       ember.computed.reads 'model.answer_cs.answer'
+
+  display_index: ember.computed 'index', -> @get('index') + 1
 
   select_answer: (choice) ->
-    @set('cur_answer', choice.get('id'))
     @get('model').select_answer(choice)
-
-  update_model: -> 
-    @get('model').save().then (success) =>
-      @get('manager').save_model(@get('type')) if success
 
   actions:
     toggle_show: ->
       @get('model').changeset_rollback().then =>
         @sendAction('show', false)
 
-    update: -> 
-      @sendAction('show', false)
-      @update_model()
+    update: -> @sendAction('update')
 
     add_choice:             -> @get('model').add_choice_to_item(@get('type'), @get('model.id'))
     delete_choice: (choice) -> @get('model').delete_choice_from_item(@get('type'), @get('model.id'), choice)

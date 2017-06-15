@@ -1,4 +1,4 @@
-if show
+if show_and_has_errors
   .dialogue.dialogue--red
     .icon.icon--32.totem-icon__warning--black.is-left
     .spacing__margin-left--3

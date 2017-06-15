@@ -2,6 +2,9 @@ import ember from 'ember'
 import base  from 'thinkspace-base/components/base'
 
 export default base.extend
+  show: true
+
+  show_and_has_errors: ember.computed.and 'show', 'has_errors'
 
   changesets: ember.computed 'model', 'model.@each', ->
     model = @get('model')
@@ -15,4 +18,5 @@ export default base.extend
       return false unless ember.isPresent(changeset)
       changeset.get('has_errors')
 
-  show: ember.computed.sum 'has_errors'
+
+

@@ -24,13 +24,14 @@ export default base.extend
 
   init_base: ->
     @init_assignment_type().then =>
-      @init_teams().then =>
-        @init_phase_states().then =>
-          assignment = @get('model')
-          if assignment.get('is_pubsub')
-            @totem_scope.authable(assignment)
-            se = @get('server_events')
-            se.join_assignment_with_current_user()
+      @init_abilities().then =>
+        @init_teams().then =>
+          @init_phase_states().then =>
+            assignment = @get('model')
+            if assignment.get('is_pubsub')
+              @totem_scope.authable(assignment)
+              se = @get('server_events')
+              se.join_assignment_with_current_user()
 
   init_assignment_type: ->
     new ember.RSVP.Promise (resolve, reject) =>
@@ -79,6 +80,12 @@ export default base.extend
       @totem_scope.add_authable_to_query(query, @get('model'))
       @tc.query_action(ns.to_p('team'), query, options).then (teams) =>
         @set('teams', teams)
+        resolve()
+
+  init_abilities: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      model = @get('model')
+      model.totem_data.ability.refresh().then =>
         resolve()
 
   # set_phase_progress: ->

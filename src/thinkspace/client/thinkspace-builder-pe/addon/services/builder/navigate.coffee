@@ -13,8 +13,10 @@ export default ember.Mixin.create
 
   # ## Properties
 
-  current_step: null
-  current_step_index: ember.computed.reads 'current_step.index'
+  current_step:            null
+  current_step_index:      ember.computed.reads 'current_step.index'
+  current_step_is_valid:   true
+  current_step_is_invalid: ember.computed.not 'current_step_is_valid'
 
 
   # ## Setters
@@ -71,6 +73,7 @@ export default ember.Mixin.create
     new ember.RSVP.Promise (resolve, reject) =>
       step = @get('current_step')
       step.validate().then (valid) =>
+        @set 'current_step_is_valid', valid
         resolve(valid)
     
   save_current_step: ->

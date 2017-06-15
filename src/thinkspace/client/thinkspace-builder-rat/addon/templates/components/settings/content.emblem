@@ -1,23 +1,58 @@
 .main-content__header
   h1 Readiness Assurance Settings
+if step.loading.all
+  component '__loader/base'
+else
+  = step.dynamic_text
+  component '__task/errors' title='Looks like something is missing' model=step.changesets show=builder.current_step_is_invalid
 
-  h2 Logistics
-  fieldset.forms__section
-    
-    h3 iRAT Logistics
-    component 'settings/phases/phase' model=step.irat_phase type='irat' step=step
-    hr
-    h3 tRAT Logistics
-    component 'settings/phases/phase' model=step.trat_phase type='trat' step=step
+  .forms__section
+    h2.spacing__margin-bottom--0 Scoring
+    .forms__heading-summary.spacing__margin-top--0 Lets set how you'd like your exercise to be scored.  
+    fieldset.forms__section
+      .forms__field-wrapper
+        label.spacing__margin-bottom--0 Maximum points awarded per question
+        .forms__label-summary 
+          | Example: student gets it right on their first try. 
+        component '__changeset/input' value=step.scoring_changeset.correct changeset=step.scoring_changeset attribute='correct' display_errors=true class='forms__input--50 is-left'
+        span.text__font-size--12.text--bold.spacing__margin-left--half points 
 
-    / = step.changeset.release_at
-    / .forms__field-wrapper
-    /   label Release date
-    /   .forms__label-summary Choose the date and time this exercise will be made available to students
-    /   component '__datetime_picker' value=step.changeset.release_at select='select_release_at'
+      .forms__field-wrapper
+        label.spacing__margin-bottom--0 Points awarded for question left blank
+        .forms__label-summary 
+          | You can add a negative number if you'd like to deduct points.  
+        component '__changeset/input' value=step.scoring_changeset.no_answer changeset=step.scoring_changeset attribute='no_answer' display_errors=true class='forms__input--50 is-left'
+        span.text__font-size--12.text--bold.spacing__margin-left--half points 
 
-    / = step.changeset.due_at
-    / .forms__field-wrapper
-    /   label Due date
-    /   .forms__label-summary Set the due date and time for this exercise. After this date, the exercise will be read-only.
-    /   component '__datetime_picker' value=step.changeset.due_at select='select_due_at'
+
+      .forms__field-wrapper
+        component '__changeset/checkbox' label='Give students Immediate Feedback (IFAT)' changeset=step.trat_changeset attribute='settings.questions.ifat' checked=step.trat_changeset.settings.questions.ifat save='toggle_is_ifat' summary='Students will be notified immediately whether the answer they chose is correct or not. You can allow them to have multiple attempts.'
+
+      if step.trat_changeset.settings.questions.ifat
+        .forms__field-wrapper
+          label.spacing__margin-bottom--0 Number of attempts allowed
+          .forms__label-summary 
+            | Example: student leaves an answer blank.
+          component '__changeset/input' value=step.trat_scoring_cs.attempted changeset=step.trat_scoring_cs attribute='attempted' display_errors=true class='forms__input--50 is-left'
+          span.text__font-size--12.text--bold.spacing__margin-left--half attempts
+
+        .forms__field-wrapper
+          label.spacing__margin-bottom--0 Number of points deducted per incorrect response
+          .forms__label-summary 
+            | Example: student leaves an answer blank.
+          component '__changeset/input' value=step.trat_scoring_cs.incorrect_attempt changeset=step.trat_scoring_cs attribute='incorrect_attempt' display_errors=true class='forms__input--50 is-left'
+          span.text__font-size--12.text--bold.spacing__margin-left--half points
+
+      .forms__field-wrapper
+        component '__changeset/checkbox' label='Require justifications for responses' changeset=step.irat_changeset attribute='settings.questions.justification' checked=step.irat_changeset.settings.questions.justification save='toggle_is_req_just' summary='This will add a text area to each question where students and teams can justify their choice.'
+  hr
+  .forms__section
+    h2.spacing__margin-bottom--0 Logistics
+    .forms__heading-summary.spacing__margin-top--0 Set your release and due date logistics for your activities. 
+    fieldset.forms__section
+      
+      h3 iRAT Logistics
+      component 'settings/phases/phase' model=step.irat_phase type='irat' step=step
+      hr
+      h3 tRAT Logistics
+      component 'settings/phases/phase' model=step.trat_phase type='trat' step=step

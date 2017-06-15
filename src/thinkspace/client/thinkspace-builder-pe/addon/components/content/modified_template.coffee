@@ -38,9 +38,9 @@ export default base.extend
 
     varr = v_arr_contains({arr: template_title_map, message: 'Your new template shares a name with another template'})
 
-    changeset = totem_changeset.create(template,
+    changeset = totem_changeset.create template,
       title: [vpresence, varr]
-    )
+    
     @set('changeset', changeset)
 
   get_default_title: -> @get('template').set('title', "New Template #{moment(new Date()).format()}")

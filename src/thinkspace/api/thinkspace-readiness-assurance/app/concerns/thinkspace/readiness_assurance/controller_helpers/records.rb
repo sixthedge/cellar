@@ -25,6 +25,7 @@ module Thinkspace; module ReadinessAssurance; module ControllerHelpers; module R
   def trat?; @assessment.trat?; end
 
   def set_irat_assessment; @assessment = get_irat_assessment; end
+
   def set_trat_assessment; @assessment = get_trat_assessment; end
 
   def get_irat_assessment; assessment_class.authable_irats(assignment_phases).first || access_denied("IRAT assessment not found."); end

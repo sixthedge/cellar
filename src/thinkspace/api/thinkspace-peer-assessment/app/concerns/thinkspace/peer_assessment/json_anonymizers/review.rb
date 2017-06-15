@@ -13,7 +13,7 @@ module Thinkspace; module PeerAssessment; module JsonAnonymizers
       @assessment = assessment
       @reviews    = reviews
       @options    = options
-      @data       = {options: get_options(@assessment, @reviews), qualitative: {}, quantitative: {}}
+      @data       = {options: get_options(@assessment, @reviews), qualitative: {}, quantitative: {}} unless @reviews.blank?
       @results    = Hash.new
     end
 
@@ -33,6 +33,7 @@ module Thinkspace; module PeerAssessment; module JsonAnonymizers
     end
 
     def process
+      return Hash.new if @reviews.blank?
       process_reviews
       average_results
       @data

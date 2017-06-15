@@ -4,8 +4,6 @@
 
 .thinkspace-dropdown {
   border-radius:    $border-radius;
-
-
 }
 
 .thinkspace-dropdown_anchor {
@@ -66,6 +64,13 @@
   }
 }
 
+.thinkspace-pe-conf_summary {
+  &:hover {
+    cursor: pointer;
+    border-color: $color-blue-base;
+  }
+}
+
 .thinkspace-dropdown_link {
   display:          block;
   padding:          1rem;
@@ -80,4 +85,8 @@
   &:hover {
     background-color: $color-gray-med;
   }
+}
+
+.white-space__pre-wrap {
+  white-space: pre-wrap;
 }

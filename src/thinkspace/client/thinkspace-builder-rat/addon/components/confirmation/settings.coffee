@@ -13,3 +13,5 @@ export default base.extend
   step:  ember.computed.reads 'builder.step_settings'
 
   phases: ember.computed.reads 'step.model.active_phases'
+
+  display_incorrect: ember.computed 'step.trat_assessment.settings.scoring.incorrect_attempt', -> @get('step.trat_assessment.settings.scoring.incorrect_attempt') * -1

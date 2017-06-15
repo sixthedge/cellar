@@ -17,7 +17,7 @@ class ThinkspaceReadinessAssurance < ::Totem::Settings.authorization.platforms.t
     can [:manage], chat
     can [:manage], status
     return unless admin?
-    can [:update], assessment
+    can [:update, :sync], assessment
 
   end
 

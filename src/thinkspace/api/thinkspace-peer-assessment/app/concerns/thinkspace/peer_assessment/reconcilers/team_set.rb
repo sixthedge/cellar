@@ -39,7 +39,7 @@ module Thinkspace; module PeerAssessment; module Reconcilers
       process_moves
       reassign_team_sets
       reset_quantitative_data
-      notify
+      #notify
     end
 
     # We implement notify as a public method to be called by the creator of the reconciler in order to avoid potentially multiple
@@ -62,12 +62,14 @@ module Thinkspace; module PeerAssessment; module Reconcilers
         team_set = get_team_set_by_team_id(tobj[:id])
         next if team_set.blank?
         if tobj[:deleted]
+          @team_sets_by_team_id.delete(tobj[:id])
           team_set.destroy
         elsif tobj[:new]
-          team_set_class.create(assessment_id: @assessment.id, team_id: tobj[:new_id])
+          set_team_set_by_team_id(tobj[:new_id], team_set_class.create(assessment_id: @assessment.id, team_id: tobj[:new_id]))
         else  
           team_set.team_id = tobj[:new_id]
           team_set.save
+          set_team_set_by_team_id(tobj[:new_id], team_set)
         end
       end
     end
@@ -138,10 +140,9 @@ module Thinkspace; module PeerAssessment; module Reconcilers
         if team[:dirty]
           team_set = get_team_set_by_team_id(team[:id])
           next if team_set.blank?
-          team_set.reset_quantitative_data
+          team_set.reset_quantitative_data(true)
           @teams_to_notify << team_set.team_id
         end
-
       end
     end
 
@@ -154,7 +155,11 @@ module Thinkspace; module PeerAssessment; module Reconcilers
 
     # ### Helpers
     def get_team_set_by_team_id(id); @team_sets_by_team_id[id]; end
-    def get_review_set_for_ownerable(team_set_id, ownerable_id); @review_sets_by_team_set_id[team_set_id].find { |rs| rs.ownerable_id == ownerable_id }; end
+    def set_team_set_by_team_id(id, team_set); @team_sets_by_team_id[id] = team_set; end
+    def get_review_set_for_ownerable(team_set_id, ownerable_id)
+      return nil unless @review_sets_by_team_set_id[team_set_id].present?
+      @review_sets_by_team_set_id[team_set_id].find { |rs| rs.ownerable_id == ownerable_id }
+    end
     def get_delta_team_by_id(id); @delta[:teams].find { |t| t[:id] == id }; end
 
 

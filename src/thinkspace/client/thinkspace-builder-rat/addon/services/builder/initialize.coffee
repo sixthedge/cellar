@@ -9,6 +9,7 @@ import totem_messages from 'totem-messages/messages'
 ###
 export default ember.Mixin.create 
   ## This mixin contains the step initialization functionality for the builder service
+  manager: ember.inject.service()
 
   launch: ->
     new ember.RSVP.Promise (resolve, reject) =>
@@ -23,7 +24,11 @@ export default ember.Mixin.create
         steps.pushObject step
 
       @set 'steps', steps
-      @initialize_steps().then => resolve()
+      @get('manager').initialize(@get('model')).then =>
+        @initialize_steps().then =>
+          steps.forEach (step) =>
+            step.set('manager_loaded', true)
+          resolve()
 
   initialize_steps: (options={}) ->
     new ember.RSVP.Promise (resolve, reject) =>
@@ -38,8 +43,8 @@ export default ember.Mixin.create
 
       promises = []
       steps.forEach (step) => promises.pushObject(step.initialize()) if step.initialize?
-
-      ember.RSVP.Promise.all(promises).then => resolve()
+      ember.RSVP.Promise.all(promises).then => 
+        resolve()
 
   get_step: (id) -> @_get_step_from_id(id)
 

@@ -2,72 +2,173 @@
 //    #Checkbox
 //\*------------------------------------*/
 
+// .checkbox__item {
+//   margin-bottom: 1rem;
+// }
+
+// .checkbox__label {
+//   max-width:    $max-width--content;
+//   padding-left: 36px;
+//   text-indent:  -36px;
+//   cursor:       pointer;
+// }
+
+// .checkbox__label-summary {
+//   font-size:     .75rem;
+//   margin-bottom: .75rem;
+//   max-width:     42em;
+//   font-weight:   $font-weight--regular;
+//   text-indent:   0;
+// }
+
+// .checkbox__icon {
+//   display:           inline-block;
+//   width:             22px;
+//   height:            22px;
+//   vertical-align:    middle;
+//   margin-right:      12px;
+//   cursor:            pointer;
+//   background-image:  url('images/icons/icons_checkbox-radio-sprite.png');
+//   background-repeat: no-repeat;
+//   overflow:          hidden;
+//   background-size:   22px 220px;
+//   background-position: 0 -110px;
+
+//   -moz-appearance:    none;
+//   -webkit-appearance: none;
+
+//   >input {
+//     display: none;
+//   }
+
+//   &:hover {
+//     background-position: 0 -132px;
+//   }
+
+//   &:focus, &:active {
+//     background-position: 0 -154px;
+//   }
+
+//   &.checkbox__icon--is-checked {
+//     background-position: 0 -176px;
+
+//     &:hover {
+//       background-position: 0 -198px;
+//     }
+
+//     &:focus, &:active {
+//       background-position: 0 -176px;
+//     }
+
+//   }
+
+
+//   @media 
+//   (-webkit-min-device-pixel-ratio: 2), 
+//   (min-resolution: 192dpi) { 
+//     background-image: url('images/icons/icons_checkbox-radio-sprite@2x.png');
+//   }
+
+
+// }
+
+// Accessible Checkbox
 .checkbox__item {
+  @extend .group;
+
+  display:       block;
+  position:      relative;
   margin-bottom: 1rem;
+
+}
+
+.checkbox__input {
+  position:    absolute;
+  top:         0;
+  width:       22px;
+  height:      22px;
+  margin:      0;
+  opacity:     0;
+  line-height: 1;
+}
+
+.checkbox__label-container {
+  position:    relative;
+  display:     block;
+  float:       left;
+  margin:      0;
+  cursor:      pointer;
+  text-indent: 0;
+}
+
+.checkbox__label-container:after {
+  position:            absolute;
+  top:                 0;
+  left:                0;
+  display:             block;
+  width:               22px;
+  height:              22px;
+  content:             '';
+  background-image:    url('images/icons/icons_checkbox-radio-sprite.png');
+  background-repeat:   no-repeat;
+  overflow:            hidden;
+  background-size:     22px 220px;
+  background-position: 0 -110px;
+
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
+    background-image: url('images/icons/icons_checkbox-radio-sprite@2x.png');
+    }
 }
 
 .checkbox__label {
-  max-width:    $max-width--content;
-  padding-left: 36px;
-  text-indent:  -36px;
-  cursor:       pointer;
+  padding-left: 2rem;
 }
 
 .checkbox__label-summary {
-  font-size:     .75rem;
-  margin-bottom: .75rem;
-  max-width:     42em;
-  font-weight:   $font-weight--regular;
-  text-indent:   0;
+  padding-left: 2rem;
+  font-size:    .75rem;
+  max-width:    42em;
+  font-weight:  $font-weight--regular;
 }
 
-.checkbox__icon {
-  display:           inline-block;
-  width:             22px;
-  height:            22px;
-  vertical-align:    middle;
-  margin-right:      12px;
-  cursor:            pointer;
-  background-image:  url('images/icons/icons_checkbox-radio-sprite.png');
-  background-repeat: no-repeat;
-  overflow:          hidden;
-  background-size:   22px 220px;
-  background-position: 0 -110px;
-
-  -moz-appearance:    none;
-  -webkit-appearance: none;
-
-  >input {
-    display: none;
-  }
-
-  &:hover {
-    background-position: 0 -132px;
-  }
-
-  &:focus, &:active {
-    background-position: 0 -154px;
-  }
-
-  &.checkbox__icon--is-checked {
-    background-position: 0 -176px;
-
-    &:hover {
-      background-position: 0 -198px;
-    }
-
-    &:focus, &:active {
-      background-position: 0 -176px;
-    }
-
-  }
-
-
-  @media 
-  (-webkit-min-device-pixel-ratio: 2), 
-  (min-resolution: 192dpi) { 
-    background-image: url('images/icons/icons_checkbox-radio-sprite@2x.png');
-  }
-
-
+// Targets input when it is in HOVER
+.radio__input:hover + label:after{
+  background-position: 0 -132px;
 }
+
+// Targets input when it is in FOCUS for the outline
+.checkbox__input:focus + label:after,
+.checkbox__input:checked:focus + label:after {
+  outline:        1px dotted $color-blue-base;
+  outline-offset: 2px;
+}
+
+// Targets input when it is FOCUSED and ACTIVE
+.checkbox__input:focus + label:after, 
+.checkbox__input:active + label:after {
+  background-position: 0 -154px;
+}
+
+// Targets input when it is CHECKED
+.checkbox__input:checked + label:after{
+  background-position: 0 -176px;
+}
+
+// Targets input when it is CHECKED and in HOVER
+.checkbox__input:checked:hover + label:after{
+  background-position: 0 -198px;
+}
+
+// Targets input when it is FOCUSED and ACTIVE and CHECKED
+.checkbox__input:checked:focus + label:after, 
+.checkbox__input:checked:active + label:after {
+  background-position: 0 -176px;
+}
+
+// Targets input when it is DISABLED
+.checkbox__input[disabled] + label:after{
+  background-position: 0 -110;
+  cursor:              not-allowed;
+  opacity:             .5;
+}
+

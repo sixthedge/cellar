@@ -1,6 +1,6 @@
 .spacing__margin-bottom--4
   h2.spacing__margin-bottom--1 Exercise Overview
   if model.instructions
-    p.spacing__margin-top--0.text__font-size--14== model.instructions
+    p.spacing__margin-top--0.text__font-size--14.white-space__pre-wrap == model.instructions
   else
     p.spacing__margin-top--0.text__font-size--14.text__font-style--italic No instructions given.

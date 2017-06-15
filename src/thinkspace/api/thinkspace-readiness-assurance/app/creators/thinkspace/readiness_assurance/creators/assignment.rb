@@ -35,6 +35,7 @@ module Thinkspace; module ReadinessAssurance; module Creators
         authable: phase,
         settings: {
           ra_type: type,
+          next_id: 0,
           questions: {
             type:          'multiple_choice',
             random:        false,
@@ -74,7 +75,7 @@ module Thinkspace; module ReadinessAssurance; module Creators
       options[:assignment_id]     = @assignment.id
       options[:phase_template_id] = template.id
       options[:team_category_id]  = Thinkspace::Team::TeamCategory.collaboration.id if type == 'trat'
-      options[:title]             = template.title
+      options[:title]             = ''
       options[:description]       = 'Readiness assurance default description.'
       options[:state]             = :active
       options[:default_state]     = 'locked'

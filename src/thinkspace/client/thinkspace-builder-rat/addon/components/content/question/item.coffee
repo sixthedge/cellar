@@ -8,19 +8,33 @@ import base  from 'thinkspace-base/components/base'
 ###
 export default base.extend
 
-  is_editing: ember.computed 'model', ->
-    model = @get('model.model')
-    if ember.isPresent(model.new)
-      true
-    else
-      false
+  manager: ember.inject.service()
 
-  handle_new: ->
-    model = @get('model.model')
-    delete model.new if ember.isPresent(model.new)
+  is_editing: false
+  index:      null
+  is_new:     ember.computed.reads 'model.is_new'
+
+  init_base: -> @set('is_editing', @get('is_new'))
+
+  update_model: ->
+    @get('model').persist().then (valid) =>
+      if valid
+        @set_loading('update')
+        @send('toggle_is_editing', false)
+        @get('manager').update_question(@get('type'), @get('model'))
+        @get('manager').save_assessment(@get('type')).then =>
+          @get('model').set('is_new', false)
+          @get('step').create_question_items(ember.makeArray(@get('model')))
+          @reset_loading('update')
 
   actions:
     toggle_is_editing: (val) -> 
-      @get('model').init() if val
-      @handle_new(val)
       @set('is_editing', val)
+
+    update_question: ->
+      @update_model()
+
+    delete: (type, item_obj) ->
+      @set_loading('update')
+      @get('step').delete_question_item(type, item_obj).then =>
+        @reset_loading('update')

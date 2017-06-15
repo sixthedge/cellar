@@ -2,7 +2,7 @@
   h1 Peer Evaluation Details
   p Time to create a new exercise!
 
-component '__task/errors' title='Looks like something is missing' model=step.changeset
+component '__task/errors' title='Looks like something is missing' model=step.changeset show=builder.current_step_is_invalid
 
 / if step.all_data_loaded
 component '__changeset/input' value=step.changeset.title changeset=step.changeset attribute='title' label='Exercise name' summary='This is what your students will see it as'

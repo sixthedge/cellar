@@ -38,7 +38,8 @@ export default base_component.extend
 
   # ## Actions
   actions:
-    next:         -> @get('manager').set_reviewable_from_offset(1)
-    previous:     -> @get('manager').set_reviewable_from_offset(-1)
-    confirmation: -> @get('manager').set_confirmation()
-    submit:       -> @get('manager').submit()
+    next:                -> @get('manager').set_reviewable_from_offset(1)
+    previous:            -> @get('manager').set_reviewable_from_offset(-1)
+    confirmation:        -> @get('manager').set_confirmation()
+    submit:              -> @get('manager').submit()
+    transition_to_first: -> @get('manager').set_reviewable(@get('reviewables').get('firstObject'))

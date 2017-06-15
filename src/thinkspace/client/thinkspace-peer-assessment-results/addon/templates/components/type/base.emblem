@@ -33,11 +33,11 @@
       else
         .phase-content_section-heading
           h2.spacing__margin-bottom--0.spacing__margin-top--0 Assessment Category Scores:
-          .forms__heading-summary Points below are the average of each category. Lowest possible score is <strong>#{calculated_overview.options.points.min}</strong> and the highest is a <strong>#{calculated_overview.options.points.max}</strong>.
+          .forms__heading-summary Points below are the average of each category.
           ul.basic-list
             each categories as |category|
               li.basic-list__item
-                label #{category.label}:
+                label #{category.label} (<strong>#{category.min}</strong> to <strong>#{category.max}</strong>):
                 .text__font-size--14 
                   | #{category.value} points
 

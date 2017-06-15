@@ -9,7 +9,7 @@
   .forms__label-summary We recommend 3-4 choices for students to choose from.
   .input-group.spacing__margin-bottom--1
     each choice_items as |choice|
-      component 'content/question/choice/edit' model=choice delete='delete_choice' select_answer='select_answer' cur_answer=cur_answer
+      component 'content/question/choice/edit' model=choice delete='delete_choice' select_answer='select_answer' answer=answer
 
   a{action 'add_choice'} class='btn' role='button' tabindex='0'
     .icon.icon--16.icon__plus--black.spacing__margin-right--half
@@ -23,7 +23,7 @@
 /   component '__dropdown' collection=choice_items display_property='prefix' text=dropdown_text selected=model.changeset.answer select_action='select_answer' action_receiver=this
 
 / br
-component '__changeset/errors' changeset=model.changeset attribute='answer' errors_visible=true 
+component '__changeset/errors' changeset=model.answer_cs attribute='answer' errors_visible=true 
 hr
 .btn-group
   button.btn.btn--primary click='update'

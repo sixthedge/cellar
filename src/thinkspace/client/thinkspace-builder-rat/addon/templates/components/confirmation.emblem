@@ -1,28 +1,31 @@
 partial 'components/header'
 .main-content
-  .grid__container--flex.spacing__margin-bottom--4
-    .grid__col--3of4.grid__mobile--full-width
-      .main-content__header
-        h1 Readiness Assurance Confirmation
-        p Make sure everything looks fine
-      // Error message
-      .dialogue.dialogue--red
-        .icon.icon--32.totem-icon__warning--black.is-left
-        .spacing__margin-left--3
-          .text__font-size--16.spacing__margin-bottom--0.text--bold Looks like something is missing
-          p Looks like you're missing the follwing things on your thing. 
-          a.link--dashed Learn more about this
-      component 'confirmation/details'
-      hr
-      component 'confirmation/content'
-      hr
-      component 'confirmation/settings'
-  .grid__container--flex.spacing__margin-bottom--4
-    .grid__col--4of4.grid__mobile--hidden
-      button.btn.is-left{action 'prev_step'}
-        | Back
-      button.btn.btn--primary.is-right{action 'exit'}
-        | Finish Building
+  if step.loading.all
+    component '__loader/base'
+  else
+    .grid__container--flex.spacing__margin-bottom--4
+      .grid__col--3of4.grid__mobile--full-width
+        .main-content__header
+          h1 Readiness Assurance Confirmation
+          p Make sure everything looks fine
+        // Error message
+        .dialogue.dialogue--red
+          .icon.icon--32.totem-icon__warning--black.is-left
+          .spacing__margin-left--3
+            .text__font-size--16.spacing__margin-bottom--0.text--bold Looks like something is missing
+            p Looks like you're missing the follwing things on your thing. 
+            a.link--dashed Learn more about this
+        component 'confirmation/details'
+        hr
+        component 'confirmation/content'
+        hr
+        component 'confirmation/settings'
+    .grid__container--flex.spacing__margin-bottom--4
+      .grid__col--4of4.grid__mobile--hidden
+        button.btn.is-left{action 'prev_step'}
+          | Back
+        button.btn.btn--primary.is-right{action 'exit'}
+          | Finish Building
 .mobile-progress
   .mobile-progress__item.is-left
     .mobile-progress__link click='prev_step'

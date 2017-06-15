@@ -10,13 +10,15 @@ fieldset {
 
 .forms__section {
 	>h2 {
-		font-size: 1.15rem;
+		// font-size: 1.15rem;
 	}
 
   .forms__heading-summary {
-    font-size: .875rem;
-    margin-top: .5rem;
+    font-size:     .875rem;
+    line-height:   1.7em;
+    margin-top:    .5rem;
     margin-bottom: 1.5rem;
+    max-width:     $max-width--content;
   }
 }
 

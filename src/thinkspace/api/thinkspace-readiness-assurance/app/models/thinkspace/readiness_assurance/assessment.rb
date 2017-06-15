@@ -1,8 +1,6 @@
 module Thinkspace
   module ReadinessAssurance
     class Assessment < ActiveRecord::Base
-      after_save :sync_assessments
-
       def question_settings; merged_question_settings; end
       def ra_type; get_ra_type; end
       totem_associations
@@ -27,14 +25,18 @@ module Thinkspace
 
       def sync_assessments
         phase      = self.authable
-        assignment = Thinkspace::Casespace::Assignment.find(phase.assignment_id)
+        assignment = phase.thinkspace_casespace_assignment
 
-        if assignment.sync_rat
+        if assignment.sync_rat?
           assessments = Thinkspace::ReadinessAssurance::Assessment.where(authable: assignment.thinkspace_casespace_phases).without(self)
           assessments.each do |assessment|
             assessment.update_columns(questions: self.questions, answers: self.answers, settings: self.settings.deep_merge(assessment.settings))
           end
         end
+      end
+
+      def sync(options)
+        Thinkspace::ReadinessAssurance::Sync::Assessment.new(options, self).sync
       end
 
       def get_settings; self.settings || Hash.new; end
@@ -48,7 +50,8 @@ module Thinkspace
       # ###
       # ### Question Helpers.
       # ###
-      def answer_for_question_id(id); answers.dig('correct', id); end
+      # The question_id may be passed in as an int, but they are stored as string.
+      def answer_for_question_id(id); answers.dig('correct', id.to_s); end
       def choices_for_question_id(id)
         question = question_for_id(id)
         return [] unless question.present?

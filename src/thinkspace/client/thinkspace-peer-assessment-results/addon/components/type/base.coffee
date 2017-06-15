@@ -27,14 +27,16 @@ export default base.extend
   categories:                    ember.computed 'assessment_quantitative_items', ->
     items = @get 'assessment_quantitative_items'
     return [] unless ember.isPresent(items)
-    ids    = items.mapBy('id')
     responses = []
-    ids.forEach (id) =>
-      label             = items.findBy('id', id).label
+    items.forEach (item) =>
+      settings          = item.settings
+      points            = settings.points if ember.isPresent(settings)
       response          = {}
-      response['id']    = id
-      response['value'] = @get_calculated_overview_value_for_id(id)
-      response['label'] = label
+      response['id']    = item.id
+      response['value'] = @get_calculated_overview_value_for_id(item.id)
+      response['label'] = item.label
+      response['min']   = points.min if ember.isPresent(points)
+      response['max']   = points.max if ember.isPresent(points)
       responses.pushObject(response)
     responses
 

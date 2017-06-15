@@ -25,10 +25,9 @@ export default ember.Object.extend
     model = @get('model')
     vlength = totem_changeset.vlength(min: 4)
 
-    changeset = totem_changeset.create(model,
+    changeset = totem_changeset.create model,
       label: [vlength]
-    )
-
+    
     changeset.set('show_errors', true)
 
     @set('changeset', changeset)
