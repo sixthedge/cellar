@@ -35,6 +35,10 @@ class Report < ActiveRecord::Base
     when 'ownerable_data'
       # TODO: Add a mapping from a type to a class in the future for more types.
       klass = Thinkspace::Casespace::Exporters::OwnerableData
+    when 'peer_assessment'
+      klass = Thinkspace::PeerAssessment::Exporters::Assessment
+    when 'readiness_assurance'
+      klass = Thinkspace::ReadinessAssurance::Exporters::Assessment
     else
       return send_error_notification('INVALID_REPORT_TYPE')
     end
