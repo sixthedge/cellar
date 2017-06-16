@@ -7,7 +7,7 @@ env:
     - APP_SRC_DIR=$TRAVIS_BUILD_DIR/src
     - APP_LOCAL_DIR=$TRAVIS_BUILD_DIR/local
 rvm:
-- 2.3.1
+  - 2.3.1
 branches:
   only:
     - development
@@ -46,7 +46,7 @@ deploy:
   skip_cleanup: true
   on: development
   api_key:
-    secure: WzdSbQK3wlshtResAndOIz4BI9w/BurFY6GHm8WvOuMf5uNCXxrUwYm1qycMEmlZQGXufUxh4hBbO24ZjcJkdjYNn/cK/Uh3IqmLXc0Xa/ITLoBdbQflxn/6tF6PkwYNHkq9/KHPDWQse3r0hzngbB8fYxCjBIwSbezEZxI8MXQ7AWuEIJxoctIPhapq+8c4XQBdGQfrDmXTHtPRVmMWdY/rhcQd+XwR4oPZgiuTWOz6l3xJwGcHZgau+xIDm/KXoljnuLEHpOowr62Nfz4PeSYstlJ4+atca+kke67bFAH6wE0uDaqivXFrsuv46CVlQxjZgcuS10dO0/PMBRPdIb2cQz9a6dFDpTYiIR/GCOxeJfm8sSOsObUnSuLe9381DQofcOQj+AQvew90sXnupul2WojIra55+WsMunP/5X9Ef2ENscZOBKsWabcOvdB79atd7LSmpUnSHhj0kmnx4/lXgc5esNbEmHF+Ynb7i+WwXnQVTvzir+tzV6/6g/mSwNX01ctAlhg3cbNYO6N8j+vLj6vWVnp1BIdO1fkaiI5hvzC3hkPseVgDM1sAUCp1tcf2lDpIj81QQM6AuP1dq1t0Dv6iia5Ivm0Atyt8RhfkdJTf889fej32Tv1cdVLKJtK3N5noNIQX3/rjYjBtqLpPVkU/7QJ2ZXkEeTtAqQE=
+    secure: yD0YZCRUrI+gaDv3GyM0oxXKyuwJK3wjsee2MJVbHsokvoYvr3M82c/k7LMvFnndQ/VyLl34bkCZ+u4b0XCUutx+OcrvjHzruSeNf/oObUabPJ2bGHnAVPruAiWLO1uRTLTpXFQYMUKBoLaMYideOU+xqTzFf12u8TIoq2U0/rm8cOaHfIoFejkAHk3Myg8I8nRjXaDbD8xEwc8siUi9ZcDPVj5dNpcSgy/38asB/LLQmzuR1HrXcgJGdG1kCNwUS5zdxlKv8/FX+WuSnIV8jM1jctj7JKhpzhiYT6ZuwoIFK4aTEP9wHEWXBCHqlPLB0y8wWnnFkBuo3O5zHU/kZJzkatWzRy5VZNMtapS7BCasDpnFQ+aegSaeuzGT+i3i8rFcPZxNMVlrU06/vnmqGOvQThshLUOxYkk6vI54XekFrXHfBlMJxsAHutQRSAMSMM3xNweSWhTvfu55zuhi5oSlmEsNlU/nXGVXu5yiXPu8hSiP/fySdQMIEyNCUgYbawRijcw87VUr9IpyBFIvsM4YvZJVSBCLmaSj/BTTAHCNQ956A4JFnbzsBIi0AilrZZ8Ij4pdDdgio7uQI9uEijGPSNgI4vSMNOUpr7Lic81vZUK8gcoShC3N/ko6+YXKXUgvxykipZncPXSjGll8aDS3XVwgoizajE0HjIDxqJc=
   app: opentbl-staging
   run:
     - rails totem:db:production_migrate
