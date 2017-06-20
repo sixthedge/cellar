@@ -48,7 +48,6 @@ export default base.extend ta.add(
   positive_qualitative_items:     ember.computed 'value.qualitative.@each', -> @get_qualitative_items_for_type('positive')
   constructive_qualitative_items: ember.computed 'value.qualitative.@each', -> @get_qualitative_items_for_type('constructive')
 
-
   quant_items: ember.computed 'value.quantitative.@each', -> @get 'value.quantitative'
   qual_items:  ember.computed 'value.qualitative.@each', -> @get 'value.qualitative'
 

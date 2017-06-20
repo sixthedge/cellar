@@ -1,15 +1,19 @@
 fieldset.forms__section.spacing__margin-bottom--4
   h2.text--inline-block Quantitative Section
-  if is_not_balance
-    .btn.btn--primary.is-right click='create'
-      .icon.icon--16.icon__plus--white.spacing__margin-right--half
-      | New Scale
 
-  .spacing__margin-bottom--2
-    each model as |item|
-      component 'content/assessment/quant/item' model=item is_balance=is_balance
+  if step.loading.quant
+    component '__loader/base'
+  else
+    if is_not_balance
+      .btn.btn--primary.is-right click='create'
+        .icon.icon--16.icon__plus--white.spacing__margin-right--half
+        | New Scale
 
-  if is_not_balance
-    .btn.btn--primary click='create'
-      .icon.icon--16.icon__plus--white.spacing__margin-right--half
-      | New Scale
+    .spacing__margin-bottom--2
+      each model as |item|
+        component 'content/assessment/quant/item' model=item is_balance=is_balance
+
+    if is_not_balance
+      .btn.btn--primary click='create'
+        .icon.icon--16.icon__plus--white.spacing__margin-right--half
+        | New Scale

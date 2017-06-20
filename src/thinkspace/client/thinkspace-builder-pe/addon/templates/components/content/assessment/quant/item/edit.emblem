@@ -2,23 +2,27 @@
 .forms__field-wrapper
   label.spacing__margin-bottom--0 Question Label
   .forms__label-summary This is the question the student will see above the scale.
-  component '__changeset/input' value=model.changeset.label
+  component '__changeset/input' value=model.changeset.label changeset=model.changeset attribute='label' display_errors=true
 
 / Scale range 
 .forms__field-wrapper
   label.spacing__margin-bottom--0 Scale range
   .forms__label-summary Set the minimum and maximum ends of the scale
   // Temp selects until we get ts-dropdown working (12/20)
-  .dropdown__container
-    select.text--inline-block onchange={action (mut model.points_changeset.min) value='target.value'}
-      each min as |num|
-        option value=num.value selected=num.is_selected
-          = num.value
-    span.text--bold.text__font-size--12.spacing__pad-left--1.spacing__pad-right--1 to
-    select.text--inline-block onchange={action (mut model.points_changeset.max) value='target.value'}
-      each max as |num|
-        option value=num.value selected=num.is_selected
-          = num.value
+  component '__dropdown' collection=min text=display_min.value display_property='value' selected=display_min select_action='select_points_min' action_receiver=this
+
+  / .dropdown__container
+  /   select.text--inline-block onchange={action (mut model.points_changeset.min) value='target.value'}
+  /     each min as |num|
+  /       option value=num.value selected=num.is_selected
+  /         = num.value
+  /   span.text--bold.text__font-size--12.spacing__pad-left--1.spacing__pad-right--1 to
+  /   select.text--inline-block onchange={action (mut model.points_changeset.max) value='target.value'}
+  /     each max as |num|
+  /       option value=num.value selected=num.is_selected
+  /         = num.value
+  component '__dropdown' collection=max text=display_max.value display_property='value' selected=display_max select_action='select_points_max' action_receiver=this
+  br
   if model.points_changeset.errors.firstObject
     ul.input-feedback__list
       li.input-feedback__item.input-feedback--error
@@ -28,9 +32,9 @@
   label.spacing__margin-bottom--0 End point labels (optional)
   .forms__label-summary Set the minimum and maximum ends of the scale
   = points_min
-  component '__changeset/input' value=scale_label_min
+  component '__changeset/input' display_errors=true changeset=model.label_changeset attribute='min' value=model.label_changeset.min
   = points_max
-  component '__changeset/input' value=scale_label_max
+  component '__changeset/input' display_errors=true changeset=model.label_changeset attribute='max' value=model.label_changeset.max
 
 hr
 

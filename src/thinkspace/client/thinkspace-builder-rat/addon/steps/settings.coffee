@@ -47,7 +47,7 @@ export default step.extend changeset_helpers,
 
     scoring_changeset = totem_changeset.create irat_assessment.get('settings.scoring'),
       correct:           [v_integer, v_presence, v_positive],
-      no_answer:         [v_integer, v_presence],
+      no_answer:         [v_integer, v_presence]
 
     trat_scoring_cs = totem_changeset.create trat_assessment.get('settings.scoring'),
       attempted:         [v_integer, v_presence, v_positive],

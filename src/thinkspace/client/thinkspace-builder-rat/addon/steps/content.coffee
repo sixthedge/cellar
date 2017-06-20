@@ -76,14 +76,14 @@ export default step.extend
 
     @set('irat_question_items', items)
 
-  toggle_assessment_sync: (val) ->
-    model = @get('model')
-    value = model.set_sync_assessment(val)
+  # toggle_assessment_sync: (val) ->
+  #   model = @get('model')
+  #   value = model.set_sync_assessment(val)
 
-    model.save().then =>
-      @query_assessments().then (assessments) =>
-        @set('assessments', assessments)
-        @init_assessments()
+  #   model.save().then =>
+  #     @query_assessments().then (assessments) =>
+  #       @set('assessments', assessments)
+  #       @init_assessments()
 
   # trat_question_items: ember.computed 'trat_assessment.questions_with_answers.@each', ->
   #   items = @get('trat_assessment.questions_with_answers')

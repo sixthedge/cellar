@@ -9,7 +9,7 @@ import base  from 'thinkspace-base/components/base'
 export default base.extend
 
   builder: ember.inject.service()
-  step:    ember.computed.reads 'builder.current_step'
+  step:    ember.computed.reads 'builder.step_content'
 
   team_sets:         ember.computed.reads 'step.team_sets'
   selected_team_set: ember.computed.reads 'step.selected_team_set'

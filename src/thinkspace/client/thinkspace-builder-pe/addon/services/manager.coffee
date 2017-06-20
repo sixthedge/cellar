@@ -91,6 +91,12 @@ export default ember.Service.extend
       type:          type
 
   # ### Add helpers
+  add_item_with_type: (type) ->
+    if type == 'qual'
+      @add_qual_item()
+    else if type == 'quant'
+      @add_quant_item()
+
   add_quant_item: ->    
     item = @get_new_quant_item('New label', 'range')
     @add_item('quant', item)
@@ -115,11 +121,22 @@ export default ember.Service.extend
   get_next_quant_id: -> @get_next_id('quant')
   get_next_qual_id:  -> @get_next_id('qual')
 
+  update_quant_item: (quant) ->
+    console.log("[update_quant] calling update_quant_item with quant ", quant)
+
+    items = @get_items_for_type('quant')
+    item  = items.findBy('id',  quant.get('id'))
+    console.log("[update_quant] found item ", quant.get('id'), item)
+
+    ember.set(item, 'settings', quant.get('settings'))
+    ember.set(item, 'label',    quant.get('label'))
+
   # ### Shared helpers
   get_items_for_type: (type) ->
     model     = @get 'model'
     console.log('[pe manager] model is ', model)
-    model.get "#{type}_items"
+    console.log('[manager get_items] model ', model, model.get("#{type}_items"))
+    items  = model.get "#{type}_items"
 
   add_item: (type, item) ->
     items = @get_items_for_type type
@@ -130,10 +147,12 @@ export default ember.Service.extend
   delete_item: (type, item) ->
     items = @get_items_for_type type
     items.removeObject item
-    @save_model()
+    @save_model().then =>
+      @create_question_items(type)
 
   reorder_item: (type, item, offset) ->
     items = @get_items_for_type type
+    item  = items.findBy('id', item.id)
     index = items.indexOf(item)
     return unless index > -1
     switch offset
@@ -150,19 +169,22 @@ export default ember.Service.extend
     return if add_at > length - 1
     items.removeAt(index)
     items.insertAt(add_at, item)
-    @save_model()
+    @save_model().then =>
+      @create_question_items(type)
 
-  duplicate_item: (type, id, item) ->
+  duplicate_item: (type, id) ->
     items = @get_items_for_type type
+    item  = items.findBy('id', id)
     index = items.indexOf(item)
     return unless index > -1
     add_at = index + 1
     return if add_at < 0
     new_item    = ember.merge({}, item)
-    new_item.id = id
+    new_item.id = @get_next_id(type)
     items.insertAt add_at, new_item
 
-    @save_model()
+    @save_model().then =>
+      @create_question_items(type)
 
   get_next_id: (type) ->
     items = @get_items_for_type(type)
@@ -171,26 +193,6 @@ export default ember.Service.extend
     sorted_items = items.sortBy('id')
     id           = sorted_items.get('lastObject.id')
     if ember.isPresent(id) then id = id + 1 else id = 1
-
-  create_quant_items: (opts={}) ->
-    assessment = @get('assessment')
-    quants = assessment.get('value.quantitative') || ember.makeArray()
-
-    items = @get('quant_items') || ember.makeArray()
-
-    i_ids = items.mapBy('id')
-    ## TODO: make sure that d_ids handles updates to questions
-    d_ids = ember.makeArray()
-
-    quants.forEach (quant) =>
-      id = quant.id
-      i = quants.indexOf(quant)
-
-      if !i_ids.contains(id) || (i_ids.contains(id) && d_ids.contains(id))
-        q_item = @create_quant_item(quant)
-        items.pushObject(q_item)
-
-    @set('quant_items', items)
 
   create_question_items: (type, opts={}) ->
     assessment = @get('assessment')

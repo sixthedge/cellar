@@ -9,7 +9,7 @@ import base  from 'thinkspace-base/components/base'
 export default base.extend
   builder: ember.inject.service()
 
-  step:    ember.computed.reads 'builder.current_step'
+  step:    ember.computed.reads 'builder.step_details'
 
   actions:
     next_step: -> @get('builder').transition_to_next_step(save: true)

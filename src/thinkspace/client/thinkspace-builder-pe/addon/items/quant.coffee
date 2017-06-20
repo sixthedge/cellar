@@ -1,14 +1,15 @@
-import ember           from 'ember'
-import util            from 'totem/util'
-import totem_changeset from 'totem/changeset'
-import vComparison     from 'thinkspace-builder-pe/validators/comparison'
+import ember             from 'ember'
+import util              from 'totem/util'
+import totem_changeset   from 'totem/changeset'
+import v_comparison      from 'thinkspace-builder-pe/validators/comparison'
+import changeset_helpers from 'thinkspace-common/mixins/helpers/common/changeset'
 
 ###
 # # quant.coffee
 # - Type: **Object**
 # - Package: **ethinkspace-builder-pe**
 ###
-export default ember.Object.extend
+export default ember.Object.extend changeset_helpers,
   
   manager: ember.inject.service()
 
@@ -21,38 +22,20 @@ export default ember.Object.extend
 
   # ### Computed properties
 
-  ## TODO: Remove or keep assessment legacy references
   points_descriptive_enabled: ember.computed 'assessment.points_descriptive_enabled', 'model.settings.labels.scale.min', 'model.settings.labels.scale.max', ->
     (@get('points_descriptive_low') and @get('points_descriptive_high')) or @get('assessment.points_descriptive_enabled')
-
-  # points_descriptive_low: ember.computed 'assessment.points_descriptive_low', 'model.settings.labels.scale.min', ->
-  #   @get_model_property('settings.labels.scale.min') or @get('assessment.points_descriptive_low')
-
-  # points_descriptive_high: ember.computed 'assessment.points_descriptive_high', 'model.settings.labels.scale.max', ->
-  #   @get_model_property('settings.labels.scale.max') or @get('assessment.points_descriptive_high')
-
-  # points_min: ember.computed 'assessment.points_min', 'settings.points.min', ->
-  #   s_points = @get 'settings.points.min'
-  #   return s_points if ember.isPresent(s_points)
-  #   a_points = @get 'assessment.points_min'   
-  #   if ember.isPresent(a_points) then a_points else 0
-
-  # points_max: ember.computed 'assessment.points_max', 'settings.points.max', ->
-  #   s_points = @get 'settings.points.max'
-  #   return s_points if ember.isPresent(s_points)
-  #   a_points = @get 'assessment.points_max'   
-  #   if ember.isPresent(a_points) then a_points else 0
 
   has_comments: ember.computed 'settings.comments.enabled', -> @get 'settings.comments.enabled'
 
   id:         ember.computed.reads 'model.id'
-  #label:      ember.computed.reads 'model.label'
+  label:      ember.computed.reads 'model.label'
   type:       ember.computed.reads 'model.type'
   settings:   ember.computed.reads 'model.settings'
   assessment: ember.computed.reads 'manager.model'
 
   init: ->
     @_super()
+    console.log("[QUANT] initing new quant item")
     @create_changeset()
 
   create_changeset: ->
@@ -64,17 +47,40 @@ export default ember.Object.extend
       label: [vpresence]
     )
 
-    # points_changeset = totem_changeset.create(model.settings.points,
-    #   max: [vComparison({val: 'min', message: 'Maximum must be greater than the Minimum', type: 'gt'})]
-    # )
-
-    points_changeset = totem_changeset.create(model.settings.points)
+    points_changeset = totem_changeset.create(model.settings.points,
+      min: [v_comparison({initial_val: model.settings.points.max, val: 'max', type: 'lt', message: 'Minimum must be smaller than maximum'})]
+      max: [v_comparison({initial_val: model.settings.points.min, val: 'min', type: 'gt', message: 'Maximum must be greater than minimum'})]
+    )
+    
+    label_changeset  = totem_changeset.create(model.settings.labels.scale)
 
     changeset.set('show_errors', true)
     points_changeset.set('show_errors', true)
+    label_changeset.set('show_errors', true)
+
+    console.log('points_changeset is ', points_changeset)
+
+    console.log('creating label_changeset ', label_changeset)
 
     @set('changeset', changeset)
     @set('points_changeset', points_changeset)
+    @set('label_changeset', label_changeset)
+
+  changeset_rollback: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      @changesets_rollback(@get_changesets()).then =>
+        resolve()
+
+  changeset_persist: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      @changesets_save(@get_changesets()).then =>
+        resolve()
+
+  get_changesets: ->
+    changeset        = @get('changeset')
+    label_changeset  = @get('label_changeset')
+    points_changeset = @get('points_changeset')
+    changesets       = [changeset, label_changeset, points_changeset]
 
   get_model_property: (path) ->
     model = @get 'model'
@@ -82,12 +88,6 @@ export default ember.Object.extend
     model.get(path)
 
   # ### Setters
-  set_value: (property, value) ->
-    console.log('[obj] calling set_value with prop, value ', property, value)
-    fn = "set_#{property}"
-    return unless @[fn]?
-    @[fn](value)
-
   set_points_min:      (points) ->       util.set_path_value @, 'model.settings.points.min', parseInt(points)
   set_points_max:      (points) ->       util.set_path_value @, 'model.settings.points.max', parseInt(points)
   set_scale_label_min: (label) ->        util.set_path_value @, 'model.settings.labels.scale.min', label

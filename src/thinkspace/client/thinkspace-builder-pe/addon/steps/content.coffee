@@ -144,4 +144,24 @@ export default step.extend
   set_is_editing_template:   -> @set('is_editing_template', true)
   reset_is_editing_template: -> @set('is_editing_template', false)
 
+  add_item_with_type: (type) ->
+    manager = @get('manager')
+    console.log('calling add_item_with_type ', type, @get('loading'))
+
+    @set_loading("#{type}")
+    manager.add_item_with_type(type).then =>
+      @reset_loading("#{type}")
+
+  duplicate_item: (type, id, item) ->
+    manager = @get('manager')
+    @set_loading("#{type}")
+    manager.duplicate_item(type, id).then =>
+      @reset_loading("#{type}")
+
+  reorder_item: (type, item, offset) ->
+    manager = @get('manager')
+    @set_loading("#{type}")
+    manager.reorder_item(type, item, offset).then =>
+      @reset_loading("#{type}")
+
   template:          ember.computed.reads 'assessment_templates.firstObject'

@@ -21,7 +21,9 @@ export default base.extend
   is_edit_mode_content: ember.computed.equal 'edit_mode', 'content'
 
   actions:
-    edit: (bool) -> @set('is_editing', bool)
+    edit: (bool) -> 
+      @get('model').changeset_rollback().then =>
+        @set('is_editing', bool)
     
     ## Bool passed by qual/item/edit component to indicate whether the changeset is 
     update: ->
