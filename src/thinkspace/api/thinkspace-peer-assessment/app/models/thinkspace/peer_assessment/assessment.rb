@@ -40,6 +40,10 @@ module Thinkspace; module PeerAssessment
       options['type']
     end
 
+    def is_balance_points?
+      assessment_type == 'balance'
+    end
+
     def get_points_per_member
       options.with_indifferent_access.dig(:points, :per_member) || 0.0
     end

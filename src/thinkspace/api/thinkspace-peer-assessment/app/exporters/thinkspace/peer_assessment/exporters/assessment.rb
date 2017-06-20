@@ -1,150 +1,59 @@
 require 'spreadsheet'
 
-module Thinkspace; module PeerAssessment; module Exporters; class Assessment < Thinkspace::Common::Exporters::Base
-  attr_reader :books, :options
-  attr_reader :phase_class, :assignment_class, :workbook_class, :team_class, :exporters_phase_score_class, :exporters_assignment_score_class
+module Thinkspace; module Casespace; module Exporters; class AssignmentScore < Thinkspace::Common::Exporters::Base
+  attr_reader :caller, :assessment, :phase, :assignment, :teams, :users, :team_sets, :review_sets, :reviews
 
-  attr_accessor :current_phases, :current_assignments, :current_ownerables
-
-  def initialize(options={})
-    @options                          = options
-    @options[:is_test]                = Rails.env.development?
-    @current_phases                   = Array.wrap(options[:phases])
-    @current_assignments              = Array.wrap(options[:assignments])
-    @current_ownerables               = Array.wrap(options[:ownerables])
-    @books                            = Hash.new
-    @phase_class                      = Thinkspace::Casespace::Phase
-    @assignment_class                 = Thinkspace::Casespace::Assignment
-    @workbook_class                   = Spreadsheet::Workbook
-    @team_class                       = Thinkspace::Team::Team
-    @exporters_phase_score_class      = Thinkspace::Casespace::Exporters::PhaseScore
-    @exporters_assignment_score_class = Thinkspace::Casespace::Exporters::AssignmentScore
+  def initialize(caller, assessment, phase, teams)
+    @caller      = caller
+    @assessment  = assessment
+    @phase       = phase
+    @assignment  = phase.thinkspace_casespace_assignment
+    @teams       = teams
+    @users       = phase.get_space.thinkspace_common_users
+    @team_sets   = assessment.thinkspace_peer_assessment_team_sets
+    @review_sets = review_set_class.scope_by_team_sets(@team_sets)
+    @reviews     = review_class.scope_by_review_sets(@review_sets)
   end
 
-  # ###
-  # ### Class methods
-  # ###
-
-  # ### Report generators
-  def self.generate(report)
-    authable = report.authable
-    return report.send_error_notification('NO_AUTH') unless authable.present?
-    if authable.respond_to?(:export_all_ownerable_data)
-      exporter = authable.export_all_ownerable_data
-      exporter.save_file_for_report(report, authable) ? report.send_access_notification : report.send_error_notification('FILE_SAVE_FAIL')
-    else
-      report.send_error_notification('AUTH_NO_RESP')
-    end
-  end
-
-  # ###
-  # ### Instance methods
-  # ###
-
-  # ### Processing
   def process
-    if is_for_assignments?
-      process_assignments
-    elsif is_for_phases?
-      process_phases
-    end
-    write_files if options[:is_test]
-    self
-  end
-
-  # ### Bulk processing
-  def process_assignments
-    current_assignments.each do |assignment|
-      process_assignment(assignment)
-    end
-  end
-
-  def process_phases
-    current_phases.each do |phase|
-      process_phase(phase)
-    end
-  end
-
-  # ### Instance processing
-  def process_assignment(assignment)
-    if has_ownerables?
-      ownerables = current_ownerables
-    else
-      ownerables = assignment.get_space.thinkspace_common_users
-    end
-    exporters_assignment_score_class.new(self, assignment, ownerables).process
-    phases = assignment.thinkspace_casespace_phases.order(:position)
-    phases.each do |phase|
-      process_phase(phase)
+    book   = caller.get_book_for_record(@phase)
+    sheet  = caller.find_or_create_worksheet_for_phase(book, @phase, 'Scores')
+    caller.add_header_to_sheet(sheet, get_sheet_header_identifier, get_sheet_header_score)
+    scope = @phase.class.where(id: phase.id)
+    @users.each_with_index do |ownerable, index|
+      review_set        = get_review_set_for_ownerable(ownerable)
+      team_set          = review_set.thinkspace_peer_assessment_team_set
+      other_review_sets = @review_sets.scope_by_team_sets(team_set).scope_where_not_ownerable_ids(ownerable).scope_submitted
+      reviews           = @reviews.scope_by_review_sets(other_review_sets).scope_by_reviewable(ownerable)
+      data              = review_class.generate_anonymized_review_json(@assessment, reviews)
+      row_number        = index + 1 # Offset by 1 due to header row
+      if @assessment.is_balance_points?
+        raise NoQuantitativeData, "No quantitative data found on peer assessment #{@assessment.id} for ownerable #{ownerable.inspect}" unless data.has_key?(:quantitative)
+        score       = 0
+        question_id = data[:quantitative].keys.pop
+        score       = data[:quantitative][question_id]
+        sheet.update_row row_number, caller.get_ownerable_identifier(ownerable), score
+      else
+        # TODO: Categories
+      end
     end
   end
 
-  def process_phase(phase)
-    if has_ownerables?
-      ownerables = current_ownerables
-    else
-      phase.collaboration? ? ownerables = phase.thinkspace_team_teams : ownerables = phase.get_space.thinkspace_common_users
-    end
-    export_phase_ownerable_data(phase, ownerables)
-  end
-
-  # ### Exportation
-  def export_phase_ownerable_data(phase, ownerables)
-    # Do not export phase scores for now, the new assignment scores will handle it.
-    # exporters_phase_score_class.new(self, phase, ownerables).process
-    export_phase_components(phase, ownerables)
-  end
-
-  def export_phase_components(phase, ownerables)
-    book           = get_book_for_record(phase)
-    components     = phase.thinkspace_casespace_phase_components
-    componentables = components.map(&:componentable)
-    componentables.each do |componentable|
-      klass = get_exporter_class_for_componentable(componentable)
-      next unless klass.present?
-      klass.new(self, componentable, phase, ownerables).process
-    end
-  end
-
-  # ###
   # ### Helpers
-  # ###
-  def is_for_assignments?; !current_assignments.empty?; end
-  def is_for_phases?;      !current_phases.empty?;      end
-  def has_ownerables?;     !current_ownerables.empty?;  end
-
-  # ### File writing
-  def write_files
-    # TODO: THIS IS FOR TESTING ONLY!  NEEDS TO WRITE TO S3 FOR PRODUCTION!
-    books.each do |key, book|
-      path      = File.join(Rails.root, 'spreadsheets')
-      filename  = Time.now.strftime('%Y-%m-%d_%H-%M-%S') + '.xls'
-      full_path = "#{path}/#{filename}"
-      book.write full_path
-    end
+  def get_review_set_for_ownerable(ownerable)
+    @review_sets.find_by(ownerable: ownerable)
   end
 
-  def save_file_for_report(report, authable)
-    # Authable will be a phase or an assignment.
-    return report.send_error_notification('NO_AUTH') unless authable.present?
-    book = get_book_for_record(authable)
-    return report.send_error_notification('NO_BOOK_FOR_AUTH') unless book.present?
-    contents = StringIO.new
-    book.write contents
-    contents.rewind # Very important, will not write the full file otherwise.
-    options = {
-      attachment:           contents,
-      attachment_file_name: get_filename_for_report(report, authable)
-    }
-    report.add_file(options) ? true : report.send_error_notification('FILE_SAVE_FAIL')
-  end
+  # ### Classes
+  def review_set_class; Thinkspace::PeerAssessment::ReviewSet; end
+  def review_class;     Thinkspace::PeerAssessment::Review;    end
 
-  def get_filename_for_report(report, authable)
-    authable.respond_to?(:title) ? title = authable.title : title = 'data-dump'
-    timestamp = Time.now.strftime('%Y-%m-%d_%H-%M-%S')
-    filename  = "#{title}_student-data_#{timestamp}"
-    sanitize_filename(filename) + '.xls'
-  end
+  # ### Errors
+  class NoQuantitativeData < StandardError; end
 
+  private
+
+  def get_sheet_header_identifier; caller.get_sheet_header_identifier; end
+  def get_sheet_header_score;      'Score';                            end
 
 end; end; end; end
