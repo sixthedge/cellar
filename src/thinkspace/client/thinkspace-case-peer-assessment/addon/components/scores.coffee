@@ -7,4 +7,42 @@ import base  from 'thinkspace-base/components/base'
 - Type: **Component**
 - Package: **thinkspace-peer-assessment**
 ###
-export default base.extend()
+export default base.extend
+
+  init_base: -> 
+    @set_loading 'all'
+    @init_assignment().then =>
+      @init_phase().then =>
+        @reset_loading 'all'
+
+  init_assignment: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      params = 
+        id: @get('model.id')
+      options =
+        action: 'load'
+        model:  ns.to_p('assignment')
+      @tc.query_action(ns.to_p('assignment'), params, options).then (assignment) =>
+        resolve assignment
+
+  init_phase: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      @get('model').get(ns.to_p('phases')).then (phases) =>
+        phase = phases.get('firstObject')
+        @set 'phase', phase
+        resolve(phase)
+
+  actions:
+    generate: ->
+      params =
+        type: 'ownerable_data'
+        auth: 
+          authable_type: ns.to_p('phase')
+          authable_id:   @get('phase.id')
+
+      query =
+        verb: 'POST'
+        action: 'generate'
+
+      @tc.query_action(ns.to_p('report:report'), params, query).then (payload) =>
+        console.log "report generated!"

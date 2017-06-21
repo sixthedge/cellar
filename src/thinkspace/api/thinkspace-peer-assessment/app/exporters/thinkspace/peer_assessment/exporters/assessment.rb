@@ -1,6 +1,6 @@
 require 'spreadsheet'
 
-module Thinkspace; module Casespace; module Exporters; class AssignmentScore < Thinkspace::Common::Exporters::Base
+module Thinkspace; module PeerAssessment; module Exporters; class Assessment < Thinkspace::Common::Exporters::Base
   attr_reader :caller, :assessment, :phase, :assignment, :teams, :users, :team_sets, :review_sets, :reviews
 
   def initialize(caller, assessment, phase, teams)
@@ -18,42 +18,77 @@ module Thinkspace; module Casespace; module Exporters; class AssignmentScore < T
   def process
     book   = caller.get_book_for_record(@phase)
     sheet  = caller.find_or_create_worksheet_for_phase(book, @phase, 'Scores')
-    caller.add_header_to_sheet(sheet, get_sheet_header_identifier, get_sheet_header_score)
-    scope = @phase.class.where(id: phase.id)
+    add_headers_to_sheet(sheet)
+
     @users.each_with_index do |ownerable, index|
-      review_set        = get_review_set_for_ownerable(ownerable)
-      team_set          = review_set.thinkspace_peer_assessment_team_set
-      other_review_sets = @review_sets.scope_by_team_sets(team_set).scope_where_not_ownerable_ids(ownerable).scope_submitted
-      reviews           = @reviews.scope_by_review_sets(other_review_sets).scope_by_reviewable(ownerable)
-      data              = review_class.generate_anonymized_review_json(@assessment, reviews)
-      row_number        = index + 1 # Offset by 1 due to header row
-      if @assessment.is_balance_points?
-        raise NoQuantitativeData, "No quantitative data found on peer assessment #{@assessment.id} for ownerable #{ownerable.inspect}" unless data.has_key?(:quantitative)
-        score       = 0
-        question_id = data[:quantitative].keys.pop
-        score       = data[:quantitative][question_id]
-        sheet.update_row row_number, caller.get_ownerable_identifier(ownerable), score
-      else
-        # TODO: Categories
-      end
+      process_ownerable(ownerable, index, sheet)
+    end
+  end
+
+  def process_ownerable(ownerable, index, sheet)
+    row_number = index + 1 # Offset by 1 due to header row
+    team       = get_team_for_user(ownerable)
+    return sheet.update_row(row_number, caller.get_ownerable_identifier(ownerable), 'N/A') unless team.present?
+
+    data = get_anonymized_review_json_for_ownerable(ownerable)
+    return sheet.update_row(row_number, caller.get_ownerable_identifier(ownerable), 'N/A') if data.empty?
+
+    @assessment.quantitative_items.each do |quant_item|
+      id    = quant_item['id'].to_s # question ids are saved as integers on the assessment, but represented as strings in the anonymized json
+      score = get_score_for_question(data, id)
+      sheet.update_row row_number, caller.get_ownerable_identifier(ownerable), score
     end
   end
 
   # ### Helpers
-  def get_review_set_for_ownerable(ownerable)
-    @review_sets.find_by(ownerable: ownerable)
+  def get_team_for_user(user) 
+    team_class.users_teams(@phase, user).first
+  end
+
+  def get_team_set_for_team(team)
+    @team_sets.find_by(team_id: team.id)
+  end
+
+  def get_anonymized_review_json_for_ownerable(ownerable)
+    team              = get_team_for_user(ownerable)
+    team_set          = get_team_set_for_team(team)
+    return Hash.new unless team_set.present?
+
+    other_review_sets = @review_sets.scope_by_team_sets(team_set).scope_where_not_ownerable_ids(ownerable).scope_submitted
+    reviews           = @reviews.scope_by_review_sets(other_review_sets).scope_by_reviewable(ownerable)
+    data              = review_class.generate_anonymized_review_json(@assessment, reviews)
+  end
+
+  def get_score_for_question(data, id)
+    return data[:quantitative][id] if data[:quantitative].has_key?(id)
+    'N/A'
   end
 
   # ### Classes
   def review_set_class; Thinkspace::PeerAssessment::ReviewSet; end
   def review_class;     Thinkspace::PeerAssessment::Review;    end
-
-  # ### Errors
-  class NoQuantitativeData < StandardError; end
+  def team_class;       Thinkspace::Team::Team;                end
 
   private
 
+  # ### Sheet Helpers
   def get_sheet_header_identifier; caller.get_sheet_header_identifier; end
   def get_sheet_header_score;      'Score';                            end
+  def wrap_in_quotes(str);         '"' + str + '"';                    end  
+
+  def get_headers_for_sheet
+    if @assessment.quantitative_items.length > 1
+      headers = @assessment.quantitative_items.map { |q| q['label'] }
+    else
+      headers = [get_sheet_header_score]
+    end
+    headers.unshift get_sheet_header_identifier
+    headers
+  end 
+
+  def add_headers_to_sheet(sheet)
+    headers = get_headers_for_sheet
+    caller.add_header_to_sheet(sheet, *headers)
+  end   
 
 end; end; end; end

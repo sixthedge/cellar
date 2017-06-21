@@ -3,4 +3,7 @@ if model.is_pubsub
   mount 'thinkspace-message-pubsub'
 
 h1 Scores
-  
+
+unless loading.all
+  button.btn.btn--primary click='generate'
+    | Generate Scores Spreadsheet

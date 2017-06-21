@@ -45,11 +45,13 @@ class Base
   end
 
   def standard_sheet_name_for_record(record, additions='')
+    # TODO: Why doesn't record.is_a?(Class) work here anymore?
     case
-    when record.is_a?(phase_class)
+    when record.class.name == phase_class.name
       name = get_sheet_name_for_phase(record, additions)  
-    when record.is_a?(assignment_class)
+    when record.class.name == assignment_class.name
       name = get_sheet_name_for_assignment(record, additions)
+
     end
     name
   end
