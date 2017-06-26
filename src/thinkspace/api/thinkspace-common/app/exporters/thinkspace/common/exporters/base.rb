@@ -84,7 +84,7 @@ class Base
 
   # ### Ownerable helpers
   def get_ownerable_identifier(ownerable)
-    ownerable.is_a?(team_class) ? ownerable.title : ownerable.email
+    ownerable.class.name == team_class.name ? ownerable.title : ownerable.email
   end
 
 end; end; end; end
