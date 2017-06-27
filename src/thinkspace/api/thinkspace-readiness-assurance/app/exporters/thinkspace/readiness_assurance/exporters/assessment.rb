@@ -8,24 +8,28 @@ module Thinkspace; module ReadinessAssurance; module Exporters; class Assessment
     @assessment  = assessment
     @phase       = phase
     @assignment  = phase.thinkspace_casespace_assignment
-    @teams       = teams
-    @users       = phase.get_space.thinkspace_common_users.uniq
+    @teams       = teams.order(:title)
+    @users       = phase.get_space.thinkspace_common_users.order(:last_name).uniq
     @responses   = @assessment.thinkspace_readiness_assurance_responses
   end
 
   def process
     book   = caller.get_book_for_record(@phase)
     sheet  = caller.find_or_create_worksheet_for_phase(book, @phase, 'Scores')
+    
+    if @assessment.irat?
+      @ownerables = @users 
+      @ownerable_type = user_class.name
+    elsif @assessment.trat?
+      @ownerables = @teams
+      @ownerable_type = team_class.name
+    end
+
     add_headers_to_sheet(sheet)
 
-    ownerables = @users if @assessment.irat?
-    ownerables = @teams if @assessment.trat?
+    raise AssessmentTypeUndetermined, "Readiness assurance assessment with id #{@assessment.id} has an undetermined type" if @ownerables.nil?
 
-    puts "users?:", @users.pluck(:first_name)
-
-    raise AssessmentTypeUndetermined, "Readiness assurance assessment with id #{@assessment.id} has an undetermined type" if ownerables.nil?
-
-    ownerables.each_with_index do |ownerable, index|
+    @ownerables.each_with_index do |ownerable, index|
       process_ownerable(ownerable, index, sheet)
     end
   end
@@ -34,7 +38,7 @@ module Thinkspace; module ReadinessAssurance; module Exporters; class Assessment
     row_number = index + 1 # Offset by 1 due to header row
     response   = get_response_for_ownerable(ownerable)
     score      = (response.present? && response.score.present?) ? response.score : 'N/A'
-    sheet.update_row(row_number, caller.get_ownerable_identifier(ownerable), score)
+    sheet.update_row(row_number, *(caller.get_ownerable_identifiers(ownerable)), score)
   end
 
   # ### Helpers
@@ -49,12 +53,16 @@ module Thinkspace; module ReadinessAssurance; module Exporters; class Assessment
 
   private
 
+  # ### Classes
+  def team_class;       Thinkspace::Team::Team;                end
+  def user_class;       Thinkspace::Common::User;              end
+
   # ### Sheet Helpers
-  def get_sheet_header_identifier; caller.get_sheet_header_identifier; end
+  def get_sheet_header_identifiers; caller.get_sheet_header_identifiers(@ownerable_type); end
   def get_sheet_header_score;      'Score';                            end
 
   def get_headers_for_sheet
-    [get_sheet_header_identifier, get_sheet_header_score]
+    [*(get_sheet_header_identifiers), get_sheet_header_score]
   end 
 
   def add_headers_to_sheet(sheet)

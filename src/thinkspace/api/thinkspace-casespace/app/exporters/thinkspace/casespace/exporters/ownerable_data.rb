@@ -2,7 +2,7 @@ require 'spreadsheet'
 
 module Thinkspace; module Casespace; module Exporters; class OwnerableData < Thinkspace::Common::Exporters::Base
   attr_reader :books, :options
-  attr_reader :phase_class, :assignment_class, :workbook_class, :team_class, :exporters_phase_score_class, :exporters_assignment_score_class
+  attr_reader :phase_class, :assignment_class, :workbook_class, :team_class, :user_class, :exporters_phase_score_class, :exporters_assignment_score_class
 
   attr_accessor :current_phases, :current_assignments, :current_ownerables
 
@@ -17,6 +17,7 @@ module Thinkspace; module Casespace; module Exporters; class OwnerableData < Thi
     @assignment_class                 = Thinkspace::Casespace::Assignment
     @workbook_class                   = Spreadsheet::Workbook
     @team_class                       = Thinkspace::Team::Team
+    @user_class                       = Thinkspace::Common::User
     @exporters_phase_score_class      = Thinkspace::Casespace::Exporters::PhaseScore
     @exporters_assignment_score_class = Thinkspace::Casespace::Exporters::AssignmentScore
   end

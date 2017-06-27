@@ -13,7 +13,16 @@ class Base
     sheet.update_row 0, *args
   end
 
-  def get_sheet_header_identifier; 'Identifier'; end
+  def get_sheet_header_identifiers(ownerable_type=nil)
+    case ownerable_type
+    when user_class.name
+      ['Last Name', 'First Name', 'Email']
+    when team_class.name
+      ['Team']
+    else
+      ['Identifier']
+    end
+  end
 
   # ### Find or create helpers
   def find_or_create_worksheet_for_phase(book, phase, additions)
@@ -83,8 +92,14 @@ class Base
   def get_exporter_namespace; 'Exporters'; end
 
   # ### Ownerable helpers
-  def get_ownerable_identifier(ownerable)
-    ownerable.class.name == team_class.name ? ownerable.title : ownerable.email
+  def get_ownerable_identifiers(ownerable)
+    if ownerable.class.name == team_class.name 
+      [ownerable.title]
+    else
+      last_name  = ownerable.last_name || ''
+      first_name = ownerable.first_name || ''
+      [last_name, first_name, ownerable.email]
+    end
   end
 
 end; end; end; end
