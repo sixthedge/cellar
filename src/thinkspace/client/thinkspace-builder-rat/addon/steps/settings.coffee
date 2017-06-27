@@ -105,6 +105,7 @@ export default step.extend changeset_helpers,
                     trat_phase_cs.save().then =>
                       @persist_assignment_dates()
                       cs.save().then =>
+                        console.log('about to call query_assessment_sync')
                         @get('manager').query_assessment_sync('irat', @get('manager').get_assessment('irat')).then =>
                           resolve()
 

@@ -24,7 +24,10 @@ export default ember.Mixin.create
         steps.pushObject step
 
       @set 'steps', steps
-      @initialize_steps().then => resolve()
+      @initialize_steps().then => 
+        steps.forEach (step) =>
+          step.set('manager_loaded', true)
+        resolve()
 
   initialize_steps: (options={}) ->
     new ember.RSVP.Promise (resolve, reject) =>

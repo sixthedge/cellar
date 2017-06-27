@@ -17,10 +17,7 @@ export default base.extend
   ## The raw json needed by the manager
   item: ember.computed.reads 'model.model'
 
-  edit_mode:  null # content, settings, preview
   is_editing: false
-
-  is_edit_mode_content: ember.computed.equal 'edit_mode', 'content'
 
   actions:
     edit: (bool) -> 
@@ -39,7 +36,9 @@ export default base.extend
 
     delete: ->
       item = @get('item')
-      @get('manager').delete_item(@get('type'), item)
+      @set_loading('all')
+      @get('manager').delete_item(@get('type'), item).then =>
+        @reset_loading('all')
 
     update: ->
       @set_loading('all')

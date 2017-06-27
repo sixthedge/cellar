@@ -24,3 +24,6 @@ export default ember.Object.extend common_helper,
   init_data: ->
     new ember.RSVP.Promise (resolve, reject) =>
       resolve()
+
+  manager_load_obs: ember.observer 'manager_loaded', ->
+    if @get('manager_loaded') then @reset_loading('all')

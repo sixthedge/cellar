@@ -35,7 +35,6 @@ export default ember.Object.extend changeset_helpers,
 
   init: ->
     @_super()
-    console.log("[QUANT] initing new quant item")
     @create_changeset()
 
   create_changeset: ->
@@ -57,10 +56,6 @@ export default ember.Object.extend changeset_helpers,
     changeset.set('show_errors', true)
     points_changeset.set('show_errors', true)
     label_changeset.set('show_errors', true)
-
-    console.log('points_changeset is ', points_changeset)
-
-    console.log('creating label_changeset ', label_changeset)
 
     @set('changeset', changeset)
     @set('points_changeset', points_changeset)

@@ -3,6 +3,8 @@ import ns             from 'totem/ns'
 import totem_messages from 'totem-messages/messages'
 import qual_item      from 'thinkspace-builder-pe/items/qual'
 import quant_item     from 'thinkspace-builder-pe/items/quant'
+import util           from 'totem/util'
+
 
 ###
 # # manager.coffee
@@ -40,8 +42,7 @@ export default ember.Service.extend
               @set("#{key}", value)
 
         @set_model(@get('assessment'))
-        @create_question_items('qual')
-        @create_question_items('quant')
+        @create_all_question_items()
 
         resolve()
 
@@ -51,6 +52,8 @@ export default ember.Service.extend
   set_model: (model) -> 
     console.info "[pa:builder] Model set to: ", model
     @set 'model', model
+
+  get_model: -> @get('model')
 
   save_model: ->
     model = @get 'model'
@@ -105,18 +108,6 @@ export default ember.Service.extend
     item = @get_new_qual_item('New positive qualitative question.', type)
     @add_item('qual', item)
 
-  # ### Delete helpers
-  delete_quant_item: (item) -> @delete_item('quant', item)
-  delete_qual_item:  (item) -> @delete_item('qual', item)
-
-  # ### Reorder helpers
-  reorder_quant_item: (item, offset) -> @reorder_item('quant', item, offset)
-  reorder_qual_item:  (item, offset) -> @reorder_item('qual', item, offset)
-
-  # ### Duplication helpers
-  duplicate_quant_item: (item) -> @duplicate_item('quant', @get_next_quant_id(), item)
-  duplicate_qual_item:  (item) -> @duplicate_item('qual', @get_next_qual_id(), item)
-
   # ### ID helpers
   get_next_quant_id: -> @get_next_id('quant')
   get_next_qual_id:  -> @get_next_id('qual')
@@ -131,6 +122,13 @@ export default ember.Service.extend
     ember.set(item, 'settings', quant.get('settings'))
     ember.set(item, 'label',    quant.get('label'))
 
+  update_qual_item: (qual) ->
+    items = @get_items_for_type('qual')
+    item  = items.findBy('id', qual.get('id'))
+    console.log('[update_qual] found item ', qual.get('id'), item)
+    ember.set(item, 'label',         qual.get('label'))
+    ember.set(item, 'feedback_type', qual.get('feedback_type'))
+
   # ### Shared helpers
   get_items_for_type: (type) ->
     model     = @get 'model'
@@ -141,36 +139,39 @@ export default ember.Service.extend
   add_item: (type, item) ->
     items = @get_items_for_type type
     items.pushObject item
+    @increment_next_id(type)
     @save_model().then =>
       @create_question_items(type)
 
   delete_item: (type, item) ->
     items = @get_items_for_type type
+    item = items.findBy('id', item.id)
     items.removeObject item
     @save_model().then =>
       @create_question_items(type)
 
   reorder_item: (type, item, offset) ->
-    items = @get_items_for_type type
-    item  = items.findBy('id', item.id)
-    index = items.indexOf(item)
-    return unless index > -1
-    switch offset
-      when 1
-        add_at = index + 1
-      when -1
-        add_at = index - 1
-      when 'top'
-        add_at = 0
-      when 'bottom'
-        add_at = items.get('length') - 1
-    return if add_at < 0
-    length = items.get('length')
-    return if add_at > length - 1
-    items.removeAt(index)
-    items.insertAt(add_at, item)
-    @save_model().then =>
-      @create_question_items(type)
+    new ember.RSVP.Promise (resolve, reject) =>
+      items    = @get_items_for_type type
+      re_item  = items.findBy('id', item.id)
+      index    = items.indexOf(re_item)
+      return reject() unless index > -1
+      switch offset
+        when 1
+          add_at = index + 1
+        when -1
+          add_at = index - 1
+        when 'top'
+          add_at = 0
+        when 'bottom'
+          add_at = items.get('length') - 1
+      return reject() if add_at < 0
+      length = items.get('length')
+      return reject() if add_at > length - 1
+      items.removeAt(index)
+      items.insertAt(add_at, re_item)
+      @save_model().then =>
+        resolve()
 
   duplicate_item: (type, id) ->
     items = @get_items_for_type type
@@ -182,23 +183,37 @@ export default ember.Service.extend
     new_item    = ember.merge({}, item)
     new_item.id = @get_next_id(type)
     items.insertAt add_at, new_item
-
+    @increment_next_id(type)
     @save_model().then =>
       @create_question_items(type)
 
-  get_next_id: (type) ->
-    items = @get_items_for_type(type)
-    console.log('[pe] manager items are ', items)
-    return 1 unless ember.isPresent(items)
-    sorted_items = items.sortBy('id')
-    id           = sorted_items.get('lastObject.id')
-    if ember.isPresent(id) then id = id + 1 else id = 1
+  get_next_id: (type) -> 
+    @get_model(type).get("value.ids.next_#{type}_id")
+
+  increment_next_id: (type) ->
+    assessment = @get_model()
+    cur = assessment.get("value.ids.next_#{type}_id")
+    next = if ember.isPresent(cur) then cur + 1 else 0
+    util.set_path_value(assessment, "value.ids.next_#{type}_id", next)
+
+  create_all_question_items: ->
+    @create_question_items('quant')
+    @create_question_items('qual')
+
+  reset_all_question_items: ->
+    @reset_question_items('quant')
+    @reset_question_items('qual')
+
+  reset_question_items: (type) -> @set("#{type}_items", ember.makeArray())
+
+  confirm_template: (template) ->
+    @reset_all_question_items()
+    @save_model().then =>
+      @create_all_question_items()
 
   create_question_items: (type, opts={}) ->
     assessment = @get('assessment')
     questions  = assessment.get("value.#{type}itative") || ember.makeArray()
-
-    console.log('calling create_question_items with type, opts ', type, opts)
 
     items   = @get("#{type}_items") || ember.makeArray()
     delta   = opts.delta || ember.makeArray()

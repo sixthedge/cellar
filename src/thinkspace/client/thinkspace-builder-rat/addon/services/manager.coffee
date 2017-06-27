@@ -78,7 +78,7 @@ export default ember.Service.extend array_helpers,
 
   update_question: (type, question) ->
     items = @get_items(type)
-    item = items.findBy('id', question.get('id'))
+    item  = items.findBy('id', question.get('id'))
     ember.set(item, 'choices', question.get('choices'))
     ember.set(item, 'question', question.get('question'))
 

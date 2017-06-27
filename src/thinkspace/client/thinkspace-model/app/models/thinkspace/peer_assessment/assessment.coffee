@@ -51,6 +51,9 @@ export default base.extend ta.add(
   quant_items: ember.computed 'value.quantitative.@each', -> @get 'value.quantitative'
   qual_items:  ember.computed 'value.qualitative.@each', -> @get 'value.qualitative'
 
+  has_qual_items:  ember.computed.notEmpty 'qual_items'
+  has_quant_items: ember.computed.notEmpty 'quant_items'
+
   # ### Events
   didLoad: -> @validate_value()
 

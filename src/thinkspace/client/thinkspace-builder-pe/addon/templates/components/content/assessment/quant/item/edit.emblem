@@ -8,19 +8,7 @@
 .forms__field-wrapper
   label.spacing__margin-bottom--0 Scale range
   .forms__label-summary Set the minimum and maximum ends of the scale
-  // Temp selects until we get ts-dropdown working (12/20)
   component '__dropdown' collection=min text=display_min.value display_property='value' selected=display_min select_action='select_points_min' action_receiver=this
-
-  / .dropdown__container
-  /   select.text--inline-block onchange={action (mut model.points_changeset.min) value='target.value'}
-  /     each min as |num|
-  /       option value=num.value selected=num.is_selected
-  /         = num.value
-  /   span.text--bold.text__font-size--12.spacing__pad-left--1.spacing__pad-right--1 to
-  /   select.text--inline-block onchange={action (mut model.points_changeset.max) value='target.value'}
-  /     each max as |num|
-  /       option value=num.value selected=num.is_selected
-  /         = num.value
   component '__dropdown' collection=max text=display_max.value display_property='value' selected=display_max select_action='select_points_max' action_receiver=this
   br
   if model.points_changeset.errors.firstObject

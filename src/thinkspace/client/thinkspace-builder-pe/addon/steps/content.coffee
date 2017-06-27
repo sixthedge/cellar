@@ -29,6 +29,9 @@ export default step.extend
 
   is_readonly:          ember.computed.or 'is_preview', 'is_editing_template'
 
+  has_qual_items:  ember.computed.notEmpty 'manager.qual_items'
+  has_quant_items: ember.computed.notEmpty 'manager.quant_items'
+
   ## API Methods
 
   create_changesets: ->
@@ -129,11 +132,13 @@ export default step.extend
   select_template: (template) -> @set('template', template) if ember.isPresent(template)
   
   confirm_template: (template=null) -> 
+    manager   = @get('manager')
     changeset = @get('assessment_changeset')
     template  = @get('template') unless ember.isPresent(template)
     changeset.set ns.to_p('assessment_template'), template
     changeset.set 'value', template.get('value')
-    changeset.save().then =>
+    changeset.execute()
+    manager.confirm_template().then =>
       @set('template', template)
       @reset_is_preview()
       @reset_is_editing_template()
@@ -162,6 +167,9 @@ export default step.extend
     manager = @get('manager')
     @set_loading("#{type}")
     manager.reorder_item(type, item, offset).then =>
+      manager.create_question_items(type)
+      @reset_loading("#{type}")
+    , (error) =>
       @reset_loading("#{type}")
 
   template:          ember.computed.reads 'assessment_templates.firstObject'

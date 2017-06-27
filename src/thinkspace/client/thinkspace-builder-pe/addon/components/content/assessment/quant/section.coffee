@@ -13,7 +13,6 @@ export default base.extend
 
   step:           ember.computed.reads 'builder.step_content'
 
-  tests:          [1, 2, 3, 4, 5]
   selected_value: null
   is_balance:     null
   is_not_balance: ember.computed.not 'is_balance'

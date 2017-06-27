@@ -11,4 +11,4 @@ export default base.extend
   manager: ember.inject.service()
 
   actions: 
-    create: -> @get('manager').add_qual_item()
+    create: -> @get('step').add_item_with_type('qual')
