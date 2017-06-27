@@ -64,7 +64,7 @@ module Thinkspace; module ReadinessAssurance; module Sync; class Assessment
 
               keys.each do |key|
                 if question_keys.include? key
-                  assessment.settings['questions']["#{key}"] = @assessment.settings['scoring']["#{key}"]
+                  assessment.settings['questions']["#{key}"] = @assessment.settings['questions']["#{key}"]
                 end
               end
 
