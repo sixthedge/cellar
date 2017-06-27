@@ -132,7 +132,7 @@
 }
 
 // Targets input when it is in HOVER
-.radio__input:hover + label:after{
+.checkbox__input:hover + label:after{
   background-position: 0 -132px;
 }
 

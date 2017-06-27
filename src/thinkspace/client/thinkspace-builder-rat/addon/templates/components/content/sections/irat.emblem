@@ -10,6 +10,8 @@ fieldset.forms__section.spacing__margin-bottom--4
       .spacing__margin-bottom--2
         each question_items as |item index|
           component 'content/question/item' model=item index=index type=type step=step
+        if step.loading.adding_question
+          component '__loader/base'
       button.btn.btn--primary click='create'
         .icon.icon--16.icon__plus--white.spacing__margin-right--half
         | New Question

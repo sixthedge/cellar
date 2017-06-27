@@ -24,6 +24,10 @@ export default base.extend
   # # ### Observers
   changed_pr_observer: ember.observer 'am.data_values.progress_report', ->  @update_correct_and_percentages()
 
+  adjusted_order: ember.computed 'data', 'data.order', -> 
+    order = @get('data.order') or 0
+    order + 1 # The order is the index in the array, so it's off by one.
+  
   init_base: ->
     console.log "[standard:question] Initial question: ", @get('model')
     @update_correct_and_percentages()

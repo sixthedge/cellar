@@ -120,10 +120,10 @@ export default step.extend
 
   add_question_item: (type) ->
     manager = @get('manager')
-    @set_loading('irat')
+    @set_loading('adding_question')
     manager.add_question_item(type).then (item) =>
       @create_question_items({new_ids: [item.id]})
-      @reset_loading('irat')
+      @reset_loading('adding_question')
 
   delete_question_item: (type, item_obj) ->
     manager = @get('manager')

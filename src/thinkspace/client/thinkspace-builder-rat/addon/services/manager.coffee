@@ -164,7 +164,7 @@ export default ember.Service.extend array_helpers,
   ## Expects 'irat' or 'trat'
   get_assessment:   (type)     -> @get("#{type}")
   get_item_by_id:   (type, id) -> @get_items(type).findBy 'id', id
-  get_next_id:      (type)     -> @get_assessment(type).get('settings.next_id')
+  get_next_id:      (type)     -> @get_assessment(type).get('settings.next_id').toString()
   get_default_choices:         -> @duplicate_array(@get('default_choices'))
   get_items:        (type)     -> @get_assessment(type).get('questions')
   # get_answer_by_id: (type, id) -> items = @get_items(type)
