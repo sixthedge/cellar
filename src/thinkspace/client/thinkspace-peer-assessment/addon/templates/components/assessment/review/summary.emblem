@@ -11,16 +11,12 @@
       label.spacing__margin-bottom--0 Score
       p.text__font-size--14.spacing__margin-top--0 #{expended_points}
 
-    if assessment.is_categories
+    else
       ul.clear-list
         each category_responses as |response|
           li
             label.spacing__margin-bottom--0 #{response.label}
             p.text__font-size--14.spacing__margin-top--0 #{response.value}
-
-    if assessment.is_custom
-      label.spacing__margin-bottom--0 #{model.reviewable.full_name}
-      p.text__font-size--14.spacing__margin-top--0 #{expended_points}
 
     each qualitative_responses as |response|
       label.spacing__margin-bottom--0 #{response.label}
