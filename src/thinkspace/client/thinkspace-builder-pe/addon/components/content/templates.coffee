@@ -77,14 +77,10 @@ export default base.extend
 
   actions:
     select_assessment_template: (template) ->
-      console.log('calling select_assessment_template with template ', template)
-      #template = @get('user_templates.firstObject') if template.id == 'user_templates'
-      #console.log('found a template belonging to a user')
       @set('selected_template', template)
       @sendAction 'select', template
 
     select_radio: (radio) ->
-      console.log('calling select_radio with radio ', radio)
       @set('selected_radio', radio)
       radio = @get('user_templates.firstObject') if radio.id == 'user_templates' && ember.isPresent(@get('user_templates'))
       @send('select_assessment_template', radio)

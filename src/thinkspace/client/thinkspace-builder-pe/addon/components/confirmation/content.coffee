@@ -16,11 +16,9 @@ export default base.extend
 
   quant_items: ember.computed 'assessment.value.quantitative.@each', ->
     items = @get('assessment.value.quantitative')
-    console.log('[quant] items are ', items)
     items
 
 
   qual_items: ember.computed 'assessment.value.qualitative.@each', ->
     items = @get('assessment.value.qualitative')
-    console.log('[qual] items are ', items)
     items

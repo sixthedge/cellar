@@ -1,5 +1,5 @@
 .forms__field-wrapper
-  label.spacing__margin-bottom--1 #{model.id} .   #{model.label}
+  label.spacing__margin-bottom--1 #{display_index}.   #{model.label}
   input.ts-rangeslider type='range' min=points_min max=points_max step=slider_step value=slider_value disabled=is_read_only
   if points_descriptive_enabled
     .grid__container.text__font-size--12.text--bold

@@ -35,6 +35,7 @@ export default base_component.extend
   assessment:       ember.computed.reads 'manager.model'
   points_different: ember.computed.reads 'assessment.points_different'
   is_read_only:     ember.computed.or 'manager.is_read_only', 'manager.is_review_read_only'
+  display_index:    ember.computed 'index', -> @get('index') + 1
 
   # #### Model computed properties
   # These come from the `model` which is a portion of the assessment's value JSON.

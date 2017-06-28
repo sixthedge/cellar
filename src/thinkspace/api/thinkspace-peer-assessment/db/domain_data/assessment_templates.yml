@@ -24,7 +24,7 @@
             min: Low
             max: High
         points:
-          min: 0
+          min: 1
           max: 15
     qualitative:
     - id: 0
@@ -74,8 +74,8 @@
             min: Low
             max: High
         points:
-          min: 0
-          max: 15
+          min: 1
+          max: 10
     - id: 1
       label: Categories Quant 2
       type: range
@@ -87,8 +87,8 @@
             min: Low
             max: High
         points:
-          min: 0
-          max: 15
+          min: 1
+          max: 10
     qualitative:
     - id: 0
       label: "[Categories] Indicate specifically how this person contributes to group
