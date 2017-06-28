@@ -12,13 +12,14 @@ export default base.extend changeset_helpers,
   has_comments:      ember.computed.reads 'model.settings.comments.enabled'
 
   manager:           ember.inject.service()
+  builder:           ember.inject.service()
 
   changeset:         ember.computed.reads 'model.changeset'
   points_changeset:  ember.computed.reads 'model.points_changeset'
   label_changeset:   ember.computed.reads 'model.label_changeset'
 
   assessment:        ember.computed.reads 'manager.model'
-  points_per_member: ember.computed.reads 'assessment.points_per_member'
+  points_per_member: ember.computed.reads 'builder.step_content.assessment_changeset.points_per_member'
 
   display_min: null
   display_max: null

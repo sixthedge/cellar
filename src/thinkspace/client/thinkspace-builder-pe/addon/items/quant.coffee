@@ -81,13 +81,3 @@ export default ember.Object.extend changeset_helpers,
     model = @get 'model'
     model = ember.Object.create(model)
     model.get(path)
-
-  # ### Setters
-  set_points_min:      (points) ->       util.set_path_value @, 'model.settings.points.min', parseInt(points)
-  set_points_max:      (points) ->       util.set_path_value @, 'model.settings.points.max', parseInt(points)
-  set_scale_label_min: (label) ->        util.set_path_value @, 'model.settings.labels.scale.min', label
-  set_scale_label_max: (label) ->        util.set_path_value @, 'model.settings.labels.scale.max', label
-  set_has_comments:    (has_comments) -> util.set_path_value @, 'model.settings.comments.enabled', has_comments
-
-  set_label: (label) ->
-    util.set_path_value @, 'model.label', label

@@ -4,6 +4,7 @@ import ns          from 'totem/ns'
 import totem_scope from 'totem/scope'
 import totem_changeset from 'totem/changeset'
 import v_arr_contains     from 'thinkspace-builder-pe/validators/array_contains'
+import util from 'totem/util'
 
 ###
 # # modified_template.coffee
@@ -56,12 +57,15 @@ export default base.extend
       assessment_changeset = @get('step.assessment_changeset')
 
       changeset.validate().then =>
+        #assessment_changeset.validate().then =>
         if changeset.get('isValid')
-          template.set('value', assessment.get('value'))
-          template.set('ownerable_id', totem_scope.get_current_user_id())
+          template.set('value',          assessment.get('value'))
+          template.set('ownerable_id',   totem_scope.get_current_user_id())
           template.set('ownerable_type', 'Thinkspace::Common::User')
+          util.set_path_value(template, 'value.options.points.per_member', assessment_changeset.get('points_per_member')) if assessment.get('is_balance')
           ## Calling confirm template on the step will cause the assessment changeset to be updated and persisted
           changeset.save().then (saved_template) =>
+            #assessment_changeset.save().then =>
             @get('step').confirm_template(saved_template)
             @get('assessment_templates').pushObject(saved_template)
 

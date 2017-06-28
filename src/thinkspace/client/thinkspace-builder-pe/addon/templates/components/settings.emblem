@@ -8,7 +8,7 @@ partial 'components/header'
       component 'progress' model=model class='grid__col--1of4 grid__mobile--hidden'
     .grid__container--flex.spacing__margin-bottom--4.grid__mobile--hidden
       .grid__col--4of4
-        button.btn.is-left click='back'
+        button.btn.is-left click='prev_step'
           | Back
         button.btn.btn--primary.is-right click='next_step'
           | Next Step

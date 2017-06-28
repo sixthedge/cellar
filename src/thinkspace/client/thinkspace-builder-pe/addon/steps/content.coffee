@@ -140,6 +140,7 @@ export default step.extend
     changeset.execute()
     manager.confirm_template().then =>
       @set('template', template)
+      @create_changesets()
       @reset_is_preview()
       @reset_is_editing_template()
 

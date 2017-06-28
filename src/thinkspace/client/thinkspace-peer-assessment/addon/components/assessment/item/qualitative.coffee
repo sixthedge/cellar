@@ -17,6 +17,7 @@ export default base_component.extend
   assessment:       ember.computed.reads 'manager.model'
   points_different: ember.computed.reads 'assessment.points_different'
   is_read_only:     ember.computed.or 'manager.is_read_only', 'manager.is_review_read_only'
+  display_index:    ember.computed 'index', -> @get('index') + 1
 
   # ### Observers
   # @TODO Why won't just `review` work for the binding as it does in quantitative?

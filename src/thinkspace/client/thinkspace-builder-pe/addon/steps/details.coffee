@@ -32,6 +32,8 @@ export default step.extend
       title:        [vpresence, vlength]
       instructions: [vpresence]
 
+    console.log('[DETAILS STEP] creating changeset ', changeset)
+
     changeset.set 'show_errors', true
     @set 'changeset', changeset
 
@@ -95,3 +97,11 @@ export default step.extend
           team_set = team_sets.get('firstObject')
           @select_team_set team_set
         resolve()
+
+  validate: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+
+      changeset = @get('changeset')
+      console.log('calling validate with changeset ', changeset)
+      changeset.validate().then =>
+        resolve(changeset.get('isValid'))
