@@ -1,5 +1,5 @@
-import ember from 'ember'
-import base  from 'thinkspace-base/components/base'
+import ember       from 'ember'
+import base        from 'thinkspace-base/components/base'
 import qual_item   from 'thinkspace-builder-pe/items/qual'
 import quant_item  from 'thinkspace-builder-pe/items/quant'
 
@@ -12,30 +12,18 @@ export default base.extend
 
   classNameBindings: ['readonly:is-readonly']
 
-  value:    null
-  template: null
+  value:      null
+  template:   null
+  manager:    ember.inject.service()
+  readonly:   ember.computed.reads 'step.is_readonly'
+  assessment: ember.computed.reads 'manager.assessment'
 
-  quant_items:    ember.computed 'value.quantitative.@each', -> 
-    ## Create objects here instead of downstream
-    items = @get 'value.quantitative'
-    if ember.isPresent(items)
-      @create_quant_item(item) for item in items
+  quant_items: ember.computed.reads 'manager.quant_items'
+  qual_items:  ember.computed.reads 'manager.qual_items'
 
-  qual_items:     ember.computed 'value.qualitative.@each', -> 
-    ## Create objects here instead of downstream
-    items = @get 'value.qualitative'
-    if ember.isPresent(items)
-      @create_qual_item(item) for item in items
+  has_qual_items:  ember.computed.notEmpty 'qual_items'
+  has_quant_items: ember.computed.notEmpty 'quant_items'
 
-  create_qual_item: (item) ->
-    qual_item.create
-      model:      item
-      assessment: @get('model')
-
-  create_quant_item: (item) ->
-    quant_item.create
-      model:      item
-      assessment: @get('model')
 
   actions:
     change_template: -> @get('step').set_is_editing_template()

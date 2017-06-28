@@ -5,18 +5,10 @@ partial 'components/header'
     component 'progress' model=model class='grid__col--1of4 grid__mobile--hidden'
   .grid__container--flex.grid__mobile--hidden
     .grid__col--4of4
-      button.btn.is-left click='back' role='button'
-        | Back
       button.btn.btn--primary.is-right click='next_step' role='button'
         | Next Step
 
 .mobile-progress
-  .mobile-progress__item.is-left
-    .mobile-progress__link click='back' role='button'
-      .text__font-size--12.text--bold
-        | Back
-      .text__font-size--14
-        | Type
   .mobile-progress__item.is-right
     .mobile-progress__link click='next_step' role='button'
       .text__font-size--12.text--bold

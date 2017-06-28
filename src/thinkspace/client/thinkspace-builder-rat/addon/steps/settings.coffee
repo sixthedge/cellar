@@ -47,7 +47,7 @@ export default step.extend changeset_helpers,
 
     scoring_changeset = totem_changeset.create irat_assessment.get('settings.scoring'),
       correct:           [v_integer, v_presence, v_positive],
-      no_answer:         [v_integer, v_presence],
+      no_answer:         [v_integer, v_presence]
 
     trat_scoring_cs = totem_changeset.create trat_assessment.get('settings.scoring'),
       attempted:         [v_integer, v_presence, v_positive],
@@ -105,6 +105,7 @@ export default step.extend changeset_helpers,
                     trat_phase_cs.save().then =>
                       @persist_assignment_dates()
                       cs.save().then =>
+                        console.log('about to call query_assessment_sync')
                         @get('manager').query_assessment_sync('irat', @get('manager').get_assessment('irat')).then =>
                           resolve()
 

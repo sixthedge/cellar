@@ -3,13 +3,17 @@
   ownerable_type: 
   ownerable_id: 
   value:
+    ids:
+      next_quant_id: 1
+      next_qual_id: 2
+
     options:
       type: balance
       points:
         per_member: 10
         different: true
     quantitative:
-    - id: 1
+    - id: 0
       label: What was the effectiveness of this team member?
       type: range
       settings:
@@ -20,15 +24,15 @@
             min: Low
             max: High
         points:
-          min: 0
+          min: 1
           max: 15
     qualitative:
-    - id: 1
+    - id: 0
       label: "Indicate specifically how this person contributes to
         group success."
       type: textarea
       feedback_type: positive
-    - id: 2
+    - id: 1
       label: "Make constructive suggestions about how this person could
         better contribute to group success."
       type: textarea
@@ -50,13 +54,16 @@
   ownerable_type: 
   ownerable_id: 
   value:
+    ids:
+      next_quant_id: 2
+      next_qual_id:  2
     options:
       type: categories
       points: 
         per_member: 10
         different: true
     quantitative:
-    - id: 1
+    - id: 0
       label: Categories Quant 1
       type: range
       settings:
@@ -67,9 +74,9 @@
             min: Low
             max: High
         points:
-          min: 0
-          max: 15
-    - id: 2
+          min: 1
+          max: 10
+    - id: 1
       label: Categories Quant 2
       type: range
       settings:
@@ -80,15 +87,15 @@
             min: Low
             max: High
         points:
-          min: 0
-          max: 15
+          min: 1
+          max: 10
     qualitative:
-    - id: 1
+    - id: 0
       label: "[Categories] Indicate specifically how this person contributes to group
         success."
       type: textarea
       feedback_type: positive
-    - id: 2
+    - id: 1
       label: "[Categories] Make constructive suggestions about how this person could
         better contribute to group success."
       type: textarea
@@ -109,9 +116,12 @@
   ownerable_type: 
   ownerable_id: 
   value:
+    ids:
+      next_quant_id: 0
+      next_qual_id:  0
     options: {}
-    quantitative: {}
-    qualitative: {}
+    quantitative: []
+    qualitative: []
   title: Blank Canvas
   description: Start fresh.
   state: system

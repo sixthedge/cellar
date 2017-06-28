@@ -8,13 +8,7 @@
 .forms__field-wrapper
   label.spacing__margin-bottom--0 Feedback Type
   .forms__label-summary This will let the system know where to place this response when it creates the results page.
-  
-  // Temp select until we get ts-dropdown working (12/20)
-  .dropdown__container
-    select onchange={action (mut model.changeset.feedback_type) value='target.value'}
-      each feedback_types as |feedback_type|
-        option value=feedback_type.id
-          = feedback_type.label
+  component '__dropdown' collection=feedback_types text=display_type.label display_property='label' selected=display_type select_action='select_feedback_type' action_receiver=this
 
 
 hr

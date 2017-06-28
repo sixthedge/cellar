@@ -17,3 +17,42 @@ export default ember.Mixin.create
           is_valid.pushObject(cs.get('isValid'))
 
         resolve(!is_valid.contains(false))
+
+  ## Bulk changeset functions
+  ## => Allow a group of changesets to call a changeset function
+
+  changesets_save: (changesets) ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      promises = ember.makeArray()
+
+      changesets.forEach (cs) =>
+        promises.pushObject(cs.save())
+
+      ember.RSVP.all(promises).then (results) =>
+        resolve(results)
+      , (error) =>
+        reject(error)
+
+  changesets_rollback: (changesets) ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      promises = ember.makeArray()
+      changesets.forEach (cs) =>
+        promises.pushObject(cs.rollback())
+
+      ember.RSVP.all(promises).then (results) =>
+        resolve(results)
+      , (error) =>
+        reject(error)
+
+  changesets_execute: (changesets) ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      promises = ember.makeArray()
+
+      changesets.forEach (cs) =>
+        promises.pushObject(cs.execute())
+
+      ember.RSVP.all(promises).then (results) =>
+        resolve(results)
+      , (error) =>
+        reject(error)
+        

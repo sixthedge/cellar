@@ -1,10 +1,27 @@
 fieldset.forms__section.spacing__margin-bottom--4
   h2.text--inline-block Qualitative Section
-  button.btn.btn--primary.is-right click='create' role='button'
-    .icon.icon--16.icon__plus--white.spacing__margin-right--half
-    | New Question
-
-  each model as |item|
-    component 'content/assessment/qual/item' model=item
+  
+  if step.loading.qual
+    component '__loader/base'
   else
-    h1 empty
+    if has_items
+      button.btn.btn--primary.is-right click='create' role='button'
+        .icon.icon--16.icon__plus--white.spacing__margin-right--half
+        | New Question
+
+      each model as |item|
+        component 'content/assessment/qual/item' model=item step=step
+
+      .btn.btn--primary click='create'
+        .icon.icon--16.icon__plus--white.spacing__margin-right--half
+        | New Question
+
+    else
+
+      div class={:bordered-panel :bordered-panel--active}
+        .forms__field-wrapper
+          label.spacing__margin-bottom--0 No qualitative feedback added.
+          .forms__label-summary Add a new positive or constructive input to collect student responses.
+        button.btn.btn--primary click='create' role='button'
+          .icon.icon--16.icon__plus--white.spacing__margin-right--half
+          | New Question

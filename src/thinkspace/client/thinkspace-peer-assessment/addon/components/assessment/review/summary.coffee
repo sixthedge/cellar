@@ -10,7 +10,6 @@ export default base_component.extend
   # ## Properties
   # ### View Property
   tagName: 'li'
-  classNames: ['thinkspace-pe-conf']
 
   # ### Internal Properties
   edit_team_member: 'edit_team_member'

@@ -71,10 +71,15 @@ export default base.extend
       @set_selected_text()
 
   set_selected_text: ->
+    console.log('[dropdown] calling set_selected_text')
     selected         = @get 'selected'
     display_property = @get 'display_property'
     return unless ember.isPresent(selected) and ember.isPresent(display_property)
+    console.log('[dropdown] made it through presence check')
+
     if selected[display_property]? then text = selected[display_property] else text = selected.get(display_property)
+    
+    console.log('[dropdown] setting to ', text)
     @set 'text', text
 
   send_selection_event: ->

@@ -9,6 +9,8 @@ import common_helper from 'thinkspace-common/mixins/helpers/common/all'
 ###
 export default ember.Object.extend common_helper,
 
+  builder: ember.inject.service()
+
   loading: null
   set_loading:      (type) -> @set("loading.#{type}", true)
   reset_loading:    (type) -> @set("loading.#{type}", false)
@@ -17,3 +19,11 @@ export default ember.Object.extend common_helper,
     @_super()
     @set('loading', new Object)
     @set_loading('all')
+    @set('model', @get('builder').get_model())
+
+  init_data: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      resolve()
+
+  manager_load_obs: ember.observer 'manager_loaded', ->
+    if @get('manager_loaded') then @reset_loading('all')

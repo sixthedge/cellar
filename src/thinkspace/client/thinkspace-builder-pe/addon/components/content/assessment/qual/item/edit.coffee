@@ -1,12 +1,14 @@
-import ember from 'ember'
-import base  from 'thinkspace-base/components/base'
+import ember             from 'ember'
+import base              from 'thinkspace-base/components/base'
+import changeset_helpers from 'thinkspace-common/mixins/helpers/common/changeset'
+
 
 ###
 # # preview.coffee
 - Type: **Component**
 - Package: **ethinkspace-builder-pe**
 ###
-export default base.extend
+export default base.extend changeset_helpers,
 
   changeset: ember.computed.reads 'model.changeset'
 
@@ -28,27 +30,31 @@ export default base.extend
     type  = types.findBy 'id', type
     type.label
 
-  update_model: ->
-    model     = @get('model')
-    changeset = model.get('changeset')
+  display_type: null
 
-    changeset.save() if changeset.get('isValid')
-    return changeset.get('isValid')
+  update_model: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      model     = @get('model')
+      changeset = model.get('changeset')
+      @determine_validity(changeset).then (validity) =>
+        resolve(validity)
+
+  init_base: ->
+    @init_feedback_type()
+
+  init_feedback_type: ->
+    model = @get('model')
+    type  = model.get('changeset.feedback_type')
+    @set('display_type', @get('feedback_types').findBy('id', type))
 
   actions:
-    back: -> @sendAction 'back'
-    save: -> 
-      @update_model()
-      @sendAction 'back'
-
-    update: -> 
-      if @update_model()
-        @sendAction('update')
+    update: -> @update_model().then (valid) => @sendAction('update') if valid
 
     edit: ->      
       changeset = @get('changeset')
       changeset.rollback()
       @sendAction('edit', false)
 
-    select_feedback_type: (type) ->  @set 'feedback_type', type.id
-    select_type:          (type) ->  @set 'type', type.id
+    select_feedback_type: (type) ->
+      @set('display_type', type)
+      @set('model.changeset.feedback_type', type.id)

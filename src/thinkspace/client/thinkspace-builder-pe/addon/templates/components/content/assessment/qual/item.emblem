@@ -1,5 +1,8 @@
-div class={:bordered-panel is_editing:bordered-panel--active}
-  if is_editing
-    component 'content/assessment/qual/item/edit' model=model update='update' edit='edit'
-  else
-    component 'content/assessment/qual/item/show' model=model edit='edit' duplicate='duplicate' delete='delete' reorder='reorder'
+if loading.all
+  component '__loader/base'
+else
+  div class={:bordered-panel is_editing:bordered-panel--active}
+    if is_editing
+      component 'content/assessment/qual/item/edit' model=model step=step update='update' edit='edit'
+    else
+      component 'content/assessment/qual/item/show' model=model step=step edit='edit' duplicate='duplicate' delete='delete' reorder='reorder'

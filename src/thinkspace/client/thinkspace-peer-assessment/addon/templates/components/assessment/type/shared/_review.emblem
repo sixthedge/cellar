@@ -7,8 +7,8 @@
       h2 Quantitative Assessment
       p.forms__heading-summary Use the sliders below to score your team member's performance
 
-      each model.quantitative_items as |item|
-        component 'assessment/item/quantitative' manager=manager model=item class='bordered-panel'
+      each model.quantitative_items as |item index|
+        component 'assessment/item/quantitative' manager=manager model=item index=index class='bordered-panel'
 
     / Qualitative (optional)
     if has_qualitative_section
@@ -16,8 +16,8 @@
         h2.spacing__margin-bottom--0 Qualitative Assessment
         p.forms__heading-summary All comments will be anonymous
 
-        each model.qualitative_items as |item|
-          component 'assessment/item/qualitative' manager=manager model=item class='bordered-panel'
+        each model.qualitative_items as |item index|
+          component 'assessment/item/qualitative' manager=manager model=item index=index class='bordered-panel'
 
     .grid__container.grid__container--content-width.spacing__margin-bottom--4
       hr

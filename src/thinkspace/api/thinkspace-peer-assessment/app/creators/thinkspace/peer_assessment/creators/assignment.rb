@@ -19,7 +19,10 @@ module Thinkspace; module PeerAssessment; module Creators
     end
 
     def create_assessment(phase)
-      @assessment = assessment_class.create(authable: phase)
+      @assessment = assessment_class.create(
+        authable: phase,
+        value:    { ids: {next_quant_id: 0, next_qual_id: 0} }
+      )
       create_header_component(phase)
       create_phase_component(phase, assessment, 'peer-assessment', 'assessment')
       @assessment

@@ -20,10 +20,17 @@ export default step.extend
   builder: ember.inject.service()
   manager: ember.inject.service()
 
-  is_preview:          ember.computed.reads 'assessment.has_no_assessment_template'
-  is_editing_template: false
+  assessment_templates: ember.computed.reads 'manager.assessment_templates'
+  user_templates:       ember.computed.reads 'manager.user_templates'
+  assessment:           ember.computed.reads 'manager.assessment'
+  
+  is_preview:           ember.computed.reads 'assessment.has_no_assessment_template'
+  is_editing_template:  false
 
-  is_readonly: ember.computed.or 'is_preview', 'is_editing_template'
+  is_readonly:          ember.computed.or 'is_preview', 'is_editing_template'
+
+  has_qual_items:  ember.computed.notEmpty 'manager.qual_items'
+  has_quant_items: ember.computed.notEmpty 'manager.quant_items'
 
   ## API Methods
 
@@ -51,20 +58,18 @@ export default step.extend
     validations
 
   initialize: ->
-    @reset_all_data_loaded()
-    model = @get('builder.model')
-    @set 'model', model
+    @create_changesets()
+    @init_template()
 
-    promises = 
-      assessment_templates: @query_assessment_templates()
-      user_templates:       @query_user_templates()
-      assessment:           @query_assessment()
+  init_data: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      promises =
+        assessment_templates: @query_assessment_templates()
+        user_templates:       @query_user_templates()
+        assessment:           @query_assessment()
 
-    @rsvp_hash_with_set(promises, @).then (results) =>
-      @create_changesets()
-      @set_manager_model()
-      @init_template().then =>
-        @set_all_data_loaded()
+      ember.RSVP.hash(promises).then (results) =>
+        resolve(results)
 
   validate: ->
     new ember.RSVP.Promise (resolve, reject) =>
@@ -72,6 +77,11 @@ export default step.extend
       assessment_changeset = @get('assessment_changeset')
       assessment_changeset.validate().then =>
         resolve(assessment_changeset.get('isValid'))
+
+  update_model: -> 
+    manager = @get('manager')
+    console.log('calling step update_model with manager ', manager)
+    manager.save_model()
 
   set_manager_model: ->
     ## Used to initialize the manager service's 'model' property to an assessment if present.
@@ -122,19 +132,45 @@ export default step.extend
   select_template: (template) -> @set('template', template) if ember.isPresent(template)
   
   confirm_template: (template=null) -> 
+    manager   = @get('manager')
     changeset = @get('assessment_changeset')
     template  = @get('template') unless ember.isPresent(template)
     changeset.set ns.to_p('assessment_template'), template
     changeset.set 'value', template.get('value')
-    changeset.save().then =>
+    changeset.execute()
+    manager.confirm_template().then =>
       @set('template', template)
+      @create_changesets()
       @reset_is_preview()
       @reset_is_editing_template()
 
   reset_is_preview: -> @set 'is_preview', false
-  set_is_preview: -> @set 'is_preview', true
+  set_is_preview: ->   @set 'is_preview', true
 
   set_is_editing_template:   -> @set('is_editing_template', true)
   reset_is_editing_template: -> @set('is_editing_template', false)
+
+  add_item_with_type: (type) ->
+    manager = @get('manager')
+    console.log('calling add_item_with_type ', type, @get('loading'))
+
+    @set_loading("#{type}")
+    manager.add_item_with_type(type).then =>
+      @reset_loading("#{type}")
+
+  duplicate_item: (type, id, item) ->
+    manager = @get('manager')
+    @set_loading("#{type}")
+    manager.duplicate_item(type, id).then =>
+      @reset_loading("#{type}")
+
+  reorder_item: (type, item, offset) ->
+    manager = @get('manager')
+    @set_loading("#{type}")
+    manager.reorder_item(type, item, offset).then =>
+      manager.create_question_items(type)
+      @reset_loading("#{type}")
+    , (error) =>
+      @reset_loading("#{type}")
 
   template:          ember.computed.reads 'assessment_templates.firstObject'

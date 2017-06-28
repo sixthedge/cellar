@@ -10,7 +10,7 @@
       li.basic-list__item
         .checkbox__item
           label.checkbox__label
-            div role='presentation' class='checkbox__icon checkbox__icon--is-checked'
+            div role='presentation' class='checkbox__icon checkbox__icon--is-checked spacing__margin-right--1'
               input type="checkbox" onclick="return false;" checked='checked'
             .avatar.avatar--32.spacing__margin-right--3
             .avatar__username = review_set.name

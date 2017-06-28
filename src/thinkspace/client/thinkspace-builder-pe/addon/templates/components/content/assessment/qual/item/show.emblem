@@ -1,6 +1,6 @@
 .forms__field-wrapper
-  label.spacing__margin-bottom--0 #{model.model.label}
-  .forms__label-summary #{model.model.feedback_type}
+  label.spacing__margin-bottom--0 #{model.changeset.label}
+  .forms__label-summary #{model.changeset.feedback_type}
 hr
 .grid__container
   .btn-group.is-left

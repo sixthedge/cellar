@@ -18,8 +18,13 @@ export default step.extend
 
   builder: ember.inject.service()
 
+  assignment: ember.computed.reads 'manager.assignment'
+  team_set:   ember.computed.reads 'manager.team_set'
+
   create_changeset: ->
     model     = @get('model')
+    console.log('calling create_changeset')
+
     vpresence = totem_changeset.vpresence(presence: true)
     vlength   = totem_changeset.vlength(min: 4)
 
@@ -27,19 +32,26 @@ export default step.extend
       title:        [vpresence, vlength]
       instructions: [vpresence]
 
+    console.log('[DETAILS STEP] creating changeset ', changeset)
+
     changeset.set 'show_errors', true
     @set 'changeset', changeset
 
   ## API Methods
 
+  init_data: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      promises =
+        assignment: @load_assignment_data()
+        team_set:   @query_team_sets()
+        #phases:     @query_phases()
+
+      ember.RSVP.hash(promises).then (results) =>
+        resolve(results)
+
   initialize: ->
-    model = @get('builder.model')
-    @set 'model', model
-    @load_assignment_data().then (assignment) =>
-      @query_team_sets().then (team_sets) =>
-        @initialize_team_set().then (team_set) =>
-          @create_changeset()
-          @set_all_data_loaded()
+    @initialize_team_set().then (team_set) =>
+      @create_changeset()
 
   save: ->
     new ember.RSVP.Promise (resolve, reject) =>
@@ -57,14 +69,14 @@ export default step.extend
         action: 'load'
         model:  ta.to_p('assignment')
       tc.query_action(ta.to_p('assignment'), params, options).then (assignment) =>
-        resolve assignment
+        resolve (assignment)
 
   query_team_sets: ->
     new ember.RSVP.Promise (resolve, reject) =>
       @get('model').get(ta.to_p('space')).then (space) =>
         space.get_default_team_set().then (team_set) =>
           @set 'team_sets', ember.makeArray(team_set)
-          resolve()
+          resolve(team_set)
 
   select_team_set: (team_set) -> 
     @set 'selected_team_set', team_set
@@ -76,8 +88,8 @@ export default step.extend
   initialize_team_set: ->
     new ember.RSVP.Promise (resolve, reject) =>
       @get('model').get(ta.to_p('phases')).then (phases) =>
-        team_sets   = @get('team_sets')
-        phase       = phases.get('firstObject')
+        team_sets = @get('team_sets')
+        phase     = phases.get('firstObject')
         if ember.isPresent(phase.get('team_set_id')) 
           team_set = team_sets.findBy 'id', phase.get('team_set_id').toString()
           @set 'selected_team_set', team_set
@@ -85,3 +97,11 @@ export default step.extend
           team_set = team_sets.get('firstObject')
           @select_team_set team_set
         resolve()
+
+  validate: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+
+      changeset = @get('changeset')
+      console.log('calling validate with changeset ', changeset)
+      changeset.validate().then =>
+        resolve(changeset.get('isValid'))
