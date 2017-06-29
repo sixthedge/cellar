@@ -13,6 +13,8 @@ export default base.extend m_data_rows,
   progress_report: ember.computed.reads 'am.data_values.progress_report'
   is_ifat:         ember.computed.reads 'assessment.is_ifat'
 
+  no_of_concerns: ember.computed 'progress_report.concerns.length', -> @get('progress_report.concerns.length') || 0
+
   init_base: -> 
     @am.set_model @get('model')
 

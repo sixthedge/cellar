@@ -17,3 +17,9 @@ export default base.extend
   # r_assignments_show:      ns.to_r 'assignments', 'show'
   # r_assignments_clone:     ns.to_r 'case_manager', 'assignments', 'clone'
   # r_assignments_delete:    ns.to_r 'case_manager', 'assignments', 'delete'
+
+  is_archived: ember.computed.equal 'model.state', 'archived'
+  is_draft:    ember.computed.equal 'model.state', 'inactive'
+  is_active:   ember.computed.equal 'model.state', 'active'
+  is_released: ember.computed.reads 'model.is_released'
+

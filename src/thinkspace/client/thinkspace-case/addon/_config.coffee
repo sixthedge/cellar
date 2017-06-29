@@ -12,7 +12,9 @@ export default {
       'phases.show', 
       {reports: 'reports.show'}, 
       'case-peer-assessment.overview',
-      'case-readiness-assurance.overview'
+      'case-readiness-assurance.overview',
+      {rat_settings: 'rat.settings'},
+      {pe_settings: 'pe.settings'}
     ]
 
   ns:

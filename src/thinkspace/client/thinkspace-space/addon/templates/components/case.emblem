@@ -6,4 +6,19 @@ li.tile__container
         = model.friendly_due_at
     div.group
       span.tile__info.is-left = model.assignment_type.title
-      .tile__status.tile__status--live.is-right Open
+
+      if model.can.update
+        if is_draft
+          .tile__status.tile__status--draft.is-right Draft
+        if is_archived
+          .tile__status.tile__status--draft.is-right Archived
+        if is_active
+          if is_released
+            .tile__status.tile__status--live.is-right Open
+          else
+            .tile__status.tile__status--live.is-right Opens #{model.friendly_release_at}
+      else
+        if is_archived
+          .tile__status.tile__status--draft.is-right Archived
+        else
+          .tile__status.tile__status--live.is-right Open

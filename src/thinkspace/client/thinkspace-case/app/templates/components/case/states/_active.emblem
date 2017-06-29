@@ -1,6 +1,15 @@
 .dialogue.dialogue--green.spacing__margin-bottom--2
   h1 Case is live
-  p.spacing__margin-bottom--2 This case is available to all your students.
+  p.spacing__margin-bottom--2
+    if is_released
+      | This case is available to all your students.
+    else
+      | This case will be available to your students on 
+      strong #{model.friendly_release_at}.
 
-  button.btn{action 'set_drafting'}
-    | Set to draft
+  unless loading.link
+    .btn-group
+      button.btn{action 'set_drafting'}
+        | Set to draft
+      link-to-external settings model class='btn'
+        | Change Logistics

@@ -31,7 +31,8 @@ export default ta.Model.extend resource_mixin, ta.totem_data, ta.add(
   is_inactive:          ember.computed.equal 'state', 'inactive'
   has_due_at:           ember.computed.notEmpty 'due_at'
   has_release_at:       ember.computed.notEmpty 'release_at'
-  
+  is_released:          ember.computed 'release_at', -> @get('release_at') < new Date()
+
   sync_rat_assessments: ember.computed.bool 'settings.rat.sync'
 
   ttz: ember.inject.service()

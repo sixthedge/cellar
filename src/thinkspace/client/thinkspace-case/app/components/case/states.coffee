@@ -9,6 +9,7 @@ export default base.extend
   is_archived: ember.computed.equal 'model.state', 'archived'
   is_draft:    ember.computed.equal 'model.state', 'inactive'
   is_active:   ember.computed.equal 'model.state', 'active'
+  is_released: ember.computed.reads 'model.is_released'
 
   is_editing_release_date: false
 
@@ -20,6 +21,17 @@ export default base.extend
       model = @get('model')
       model.set('release_at', date)
       model.save().then => resolve()
+
+  init_base: ->
+    @set_loading 'link'
+    model = @get('model')
+    model.get('assignment_type').then (assignment_type) =>
+      if assignment_type.get('is_pe')
+        settings = 'pe_settings'
+      else
+        settings = 'rat_settings'
+      @set 'settings', settings
+      @reset_loading 'link'
 
   actions:
 

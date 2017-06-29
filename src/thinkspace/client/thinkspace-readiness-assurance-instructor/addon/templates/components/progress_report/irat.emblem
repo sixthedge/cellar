@@ -28,8 +28,9 @@ mount 'thinkspace-toolbar'
           label iRAT Average: 
           .analytics-panel__data #{progress_report.average}
         .analytics-panel__item
-          label Questions <50%: 
-          .analytics-panel__data #{progress_report.concerns.length}
+          label 
+            | Questions less than 50%:
+          .analytics-panel__data = no_of_concerns
 
       / if progress_report.concerns
       /   ul
