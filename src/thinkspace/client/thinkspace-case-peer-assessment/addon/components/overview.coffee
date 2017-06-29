@@ -31,7 +31,6 @@ export default base.extend
 
   # ### Events
   init_base: ->
-    #@set_phase_progress()
     @init_assignment_type()
     @init_abilities().then =>
       @init_assessment_phase().then =>
@@ -45,25 +44,6 @@ export default base.extend
               @init_pa_team_set().then =>
                 @init_phase_states().then =>
                   @init_pubsub()
-
-  # ### Helpers
-  # set_phase_progress: ->
-  #   assignment = @get('model')
-  #   assignment.get(ns.to_p 'phases' ).then (phases) =>
-  #     phase_promises = phases.getEach(ns.to_p('phase_states'))
-  #     ember.RSVP.Promise.all(phase_promises).then =>
-  #       sorted_phases = phases.sortBy('position')
-  #       resume_phase  = sorted_phases.find (phase) -> phase.get('is_unlocked')
-  #       if resume_phase
-  #         @set 'resume_phase', resume_phase
-  #         @set 'is_in_progress', true  if resume_phase != sorted_phases.get('firstObject')
-  #       uncompleted_phase = phases.find (phase) -> phase.get('is_completed') != true
-  #       @set 'all_phases_completed', true unless uncompleted_phase
-  #       @set 'phase_states_loaded', true
-  #     , (error) =>
-  #       @totem_messages.api_failure error, source: @, model: ns.to_p('phase_states')
-  #   , (error) =>
-  #     @totem_messages.api_failure error, source: @, model: ns.to_p('phases')
 
   init_phase_states: ->
     new ember.RSVP.Promise (resolve, reject) =>
