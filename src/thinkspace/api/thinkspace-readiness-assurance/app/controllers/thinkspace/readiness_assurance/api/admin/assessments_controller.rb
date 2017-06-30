@@ -32,6 +32,12 @@ module Thinkspace
             controller_render_json(results)
           end
 
+          def sync
+            options = params_root[:options]
+            @assessment.sync(options)
+            controller_render(@assessment)
+          end
+        
           private
 
           include ReadinessAssurance::ControllerHelpers::Base

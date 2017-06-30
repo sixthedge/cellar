@@ -12,7 +12,7 @@
               link-to-external link model class='btn btn--primary'
                 | Edit Exercise
           else
-            button.btn
+            button.btn.btn--disabled
               | Edit Exercise
       / else 
       /   .btn-group.is-right
