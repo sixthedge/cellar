@@ -80,7 +80,7 @@ export default ember.Service.extend array_helpers,
     items = @get_items(type)
     item  = items.findBy('id', question.get('id'))
     ember.set(item, 'choices', question.get('choices'))
-    ember.set(item, 'question', question.get('question'))
+    ember.set(item, 'question', question.get('question'))    
 
   ## Needed to get the assessment to serialize its answers
   query_assessment_answers: (type, assessment) ->
