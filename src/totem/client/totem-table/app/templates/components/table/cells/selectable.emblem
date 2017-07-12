@@ -1,6 +1,6 @@
 if is_selected
   div role='presentation' class='checkbox__icon checkbox__icon--is-checked'
-    input type='checkbox' role='checkbox' 
+    input type='checkbox' role='checkbox' checked=''
 
 else
   div role='presentation' class={:checkbox__icon}

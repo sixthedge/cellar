@@ -4,6 +4,7 @@ module Thinkspace; module PeerAssessment; module Concerns; module SerializerOpti
   module ReviewSets
     def ignore(serializer_options); state_change(serializer_options); end
     def unignore(serializer_options); state_change(serializer_options); end
+    def complete(serializer_options); state_change(serializer_options); end
     def unlock(serializer_options); end
     def remind(serializer_options); end
 

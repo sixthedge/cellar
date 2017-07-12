@@ -34,6 +34,13 @@ module Thinkspace; module PeerAssessment; module Api; module Admin;
       controller_render(@review_set)
     end
 
+    def complete
+      access_denied_state_error :submit unless @review_set.may_submit?
+      @review_set.submit!
+      @review_set.complete_phase_for_ownerable
+      controller_render(@review_set)
+    end
+
     def remind
       Thinkspace::PeerAssessment::AssessmentMailer.notify_assessment_reminder(@review_set).deliver_now
       controller_render(@review_set)

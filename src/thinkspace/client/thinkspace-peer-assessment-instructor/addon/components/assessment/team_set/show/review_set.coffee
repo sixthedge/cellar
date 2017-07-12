@@ -50,6 +50,7 @@ export default base_component.extend
     unlock: -> @review_set_action('unlock')
     ignore: -> @review_set_action('ignore')
     unignore: -> @review_set_action('unignore')
+    complete: -> @review_set_action('complete')
     remind: -> @review_set_action('remind')
 
     toggle_expand: -> @toggleProperty 'is_expanded'
