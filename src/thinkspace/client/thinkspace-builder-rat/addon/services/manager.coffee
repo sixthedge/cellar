@@ -31,6 +31,7 @@ export default ember.Service.extend array_helpers,
   default_sync_options: {
     questions: 'all',
     answers:   'all',
+    transform: 'all',
     settings: 
       next_id: true
       scoring:
@@ -240,12 +241,15 @@ export default ember.Service.extend array_helpers,
 
   get_item_answer: (type, item) ->
     answers = @get_answers(type)
+    return unless ember.isPresent(answers)
     return unless ember.isPresent(answers.correct)
     return unless ember.isPresent(answers.correct["#{item.id}"])
     return answers.correct["#{item.id}"]
 
   get_answer_by_id: (type, id) ->
     answers = @get_answers(type)
+
+    return unless ember.isPresent(answers)
     return unless ember.isPresent(answers.correct)
     return unless ember.isPresent(answers.correct[id])
     return answers.correct[id]
@@ -293,7 +297,7 @@ export default ember.Service.extend array_helpers,
     item = @get_item_by_id(type, item_id)
     assessment = @get_assessment(type)
 
-    answers         = if ember.isPresent(assessment.get('answers')) then assessment.get('answers') else {}
+    answers         = if ember.isPresent(assessment.get(@get_column(type, 'answers'))) then assessment.get(@get_column(type, 'answers')) else {}
     correct_answers = if ember.isPresent(answers) and ember.isPresent(answers.correct) then answers.correct else {}
     delete correct_answers["#{item_id}"] if ember.isPresent(correct_answers["#{item_id}"])
 

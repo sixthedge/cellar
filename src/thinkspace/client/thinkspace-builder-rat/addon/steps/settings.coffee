@@ -32,10 +32,19 @@ export default step.extend changeset_helpers,
   is_ifat:          ember.computed.reads 'trat_assessment.settings.questions.ifat'
   is_req_just:      ember.computed.reads 'irat_assessment.settings.questions.justification'
 
+  dynamic_ifat:          ember.computed 'trat_assessment', -> @get('manager').get_column('trat', 'settings.questions.ifat')
+  dynamic_justification: ember.computed 'irat_assessment', -> @get('manager').get_column('irat', 'settings.questions.justification')
+
+  is_ifat:          ember.computed 'dynamic_ifat', 'trat_changeset',          -> @get("trat_changeset.#{@get('dynamic_ifat')}")
+  is_justification: ember.computed 'dynamic_justification', 'irat_changeset', -> @get("irat_changeset.#{@get('dynamic_justification')}")
+
+  get_column: (args...) -> @get('manager').get_column(args...)
+
   create_changesets: ->
     model           = @get('model')
     irat_assessment = @get('irat_assessment')
     trat_assessment = @get('trat_assessment')
+    manager         = @get('manager')
 
     v_integer  = totem_changeset.vnumber({integer: true})
     v_positive = totem_changeset.vnumber({positive: true})
@@ -45,11 +54,11 @@ export default step.extend changeset_helpers,
     irat_changeset = totem_changeset.create(irat_assessment)
     trat_changeset = totem_changeset.create(trat_assessment)
 
-    scoring_changeset = totem_changeset.create irat_assessment.get('settings.scoring'),
+    scoring_changeset = totem_changeset.create irat_assessment.get(manager.get_column('irat', 'settings.scoring')),
       correct:           [v_integer, v_presence, v_positive],
       no_answer:         [v_integer, v_presence]
 
-    trat_scoring_cs = totem_changeset.create trat_assessment.get('settings.scoring'),
+    trat_scoring_cs = totem_changeset.create trat_assessment.get(manager.get_column('trat', 'settings.scoring')),
       attempted:         [v_integer, v_presence, v_positive],
       incorrect_attempt: [v_integer, v_presence, v_positive]
 
@@ -105,7 +114,6 @@ export default step.extend changeset_helpers,
                     trat_phase_cs.save().then =>
                       @persist_assignment_dates()
                       cs.save().then =>
-                        console.log('about to call query_assessment_sync')
                         @get('manager').query_assessment_sync('irat', @get('manager').get_assessment('irat')).then =>
                           resolve()
 
@@ -144,7 +152,7 @@ export default step.extend changeset_helpers,
   toggle_rat_changeset_property: (type, property) ->
     changeset = @get("#{type}_changeset")
     changeset.toggleProperty(property)
-    @propertyDidChange('trat_changeset')
+    @propertyDidChange("#{type}_changeset")
 
   ## When we toggle the visibility of the ifat-dependent fields, we want to make sure we aren't validating changes to fields that aren't present
   reset_changeset_values: (path) ->
@@ -156,10 +164,10 @@ export default step.extend changeset_helpers,
       scoring_cs.set('incorrect_attempt', trat_cs.get('settings.scoring.incorrect_attempt') * -1)
 
   toggle_is_ifat:     -> 
-    @toggle_rat_changeset_property('trat', 'settings.questions.ifat')
+    @toggle_rat_changeset_property('trat', @get_column('trat', 'settings.questions.ifat'))
     @reset_changeset_values('settings.questions.ifat')
 
-  toggle_is_req_just: -> @toggle_rat_changeset_property('irat', 'settings.questions.justification')
+  toggle_is_req_just: -> @toggle_rat_changeset_property('irat', @get_column('irat', 'settings.questions.justification'))
 
   select_release_at: (date) -> @get('changeset').set 'release_at', date
   select_due_at:     (date) -> @get('changeset').set 'due_at', date
