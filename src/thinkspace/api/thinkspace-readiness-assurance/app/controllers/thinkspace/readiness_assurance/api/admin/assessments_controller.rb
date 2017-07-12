@@ -6,9 +6,26 @@ module Thinkspace
           load_and_authorize_resource class: totem_controller_model_class, except: [:progress_report]
 
           def update
-            @assessment.questions = params_root[:questions]
-            @assessment.settings  = params_root[:settings]
-            @assessment.answers   = params_root[:answers]
+            if @assessment.has_responses?
+              if @assessment.transform.present?
+                @assessment.transform = params_root[:transform]
+              else
+                @assessment.transform = {
+                  questions: params_root[:questions],
+                  settings:  params_root[:settings],
+                  answers:   params_root[:answers]
+                }
+              end
+              # @assessment.transform = {
+              #   questions: params_root[:questions],
+              #   settings:  params_root[:settings],
+              #   answers:   params_root[:answers]
+              # }
+            else
+              @assessment.questions = params_root[:questions]
+              @assessment.settings  = params_root[:settings]
+              @assessment.answers   = params_root[:answers]
+            end
             #@assessment.sync_assessments
             controller_save_record(@assessment)
           end

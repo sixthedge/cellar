@@ -16,10 +16,13 @@ export default base.extend ta.add(
   settings:  ta.attr()
   answers:   ta.attr()
   questions: ta.attr()
+  transform: ta.attr()
 
   is_irat: ember.computed.equal 'ra_type', 'irat'
   is_trat: ember.computed.equal 'ra_type', 'trat'
   is_ifat: ember.computed.equal 'settings.questions.ifat', true
+
+  has_transform: ember.computed.notEmpty 'transform'
 
   questions_with_answers: ember.computed 'questions', 'answers', ->
     questions = @get('questions')
@@ -33,7 +36,9 @@ export default base.extend ta.add(
     arr
 
   remove_question_answers: ->
-    questions = @get('questions')
+    questions           = @get('questions')
+    #transform_questions = @get('transform.questions')
+    #questions           = questions.concat(transform_questions)
     questions.forEach (question) =>
       delete question.answer
 

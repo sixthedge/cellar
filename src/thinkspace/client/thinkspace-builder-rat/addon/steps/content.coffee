@@ -42,7 +42,12 @@ export default step.extend
   ## TODO: get this to support trats as well
   create_question_items: (opts={}) ->
     irat_assessment = @get('irat_assessment')
-    questions       = irat_assessment.get('questions') || ember.makeArray()
+    #questions      = irat_assessment.get('questions') || ember.makeArray()
+    col_name        = @get('manager.irat_questions_column')
+
+    console.log('creating question items with col_name ', col_name)
+
+    questions       = irat_assessment.get(col_name) || ember.makeArray()
 
     items   = @get('irat_question_items') || ember.makeArray()
     delta   = opts.delta || ember.makeArray()

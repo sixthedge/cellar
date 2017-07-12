@@ -39,6 +39,23 @@ export default ember.Service.extend array_helpers,
         only: ['justification']
   }
 
+  ## Reconciliation varable
+  irat_questions_column: ember.computed 'irat.transform', -> @get_column('irat', 'questions')
+  irat_settings_column:  ember.computed 'irat.transform', -> @get_column('irat', 'settings')
+  irat_answers_column:   ember.computed 'irat.transform', -> @get_column('irat', 'answers')
+
+  #trat_questions_column: ember.computed 'trat_assessment.transform', -> @get_column('trat', 'questions')
+  #trat_settings_column:  ember.computed 'trat_assessment.transform', -> @get_column('trat', 'settings')
+  #trat_answers_column:   ember.computed 'trat_assessment.transform', -> @get_column('trat', 'answers')
+
+  get_column: (type, col) ->
+    console.log('get_column isPresent? ', @get('irat'), type, col, @get("{type}.transform"))
+
+    if ember.isPresent(@get("#{type}.transform")) 
+      "transform.#{col}" 
+    else 
+      col
+
   loading: null
   set_loading:      (type) -> @set("loading.#{type}", true)
   reset_loading:    (type) -> @set("loading.#{type}", false)
@@ -164,16 +181,17 @@ export default ember.Service.extend array_helpers,
   ## Expects 'irat' or 'trat'
   get_assessment:   (type)     -> @get("#{type}")
   get_item_by_id:   (type, id) -> @get_items(type).findBy 'id', id
-  get_next_id:      (type)     -> @get_assessment(type).get('settings.next_id').toString()
+  get_next_id:      (type)     -> @get_assessment(type).get(@get_column(type, 'settings.next_id')).toString()
   get_default_choices:         -> @duplicate_array(@get('default_choices'))
-  get_items:        (type)     -> @get_assessment(type).get('questions')
+  get_items:        (type)     -> @get_assessment(type).get(@get_column(type, 'questions'))
   # get_answer_by_id: (type, id) -> items = @get_items(type)
 
   increment_next_id: (type) -> 
     assessment = @get_assessment(type)
-    cur = assessment.get('settings.next_id')
+    cur = assessment.get(@get_column(type, 'settings.next_id'))
+    #cur = assessment.get('settings.next_id')
     next = if ember.isPresent(cur) then cur + 1 else 0
-    util.set_path_value(assessment, 'settings.next_id', next)
+    util.set_path_value(assessment, @get_column(type, 'settings.next_id'), next)
 
   add_question_item: (type) ->
     new ember.RSVP.Promise (resolve, reject) =>
@@ -218,11 +236,19 @@ export default ember.Service.extend array_helpers,
       @save_assessment(type).then =>
         resolve()
 
+  get_answers: (type) -> @get_assessment(type).get(@get_column(type, 'answers'))
+
   get_item_answer: (type, item) ->
-    answers = @get_assessment(type).get('answers')
+    answers = @get_answers(type)
     return unless ember.isPresent(answers.correct)
     return unless ember.isPresent(answers.correct["#{item.id}"])
     return answers.correct["#{item.id}"]
+
+  get_answer_by_id: (type, id) ->
+    answers = @get_answers(type)
+    return unless ember.isPresent(answers.correct)
+    return unless ember.isPresent(answers.correct[id])
+    return answers.correct[id]
 
   get_new_choice: (item, changeset_choices) ->
     choices        = if ember.isPresent(changeset_choices) then changeset_choices else item.choices
@@ -276,9 +302,9 @@ export default ember.Service.extend array_helpers,
     item       = @get_item_by_id(type, item_id)
     assessment = @get_assessment(type)
 
-    answers = if ember.isPresent(assessment.get('answers')) then assessment.get('answers') else {}
+    answers = if ember.isPresent(assessment.get(@get_column(type, 'answers'))) then assessment.get(@get_column(type, 'answers')) else {}
     correct_answers = if ember.isPresent(answers) and ember.isPresent(answers.correct) then answers.correct else {}
     correct_answers["#{item_id}"] = choice_id
 
     answers.correct = correct_answers
-    assessment.set('answers', answers)
+    util.set_path_value(assessment, @get_column(type, 'answers'), answers)
