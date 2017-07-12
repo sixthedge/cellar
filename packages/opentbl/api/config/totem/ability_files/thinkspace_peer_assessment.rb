@@ -18,7 +18,7 @@ class ThinkspacePeerAssessment < ::Totem::Settings.authorization.platforms.think
     return unless admin?
     can [:approve, :teams, :review_sets, :team_sets, :update, :activate, :progress_report, :approve_team_sets], assessment 
     can [:approve, :unapprove], review
-    can [:ignore, :unignore, :unlock, :remind], review_set
+    can [:ignore, :unignore, :unlock, :remind, :complete], review_set
     can [:approve, :unapprove, :approve_all, :unapprove_all, :read], team_set
   end
 

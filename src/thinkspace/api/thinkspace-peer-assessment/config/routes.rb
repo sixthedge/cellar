@@ -26,6 +26,7 @@ Thinkspace::PeerAssessment::Engine.routes.draw do
             put  :unignore
             put  :unlock
             put  :remind
+            put  :complete
           end
         end
 

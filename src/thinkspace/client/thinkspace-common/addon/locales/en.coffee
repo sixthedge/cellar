@@ -318,6 +318,7 @@ export default {
               ignore: 'Evaluations ignored successfully.'
               unignore: 'Evaluations unignored successfully.'
               unlock: 'Evaluations unlocked successfully. The student will be notified.'
+              complete: 'Evaluations have been successfully submitted.'
               remind: 'Reminder email sent successfully.'
           readiness_assurance:
             assessment:

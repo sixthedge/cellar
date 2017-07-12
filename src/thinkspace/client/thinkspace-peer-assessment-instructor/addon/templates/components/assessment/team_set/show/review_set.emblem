@@ -8,19 +8,24 @@
       .icon.icon--16.icon__checkmark--green.spacing__margin-right--half
       span.text__font-size--14.text--bold.text__color--green Sent
     else
-      if model.is_submitted
-        button.btn click='unlock'
-          | Unlock Evaluations
-      else
-        .btn-group
+      .btn-group
+        if model.is_submitted
+          button.btn click='unlock'
+            | Unlock
+          button.btn click='ignore'
+            | Ignore
+        else
+          
           button.btn.btn--primary click='remind'
             | Send reminder
           if model.is_ignored
             button.btn click='unignore'
-              | Unignore evaluations
+              | Unignore
           else
+            button.btn click='complete'
+              | Mark as complete
             button.btn click='ignore'
-              | Ignore evaluations
+              | Ignore
   ul.basic-list
     each sorted_reviews as |review|
       li.basic-list__item

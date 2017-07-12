@@ -11,7 +11,7 @@ export default base.extend arr_helpers,
   space:       null
   abstract:    null
   team_set:    null
-  initialized: false
+  initialized: null # set to space.id once initialized once
 
   # ### Computed Properties
   has_transform: ember.computed.reads 'team_set.has_transform'
@@ -22,9 +22,9 @@ export default base.extend arr_helpers,
   # each route's component calls manager.initialize to avoid calling it in the application route
   initialize: ->
     new ember.RSVP.Promise (resolve, reject) =>
-      return resolve() if @get('initialized')
+      return resolve() if @get('initialized') == @get('space.id')
       @reinitialize().then =>
-        @set 'initialized', true
+        @set 'initialized', @get('space.id')
         resolve()
 
   reinitialize: ->

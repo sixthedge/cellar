@@ -13,7 +13,7 @@ hr
         | Cancel
   else
     button.btn click='toggle_edit'
-      | Edit Evaluation
+      | Edit
 
 .spacing__pad-left--3
   if assessment.quantitative_items
