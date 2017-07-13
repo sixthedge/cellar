@@ -58,6 +58,8 @@ export default step.extend changeset_helpers,
       correct:           [v_integer, v_presence, v_positive],
       no_answer:         [v_integer, v_presence]
 
+    console.log "trat:", trat_assessment
+    console.log "column:", manager.get_column('trat', 'settings.scoring')
     trat_scoring_cs = totem_changeset.create trat_assessment.get(manager.get_column('trat', 'settings.scoring')),
       attempted:         [v_integer, v_presence, v_positive],
       incorrect_attempt: [v_integer, v_presence, v_positive]
@@ -131,10 +133,10 @@ export default step.extend changeset_helpers,
     trat_scoring_cs = @get('trat_scoring_cs')
     irat_cs         = @get('irat_changeset')
     trat_cs         = @get('trat_changeset')
-    irat_cs.set('settings.scoring.correct',           scoring_cs.get('correct'))
-    irat_cs.set('settings.scoring.no_answer',         scoring_cs.get('no_answer'))
-    trat_cs.set('settings.scoring.attempted',         trat_scoring_cs.get('attempted'))
-    trat_cs.set('settings.scoring.incorrect_attempt', trat_scoring_cs.get('incorrect_attempt') * -1)
+    irat_cs.set(@get_column('irat', 'settings.scoring.correct'),           scoring_cs.get('correct'))
+    irat_cs.set(@get_column('irat', 'settings.scoring.no_answer'),         scoring_cs.get('no_answer'))
+    trat_cs.set(@get_column('trat', 'settings.scoring.attempted'),         trat_scoring_cs.get('attempted'))
+    trat_cs.set(@get_column('trat', 'settings.scoring.incorrect_attempt'), trat_scoring_cs.get('incorrect_attempt') * -1)
 
     @process_changeset_strings()
 

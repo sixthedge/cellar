@@ -18,25 +18,23 @@ module Thinkspace; module ReadinessAssurance; module Sync; class Assessment
     if assignment.sync_rat?
       assessments = Thinkspace::ReadinessAssurance::Assessment.where(authable: assignment.thinkspace_casespace_phases).without(@assessment)
       assessments.each do |assessment|
-        #has_transform = @options.dig('transform').present?
-        ## Check for questions
-        if @options.dig('questions').present?
-          assessment.questions = @assessment.questions
-        end
-        if @options.dig('answers').present?
-          assessment.answers = @assessment.answers
-        end
+        # assessment = TRAT
+        # @assessment = IRAT
 
-        if @options.dig('transform').present?
-          assessment.transform = @assessment.transform
+        has_transform = @options.dig('transform').present? && @assessment.has_responses?
+        ## Check for questions
+        assessment.questions = @assessment.questions if @options.dig('questions').present?
+        assessment.answers   = @assessment.answers   if @options.dig('answers').present?
+        if has_transform
+          assessment.transform = {} unless assessment.transform.present?
+          set_nested_value(assessment.transform, 'questions', @assessment.transform['questions'])
+          set_nested_value(assessment.transform, 'answers', @assessment.transform['answers'])
         end
 
         if @options.dig('settings').present?
           if @options.dig('settings', 'next_id').present?
             assessment.settings['next_id'] = @assessment.settings['next_id']
-            # if has_transform
-            #   assessment.transform['settings']['next_id'] = @assessment.transform['settings']['next_id']
-            # end
+            set_nested_value(assessment.transform, 'settings', 'next_id', @assessment.transform['settings']['next_id']) if has_transform
           end
 
           if @options.dig('settings', 'scoring').present?
@@ -45,10 +43,8 @@ module Thinkspace; module ReadinessAssurance; module Sync; class Assessment
 
               keys.each do |key|
                 if scoring_keys.include? key
-                  assessment.settings['scoring']["#{key}"] = @assessment.settings['scoring']["#{key}"]
-                  # if has_transform
-                  #   assessment.transform['settings']['scoring']["#{key}"] = @assessment.transform['settings']['scoring']["#{key}"]
-                  # end
+                  assessment.settings['scoring'][key] = @assessment.settings['scoring'][key]
+                  set_nested_value(assessment.transform, 'settings', 'scoring', key, @assessment.transform['settings']['scoring'][key]) if has_transform
                 end
               end
 
@@ -58,12 +54,12 @@ module Thinkspace; module ReadinessAssurance; module Sync; class Assessment
               obj = {}
               keys.each do |key|
                 if scoring_keys.include? key
-                  obj["#{key}"] = assessment.settings['scoring']["#{key}"]
+                  obj[key] = assessment.settings['scoring'][key]
                 end
               end
               assessment.settings['scoring'] = @assessment.settings['scoring']
               obj.each do |key, value|
-                assessment.settings['scoring']["#{key}"] = value
+                assessment.settings['scoring'][key] = value
               end
 
             end
@@ -75,10 +71,8 @@ module Thinkspace; module ReadinessAssurance; module Sync; class Assessment
 
               keys.each do |key|
                 if question_keys.include? key
-                  assessment.settings['questions']["#{key}"] = @assessment.settings['questions']["#{key}"]
-                  # if has_transform
-                  #   assessment.transform['settings']['questions']["#{key}"] = @assessment.transform['settings']['questions']["#{key}"]
-                  # end
+                  assessment.settings['questions'][key] = @assessment.settings['questions'][key]
+                  set_nested_value(assessment.transform, 'settings', 'questions', key, @assessment.transform['settings']['questions'][key]) if has_transform
                 end
               end
 
@@ -88,19 +82,21 @@ module Thinkspace; module ReadinessAssurance; module Sync; class Assessment
               obj = {}
               keys.each do |key|
                 if question_keys.include? key
-                  obj["#{key}"] = assessment.settings['questions']["#{key}"]
+                  obj[key] = assessment.settings['questions'][key]
                 end
               end
 
               assessment.settings['questions'] = @assessment.settings['questions']
               obj.each do |key, value|
-                assessment.settings['questions']["#{key}"] = value
+                assessment.settings['questions'][key] = value
               end
             end
           end
         end
         assessment.save
       end
+
+
 
       ## We care about three columns for sync purposes
       ## => 1. :questions
@@ -113,5 +109,14 @@ module Thinkspace; module ReadinessAssurance; module Sync; class Assessment
     end
   end
 
+  def set_nested_value(hash, *keys, value)
+    key = keys.shift
+    if keys.empty?
+      hash[key] = value
+    else
+      hash[key] = {} unless (hash[key].is_a?(Hash) && hash[key].present?)
+      set_nested_value(hash[key], *keys, value)
+    end
+  end
 
 end; end; end; end

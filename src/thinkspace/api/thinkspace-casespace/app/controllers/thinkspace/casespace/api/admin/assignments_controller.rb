@@ -65,6 +65,11 @@ module Thinkspace
 
           end
 
+          def explode
+            @assignment.explode
+            controller_render_no_content
+          end
+
           def delete
             raise_access_denied_exception "Cannot delete a peer assessment assignment.", :clone, @assignment  if @assignment.peer_assessment?
             @assignment.to_deleted # set state to deleted

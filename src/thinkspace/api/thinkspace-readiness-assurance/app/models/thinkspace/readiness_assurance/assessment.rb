@@ -48,8 +48,7 @@ module Thinkspace
       def ifat?; get_settings.dig('questions', 'ifat') == true; end
 
       def has_responses?
-        #Thinkspace::ReadinessAssurance::Response.where(assessment_id: self.id).count > 0
-        true
+        Thinkspace::ReadinessAssurance::Response.where(assessment_id: self.id).count > 0
       end
 
       # ###
