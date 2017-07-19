@@ -16,17 +16,11 @@ module Thinkspace
                   answers:   params_root[:answers]
                 }
               end
-              # @assessment.transform = {
-              #   questions: params_root[:questions],
-              #   settings:  params_root[:settings],
-              #   answers:   params_root[:answers]
-              # }
             else
               @assessment.questions = params_root[:questions]
               @assessment.settings  = params_root[:settings]
               @assessment.answers   = params_root[:answers]
             end
-            #@assessment.sync_assessments
             controller_save_record(@assessment)
           end
 

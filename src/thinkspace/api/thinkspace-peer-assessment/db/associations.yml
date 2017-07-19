@@ -6,7 +6,7 @@
     - has_many: thinkspace/peer_assessment/overviews
     - belongs_to: thinkspace/peer_assessment/assessment_template
   serializers:
-    - attributes: [id, authable_id, authable_type, assessment_template_id, value, state, modified_template]
+    - attributes: [id, authable_id, authable_type, assessment_template_id, value, state, modified_template, transform]
 
 - model: thinkspace/peer_assessment/assessment_template
   domain: true

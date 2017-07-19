@@ -14,11 +14,12 @@ export default base.extend ta.add(
   assessment_template_id: ta.attr('number')
   modified_template:      ta.attr('boolean')
   value:                  ta.attr()
+  transform:              ta.attr()
 
   # ### Computed properties
-  is_categories:           ember.computed.equal 'assessment_type', 'categories'
-  is_balance:              ember.computed.equal 'assessment_type', 'balance'
-  is_custom:               ember.computed.equal 'assessment_type', 'custom'
+  is_categories:              ember.computed.equal 'assessment_type', 'categories'
+  is_balance:                 ember.computed.equal 'assessment_type', 'balance'
+  is_custom:                  ember.computed.equal 'assessment_type', 'custom'
   has_no_assessment_template: ember.computed.empty 'assessment_template_id'
   # is_active:             ember.computed.equal 'state', 'active'
   # is_approved:           ember.computed.equal 'state', 'approved'
@@ -26,14 +27,14 @@ export default base.extend ta.add(
   # is_not_active:         ember.computed.not 'is_active'
 
   # Abstractions from JSON keys to reference in templates.
-  qualitative_items:          ember.computed 'value.qualitative.@each', -> @get('value.qualitative')
-  quantitative_items:         ember.computed 'value.quantitative.@each', -> @get('value.quantitative')
-  assessment_type:            ember.computed 'value.options.type', -> @get('value.options.type')
-  points:                     ember.computed 'value.options.points', -> @get('value.options.points')
+  qualitative_items:          ember.computed 'value.qualitative.@each',         -> @get('value.qualitative')
+  quantitative_items:         ember.computed 'value.quantitative.@each',        -> @get('value.quantitative')
+  assessment_type:            ember.computed 'value.options.type',              -> @get('value.options.type')
+  points:                     ember.computed 'value.options.points',            -> @get('value.options.points')
   points_per_member:          ember.computed 'value.options.points.per_member', -> @get('points.per_member')
-  points_min:                 ember.computed 'value.options.points.min', -> @get('points.min')
-  points_max:                 ember.computed 'value.options.points.max', -> @get('points.max')
-  points_different:           ember.computed 'value.options.points.different', -> @get('points.different')
+  points_min:                 ember.computed 'value.options.points.min',        -> @get('points.min')
+  points_max:                 ember.computed 'value.options.points.max',        -> @get('points.max')
+  points_different:           ember.computed 'value.options.points.different',  -> @get('points.different')
   points_descriptive_enabled: ember.computed 'value.options.points.descriptive.enabled', -> @get('points.descriptive.enabled')
   points_descriptive_low:     ember.computed 'value.options.points.descriptive.values', -> 
     values = @get('points.descriptive.values')
