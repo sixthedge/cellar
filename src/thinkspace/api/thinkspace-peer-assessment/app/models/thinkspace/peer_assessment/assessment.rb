@@ -22,12 +22,11 @@ module Thinkspace; module PeerAssessment
     end
 
     def has_reviews?
-      true
-      # ts = self.thinkspace_peer_assessment_team_sets.pluck(:id)
-      # return false unless ts.present?
-      # rs = Thinkspace::PeerAssessment::ReviewSet.where(team_set_id: ts)
-      # return false unless rs.present?
-      # Thinkspace::PeerAssessment::Review.where(review_set_id: rs).count > 0
+      ts = self.thinkspace_peer_assessment_team_sets.pluck(:id)
+      return false unless ts.present?
+      rs = Thinkspace::PeerAssessment::ReviewSet.where(team_set_id: ts)
+      return false unless rs.present?
+      Thinkspace::PeerAssessment::Review.where(review_set_id: rs).count > 0
     end
 
     def quantitative_items
@@ -47,6 +46,10 @@ module Thinkspace; module PeerAssessment
     def assessment_type
       return nil unless options.present?
       options['type']
+    end
+
+    def is_balance?
+      assessment_type == 'balance'
     end
 
     def get_points_per_member

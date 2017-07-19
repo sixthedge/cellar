@@ -5,15 +5,16 @@ module Thinkspace; module PeerAssessment; module Reconcilers
     # ----------------------------------------
     #
     # The purpose of this object is to:
-    # - generate a delta between the transform and the assessment data
+    # - generate a delta between the transform and the assessment value
     # - reset review data for all quant data or each modified question
     # - unlock phases
-    # - update the assessment's data to the transform
+    # - unlock review_sets
+    # - update the assessment's value to the transform
 
     # ### Summary
     # If the type, points, or any quantitative question changes while the assessment is balance points,
-    # all quantitative data will be reset for each review.
-    # Otherwise, only changed quantitative and qualitative question data will be reset for each review.
+    # all quantitative data will be reset for each review. Otherwise, only changed quantitative and 
+    # qualitative question data will be reset for each review.
 
     attr_reader :assignment, :options, :phase, :assessment, :transform, :delta, :team_sets, :review_sets, :reviews
 
@@ -34,9 +35,13 @@ module Thinkspace; module PeerAssessment; module Reconcilers
     def process
       raise "Attempted to explode assignment #{@assignment.id} with no transform present for assessment #{@assessment.id}" unless @transform.present?
 
-      options = get_update_options
-      update_reviews(options) unless delta_is_empty?
-      unlock_phases unless delta_is_empty?
+      unless delta_is_empty?
+        options = get_update_options
+        update_reviews(options)
+        unlock_review_sets
+        unlock_phases
+      end
+
       update_assessment
     end
 
@@ -64,12 +69,11 @@ module Thinkspace; module PeerAssessment; module Reconcilers
     def update_review_data_for_type(value, type, options={})
       if options[type].present?
         if options[type] == 'all' # reset all question data
-            value[type.to_s] = Array.new
+            value[type.to_s] = Hash.new
         elsif options[type] == 'per' # reset only changed questions
           @delta[type].each do |question|
             if question[:dirty] || question[:deleted]
-              data = get_review_data_for_question(value, question[:id])
-              value[type.to_s].delete(data) if data.present?
+              value[type.to_s].delete(question[:id].to_s) # why is question ID a string in the review data but an integer in the assessment?
             end
           end
         end
@@ -78,6 +82,10 @@ module Thinkspace; module PeerAssessment; module Reconcilers
 
     def unlock_phases
       get_phase_states.update_all current_state: 'unlocked'
+    end
+
+    def unlock_review_sets
+      get_review_sets.update_all state: 'neutral'
     end
 
     def update_assessment
@@ -102,34 +110,38 @@ module Thinkspace; module PeerAssessment; module Reconcilers
 
     # ### Helpers
     def all_quantitative_data_invalid?
-      return true if @delta[type_key] # changed FROM or TO balance points
-      return true if @assessment.is_balance? && @delta[points_key] # changed points per member or different
-      return true if @assessment.is_balance? && @delta[quant_key].present? # changed at least 1 quant question
+      return true if @delta[:type] # changed FROM or TO balance points
+      return true if @assessment.is_balance? && @delta[:points] # changed points per member or different
+      return true if @assessment.is_balance? && @delta[:quantitative].present? # changed at least 1 quant question
       return false
     end
 
     def delta_is_empty?
-      @delta[type_key] == false && @delta[points_key] == false && @delta[quant_key].empty? && @delta[qual_key].empty?
+      return false if @delta[:type]
+      return false if @delta[:points]
+      return false if @delta[:quantitative].present?
+      return false if @delta[:qualitative].present?
+      return true
     end
-
-    def get_review_data_for_question(value, type, id); value[type.to_s].find { |q| q['id'] == id }; end
 
     def get_phase_states; phase_state_class.where(phase_id: @phase.id).scope_completed; end
 
-    def type_is_dirty?; @assessment.value[type_key] != @transform['value'][type_key]; end
+    def get_review_sets; @review_sets.scope_submitted; end
+
+    def type_is_dirty?; @assessment.value[options_key][type_key] != @transform['value'][options_key][type_key]; end
 
     def points_is_dirty?
-      points   = @assessment.value[points_key]
-      t_points = @transform['value'][points_key]
+      points   = @assessment.value[options_key][points_key]
+      t_points = @transform['value'][options_key][points_key]
       return false if (points.nil? && t_points.nil?)
       return true unless (points.present? && t_points.present?)
-      return hashes_are_equal?(points, t_points)
+      return !hashes_equal?(points, t_points)
     end
 
     def question_is_dirty?(type, id)
       question   = get_question(type, id)
       t_question = get_transform_question(type, id)
-      return hashes_equal?(question, t_question)
+      return !hashes_equal?(question, t_question)
     end
 
     def get_question_delta(type)
@@ -176,6 +188,7 @@ module Thinkspace; module PeerAssessment; module Reconcilers
 
     def type_key;      'type';         end
     def points_key;    'points';       end
+    def options_key;   'options';      end
     def questions_key; 'questions';    end
     def quant_key;     'quantitative'; end
     def qual_key;      'qualitative';  end
