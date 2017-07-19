@@ -20,6 +20,25 @@ export default ember.Service.extend
 
   steps: ember.computed.reads 'builder.steps'
 
+  get_column: (col) ->
+    console.log('get_column isPresent? ', @get('model'), col, @get('model.transform'))
+    if ember.isPresent(@get('model.transform'))
+      a = "transform.value.#{col}"
+    else
+      a = "value.#{col}"
+
+    console.log('get_column column, value ', col, a)
+    return a
+
+  ## Used to allow us to call functions using the 'qual' and 'quant' abbreviations while calling manager functions
+  expand_type: (type) ->
+    if type == 'quant'
+      'quantitative'
+    else if type == 'qual'
+      'qualitative'
+    else
+      type
+
   initialize: ->
     new ember.RSVP.Promise (resolve, reject) =>
       promises = ember.makeArray()
@@ -115,7 +134,7 @@ export default ember.Service.extend
   update_quant_item: (quant) ->
     console.log("[update_quant] calling update_quant_item with quant ", quant)
 
-    items = @get_items_for_type('quant')
+    items = @get_items_for_type(@expand_type('quant'))
     item  = items.findBy('id',  quant.get('id'))
     console.log("[update_quant] found item ", quant.get('id'), item)
 
@@ -123,7 +142,8 @@ export default ember.Service.extend
     ember.set(item, 'label',    quant.get('label'))
 
   update_qual_item: (qual) ->
-    items = @get_items_for_type('qual')
+    type  = @expand_type('qual')
+    items = @get_items_for_type(type)
     item  = items.findBy('id', qual.get('id'))
     console.log('[update_qual] found item ', qual.get('id'), item)
     ember.set(item, 'label',         qual.get('label'))
@@ -133,18 +153,18 @@ export default ember.Service.extend
   get_items_for_type: (type) ->
     model     = @get 'model'
     console.log('[pe manager] model is ', model)
-    console.log('[manager get_items] model ', model, model.get("#{type}_items"))
-    items  = model.get "#{type}_items"
+    #console.log('[manager get_items] model ', model, model.get("#{type}_items"))
+    items  = model.get(@get_column(type))
 
   add_item: (type, item) ->
-    items = @get_items_for_type type
+    items = @get_items_for_type @expand_type(type)
     items.pushObject item
     @increment_next_id(type)
     @save_model().then =>
       @create_question_items(type)
 
   delete_item: (type, item) ->
-    items = @get_items_for_type type
+    items = @get_items_for_type @expand_type(type)
     item = items.findBy('id', item.id)
     items.removeObject item
     @save_model().then =>
@@ -152,7 +172,7 @@ export default ember.Service.extend
 
   reorder_item: (type, item, offset) ->
     new ember.RSVP.Promise (resolve, reject) =>
-      items    = @get_items_for_type type
+      items    = @get_items_for_type @expand_type(type)
       re_item  = items.findBy('id', item.id)
       index    = items.indexOf(re_item)
       return reject() unless index > -1
@@ -174,7 +194,7 @@ export default ember.Service.extend
         resolve()
 
   duplicate_item: (type, id) ->
-    items = @get_items_for_type type
+    items = @get_items_for_type @expand_type(type)
     item  = items.findBy('id', id)
     index = items.indexOf(item)
     return unless index > -1
@@ -188,13 +208,15 @@ export default ember.Service.extend
       @create_question_items(type)
 
   get_next_id: (type) -> 
-    @get_model(type).get("value.ids.next_#{type}_id")
+    # @get_model().get("value.ids.next_#{type}_id")
+    @get_model().get(@get_column("ids.next_#{type}_id"))
 
   increment_next_id: (type) ->
     assessment = @get_model()
-    cur = assessment.get("value.ids.next_#{type}_id")
+    #cur = assessment.get("value.ids.next_#{type}_id")
+    cur = assessment.get(@get_column("ids.next_#{type}_id"))
     next = if ember.isPresent(cur) then cur + 1 else 0
-    util.set_path_value(assessment, "value.ids.next_#{type}_id", next)
+    util.set_path_value(assessment, @get_column("ids.next_#{type}_id"), next)
 
   create_all_question_items: ->
     @create_question_items('quant')
@@ -213,7 +235,7 @@ export default ember.Service.extend
 
   create_question_items: (type, opts={}) ->
     assessment = @get('assessment')
-    questions  = assessment.get("value.#{type}itative") || ember.makeArray()
+    questions  = assessment.get(@get_column(@expand_type(type))) || ember.makeArray()
 
     items   = @get("#{type}_items") || ember.makeArray()
     delta   = opts.delta || ember.makeArray()
