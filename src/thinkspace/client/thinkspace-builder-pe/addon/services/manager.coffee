@@ -20,15 +20,7 @@ export default ember.Service.extend
 
   steps: ember.computed.reads 'builder.steps'
 
-  get_column: (col) ->
-    console.log('get_column isPresent? ', @get('model'), col, @get('model.transform'))
-    if ember.isPresent(@get('model.transform'))
-      a = "transform.value.#{col}"
-    else
-      a = "value.#{col}"
-
-    console.log('get_column column, value ', col, a)
-    return a
+  get_column: (col) -> if ember.isPresent(@get('model.transform')) then "transform.value.#{col}" else "value.#{col}"
 
   ## Used to allow us to call functions using the 'qual' and 'quant' abbreviations while calling manager functions
   expand_type: (type) ->
@@ -56,8 +48,6 @@ export default ember.Service.extend
           if ember.isPresent(obj)
             ## If there are results from a particular step, set them to the manager
             for key, value of obj
-              console.log("[manager init] setting #{key} to #{value}")
-
               @set("#{key}", value)
 
         @set_model(@get('assessment'))
@@ -76,7 +66,6 @@ export default ember.Service.extend
 
   save_model: ->
     model = @get 'model'
-    console.log('saving model ', model)
     model.save().then =>
       totem_messages.api_success source: @, model: model, action: 'update', i18n_path: ns.to_o('tbl:assessment', 'save')
     , (error) => @error(error)
@@ -132,12 +121,8 @@ export default ember.Service.extend
   get_next_qual_id:  -> @get_next_id('qual')
 
   update_quant_item: (quant) ->
-    console.log("[update_quant] calling update_quant_item with quant ", quant)
-
     items = @get_items_for_type(@expand_type('quant'))
     item  = items.findBy('id',  quant.get('id'))
-    console.log("[update_quant] found item ", quant.get('id'), item)
-
     ember.set(item, 'settings', quant.get('settings'))
     ember.set(item, 'label',    quant.get('label'))
 
@@ -145,16 +130,13 @@ export default ember.Service.extend
     type  = @expand_type('qual')
     items = @get_items_for_type(type)
     item  = items.findBy('id', qual.get('id'))
-    console.log('[update_qual] found item ', qual.get('id'), item)
     ember.set(item, 'label',         qual.get('label'))
     ember.set(item, 'feedback_type', qual.get('feedback_type'))
 
   # ### Shared helpers
   get_items_for_type: (type) ->
-    model     = @get 'model'
-    console.log('[pe manager] model is ', model)
-    #console.log('[manager get_items] model ', model, model.get("#{type}_items"))
-    items  = model.get(@get_column(type))
+    model = @get 'model'
+    items = model.get(@get_column(type))
 
   add_item: (type, item) ->
     items = @get_items_for_type @expand_type(type)
@@ -244,8 +226,6 @@ export default ember.Service.extend
     ## TODO: make sure that d_ids handles updates to questions
     d_ids   = delta.mapBy('id')
 
-    console.log('d_ids are ', d_ids)
-
     questions.forEach (question) =>
       id = question.id
       i  = questions.indexOf(question)
@@ -257,9 +237,8 @@ export default ember.Service.extend
         q_item = @create_question_item(type, question)
         ## If we identify an updated id, replace the existing item with a new one at the same index
         if d_ids.contains(id)
-          console.log('found delta id ', id)
           cur_item = items.filter((item) -> item.get('id') == id).get('firstObject')
-          index = items.indexOf(cur_item)
+          index    = items.indexOf(cur_item)
           items.removeAt(index)
           items.insertAt(index, q_item)
         ## Otherwise, push a new item to the back of the array

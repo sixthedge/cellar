@@ -12,7 +12,7 @@ export default {
     'thinkspace-message'
     'thinkspace-message-pubsub'
     'thinkspace-dock'
-    'thinkspace-peer-assessment-results': {external_routes: {login: 'users.sign_in'}}
+    'thinkspace-peer-assessment-results': {external_routes: {login: 'users.sign_in', cases_show: 'cases.show'}}
     'thinkspace-peer-assessment-instructor': {external_routes: {login: 'users.sign_in', pe_details: 'pe.details'}}
     'thinkspace-toolbar':  {external_routes: {home: 'spaces.index'}}
   ]

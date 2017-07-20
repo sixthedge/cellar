@@ -23,16 +23,11 @@ export default step.extend
 
   create_changeset: ->
     model     = @get('model')
-    console.log('calling create_changeset')
-
     vpresence = totem_changeset.vpresence(presence: true)
     vlength   = totem_changeset.vlength(min: 4)
-
     changeset = totem_changeset.create model,
       title:        [vpresence, vlength]
       instructions: [vpresence]
-
-    console.log('[DETAILS STEP] creating changeset ', changeset)
 
     changeset.set 'show_errors', true
     @set 'changeset', changeset
@@ -100,8 +95,6 @@ export default step.extend
 
   validate: ->
     new ember.RSVP.Promise (resolve, reject) =>
-
       changeset = @get('changeset')
-      console.log('calling validate with changeset ', changeset)
       changeset.validate().then =>
         resolve(changeset.get('isValid'))
