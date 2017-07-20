@@ -92,14 +92,18 @@ module Thinkspace; module ReadinessAssurance; module Reconcilers
       @assessment.save
     end
 
-    # TODO: Implement
+    # TODO: Optimize? Currently 5 database transactions per response
     def rescore_responses
-      # get_responses.each do |response|
-      #   response.rescore!(response.ownerable)
-      # end
+      get_responses.each do |response|
+        score             = response.rescore!(response.ownerable)
+        response.score    = score
+        phase_score       = get_phase_score_for_response(response)
+        phase_score.score = score if phase_score.present?
+        response.save
+        phase_score.save if phase_score.present?
+      end
     end
 
-    # Requested by assignment#notify_assignment_explode
     def get_phase; @phase; end
 
     private
@@ -108,10 +112,18 @@ module Thinkspace; module ReadinessAssurance; module Reconcilers
     def get_phase_states; phase_state_class.where(phase_id: @phase.id).scope_completed; end
     def get_responses; @assessment.thinkspace_readiness_assurance_responses; end
 
+    def get_phase_state_for_user(user); phase_state_class.find_by(ownerable: user, phase_id: @phase.id); end
+
+    def get_phase_score_for_response(response)
+      phase_state = get_phase_state_for_user(response.ownerable)
+      return nil unless phase_state.present?
+      phase_score_class.find_by(user_id: response.ownerable.id, phase_state_id: phase_state.id)
+    end
+
     def assessment_is_ifat?; @assessment.ifat?; end
     def transform_is_ifat?; @transform.dig('settings', 'questions', 'ifat') == true; end
 
-    # Will not reset the data in case of a question re-order
+    # Will not generate a delta object for case of a question re-order
     def get_delta
       delta = []
       get_questions.each do |question|
@@ -144,8 +156,8 @@ module Thinkspace; module ReadinessAssurance; module Reconcilers
       get_choices_for_question(original).each do |choice|
         t_choice = get_choice_for_question(t_question, choice['id'])
         return true unless t_choice.present? # choice was deleted
-        return true if t_choice['id'] != choice['id'] # choice was modified
-        return true if t_choice['label'] != choice['label'] # choice was modified
+        return true if t_choice['id'] != choice['id'] # choice id was modified
+        return true if t_choice['label'] != choice['label'] # choice label was modified
       end
 
       get_choices_for_question(t_question).each do |t_choice|
@@ -184,11 +196,11 @@ module Thinkspace; module ReadinessAssurance; module Reconcilers
     def question_scores_key;  'question_scores';  end
     def question_correct_key; 'question_correct'; end
     def correct_answer_key;   'correct_answer';   end
-
-    def all_correct_key; 'all_correct'; end
+    def all_correct_key;      'all_correct';      end
 
     # ### Classes
     def phase_state_class; Thinkspace::Casespace::PhaseState; end
+    def phase_score_class; Thinkspace::Casespace::PhaseScore; end
 
   end
 end; end; end
