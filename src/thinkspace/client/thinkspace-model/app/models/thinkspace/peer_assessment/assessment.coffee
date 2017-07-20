@@ -17,10 +17,10 @@ export default base.extend ta.add(
   transform:              ta.attr()
 
   # ### Computed properties
-  is_categories:              ember.computed.equal 'assessment_type', 'categories'
-  is_balance:                 ember.computed.equal 'assessment_type', 'balance'
-  is_custom:                  ember.computed.equal 'assessment_type', 'custom'
-  has_no_assessment_template: ember.computed.empty 'assessment_template_id'
+  is_categories:              ember.computed.equal    'assessment_type', 'categories'
+  is_balance:                 ember.computed.equal    'assessment_type', 'balance'
+  is_custom:                  ember.computed.equal    'assessment_type', 'custom'
+  has_no_assessment_template: ember.computed.empty    'assessment_template_id'
   has_transform:              ember.computed.notEmpty 'transform'
   # is_active:                ember.computed.equal 'state', 'active'
   # is_approved:              ember.computed.equal 'state', 'approved'
