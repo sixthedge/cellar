@@ -20,22 +20,11 @@ module Thinkspace; module PeerAssessment; module Api; module Admin;
     # - `progress_reports`
     def update
       access_denied_state_error :update if @assessment.active?
-      puts '***************************PE UPDATE***************************'
-      puts '***************************PE UPDATE***************************'
-      puts '***************************PE UPDATE***************************'
-      puts '***************************PE UPDATE***************************'
-      puts '***************************PE UPDATE***************************'
-      puts '***************************PE UPDATE***************************'
-      puts '***************************PE UPDATE***************************'
-      puts '***************************PE UPDATE***************************'
-      puts '***************************PE UPDATE***************************'
-      puts params_root
-      
+
       if @assessment.has_reviews?
         if @assessment.transform.present?
           @assessment.transform = params_root[:transform]
         else
-          puts 'not hitting this is it...'
           @assessment.transform = {
             value: params_root[:value],
             assessment_template_id: params_root[:assessment_template_id]

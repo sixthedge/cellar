@@ -58,6 +58,7 @@ module Thinkspace; module PeerAssessment; module Reconcilers
 
     def update_reviews(options={})
       @reviews.each do |review|
+        next unless review.value.present?
         value = review.value.deep_dup
         update_review_data_for_type(value, :quantitative, options)
         update_review_data_for_type(value, :qualitative, options)
