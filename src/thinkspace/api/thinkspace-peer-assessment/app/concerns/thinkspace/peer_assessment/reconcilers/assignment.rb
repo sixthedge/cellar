@@ -38,7 +38,7 @@ module Thinkspace; module PeerAssessment; module Reconcilers
       unless delta_is_empty?
         options = get_update_options
         update_reviews(options)
-        unlock_review_sets
+        unlock_review_and_team_sets
         unlock_phases
       end
 
@@ -58,6 +58,7 @@ module Thinkspace; module PeerAssessment; module Reconcilers
 
     def update_reviews(options={})
       @reviews.each do |review|
+        next unless review.value.present?
         value = review.value.deep_dup
         update_review_data_for_type(value, :quantitative, options)
         update_review_data_for_type(value, :qualitative, options)
@@ -84,8 +85,9 @@ module Thinkspace; module PeerAssessment; module Reconcilers
       get_phase_states.update_all current_state: 'unlocked'
     end
 
-    def unlock_review_sets
+    def unlock_review_and_team_sets
       get_review_sets.update_all state: 'neutral'
+      get_team_sets.update_all state: 'neutral'
     end
 
     def update_assessment
@@ -126,7 +128,8 @@ module Thinkspace; module PeerAssessment; module Reconcilers
 
     def get_phase_states; phase_state_class.where(phase_id: @phase.id).scope_completed; end
 
-    def get_review_sets; @review_sets.scope_submitted; end
+    def get_review_sets; @review_sets; end
+    def get_team_sets; @team_sets; end
 
     def type_is_dirty?; @assessment.value[options_key][type_key] != @transform['value'][options_key][type_key]; end
 
