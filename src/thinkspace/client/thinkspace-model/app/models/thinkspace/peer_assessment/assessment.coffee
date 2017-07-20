@@ -21,10 +21,11 @@ export default base.extend ta.add(
   is_balance:                 ember.computed.equal 'assessment_type', 'balance'
   is_custom:                  ember.computed.equal 'assessment_type', 'custom'
   has_no_assessment_template: ember.computed.empty 'assessment_template_id'
-  # is_active:             ember.computed.equal 'state', 'active'
-  # is_approved:           ember.computed.equal 'state', 'approved'
-  # is_read_only:          ember.computed.or 'is_active', 'is_approved'
-  # is_not_active:         ember.computed.not 'is_active'
+  has_transform:              ember.computed.notEmpty 'transform'
+  # is_active:                ember.computed.equal 'state', 'active'
+  # is_approved:              ember.computed.equal 'state', 'approved'
+  # is_read_only:             ember.computed.or 'is_active', 'is_approved'
+  # is_not_active:            ember.computed.not 'is_active'
 
   # Abstractions from JSON keys to reference in templates.
   qualitative_items:          ember.computed 'value.qualitative.@each',         -> @get('value.qualitative')

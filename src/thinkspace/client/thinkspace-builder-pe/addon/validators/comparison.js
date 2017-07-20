@@ -15,9 +15,6 @@ export default function validateComparison(options = {}) {
     let thisVal    = newValue;
     let type       = options['type'];
 
-    console.log('[comp] changes are ', changes);
-    console.log('[comp] comparing ', initialVal, otherVal, value, thisVal);
-
     if (ember.isPresent(otherVal)) {
       value = otherVal;
     }

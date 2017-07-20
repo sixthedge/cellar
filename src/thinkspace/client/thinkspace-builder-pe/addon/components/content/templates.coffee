@@ -1,5 +1,6 @@
 import ember from 'ember'
 import base  from 'thinkspace-base/components/base'
+import ns    from 'totem/ns'
 
 ###
 # # templates.coffee
@@ -18,11 +19,12 @@ export default base.extend
   selected_radio: null
 
   # # Computed properties
-  selected_template:      ember.computed.reads 'assessment_template_michaelsens'
-  assessment_templates:   ember.computed.reads 'step.assessment_templates'
-  user_templates:         ember.computed.reads 'step.user_templates'
-  is_editing_template:    ember.computed.reads 'step.is_editing_template'
-  has_no_user_templates:  ember.computed.empty 'user_templates'
+  selected_template:     ember.computed.reads 'assessment_template_michaelsens'
+  assessment_templates:  ember.computed.reads 'step.assessment_templates'
+  user_templates:        ember.computed.reads 'step.user_templates'
+  is_editing_template:   ember.computed.reads 'step.is_editing_template'
+  assessment:            ember.computed.reads 'manager.model'
+  has_no_user_templates: ember.computed.empty 'user_templates'
 
   assessment_template_michaelsens:    ember.computed 'assessment_templates', -> @get('assessment_templates').findBy('is_balance', true)
   assessment_template_categories:     ember.computed 'assessment_templates', -> @get('assessment_templates').findBy('is_categories', true)
@@ -41,7 +43,7 @@ export default base.extend
     blank       = @get('assessment_template_blank_canvas')
     user        = @get('assessment_template_user_templates')
     group:
-      label: 'Choose a template for your Peer Evaluation'
+      label:   'Choose a template for your Peer Evaluation'
       summary: 'These templates will help you get started.  You can always save a peer evaluation as a template to use in the future.'
     choices: [
       {label: michaelsens.get('title'), value: michaelsens, summary: michaelsens.get('description')},
@@ -59,9 +61,9 @@ export default base.extend
 
   # # Events
   init_base: ->
-    assessment = @get('manager.model')
+    assessment = @get('assessment')
     @set_loading('all')
-    assessment.get('assessment_template').then (assessment_template) =>
+    @get_assessment_template().then (assessment_template) =>
       if ember.isPresent assessment_template
         if assessment_template.get('is_user')
           @set('selected_radio', @get('assessment_template_user_templates'))
@@ -74,6 +76,14 @@ export default base.extend
         @send 'select_radio', @get('assessment_template_michaelsens')
 
       @reset_loading('all')
+
+  get_assessment_template: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      assessment  = @get('assessment')
+      template_id = if assessment.get('has_transform') then assessment.get('transform.assessment_template_id') else assessment.get('assessment_template_id')
+      return resolve() unless ember.isPresent(template_id)
+      @tc.find_record(ns.to_p('assessment_template'), template_id).then (template) =>
+        resolve(template)
 
   actions:
     select_assessment_template: (template) ->
