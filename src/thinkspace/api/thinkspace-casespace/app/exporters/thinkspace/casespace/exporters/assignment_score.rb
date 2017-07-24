@@ -1,14 +1,15 @@
 require 'spreadsheet'
 
 module Thinkspace; module Casespace; module Exporters; class AssignmentScore < Thinkspace::Common::Exporters::Base
-  attr_reader :caller, :assignment, :ownerables, :phase_class, :team_class
+  attr_reader :caller, :assignment, :ownerables, :phase_class, :team_class, :user_class
 
   def initialize(caller, assignment, ownerables)
     @caller      = caller
     @assignment  = assignment
-    @ownerables  = ownerables
+    @ownerables  = ownerables.uniq
     @phase_class = Thinkspace::Casespace::Phase
     @team_class  = Thinkspace::Team::Team
+    @user_class  = Thinkspace::Common::User
   end
 
   def process
@@ -16,7 +17,7 @@ module Thinkspace; module Casespace; module Exporters; class AssignmentScore < T
     sheet  = caller.find_or_create_worksheet_for_assignment(book, assignment, 'Total Scores')
     phases = assignment.thinkspace_casespace_phases.order(:position)
     titles = phases.pluck(:title)
-    caller.add_header_to_sheet(sheet, get_sheet_header_identifier, *titles, 'Total')
+    caller.add_header_to_sheet(sheet, *(get_sheet_header_identifiers), *titles, 'Total')
     # Ownerables is [User, User,...]
     ownerables.each_with_index do |ownerable, index|
       row        = Array.new
@@ -26,7 +27,7 @@ module Thinkspace; module Casespace; module Exporters; class AssignmentScore < T
         row.push score
       end
       row.push get_total(row) # Add total at end.
-      row.unshift caller.get_ownerable_identifier(ownerable) # Add email at beginning
+      row.unshift *(get_ownerable_identifier(ownerable)) # Add email at beginning
       sheet.insert_row row_number, row
     end
   end
@@ -53,6 +54,8 @@ module Thinkspace; module Casespace; module Exporters; class AssignmentScore < T
 
   private
 
-  def get_sheet_header_identifier; caller.get_sheet_header_identifier; end
+  def get_sheet_header_identifiers; caller.get_sheet_header_identifiers(user_class.name); end
+
+  def get_ownerable_identifier(ownerable); caller.get_ownerable_identifiers(ownerable); end
 
 end; end; end; end

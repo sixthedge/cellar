@@ -6,7 +6,7 @@ module Thinkspace; module Casespace; module Exporters; class PhaseScore < Thinks
   def initialize(caller, phase, ownerables)
     @caller     = caller
     @phase      = phase
-    @ownerables = ownerables
+    @ownerables = ownerables.uniq
   end
 
   def process
@@ -21,7 +21,7 @@ module Thinkspace; module Casespace; module Exporters; class PhaseScore < Thinks
       raise InvalidScoresLength, "Multiple phase scores [phase_id: #{phase.id}] for a single ownerable #{ownerable.inspect}" if phase_scores.length > 1
       phase_score                  = phase_scores.first
       phase_score.present? ? score = phase_score.score.to_f : score =  0.0
-      sheet.update_row row_number, caller.get_ownerable_identifier(ownerable), score
+      sheet.update_row row_number, *(get_ownerable_identifier(ownerable)), score
     end
   end
 
@@ -29,7 +29,9 @@ module Thinkspace; module Casespace; module Exporters; class PhaseScore < Thinks
 
   private
 
-  def get_sheet_header_identifier; caller.get_sheet_header_identifier; end
+  def get_sheet_header_identifier; caller.get_sheet_header_identifiers; end
   def get_sheet_header_score; 'Score'; end
+
+  def get_ownerable_identifier(ownerable); caller.get_ownerable_identifier(ownerable); end
 
 end; end; end; end
