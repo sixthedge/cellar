@@ -4,7 +4,9 @@ if model.is_pubsub
 
 h1 Scores
 
-unless loading.all
+if loading.all
+  component '__loader/base'
+else
   if generate_success
     .dialogue.dialogue--green.spacing__margin-bottom--2
       h1 Your report is being processed

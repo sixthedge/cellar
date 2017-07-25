@@ -21,7 +21,7 @@ class File < ActiveRecord::Base
 
   # ### Paperclip
   def paperclip_path
-    default = "spaces/system/importer/:filename"
+    default = "spaces/system/reports/:filename"
     report = thinkspace_report_report
     return default unless report.present?
     authable = report.authable
@@ -29,7 +29,7 @@ class File < ActiveRecord::Base
     return default unless authable.respond_to?(:thinkspace_common_space)
     space = authable.thinkspace_common_space
     return default unless space.present?
-    return "spaces/#{space.id}/importer/:filename"
+    return "spaces/#{space.id}/reports/:filename"
   end
 
   totem_associations

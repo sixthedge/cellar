@@ -24,6 +24,3 @@ if all_data_loaded
     component '__table' rows=admins columns=admin_columns data=admin_data server=true
 else
   component '__loader/base'
-  .loader__container
-    .loader.loader--logo
-    .text__font-size--14.text--bold Loading...

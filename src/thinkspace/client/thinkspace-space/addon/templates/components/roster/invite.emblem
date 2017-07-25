@@ -9,5 +9,6 @@
     component '__accessibility/radio/group' value=changeset.role options=role_options changed='changed_role'
     .btn-group.spacing__margin-top--2
       button.btn.btn--primary type='submit' Send Invitation
-      button.btn Cancel
+      link-to 'roster.index' class='btn btn--mobile-full'
+        | Cancel
   
