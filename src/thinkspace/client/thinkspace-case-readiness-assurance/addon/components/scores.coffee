@@ -6,6 +6,8 @@ export default base.extend
 
   actions:
     generate: ->
+      @set_loading 'all'
+
       params =
         type: 'ownerable_data'
         auth: 
@@ -16,5 +18,6 @@ export default base.extend
         verb: 'POST'
         action: 'generate'
 
-      @tc.query_action(ns.to_p('report:report'), params, query).then (payload) =>
-        console.log "report generated!"
+      @tc.query_data(ns.to_p('report:report'), params, query).then (payload) =>
+        @set 'generate_success', true
+        @reset_loading 'all'

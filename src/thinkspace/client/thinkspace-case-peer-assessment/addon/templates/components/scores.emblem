@@ -5,5 +5,10 @@ if model.is_pubsub
 h1 Scores
 
 unless loading.all
-  button.btn.btn--primary click='generate'
-    | Generate Scores Spreadsheet
+  if generate_success
+    .dialogue.dialogue--green.spacing__margin-bottom--2
+      h1 Your report is being processed
+      p.spacing__margin-bottom--2 You will receive an email with a link to view the report shortly.
+  else
+    button.btn.btn--primary click='generate'
+      | Generate Scores Spreadsheet
