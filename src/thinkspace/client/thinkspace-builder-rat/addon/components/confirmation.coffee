@@ -15,5 +15,9 @@ export default base.extend
 
   # ## Actions
   actions:
+    set_loading:   (type) -> @get('step').set_loading(type)
+    reset_loading: (type) -> @get('step').reset_loading(type)
+    init_assessments:     -> @get('step').init_assessments()
+
     prev_step: -> @get('builder').transition_to_prev_step()
-    exit: -> @get('builder').transition_to_cases_show()
+    exit: ->      @get('builder').transition_to_cases_show()

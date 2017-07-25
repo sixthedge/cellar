@@ -20,9 +20,11 @@ module Thinkspace; module ReadinessAssurance; module Reconcilers
       @phase                      = options[:phase]
       @assessment                 = options[:componentable]
       @transform                  = @assessment.transform
-      @questions_by_id            = Hash.new; @assessment.questions.each { |q| @questions_by_id[q['id']] = q }
-      @transform_questions_by_id  = Hash.new; @transform[questions_key].each { |q| @transform_questions_by_id[q['id']] = q }
-      @delta                      = get_delta
+      if @transform.present?
+        @questions_by_id            = Hash.new; @assessment.questions.each { |q| @questions_by_id[q['id']] = q }
+        @transform_questions_by_id  = Hash.new; @transform[questions_key].each { |q| @transform_questions_by_id[q['id']] = q }
+        @delta                      = get_delta
+      end
     end
 
     # ### Processing
@@ -87,7 +89,13 @@ module Thinkspace; module ReadinessAssurance; module Reconcilers
     def update_assessment
       @assessment.questions = @transform[questions_key]
       @assessment.answers   = @transform[answers_key]
-      @assessment.settings  = @transform[settings_key]
+      # @assessment.settings  = @transform[settings_key]
+
+      ## We want to make sure that the assessment has all keys present, not just its defaults
+      @assessment.settings = @assessment.settings.deep_merge(@transform[settings_key])
+
+
+
       @assessment.transform = nil
       @assessment.save
     end

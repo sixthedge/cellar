@@ -4,6 +4,10 @@ component '__case/external/header' model=model
 
 .grid__container--flex.spacing__margin-bottom--4
   .grid__col--3of4.grid__mobile--full-width.grid__col--primary
+    if has_transform
+      component '__case/edit/persist_changes/rat/persist_changes' model=model assessments=assessments set_loading='set_loading' reset_loading='reset_loading' init_assessments='init_assessments'
+
+
     if model.can.update
       component '__case/states' model=model assignment_type=assignment_type
     component '__case/instructions' model=model

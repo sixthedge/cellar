@@ -40,6 +40,11 @@ export default ember.Service.extend array_helpers,
         only: ['justification']
   }
 
+  has_transform:      ember.computed 'has_irat_transform', 'has_trat_transform', -> @get('has_irat_transform') || @get('has_trat_transform')
+  
+  has_irat_transform: ember.computed.notEmpty 'irat.transform'
+  has_trat_transform: ember.computed.notEmpty 'trat.transform'
+
   ## Reconciliation varable
   irat_questions_column: ember.computed 'irat.transform', -> @get_column('irat', 'questions')
   irat_settings_column:  ember.computed 'irat.transform', -> @get_column('irat', 'settings')
@@ -84,6 +89,8 @@ export default ember.Service.extend array_helpers,
       tc.query_action(ns.to_p('assignment'), query, options).then (assessments) =>
         irat = assessments.findBy 'is_irat', true
         trat = assessments.findBy 'is_trat', true
+
+        console.log('init_assessments ', irat, trat)
 
         promises = 
           irat: @query_assessment_answers('irat', irat)

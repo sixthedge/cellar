@@ -1,0 +1,14 @@
+.dialogue.dialogue--blue.grid__container--centered.dialogue--shadow
+  h1 Are you sure you want to revert these changes?
+  
+  p 
+    strong This will discard the changes to exercise questions.
+  p
+    | Changes made to the exercise title, exercise instructions, release date, and due date will not be affected.
+
+  .btn-group
+    button.btn.btn--primary click='confirm'
+      | Revert Changes
+    button.btn click='deny'
+      | Cancel
+

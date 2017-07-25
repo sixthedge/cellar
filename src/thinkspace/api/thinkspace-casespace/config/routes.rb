@@ -15,6 +15,7 @@ Thinkspace::Casespace::Engine.routes.draw do
             put    :activate
             put    :inactivate
             put    :archive
+            put    :explode
           end
         end
 

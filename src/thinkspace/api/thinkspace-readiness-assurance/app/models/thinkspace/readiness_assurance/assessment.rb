@@ -51,6 +51,44 @@ module Thinkspace
         Thinkspace::ReadinessAssurance::Response.where(assessment_id: self.id).count > 0
       end
 
+      def default_irat_settings
+        {
+          ra_type: 'irat',
+          next_id: 0,
+          questions: {
+            type:          'multiple_choice',
+            random:        false,
+            ifat:          false,
+            justification: true
+          },
+          scoring: {
+            correct:           5,
+            attempted:         1,
+            no_answer:         0,
+            incorrect_attempt: -1
+          }
+        }
+      end
+
+      def default_trat_settings
+        {
+          ra_type: 'trat',
+          next_id: 0,
+          questions: {
+            type:          'multiple_choice',
+            random:        false,
+            ifat:          false,
+            justification: true
+          },
+          scoring: {
+            correct:           5,
+            attempted:         1,
+            no_answer:         0,
+            incorrect_attempt: -1
+          }
+        }
+      end
+
       # ###
       # ### Question Helpers.
       # ###

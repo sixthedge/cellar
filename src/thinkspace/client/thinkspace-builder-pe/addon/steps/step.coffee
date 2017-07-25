@@ -12,8 +12,8 @@ export default ember.Object.extend common_helper,
   builder: ember.inject.service()
 
   loading: null
-  set_loading:      (type) -> @set("loading.#{type}", true)
-  reset_loading:    (type) -> @set("loading.#{type}", false)
+  set_loading:      (type) -> @set("loading.#{type}", true); false
+  reset_loading:    (type) -> @set("loading.#{type}", false); false
 
   init: ->
     @_super()

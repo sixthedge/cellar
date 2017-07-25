@@ -67,7 +67,7 @@ module Thinkspace
 
           def explode
             @assignment.explode
-            controller_render_no_content
+            controller_render(@assignment)
           end
 
           def delete

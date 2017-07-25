@@ -42,7 +42,7 @@ class ThinkspaceCasespace < ::Totem::Settings.authorization.platforms.thinkspace
     return unless admin_ability?
     can [:read, :phase_states], assignment, admin_assignment
     can [:create], assignment
-    can [:templates, :clone, :delete, :load, :update, :view, :roster, :phase_order, :phase_componentables, :activate, :inactivate, :archive], assignment, admin_assignment
+    can [:templates, :clone, :delete, :load, :update, :view, :roster, :phase_order, :phase_componentables, :activate, :inactivate, :archive, :explode], assignment, admin_assignment
     can [:gradebook, :manage_resources, :report], assignment, admin_assignment
   end
 

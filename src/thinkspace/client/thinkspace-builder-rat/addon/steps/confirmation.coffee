@@ -13,3 +13,18 @@ export default step.extend
   route_path: 'confirmation'
 
   builder: ember.inject.service()
+  manager: ember.inject.service()
+
+  has_transform: ember.computed.reads 'manager.has_transform'
+  assignment:    ember.computed.reads 'builder.model'
+
+  assessments: ember.computed 'manager.irat', 'manager.trat', -> 
+    arr  = ember.makeArray()
+    arr.pushObject(@get('manager.irat'))
+    arr.pushObject(@get('manager.trat'))
+    arr
+
+  init_assessments: -> 
+
+    console.log('calling init_assessments!!!!')
+    @get('manager').init_assessments()

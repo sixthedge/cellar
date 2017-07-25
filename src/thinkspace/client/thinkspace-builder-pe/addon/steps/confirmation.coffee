@@ -12,4 +12,10 @@ export default step.extend
   index: 3
   route_path: 'confirmation'
 
-  builder: ember.inject.service()
+  builder:    ember.inject.service()
+  manager:    ember.inject.service()
+
+  assignment:    ember.computed.reads 'builder.model'
+  assessment:    ember.computed.reads 'manager.model'
+  
+  has_transform: ember.computed.reads 'assessment.has_transform'

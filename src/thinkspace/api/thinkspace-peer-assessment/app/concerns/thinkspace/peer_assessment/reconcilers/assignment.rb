@@ -25,7 +25,7 @@ module Thinkspace; module PeerAssessment; module Reconcilers
       @phase       = options[:phase]
       @assessment  = options[:componentable]
       @transform   = @assessment.transform
-      @delta       = get_delta
+      @delta       = get_delta if @transform.present?
       @team_sets   = @assessment.thinkspace_peer_assessment_team_sets
       @review_sets = review_set_class.where(team_set_id: @team_sets.pluck(:id))
       @reviews     = review_class.where(review_set_id: @review_sets.pluck(:id))
