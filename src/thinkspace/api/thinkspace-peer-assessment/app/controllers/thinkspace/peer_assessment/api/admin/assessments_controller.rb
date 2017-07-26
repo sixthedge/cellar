@@ -19,7 +19,7 @@ module Thinkspace; module PeerAssessment; module Api; module Admin;
     # - `team_sets`
     # - `progress_reports`
     def update
-      access_denied_state_error :update if @assessment.active?
+      #access_denied_state_error :update if @assessment.active?
 
       if @assessment.has_reviews?
         if @assessment.transform.present?

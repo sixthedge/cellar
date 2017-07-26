@@ -1,5 +1,0 @@
-.dialogue.dialogue--yellow.spacing__margin-bottom--2
-  h5 Your changes will impact an ongoing exercise. Do you want to apply them now?
-  component '__modal/confirmation' content_partial='__components/case/edit/persist_changes/modals/save/modal' link_partial='__components/case/edit/persist_changes/modals/save/action' confirm='explode' class='btn__component text--inline-block spacing__margin-right--1'
-
-  component '__modal/confirmation' content_partial='__components/case/edit/persist_changes/modals/revert/modal' link_partial='__components/case/edit/persist_changes/modals/revert/action' confirm='revert' class='btn__component text--inline-block'

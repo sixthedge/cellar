@@ -23,8 +23,3 @@ export default step.extend
     arr.pushObject(@get('manager.irat'))
     arr.pushObject(@get('manager.trat'))
     arr
-
-  init_assessments: -> 
-
-    console.log('calling init_assessments!!!!')
-    @get('manager').init_assessments()

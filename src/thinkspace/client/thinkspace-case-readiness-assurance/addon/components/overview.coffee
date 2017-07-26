@@ -12,8 +12,7 @@ export default base.extend
   has_trat_transform: ember.computed.notEmpty 'trat.transform'
 
   init_base: ->
-    console.log('i think this is where we are...')
-    @init_assessments()
+    @init_assessments() if @get('model.can.update')
 
   init_assessments: ->
     new ember.RSVP.Promise (resolve, reject) =>

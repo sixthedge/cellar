@@ -10,7 +10,7 @@ partial 'components/header'
           p Make sure everything looks fine
 
         if step.has_transform
-          component '__case/edit/persist_changes/rat/persist_changes' model=step.assignment assessments=step.assessments set_loading='set_loading' reset_loading='reset_loading' init_assessments='init_assessments'
+          component '__case/edit/persist_changes' model=step.assignment assessments=step.assessments set_loading='set_loading' reset_loading='reset_loading' type='rat' loader_key='all' init_assessments='init_assessments'
 
         component 'confirmation/details'
         hr
