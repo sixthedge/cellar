@@ -8,8 +8,7 @@
          link-to 'progress_report' model class='menu-bar__link' tabindex='0'
           | Progress Report
       li.menu-bar__item
-        /link-to 'scores' model class='menu-bar__link' tabindex='0'
-        a.menu-bar__link
+        link-to 'scores' model class='menu-bar__link' tabindex='0'
           | Scores
     else
       li.menu-bar__item

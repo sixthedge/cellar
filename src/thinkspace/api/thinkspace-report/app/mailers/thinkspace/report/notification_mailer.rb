@@ -30,7 +30,6 @@ class NotificationMailer < Thinkspace::Common::BaseMailer
 
   private
 
-  def reports_token_url(report_token); get_file_for_token(report_token).attachment.url; end
-  def get_file_for_token(report_token); report_token.thinkspace_report_report.thinkspace_report_files.first; end
+  def reports_token_url(report_token); format_url("reports/#{report_token.token}"); end
 
 end; end; end

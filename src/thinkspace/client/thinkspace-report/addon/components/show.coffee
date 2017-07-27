@@ -19,15 +19,14 @@ export default base.extend
     new ember.RSVP.Promise (resolve, reject) =>
       token = @get 'token'
       return unless ember.isPresent(token) # TODO: Raise a totem error?
+
       query =
+        report_token: token
+
+      options =
         action: 'access'
-        verb:   'get'
-        model:  ns.to_p('report:report')
-        data:
-          report_token: token
-      @totem_messages.show_loading_outlet(message: 'Requesting report...')
-      ajax.object(query).then (payload) =>
-        report = @tc.push_payload_and_return_data_record(payload)
+        single: true
+
+      @tc.query_action(ns.to_p('report:report'), query, options).then (report) =>
         @set 'model', report
-        @totem_messages.hide_loading_outlet()
         resolve()
