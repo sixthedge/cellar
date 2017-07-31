@@ -21,7 +21,7 @@ module Thinkspace; module ReadinessAssurance; module Sync; class Assessment
         # assessment = TRAT
         # @assessment = IRAT
 
-        has_transform = @options.dig('transform').present? && @assessment.has_responses?
+        has_transform = @options.dig('transform').present? && @assessment.transform.present?
         ## Check for questions
         assessment.questions = @assessment.questions if @options.dig('questions').present?
         assessment.answers   = @assessment.answers   if @options.dig('answers').present?

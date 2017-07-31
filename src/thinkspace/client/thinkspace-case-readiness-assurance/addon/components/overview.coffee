@@ -12,7 +12,18 @@ export default base.extend
   has_trat_transform: ember.computed.notEmpty 'trat.transform'
 
   init_base: ->
-    @init_assessments() if @get('model.can.update')
+
+    @init_assignment_type().then =>
+      @init_abilities().then =>
+        @init_teams().then =>
+          @init_phase_states().then =>
+            assignment = @get('model')
+            if assignment.get('is_pubsub')
+              @totem_scope.authable(assignment)
+              se = @get('server_events')
+              se.join_assignment_with_current_user()
+            if @get('model.can.update')
+              @init_assessments()
 
   init_assessments: ->
     new ember.RSVP.Promise (resolve, reject) =>

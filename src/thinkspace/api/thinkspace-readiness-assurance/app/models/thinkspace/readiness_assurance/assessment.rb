@@ -35,6 +35,14 @@ module Thinkspace
         end
       end
 
+      def self.assignment_has_responses?(assignment)
+        phases = assignment.thinkspace_casespace_phases
+        assessments = self.where(authable: phases)
+        assessments.any? { |a| a.has_responses? }
+      end
+
+      def get_assignment; authable.thinkspace_casespace_assignment; end
+
       def sync(options)
         Thinkspace::ReadinessAssurance::Sync::Assessment.new(options, self).sync
       end

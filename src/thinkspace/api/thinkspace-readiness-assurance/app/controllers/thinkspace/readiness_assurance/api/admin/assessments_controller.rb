@@ -6,7 +6,7 @@ module Thinkspace
           load_and_authorize_resource class: totem_controller_model_class, except: [:progress_report]
 
           def update
-            if @assessment.has_responses?
+            if Thinkspace::ReadinessAssurance::Assessment.assignment_has_responses?(@assessment.get_assignment)
               if @assessment.transform.present?
                 @assessment.transform = params_root[:transform]
               else
@@ -20,7 +20,7 @@ module Thinkspace
               @assessment.questions = params_root[:questions]
               @assessment.settings  = params_root[:settings]
               @assessment.answers   = params_root[:answers]
-            end
+            end       
             controller_save_record(@assessment)
           end
 

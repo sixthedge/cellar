@@ -11,7 +11,8 @@ component '__case/external/header' model=model
     if model.can.update
       component '__case/states' model=model assignment_type=assignment_type
     component '__case/instructions' model=model
-    component '__case/progress' model=model phase_states=all_phase_states
+    if phase_states_loaded
+      component '__case/progress' model=model phase_states=all_phase_states
 
   .grid__col--1of4.grid__mobile--full-width
     if phase_states_loaded
