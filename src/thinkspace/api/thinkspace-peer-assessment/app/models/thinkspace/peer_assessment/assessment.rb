@@ -22,9 +22,10 @@ module Thinkspace; module PeerAssessment
     end
 
     def has_reviews?
-      reviews = get_reviews
-      return false unless reviews.present?
-      reviews.count > 0
+      true
+      # reviews = get_reviews
+      # return false unless reviews.present?
+      # reviews.count > 0
     end
 
     def get_reviews

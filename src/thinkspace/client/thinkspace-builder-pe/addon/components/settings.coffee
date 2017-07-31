@@ -17,5 +17,3 @@ export default base.extend
     prev_step: -> @get('builder').transition_to_prev_step(save: true, validate: true)
 
     exit: -> @get('builder').transition_to_cases_show()
-
-

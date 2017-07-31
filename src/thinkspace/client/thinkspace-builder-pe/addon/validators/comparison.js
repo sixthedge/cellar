@@ -15,6 +15,19 @@ export default function validateComparison(options = {}) {
     let thisVal    = newValue;
     let type       = options['type'];
 
+    if (!ember.isPresent(initialVal)) {
+      initialVal = 'not present';
+    }
+    if (!ember.isPresent(otherVal)) {
+      otherVal = 'not present';
+    }
+    if (!ember.isPresent(thisVal)) {
+      thisVal = 'not present';
+    }
+
+    console.log("[comparison] COMPARING VALUES initial, changeset, changed ", initialVal.toString(), otherVal.toString(), thisVal.toString());
+    console.log('[comparison] changes are ', changes)
+
     if (ember.isPresent(otherVal)) {
       value = otherVal;
     }

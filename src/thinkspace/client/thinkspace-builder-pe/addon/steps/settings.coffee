@@ -25,22 +25,30 @@ export default step.extend
       due_at:     [vpresence, v_comparison({initial_val: model.get('due_at'), val: 'release_at', message: 'Release date must be set before the due date', type: 'gt'})]
     )
 
+    console.log('[create_changeset] release, due: ', changeset.get('release_at'), changeset.get('due_at'))
+    #changeset.set('release_at', model.get('release_at'))
+    #changeset.set('due_at',     model.get('due_at'))
+
     changeset.set 'show_errors', true
     @set 'changeset', changeset
 
   ## API Methods
 
   initialize: ->
+    console.log('calling step initialize')
     @set('model', @get('builder.model'))
-    @create_changeset()
+    console.log('changeset present? ', @get('changeset'))
+    @create_changeset() unless ember.isPresent(@get('changeset'))
 
   save: ->
     new ember.RSVP.Promise (resolve, reject) =>
       changeset = @get('changeset')
-      changeset.save()
-      @get('model').save().then (saved_model) =>
-        resolve(saved_model)
-      , (error) => reject(error)
+      console.log('calling changeset.save ', changeset)
+      changeset.save().then =>
+        resolve()
+      # @get('model').save().then (saved_model) =>
+      #   resolve(saved_model)
+      # , (error) => reject(error)
 
   validate: ->
     new ember.RSVP.Promise (resolve, reject) =>
