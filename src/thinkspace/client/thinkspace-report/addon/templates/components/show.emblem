@@ -38,7 +38,7 @@
         each model.files as |file|
           .illustration-msg__img-container.illustration-msg__img--100.is-left.spacing__margin-right--1
                 img src='/assets/images/illustrations/illustrations__file--spreadsheet.svg' alt="Report Download" title="Report Download"
-          .grid__container
+          .grid__container.spacing__margin-bottom--4
             .text__font-size--14.spacing__margin-bottom--half
               strong Space:  
               span
