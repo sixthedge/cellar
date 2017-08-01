@@ -32,6 +32,12 @@
 }
 
 // image sizes
+.illustration-msg__img--100 {
+  >img {
+    width: 100px;
+  }
+}
+
 .illustration-msg__img--200 {
   >img {
     max-width: 200px;

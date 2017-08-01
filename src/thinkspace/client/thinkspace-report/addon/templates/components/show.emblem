@@ -1,13 +1,56 @@
-if all_data_loaded
-    h1 #{model.title}
-    hr
+.top-bar.top-bar--main
+  nav.top-bar__nav.is-left
+    ul.nav-list 
+      li.nav-list__logo
+        img src='/assets/images/branding/otbl-logo_default.svg' alt="OpenTBL Logo" title="OpenTBL Logo"
+      li.nav-list__item
+        a href="#" class='nav-list__link'
+          | Spaces
+      li.nav-list__item
+        a.nav-list__link href='mailto:support@opentbl.com'
+          | Support
+   
+.main-content
+  / if all_data_loaded
+  /     h1 #{model.title}
+  /     hr
 
-    each model.files as |file|
-      .row
-        .ts-grid_columns.small-12.medium-2.large-2
-        .ts-grid_columns.small-12.medium-9.large-9.right
-          h6
-            | #{file.title}
-          a.btn.btn-primary.btn-small href=file.url
-            | Download File
-            .tsi.tsi-left.tsi-size_16.tsi-download_white.left
+  /     each model.files as |file|
+  /       .row
+  /         .ts-grid_columns.small-12.medium-2.large-2
+  /         .ts-grid_columns.small-12.medium-9.large-9.right
+  /           h6
+  /             | #{file.title}
+  /           a.btn.btn-primary.btn-small href=file.url
+  /             | Download File
+  /             .tsi.tsi-left.tsi-size_16.tsi-download_white.left
+
+
+
+  .grid__container--flex
+    .grid__col--4of4
+      .main-content__header
+        h1.text--inline-block Your report is ready!
+        p Click on the button below to download. 
+  .grid__container--flex.spacing__margin-bottom--4
+    .grid__col--4of4.grid__mobile--full-width
+      if all_data_loaded
+        each model.files as |file|
+          .illustration-msg__img-container.illustration-msg__img--100.is-left.spacing__margin-right--1
+                img src='/assets/images/illustrations/illustrations__file--spreadsheet.svg' alt="Report Download" title="Report Download"
+          .grid__container
+            .text__font-size--14.spacing__margin-bottom--half
+              strong Space:  
+              span
+                | Space name
+            .text__font-size--14.spacing__margin-bottom--half
+              strong Exercise:  
+              span
+                | Fixed Order RAT
+            .text__font-size--14.spacing__margin-bottom--1
+              strong File name:  
+              span
+                | #{file.title}
+
+            a.btn.btn--primary role='button' href=file.url
+              | Download File
