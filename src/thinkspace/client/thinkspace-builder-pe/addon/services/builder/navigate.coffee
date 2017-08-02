@@ -72,8 +72,6 @@ export default ember.Mixin.create
     new ember.RSVP.Promise (resolve, reject) =>
       step = @get('current_step')
       step.validate().then (valid) =>
-        console.log("calling validate_current_step ", step, valid)
-
         resolve(valid)
     
   save_current_step: ->
