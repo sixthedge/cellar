@@ -160,7 +160,7 @@ module Thinkspace; module ReadinessAssurance; module Reconcilers
       original   = get_question_by_id(id)
       t_question = get_transform_question_by_id(id)
 
-      return true if original['question'] != t_question['question']
+      #return true if original['question'] != t_question['question']
       return true if get_correct_answer_for_question(id) != get_correct_answer_for_transform_question(id)
       return get_question_choices_are_dirty(id)
     end

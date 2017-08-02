@@ -35,7 +35,7 @@ export default ember.Service.extend array_helpers,
     settings: 
       next_id: true
       scoring:
-        only: ['correct', 'no_answer']
+        only: ['correct', 'no_answer', 'attempted', 'incorrect_attempt']
       questions:
         only: ['justification']
   }
@@ -55,8 +55,6 @@ export default ember.Service.extend array_helpers,
   #trat_answers_column:   ember.computed 'trat_assessment.transform', -> @get_column('trat', 'answers')
 
   get_column: (type, col) ->
-    console.log('get_column isPresent? ', @get('irat'), type, col, @get("{type}.transform"))
-
     if ember.isPresent(@get("#{type}.transform")) 
       "transform.#{col}" 
     else 
@@ -89,8 +87,6 @@ export default ember.Service.extend array_helpers,
       tc.query_action(ns.to_p('assignment'), query, options).then (assessments) =>
         irat = assessments.findBy 'is_irat', true
         trat = assessments.findBy 'is_trat', true
-
-        console.log('init_assessments ', irat, trat)
 
         promises = 
           irat: @query_assessment_answers('irat', irat)

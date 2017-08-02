@@ -40,10 +40,10 @@ export default base.extend initialize, navigate,
   #   new ember.RSVP.Promise (resolve, reject) =>
   #     @_initialize_map()
 
-  step_details:      ember.computed -> @get('steps').findBy 'id', 'details'
-  step_content:      ember.computed -> @get('steps').findBy 'id', 'content'
-  step_settings:     ember.computed -> @get('steps').findBy 'id', 'settings'
-  step_confirmation: ember.computed -> @get('steps').findBy 'id', 'confirmation'
+  step_details:      ember.computed 'steps', -> @get('steps').findBy 'id', 'details'
+  step_content:      ember.computed 'steps', -> @get('steps').findBy 'id', 'content'
+  step_settings:     ember.computed 'steps', -> @get('steps').findBy 'id', 'settings'
+  step_confirmation: ember.computed 'steps', -> @get('steps').findBy 'id', 'confirmation'
   step_prototypes: ember.computed -> 
     [
       details_step,

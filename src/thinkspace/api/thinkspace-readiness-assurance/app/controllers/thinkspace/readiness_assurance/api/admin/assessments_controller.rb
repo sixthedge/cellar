@@ -9,12 +9,21 @@ module Thinkspace
             if Thinkspace::ReadinessAssurance::Assessment.assignment_has_responses?(@assessment.get_assignment)
               if @assessment.transform.present?
                 @assessment.transform = params_root[:transform]
-              else
-                @assessment.transform = {
-                  questions: params_root[:questions],
-                  settings:  params_root[:settings],
-                  answers:   params_root[:answers]
+              else 
+                options = {
+                  transform: params_root,
+                  questions: {
+                    label: true,
+                    order: true
+                  }
                 }
+                if Thinkspace::ReadinessAssurance::Deltas::Assessment.new(@assessment, options).has_changes?
+                  @assessment.transform = {
+                    questions: params_root[:questions],
+                    settings:  params_root[:settings],
+                    answers:   params_root[:answers]
+                  }
+                end
               end
             else
               @assessment.questions = params_root[:questions]

@@ -26,7 +26,7 @@ module Thinkspace; module ReadinessAssurance; module Sync; class Assessment
         assessment.questions = @assessment.questions if @options.dig('questions').present?
         assessment.answers   = @assessment.answers   if @options.dig('answers').present?
         if has_transform
-          assessment.transform = {} unless assessment.transform.present?
+          assessment.transform = generate_default_transform(assessment) unless assessment.transform.present?
           set_nested_value(assessment.transform, 'questions', @assessment.transform['questions'])
           set_nested_value(assessment.transform, 'answers', @assessment.transform['answers'])
         end
@@ -107,6 +107,12 @@ module Thinkspace; module ReadinessAssurance; module Sync; class Assessment
       ## certain settings keys should not be modified - ie 'ra_type', others should only be modified conditionally
 
     end
+  end
+
+  def generate_default_transform(assessment)
+    {
+      settings: assessment.settings
+    }
   end
 
   def set_nested_value(hash, *keys, value)

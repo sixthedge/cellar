@@ -58,8 +58,6 @@ export default step.extend changeset_helpers,
       correct:           [v_integer, v_presence, v_positive],
       no_answer:         [v_integer, v_presence]
 
-    console.log "trat:", trat_assessment
-    console.log "column:", manager.get_column('trat', 'settings.scoring')
     trat_scoring_cs = totem_changeset.create trat_assessment.get(manager.get_column('trat', 'settings.scoring')),
       attempted:         [v_integer, v_presence, v_positive],
       incorrect_attempt: [v_integer, v_presence, v_positive]
