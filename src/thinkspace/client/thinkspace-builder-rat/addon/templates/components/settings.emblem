@@ -5,7 +5,6 @@ if step.loading.all
 else
   .main-content
     .grid__container--flex.spacing__margin-bottom--4
-
       component 'settings/content' model=model step=step class='grid__col--3of4 grid__mobile--full-width'
       component 'progress' model=model class='grid__col--1of4 grid__mobile--hidden'
     .grid__container--flex.spacing__margin-bottom--4.grid__mobile--hidden

@@ -5,11 +5,6 @@ partial 'components/header'
     .grid__col--3of4.grid__mobile--full-width
       .main-content__header
         h1 Readiness Assurance Test Content
-      = step.manager.has_transform
-      = step.manager.has_irat_transform
-      = step.manager.has_trat_transform
-
-
       if step.loading.all
         component '__loader/base'
       else
