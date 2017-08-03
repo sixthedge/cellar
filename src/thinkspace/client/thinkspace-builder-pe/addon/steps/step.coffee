@@ -15,6 +15,9 @@ export default ember.Object.extend common_helper,
   set_loading:      (type) -> @set("loading.#{type}", true); false
   reset_loading:    (type) -> @set("loading.#{type}", false); false
 
+  set_all_data_loaded: -> @set 'all_data_loaded', true
+  reset_all_data_loaded: -> @set 'all_data_loaded', false
+
   init: ->
     @_super()
     @set('loading', new Object)

@@ -1,5 +1,35 @@
 if all_data_loaded 
-  unless model.active_assignments
+  if model.assignments
+    .grid__container--flex.spacing__margin-bottom--4
+      .grid__col--3of4.grid__mobile--full-width
+        if model.active_assignments
+          h2.spacing__margin-top--0 Recent Exercises
+          ul.tile__list.spacing__margin-bottom--4
+            each model.active_assignments as |case|
+              component 'case' model=case
+
+
+        if can.update
+          .space-content_container.spacing__margin-bottom--4
+            .space-content_heading
+              h2 Draft Exercises
+            if model.draft_assignments
+              ul.tile__list
+                each model.draft_assignments as |case|
+                  component 'case' model=case
+            else
+              h5 No draft Exercises.
+
+          .space-content_container.spacing__margin-bottom--4
+            .space-content_heading
+              h2 Archived Exercises
+            if model.archived_assignments
+              ul.tile__list
+                each model.archived_assignments as |case|
+                  component 'case' model=case
+            else
+              h5 No archived Exercises. 
+  else
     .illustration-msg__container
       .illustration-msg.illustration-msg--center.illustration-msg--img-top
         .illustration-msg__img-container.illustration-msg__img--200
@@ -11,37 +41,6 @@ if all_data_loaded
               | Click on the <strong>New Exercise</strong> button to create one.
           else
             p You'll be able to access them here once they're released.
-
-  .grid__container--flex.spacing__margin-bottom--4
-    .grid__col--3of4.grid__mobile--full-width
-      if model.assignments
-        if model.active_assignments
-          h2.spacing__margin-top--0 Recent Exercises
-          ul.tile__list.spacing__margin-bottom--4
-            each model.active_assignments as |case|
-              component 'case' model=case
-
-
-      if can.update
-        .space-content_container.spacing__margin-bottom--4
-          .space-content_heading
-            h2 Draft Cases
-          if model.draft_assignments
-            ul.tile__list
-              each model.draft_assignments as |case|
-                component 'case' model=case
-          else
-            h5 No draft cases.
-
-        .space-content_container.spacing__margin-bottom--4
-          .space-content_heading
-            h2 Archived Cases
-          if model.archived_assignments
-            ul.tile__list
-              each model.archived_assignments as |case|
-                component 'case' model=case
-          else
-            h5 No archived cases.
 else
   .loader__container
     .loader.loader--logo

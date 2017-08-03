@@ -75,6 +75,13 @@ module Thinkspace; module PeerAssessment
     def get_ownerable;  get_review_set.ownerable; end
     def get_authable;   get_assessment.authable; end
 
+    def self.scope_by_review_sets(review_sets)
+      where(thinkspace_peer_assessment_review_set: review_sets)
+    end
+
+    def self.scope_by_reviewable(reviewable)
+      where(reviewable: reviewable)
+    end
 
   end
 end; end;
