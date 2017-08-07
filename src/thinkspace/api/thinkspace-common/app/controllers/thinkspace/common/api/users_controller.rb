@@ -51,6 +51,7 @@ module Thinkspace
         end
 
         include ::Totem::Settings.module.thinkspace.session_user_actions
+        include ::Totem::Settings.module.thinkspace.lti_user_actions
 
         private
 

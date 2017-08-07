@@ -48,6 +48,7 @@ Thinkspace::Common::Engine.routes.draw do
         collection do
           post :sign_in
           post :sign_out
+          post :sign_in_lti
           get  :stay_alive
           get  :validate
         end
