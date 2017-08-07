@@ -15,8 +15,13 @@ export default base.extend
   init_base: ->
     @set_loading 'all'
     @get_report().then (report) =>
-      report.get('authable').then (assignment) =>
-        assignment.get('space').then (space) =>
+      report.get('authable').then (authable) =>
+        model_name         = authable.get('constructor.modelName').split('/').pop()
+        models             = {}
+        models[model_name] = authable
+        @get('thinkspace').set_current_models(models).then =>
+          @set 'assignment', @get('thinkspace').get_current_assignment()
+          @set 'space', @get('thinkspace').get_current_space()
           @reset_loading 'all'
 
   get_report: ->
