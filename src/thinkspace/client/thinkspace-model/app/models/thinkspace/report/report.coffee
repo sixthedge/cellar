@@ -2,6 +2,7 @@ import ember from 'ember'
 import ta    from 'totem/ds/associations'
 
 export default ta.Model.extend ta.add(
+    ta.polymorphic 'authable'
     ta.has_many  'report:files', reads: {}
   ), 
 
