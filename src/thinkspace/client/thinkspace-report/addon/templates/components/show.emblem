@@ -18,10 +18,10 @@ mount 'thinkspace-toolbar'
             .text__font-size--14.spacing__margin-bottom--half
               strong Space:  
               span
-                = model.authable.space.title
+                = space.title
             .text__font-size--14.spacing__margin-bottom--half
               strong Exercise:  
-              span = model.authable.title
+              span = assignment.title
             .text__font-size--14.spacing__margin-bottom--1
               strong File name:  
               span
