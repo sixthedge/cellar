@@ -11,7 +11,7 @@ fieldset.forms__section
         component '__dropdown' collection=user_templates display_property='title' text=selected_template.title selected=selected_template select_action='select_assessment_template' action_receiver=this
         br
 
-    .btn-group
+    .btn-group.spacing__margin-top--1
       button.btn.btn--primary{action 'confirm'}
         | Select Template
       if is_editing_template

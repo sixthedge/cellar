@@ -2,7 +2,7 @@ fieldset
   if has_label
     label id=label_id #{label}
     if has_summary
-      span #{summary}
+      .forms__label-summary.spacing__margin-bottom--1 #{summary}
   .radio__group role='radiogroup' aria-labelledby=label_id
     each choices as |choice|
       component '__accessibility/radio/choice' model=choice name=name group_value=value changed='changed' delayed='delayed'
