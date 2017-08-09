@@ -3,10 +3,11 @@ li.tile__container
     h1.tile__name = model.title
     .tile__sub-caption Summer 2017
     div.group
-      span.tile__info.is-left 
+      .tile__info.is-left 
         if has_owners
+          span.text--bold Instructors:
           each model.owners as |owner|
-            span #{owner.display_name}
+            span.spacing__margin-left--half #{owner.display_name}
         else
           span No Instructors
       .tile__status.tile__status--live.is-right Live
