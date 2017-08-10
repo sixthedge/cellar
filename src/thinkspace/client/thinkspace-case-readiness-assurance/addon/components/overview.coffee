@@ -46,6 +46,10 @@ export default base.extend
     trat = assessments.findBy('is_trat', true)
     @set('irat', irat) if ember.isPresent(irat)
     @set('trat', trat) if ember.isPresent(trat)
+    assessments = []
+    assessments.pushObject(irat) if ember.isPresent(irat)
+    assessments.pushObject(trat) if ember.isPresent(trat)
+    @set 'assessments', assessments
 
   actions:
     set_loading:   (type) -> @set_loading(type); false

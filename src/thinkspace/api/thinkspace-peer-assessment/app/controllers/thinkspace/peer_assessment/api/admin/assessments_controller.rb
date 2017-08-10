@@ -37,6 +37,12 @@ module Thinkspace; module PeerAssessment; module Api; module Admin;
       @assessment.save ? controller_render(@assessment) : controller_render_error(@assessment)
     end
 
+    def revert
+      @assessment.transform = Hash.new
+      @assessment.save
+      controller_render(@assessment)
+    end
+          
     def activate
       access_denied_state_error :activate unless @assessment.may_activate?
       phase = @assessment.authable

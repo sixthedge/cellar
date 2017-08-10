@@ -11,6 +11,8 @@ module Thinkspace; module ReadinessAssurance; module Reconcilers
     # - update the assessment's data to the transform
     # - rescore the responses
 
+    ## TODO: Remove delta code here, use readiness_assurance/deltas/assignment object
+
     attr_reader :assignment, :options, :phase, :assessment, :transform, :questions_by_id, :transform_questions_by_id, :delta
 
     # ### Initialization

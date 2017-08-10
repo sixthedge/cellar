@@ -21,6 +21,7 @@ module Thinkspace; module ReadinessAssurance; module Deltas
         @transform_questions_by_id  = Hash.new; @transform[questions_key].each { |q| @transform_questions_by_id[q['id']] = q }
       end
       @delta = { questions: [], settings: {}}
+      process
     end
 
     # ### Processing
@@ -73,7 +74,7 @@ module Thinkspace; module ReadinessAssurance; module Deltas
     def add_dirty_question_delta(id);   @delta[:questions] << {id: id, new: false, deleted: false, dirty: true }; end
 
     # ### Helpers
-    def get_question_is_reordered?(id)
+    def get_question_is_reordered(id)
       get_question_index(id) != get_transform_question_index(id)
     end
 

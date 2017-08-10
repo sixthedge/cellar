@@ -26,11 +26,18 @@ module Thinkspace
                 end
               end
             else
+              puts "has no responses"
               @assessment.questions = params_root[:questions]
               @assessment.settings  = params_root[:settings]
               @assessment.answers   = params_root[:answers]
             end       
             controller_save_record(@assessment)
+          end
+
+          def revert
+            @assessment.transform = Hash.new
+            @assessment.save
+            controller_render(@assessment)
           end
 
           def progress_report

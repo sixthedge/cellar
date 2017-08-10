@@ -3,6 +3,7 @@ module Thinkspace; module PeerAssessment; module Concerns; module SerializerOpti
     # Thinkspace::PeerAssessment::Concerns::SerializerOptions::Admin::Assessments
     # ---
     def update(serializer_options); end
+    def revert(serializer_options); end
 
     def teams(serializer_options)
       serializer_options.include_association :thinkspace_common_users, scope: :root # Root are teams.

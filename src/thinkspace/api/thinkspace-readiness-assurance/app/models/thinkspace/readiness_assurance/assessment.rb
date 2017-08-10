@@ -44,7 +44,7 @@ module Thinkspace
       def get_assignment; authable.thinkspace_casespace_assignment; end
 
       def sync(options)
-        Thinkspace::ReadinessAssurance::Sync::Assessment.new(options, self).sync
+        Thinkspace::ReadinessAssurance::Sync::Assessment.new(options, self).process
       end
 
       def get_settings; self.settings || Hash.new; end
