@@ -6,11 +6,38 @@ module Thinkspace
           load_and_authorize_resource class: totem_controller_model_class, except: [:progress_report]
 
           def update
-            @assessment.questions = params_root[:questions]
-            @assessment.settings  = params_root[:settings]
-            @assessment.answers   = params_root[:answers]
-            #@assessment.sync_assessments
+            if Thinkspace::ReadinessAssurance::Assessment.assignment_has_responses?(@assessment.get_assignment)
+              if @assessment.transform.present?
+                @assessment.transform = params_root[:transform]
+              else 
+                options = {
+                  transform: params_root,
+                  questions: {
+                    label: true,
+                    order: true
+                  }
+                }
+                if Thinkspace::ReadinessAssurance::Deltas::Assessment.new(@assessment, options).has_changes?
+                  @assessment.transform = {
+                    questions: params_root[:questions],
+                    settings:  params_root[:settings],
+                    answers:   params_root[:answers]
+                  }
+                end
+              end
+            else
+              puts "has no responses"
+              @assessment.questions = params_root[:questions]
+              @assessment.settings  = params_root[:settings]
+              @assessment.answers   = params_root[:answers]
+            end       
             controller_save_record(@assessment)
+          end
+
+          def revert
+            @assessment.transform = Hash.new
+            @assessment.save
+            controller_render(@assessment)
           end
 
           def progress_report

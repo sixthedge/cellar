@@ -19,12 +19,30 @@ module Thinkspace; module PeerAssessment; module Api; module Admin;
     # - `team_sets`
     # - `progress_reports`
     def update
-      access_denied_state_error :update if @assessment.active?
-      @assessment.value = params_root[:value]
+      #access_denied_state_error :update if @assessment.active?
+
+      if @assessment.has_reviews?
+        if @assessment.transform.present?
+          @assessment.transform = params_root[:transform]
+        else
+          @assessment.transform = {
+            value: params_root[:value],
+            assessment_template_id: params_root[:assessment_template_id]
+          }
+        end
+      else
+        @assessment.value = params_root[:value]
+      end
       @assessment.assessment_template_id = params_association_id(:assessment_template_id)
       @assessment.save ? controller_render(@assessment) : controller_render_error(@assessment)
     end
 
+    def revert
+      @assessment.transform = Hash.new
+      @assessment.save
+      controller_render(@assessment)
+    end
+          
     def activate
       access_denied_state_error :activate unless @assessment.may_activate?
       phase = @assessment.authable

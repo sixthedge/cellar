@@ -1,0 +1,14 @@
+.dialogue.dialogue--blue.grid__container--centered.dialogue--shadow
+  h1 Are you sure you want to save these changes?
+  
+  p 
+    strong Students will have their work reset for any questions that were modified in this exercise.
+  p  
+    | Affected students will have their exercises unlocked and be notified by email to re-submit their work.
+
+  .btn-group
+    button.btn.btn--primary click='confirm'
+      | Save Changes
+    button.btn click='deny'
+      | Cancel
+

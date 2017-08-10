@@ -35,8 +35,16 @@ module Thinkspace
         end
       end
 
+      def self.assignment_has_responses?(assignment)
+        phases = assignment.thinkspace_casespace_phases
+        assessments = self.where(authable: phases)
+        assessments.any? { |a| a.has_responses? }
+      end
+
+      def get_assignment; authable.thinkspace_casespace_assignment; end
+
       def sync(options)
-        Thinkspace::ReadinessAssurance::Sync::Assessment.new(options, self).sync
+        Thinkspace::ReadinessAssurance::Sync::Assessment.new(options, self).process
       end
 
       def get_settings; self.settings || Hash.new; end
@@ -46,6 +54,48 @@ module Thinkspace
       def trat?; get_ra_type == 'trat'; end
 
       def ifat?; get_settings.dig('questions', 'ifat') == true; end
+
+      def has_responses?
+        Thinkspace::ReadinessAssurance::Response.where(assessment_id: self.id).count > 0
+      end
+
+      def default_irat_settings
+        {
+          ra_type: 'irat',
+          next_id: 0,
+          questions: {
+            type:          'multiple_choice',
+            random:        false,
+            ifat:          false,
+            justification: true
+          },
+          scoring: {
+            correct:           5,
+            attempted:         1,
+            no_answer:         0,
+            incorrect_attempt: -1
+          }
+        }
+      end
+
+      def default_trat_settings
+        {
+          ra_type: 'trat',
+          next_id: 0,
+          questions: {
+            type:          'multiple_choice',
+            random:        false,
+            ifat:          false,
+            justification: true
+          },
+          scoring: {
+            correct:           5,
+            attempted:         1,
+            no_answer:         0,
+            incorrect_attempt: -1
+          }
+        }
+      end
 
       # ###
       # ### Question Helpers.

@@ -7,23 +7,23 @@
   h3 Scoring
   label Maximum points per question
   p.text__font-size--14.spacing__margin-top--0 
-    = step.irat_assessment.settings.scoring.correct
+    = comp_correct
 
   label Points given for no answer
   p.text__font-size--14.spacing__margin-top--0 
-    = step.irat_assessment.settings.scoring.no_answer
+    = comp_no_answer
 
   label Immediate Feedback (IFAT) enabled?
   p.text__font-size--14.spacing__margin-top--0
-    if step.trat_assessment.settings.questions.ifat
+    if comp_ifat
       | Yes
     else
       | No
 
-  if step.trat_assessment.settings.questions.ifat
+  if comp_ifat
     label Number of attempts allowed
     p.text__font-size--14.spacing__margin-top--0 
-      = step.trat_assessment.settings.scoring.attempted
+      = comp_attempted
 
     label Number of points deducted per incorrect response
     p.text__font-size--14.spacing__margin-top--0 
@@ -31,7 +31,7 @@
 
   label Questions require justification?
   p.text__font-size--14.spacing__margin-top--0
-    if step.irat_assessment.settings.questions.justification
+    if comp_justification
       | Yes
     else
       | No

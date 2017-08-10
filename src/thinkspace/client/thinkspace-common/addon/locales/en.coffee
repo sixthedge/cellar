@@ -310,7 +310,11 @@ export default {
           peer_assessment:
             assessment:
               approve: 'Results sent successfully.'
-              approve_team_sets: 'All teams approved successfully'
+              approve_team_sets: 'All teams approved successfully.'
+              save: 'Peer evaluation saved successfully.'
+              submit: 'Peer evaluation submitted successfully.'
+              explode: 'Peer evaluation changes saved successfully. Notifications will be sent to any students affected.'
+              revert:  'Peer evaluation changes reverted successfully.'
             review:
               save: 'Evaluation saved successfully.'
             review_set:
@@ -323,7 +327,9 @@ export default {
           readiness_assurance:
             assessment:
               save: 'Readiness assurance assessment saved successfully.'
-              submit: 'Peer evaluation submitted successfully.'
+              submit: 'Readiness assurance assessment submitted successfully.'
+              explode: 'Readiness assurance assessment changes saved successfully.'
+              revert: 'Readiness assurance assessment changes reverted successfully.'
             team_set:
               approve: 'Team evaluations approved successfully.'
               unapprove: 'Team evaluations unapproved successfully.'

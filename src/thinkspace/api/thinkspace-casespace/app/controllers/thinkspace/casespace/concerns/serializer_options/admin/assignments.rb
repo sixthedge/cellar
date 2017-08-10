@@ -38,7 +38,8 @@ module Thinkspace
             def phase_componentables(serializer_options); end
             def activate(serializer_options);   end
             def inactivate(serializer_options); end
-            def archive(serializer_options); end            
+            def archive(serializer_options); end
+            def explode(serializer_options); end            
 
             def self.metadata_assignment(controller, record, ownerable); record.serializer_metadata(ownerable, controller.get_serializer_options); end
 

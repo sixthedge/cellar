@@ -42,9 +42,7 @@ export default ta.Model.extend ta.totem_data, ta.add(
     new Date(due_at).getTime() < new Date().getTime()
 
   # ## Friendly times
-  friendly_due_at:     ember.computed 'metadata.due_at',     -> 
-    console.log "DUE AT: ", @get('due_at')
-    @format_time('due_at')
+  friendly_due_at:     ember.computed 'metadata.due_at',     -> @format_time('due_at')
   friendly_unlock_at:  ember.computed 'metadata.unlock_at',  -> @format_time('unlock_at')
   friendly_release_at: ember.computed 'metadata.release_at', -> @format_time('release_at')
 

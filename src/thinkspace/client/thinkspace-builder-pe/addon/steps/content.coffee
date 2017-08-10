@@ -5,6 +5,7 @@ import totem_changeset from 'totem/changeset'
 import ta              from 'totem/ds/associations'
 import totem_scope     from 'totem/scope'
 import step            from './step'
+import util            from 'totem/util'
 
 ###
 # # content.coffee
@@ -33,6 +34,8 @@ export default step.extend
   has_quant_items: ember.computed.notEmpty 'manager.quant_items'
 
   ## API Methods
+
+  get_column: (col) -> @get('manager').get_column(col)
 
   create_changesets: ->
     model         = @get('model')
@@ -80,7 +83,6 @@ export default step.extend
 
   update_model: -> 
     manager = @get('manager')
-    console.log('calling step update_model with manager ', manager)
     manager.save_model()
 
   set_manager_model: ->
@@ -132,12 +134,21 @@ export default step.extend
   select_template: (template) -> @set('template', template) if ember.isPresent(template)
   
   confirm_template: (template=null) -> 
-    manager   = @get('manager')
-    changeset = @get('assessment_changeset')
-    template  = @get('template') unless ember.isPresent(template)
-    changeset.set ns.to_p('assessment_template'), template
-    changeset.set 'value', template.get('value')
+    manager    = @get('manager')
+    changeset  = @get('assessment_changeset')
+    assessment = @get('assessment')
+    template   = @get('template') unless ember.isPresent(template)
+
+    if assessment.get('has_transform')
+      util.set_path_value(changeset, @get_column(ns.to_p('assessment_template')), template)
+      util.set_path_value(changeset, 'transform.assessment_template_id', template.get('id'))
+      util.set_path_value(changeset, 'transform.value', template.get('value'))
+    else
+      changeset.set ns.to_p('assessment_template'), template
+      changeset.set 'value', template.get('value')
+
     changeset.execute()
+
     manager.confirm_template().then =>
       @set('template', template)
       @create_changesets()
@@ -152,8 +163,6 @@ export default step.extend
 
   add_item_with_type: (type) ->
     manager = @get('manager')
-    console.log('calling add_item_with_type ', type, @get('loading'))
-
     @set_loading("#{type}")
     manager.add_item_with_type(type).then =>
       @reset_loading("#{type}")

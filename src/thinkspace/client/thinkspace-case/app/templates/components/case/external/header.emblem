@@ -7,10 +7,9 @@
       h1.text--inline-block = model.title
       if model.can.update
         .btn-group.is-right
-          if model.is_inactive
-            unless loading.link
-              link-to-external link model class='btn btn--primary'
-                | Edit Exercise
+          unless loading.link
+            link-to-external link model class='btn btn--primary'
+              | Edit Exercise
           else
             button.btn.btn--disabled title='Cannot edit an active exercise'
               | Edit Exercise

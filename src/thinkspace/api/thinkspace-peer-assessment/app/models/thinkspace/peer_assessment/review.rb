@@ -40,7 +40,7 @@ module Thinkspace; module PeerAssessment
     def reset_quantitative_data
       return unless self.value.present?
       val = self.value.deep_dup
-      val['quantitative'] = []
+      val['quantitative'] = {}
       self.value = val
       self.save
     end

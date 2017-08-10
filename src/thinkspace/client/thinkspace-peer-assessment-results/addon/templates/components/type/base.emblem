@@ -12,7 +12,7 @@
     .menu-bar
       ul.menu-bar__list
         li.menu-bar__item
-          a class='menu-bar__link'
+          link-to-external 'cases_show' assignment class='menu-bar__link' tabindex='0'
             | Overview
         li.menu-bar__item
           a class='menu-bar__link active'

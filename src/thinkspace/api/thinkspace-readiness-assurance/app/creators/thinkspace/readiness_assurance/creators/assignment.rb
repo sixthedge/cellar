@@ -31,26 +31,40 @@ module Thinkspace; module ReadinessAssurance; module Creators
     end
 
     def create_assessment(phase, type, ifat)
-      @assessment = assessment_class.create(
-        authable: phase,
-        settings: {
-          ra_type: type,
-          next_id: 0,
-          questions: {
-            type:          'multiple_choice',
-            random:        false,
-            ifat:          ifat,
-            justification: true
-          },
-          scoring: {
-            correct:           5,
-            attempted:         1,
-            no_answer:         0,
-            incorrect_attempt: -1
-          }
-        },
-        questions: []
-      )
+      @assessment = assessment_class.new
+      @assessment.authable = phase
+      if type == 'irat'
+        @assessment.settings = @assessment.default_irat_settings
+      elsif type == 'trat'
+        @assessment.settings = @assessment.default_trat_settings
+      end
+
+      @assessment.settings['questions']['ifat'] = ifat
+      @assessment.questions = []
+      @assessment.save
+
+
+      # @assessment = assessment_class.create(
+      #   authable: phase,
+      #   settings: {
+      #     ra_type: type,
+      #     next_id: 0,
+      #     questions: {
+      #       type:          'multiple_choice',
+      #       random:        false,
+      #       ifat:          ifat,
+      #       justification: true
+      #     },
+      #     scoring: {
+      #       correct:           5,
+      #       attempted:         1,
+      #       no_answer:         0,
+      #       incorrect_attempt: -1
+      #     }
+      #   },
+      #   questions: []
+      # )
+
       create_header_component(phase)
       create_phase_component(phase, assessment, 'readiness-assurance', 'rat')
       create_submit_component(phase)

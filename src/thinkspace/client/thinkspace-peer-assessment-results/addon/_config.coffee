@@ -6,7 +6,7 @@ export default {
 
   engine:
     mount:           {as: 'pe-results'}
-    external_routes: [{login: 'users.sign_in'}]
+    external_routes: [{login: 'users.sign_in'}, 'cases_show']
 
   add_engines: [
     'thinkspace-message'

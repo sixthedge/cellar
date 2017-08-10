@@ -11,6 +11,7 @@ Thinkspace::PeerAssessment::Engine.routes.draw do
           put  :activate,    on: :member
           get  :progress_report, on: :member
           put  :approve_team_sets, on: :member
+          put  :revert, on: :member
         end
 
         resources :reviews, only: [] do

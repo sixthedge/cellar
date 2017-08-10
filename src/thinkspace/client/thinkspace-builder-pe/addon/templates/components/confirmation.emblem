@@ -9,6 +9,9 @@ partial 'components/header'
           h1 Peer Evaluation Confirmation
           p Make sure everything looks fine
 
+        if step.has_transform
+          component '__case/edit/persist_changes' type='pe' model=step.assignment loader_key='all' assessments=step.assessment set_loading='set_loading' reset_loading='reset_loading'
+
         component 'confirmation/details'
         hr
         component 'confirmation/content'

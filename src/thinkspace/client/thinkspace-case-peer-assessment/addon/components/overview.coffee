@@ -162,3 +162,6 @@ export default base.extend
     @totem_scope.add_authable_to_query(options)
     options
 
+  actions:
+    set_loading:   (type) -> @set_loading(type); false
+    reset_loading: (type) -> @reset_loading(type); false

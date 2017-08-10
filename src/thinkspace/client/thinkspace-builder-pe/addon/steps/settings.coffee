@@ -32,15 +32,13 @@ export default step.extend
 
   initialize: ->
     @set('model', @get('builder.model'))
-    @create_changeset()
+    @create_changeset() unless ember.isPresent(@get('changeset'))
 
   save: ->
     new ember.RSVP.Promise (resolve, reject) =>
       changeset = @get('changeset')
-      changeset.save()
-      @get('model').save().then (saved_model) =>
-        resolve(saved_model)
-      , (error) => reject(error)
+      changeset.save().then =>
+        resolve()
 
   validate: ->
     new ember.RSVP.Promise (resolve, reject) =>

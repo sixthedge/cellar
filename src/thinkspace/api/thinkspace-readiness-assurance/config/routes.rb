@@ -42,6 +42,7 @@ Thinkspace::ReadinessAssurance::Engine.routes.draw do
           end
           member do
             post :sync
+            put  :revert
           end
         end
         

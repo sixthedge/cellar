@@ -34,8 +34,9 @@ export default ember.Object.extend array_helpers, changeset_helpers,
 
   init_answer: ->
     manager = @get('manager')
-    irat    = manager.get_assessment(@get('type'))
-    ans     = irat.get_answer_by_id(@get('id'))
+    #irat    = manager.get_assessment(@get('type'))
+    ans = manager.get_answer_by_id(@get('type'), @get('id'))
+    #ns     = irat.get_answer_by_id(@get('id'))
     @set('answer', ans)
 
   #######

@@ -195,6 +195,33 @@ module Thinkspace
         end
       end
 
+      def explode
+        ActiveRecord::Base.transaction do
+          phase_components = Thinkspace::Casespace::PhaseComponent.where(phase_id: thinkspace_casespace_phases.pluck(:id))
+          reconcilers      = Array.new
+          phase_components.each do |phase_component|
+            path = phase_component.componentable_type.split('::')
+            path.pop
+            path << 'Reconcilers' << 'Assignment'
+            path  = path.join('::')
+            klass = path.safe_constantize
+            if klass.present?
+              reconciler = klass.new(self, phase: phase_component.thinkspace_casespace_phase, componentable: phase_component.componentable)
+              reconciler.process
+              reconcilers << reconciler 
+            end
+          end
+
+          #assignment.notify_assignment_explode(reconcilers)
+        end
+      end
+
+      def notify_assignment_explode(reconcilers)
+        phases = reconcilers.map { |r| r.get_phase }
+        phases = phases.uniq
+        # TODO: Finish
+      end
+
       private
 
       def get_clone_associations(options={})

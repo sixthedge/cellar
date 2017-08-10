@@ -6,7 +6,7 @@ module Thinkspace; module PeerAssessment
 
     # ### States
     include AASM
-   
+
     aasm column: :state do
       state :neutral, initial: true
       state :approved
@@ -21,14 +21,29 @@ module Thinkspace; module PeerAssessment
       end
     end
 
-    def quantitative_items
-      return [] unless value.has_key?('quantitative')
-      value['quantitative']
+    def has_reviews?
+      true
+      # reviews = get_reviews
+      # return false unless reviews.present?
+      # reviews.count > 0
+    end
+
+    def get_reviews
+      ts = self.thinkspace_peer_assessment_team_sets.pluck(:id)
+      return nil unless ts.present?
+      rs = Thinkspace::PeerAssessment::ReviewSet.where(team_set_id: ts)
+      return nil unless rs.present?
+      Thinkspace::PeerAssessment::Review.where(review_set_id: rs)
     end
 
     def quantitative_items
       return [] unless value.has_key?('quantitative')
       value['quantitative']
+    end
+
+    def qualitative_items
+      return [] unless value.has_key?('qualitative')
+      value['qualitative']
     end
 
     def options
@@ -40,7 +55,7 @@ module Thinkspace; module PeerAssessment
       options['type']
     end
 
-    def is_balance_points?
+    def is_balance?
       assessment_type == 'balance'
     end
 
