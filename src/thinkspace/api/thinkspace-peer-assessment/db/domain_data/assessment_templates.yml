@@ -24,7 +24,7 @@
             min: Low
             max: High
         points:
-          min: 1
+          min: 0
           max: 15
     qualitative:
     - id: 0

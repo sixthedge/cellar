@@ -5,32 +5,21 @@ const {
 } = ember;
 
 export default function validateComparison(options = {}) { 
-  return (key, newValue, oldValue, changes) => {
+  return (key, newValue, oldValue, changes, content) => {
 
-    // We're trying to mirror the behavior of isNumber with our options as much as possible
-
-    let initialVal = options['initial_val'];
-    let otherVal   = get(changes, options['val']);
-    let value      = initialVal;
-    let thisVal    = newValue;
+    let new_value  = newValue; // Underscoring
+    let compare_to = get(changes, options['compare_to']) || get(content, options['compare_to']);
     let type       = options['type'];
 
-    console.log('[comp] changes are ', changes);
-    console.log('[comp] comparing ', initialVal, otherVal, value, thisVal);
-
-    if (ember.isPresent(otherVal)) {
-      value = otherVal;
-    }
-
-    if (type === 'is' && value !== thisVal) {
+    if (type === 'is' && value !== new_value) {
       return options.message;
-    } else if (type === 'lt' && thisVal >= value) {
+    } else if (type === 'lt' && new_value >= compare_to) {
       return options.message;
-    } else if (type === 'lte' && thisVal > value) {
+    } else if (type === 'lte' && new_value > compare_to) {
       return options.message;
-    } else if (type === 'gt' && thisVal <= value) {
+    } else if (type === 'gt' && new_value <= compare_to) {
       return options.message;
-    } else if (type === 'gte' && thisVal < value) {
+    } else if (type === 'gte' && new_value < compare_to) {
       return options.message;
     }
     return true;

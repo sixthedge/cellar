@@ -80,7 +80,7 @@ export default ember.Mixin.create
       model = @get('model')
       if step.save?
         step.save().then =>
-          totem_messages.api_success source: @, model: model, action: 'update', i18n_path: ns.to_o('assignment', 'save')
+          totem_messages.api_success source: @, model: model, action: 'update', i18n_path: ns.to_o('tbl:assessment', 'save')
           resolve()
         , (error) => 
           totem_messages.api_failure error, source: @, model: model, action: 'update'

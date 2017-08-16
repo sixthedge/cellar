@@ -53,9 +53,9 @@ export default step.extend
     questions.forEach (question) =>
       id = question.id
       i  = questions.indexOf(question)
-      if !i_ids.contains(id) || (i_ids.contains(id) && d_ids.contains(id))
+      if !i_ids.includes(id) || (i_ids.includes(id) && d_ids.includes(id))
         q_item = @create_question_item(@get('irat_type'), question)
-        if d_ids.contains(id)
+        if d_ids.includes(id)
           cur_item = items.filter((item) -> item.get('id') == id).get('firstObject')
           index    = items.indexOf(cur_item)
           items.removeAt(index)
@@ -69,7 +69,7 @@ export default step.extend
     q_ids = questions.mapBy('id')
     i_ids = items.mapBy('id')
 
-    del = i_ids.filter ((id) -> !q_ids.contains(id))
+    del = i_ids.filter ((id) -> !q_ids.includes(id))
     del.forEach (id) => items.removeObject(items.findBy('id', id))
 
     new_ids.forEach (id) => items.findBy('id', id).set('is_new', true)

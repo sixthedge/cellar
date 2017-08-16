@@ -309,6 +309,7 @@ export default {
               destroy: 'Tag removed successfully.'
           peer_assessment:
             assessment:
+              save: 'Exercise saved successfully.'
               approve: 'Results sent successfully.'
               approve_team_sets: 'All teams approved successfully'
             review:

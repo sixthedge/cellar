@@ -1,7 +1,7 @@
 import ember           from 'ember'
 import totem_changeset from 'totem/changeset'
 import base            from 'thinkspace-base/components/base'
-import v_comparison    from 'thinkspace-builder-pe/validators/comparison'
+import vcomparison     from 'thinkspace-builder-pe/validators/comparison'
 
 
 export default base.extend
@@ -41,8 +41,8 @@ export default base.extend
     vpresence = totem_changeset.vpresence(true)
 
     changeset = totem_changeset.create model,
-      due_at:    [v_comparison({initial_val: model.get('unlock_at'), val: 'unlock_at', message: 'Release date must be set before the due date', type: 'gt'})],
-      unlock_at: [v_comparison({initial_val: model.get('due_at'),    val: 'due_at',    message: 'Release date must be set before the due date', type: 'lt'})]
+      due_at:    [vcomparison({compare_to: 'unlock_at', type: 'gt', message: 'Release date must be set before the due date'})],
+      unlock_at: [vcomparison({compare_to: 'due_at',    type: 'lt', message: 'Release date must be set before the due date',})]
     changeset.set('configuration', null) # No configuration changes are made here.
     @set('changeset', changeset)
 

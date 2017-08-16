@@ -23,17 +23,11 @@ export default step.extend
 
   create_changeset: ->
     model     = @get('model')
-    console.log('calling create_changeset')
-
     vpresence = totem_changeset.vpresence(presence: true)
     vlength   = totem_changeset.vlength(min: 4)
-
     changeset = totem_changeset.create model,
       title:        [vpresence, vlength]
       instructions: [vpresence]
-
-    console.log('[DETAILS STEP] creating changeset ', changeset)
-
     changeset.set 'show_errors', true
     @set 'changeset', changeset
 
