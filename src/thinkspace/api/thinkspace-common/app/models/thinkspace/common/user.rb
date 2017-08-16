@@ -115,7 +115,10 @@ module Thinkspace
       # end
 
       # ### Callbacks
-      def callback_new_api_session; self.touch(:last_sign_in_at); end
+      def callback_new_api_session
+        self.activate! if self.may_activate?
+        self.touch(:last_sign_in_at)
+      end
 
       totem_associations
     end

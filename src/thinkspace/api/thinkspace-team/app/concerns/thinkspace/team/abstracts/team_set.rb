@@ -21,9 +21,7 @@ module Thinkspace; module Team; module Abstracts
 
     def process_users
       # Writing `assigned` since the `id` value is needed for unassigned the way it is currently written.
-      @assigned         = get_assigned
-      @unassigned       = get_relational_unassigned
-      @results['users'] = @assigned + @unassigned
+      @results['users'] = get_relational_users
     end
 
     def process_teams
@@ -31,31 +29,12 @@ module Thinkspace; module Team; module Abstracts
     end
 
     # # Querying
-    def get_users
-      to_pluck = ['id', 'first_name', 'last_name']
-      values   = @space.thinkspace_common_users.pluck(*to_pluck)
-      pluck_to_hash(values, abstract_keys)
+    def get_relational_users
+      to_pluck = ['id', 'first_name', 'last_name', 'email']
+      values   = @space.thinkspace_common_users.distinct.pluck(*to_pluck)
+      pluck_to_hash(values, ['id', 'first_name', 'last_name', 'email'])
     end
 
-    def get_relational_assigned
-      to_pluck = ['thinkspace_common_users.id', 'thinkspace_common_users.first_name', 'thinkspace_common_users.last_name', 'thinkspace_team_teams.id']
-      values   = @teams.joins(:thinkspace_common_users).distinct.pluck(*to_pluck)
-      pluck_to_hash(values, abstract_keys)
-    end
-
-    def get_relational_unassigned
-      to_pluck = ['id', 'first_name', 'last_name']
-      values   = @space.thinkspace_common_users.where.not(id: assigned_ids).distinct.pluck(*to_pluck)
-      pluck_to_hash(values, abstract_keys)
-    end
-
-    def get_relational_teams
-      to_pluck = ['id', 'title']
-      values   = @teams.pluck(*to_pluck)
-      pluck_to_hash(values, to_pluck)
-    end
-
-    def get_assigned; json_query(assigned_json_query); end
     def get_teams; json_query(teams_json_query); end
 
     def json_query(query)
@@ -112,7 +91,7 @@ module Thinkspace; module Team; module Abstracts
     end
 
     # # Helpers
-    def abstract_keys; ['id', 'first_name', 'last_name', 'team_id']; end
+    def abstract_keys; ['id', 'first_name', 'last_name', 'team_id', 'email']; end
     def assigned_ids; @assigned.map { |u| u['id'] }.uniq; end
     def joined_team_set_ids; [@team_set.id].join(','); end
     def json_column; @team_set.has_transform? ? 'transform' : 'scaffold'; end

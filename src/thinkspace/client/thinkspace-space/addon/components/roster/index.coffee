@@ -28,11 +28,10 @@ export default base.extend
   # ## Sorting/column helpers
   get_columns: ->
     [
-      column.create({display: 'Last Name',  property: 'last_name', direction: 'ASC'})
-      column.create({display: 'First Name', property: 'first_name'}),
-      column.create({display: 'Email',      property: 'email'}),
-      column.create({display: 'I. Status',  property: 'invitation_status', sortable: false}),
-      column.create({display: 'Status',     component: 'roster/space_users/state', data: {space: @get('model')}})
+      column.create({display: 'Last Name',      property: 'last_name', direction: 'ASC'})
+      column.create({display: 'First Name',     property: 'first_name'}),
+      column.create({display: 'Email',          property: 'email'}),
+      column.create({display: 'Has Logged In?',  property: 'invitation_status', sortable: false}),
     ]
 
   student_sort: (column) ->
