@@ -1,21 +1,20 @@
 / Question label
 .forms__field-wrapper
-  label.spacing__margin-bottom--0 Question Label
+  label.spacing__margin-bottom--0 Question label
   .forms__label-summary This is the question the student will see above the scale.
   component '__changeset/input' value=model.changeset.label changeset=model.changeset attribute='label' display_errors=true
 
 / Scale range 
 .forms__field-wrapper
   label.spacing__margin-bottom--0 Scale range
-  .forms__label-summary Set the minimum and maximum ends of the scale
-  .dropdown__container
-    .text--inline-block
+  .forms__label-summary Set the minimum and maximum ends of the scale.
+  .forms__field-wrapper
+    .forms__field-wrapper--inline
       = input value=p_min type='number'
-
-    span.text--bold.text__font-size--12.spacing__pad-left--1.spacing__pad-right--1 to
-    .text--inline-block
+    .text--inline-block.text__align--center.spacing__margin-left--1.spacing__margin-right--1.vertical-align--top
+      span.text--bold.text__font-size--12 to
+    .forms__field-wrapper--inline
       = input value=p_max type='number'
-  br
   if model.points_changeset.errors.firstObject
     ul.input-feedback__list
       li.input-feedback__item.input-feedback--error
@@ -23,7 +22,7 @@
 / End point labels
 .forms__field-wrapper
   label.spacing__margin-bottom--0 End point labels (optional)
-  .forms__label-summary Set the minimum and maximum ends of the scale
+  .forms__label-summary Set the labels for the minimum and maximum ends of the scale.
   component '__changeset/input' display_errors=true changeset=model.label_changeset attribute='min' value=model.label_changeset.min
   component '__changeset/input' display_errors=true changeset=model.label_changeset attribute='max' value=model.label_changeset.max
 
