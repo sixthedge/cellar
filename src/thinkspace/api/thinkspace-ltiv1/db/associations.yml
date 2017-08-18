@@ -1,0 +1,8 @@
+- model: thinkspace/ltiv1/context
+  associations:
+    - {belongs_to: ownerable, polymorphic: true}
+    - {belongs_to: contextable, polymorphic: true}
+
+- model: thinkspace/ltiv1/consumer
+  associations:
+    - {belongs_to: consumerable, polymorphic: true}

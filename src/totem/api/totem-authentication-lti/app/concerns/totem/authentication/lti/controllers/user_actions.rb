@@ -4,48 +4,90 @@ module Totem
       module Controllers
         module UserActions
 
-          # ###
-          # ### Lti User Actions.
-          # ###
+          def sign_in
+            @handler = handler_class.new(params, request)
 
-          def sign_in_lti
-            puts "LTI SIGN IN"
-            # api_session  = totem_sign_in_user!
-            # hash         = controller_as_json(current_user)
-            # controller_after_json(hash)
-            # hash[:token] = api_session.authentication_token
-            # controller_render_json(hash)
-            controller_render_no_content
+            begin
+              @handler.process
+            rescue @handler.request_validation_error, @handler.consumer_not_found_error
+              return redirect_to_lti_sign_in_failure
+            rescue @handler.resource_not_found_error
+              @session = find_or_create_api_session(@handler.user)
+              return redirect_to_lti_setup
+            end
+
+            @session = find_or_create_api_session(@handler.user)
+            redirect_to_lti_sign_in_success
           end
 
-          def sign_out_lti
-            #totem_sign_out_user!
-            controller_render_no_content
+
+          private
+
+          def handler_class; Totem::Authentication::Lti::RequestHandler; end
+
+          def get_lti_sign_in_failure_query_params
+            {
+              email: @handler.email,
+              error: true
+            }
           end
 
-          # # Authenticates the user (via before_action) and resets the session timeout.
-          # # Used by the ember application when no server calls are performed, but the user is active.
-          # # Must be called by ember on the platform's api 'users' controller which extends this controller.
-          # # The platform's routes must include: get :stay_alive, on: :collection
-          # def stay_alive
-          #   update_api_session_alive(current_user)
-          #   render json: {"#{current_user.class.name.underscore}" => []}, status: :ok
-          # end
+          def get_lti_sign_in_success_query_params
+            {
+              user_id:      @handler.user.id,
+              email:        @handler.email,
+              context_type: @handler.resource.contextable_type.underscore.split('/').pop,
+              context_id:   @handler.resource.contextable_id,
+              auth_token:   @session.authentication_token
+            }
+          end
 
-          # # Authenticates the user's token and email are valid (e.g. token has not expired) but
-          # # does 'not' update the api_session 'updated_at' like 'stay_alive' or return any json.
-          # # The user's token and email are validated by the authentication controller's
-          # # before_action ':totem_authenticate_user_from_token!'.  If this does not raise
-          # # an exception (e.g. a session timout), then is still valid.
-          # # Used by the 'ember-cli-simple-auth' authenticator when restoring a session
-          # # (e.g. page reload, browser is opened by another user) to determine if the
-          # # browser's local storage is still valid (user token and user email).
-          # # If not valid, the authenticator routes the user to the sign_in page.
-          # def validate
-          #   raise SessionCredentialsInvalid, "Invalid credentials."  if current_user.blank?
-          #   raise SessionCredentialsInvalid, "Invalid user."         unless current_user.id.to_s == params[:user_id]
-          #   controller_render(current_user)
-          # end
+          def get_lti_setup_query_params
+            {
+              email:            @handler.email,
+              context_title:    @handler.context_title,
+              resource_link_id: @handler.resource_link_id,
+              consumer_title:   @handler.consumer.title,
+              user_id:          @handler.user.id,
+              auth_token:       @session.authentication_token
+            }
+          end
+
+          def add_query_params_to_url(params)
+            return @url unless params.present?
+            @url = @url + '?'
+            params.each do |key, value|
+              @url = @url + key.to_s + '=' + value.to_s + '&'
+            end
+            @url.chop!
+          end
+
+          def redirect_to_lti_sign_in_success
+            qp   = get_lti_sign_in_success_query_params
+            @url = lti_sign_in_url
+            add_query_params_to_url(qp)
+            redirect_to @url
+          end
+
+          def redirect_to_lti_sign_in_failure
+            qp   = get_lti_sign_in_failure_query_params
+            @url = lti_sign_in_url
+            add_query_params_to_url(qp)
+            redirect_to @url
+          end
+
+          def redirect_to_lti_setup
+            qp   = get_lti_setup_query_params
+            @url = lti_setup_url
+            add_query_params_to_url(qp)
+            redirect_to @url
+          end
+
+          def lti_sign_in_url; app_domain + '/lti/sign_in'; end
+          def lti_failure_url; app_domain + '/lti/sign_in'; end
+          def lti_setup_url;   app_domain + '/lti/setup';   end
+
+          def app_domain; Rails.application.secrets.smtp['postmark']['domain']; end
 
         end
       end

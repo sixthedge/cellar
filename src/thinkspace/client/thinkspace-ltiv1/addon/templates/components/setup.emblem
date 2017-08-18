@@ -1,0 +1,31 @@
+.grid__container.spacing__margin-bottom--4
+  .bordered-panel.bordered-panel--authentication.bordered-panel--shadow.bordered-panel--mobile.spacing__pad--2.grid__container--centered
+    h1 Hi #{email}
+
+    if loading.all
+      component '__loader/base'
+    else
+      if no_spaces
+        h3 It looks like you dont have any OpenTBL spaces yet. Let's create one!
+        link-to-external 'spaces.new' (query-params lti_setup=true) class='btn btn--primary'
+          | Create a space
+      else
+        if loading.error
+          h3 Oops! Something went wrong. Please contact us at support@opentbl.com
+        else
+          h3 Which OpenTBL #{provider_context_type} does your #{consumer_title} #{consumer_context_type} #{context_title} belong to?
+
+          ul
+          each spaces as |space|
+            li{action 'select' space} = space.title
+
+
+          if selected_space
+            p 
+              .icon.icon--16.icon__checkmark--green.spacing__margin-right--half
+              | You will link your #{consumer_title} #{consumer_context_type}, 
+              strong #{context_title}
+              |  to your OpenTBL #{provider_context_type}, 
+              strong #{selected_space.title}
+            button.btn.btn--primary{action 'create'}
+              | Link #{provider_context_type}

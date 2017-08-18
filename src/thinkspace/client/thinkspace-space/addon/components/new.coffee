@@ -5,7 +5,12 @@ import totem_changeset from 'totem/changeset'
 
 export default base.extend
 
+  lti_session: ember.inject.service()
+
+  get_route: -> @get('container').lookup('route:new')
+
   init_base: ->
+    @set 'lti_setup', @get_query_param('lti_setup')
     @create_changeset()
 
   create_changeset: ->
@@ -24,4 +29,9 @@ export default base.extend
     submit: ->
       @get('changeset').save().then =>
         @get('model').save().then (saved_model) =>
-          @get_app_route().transitionTo 'spaces.index'
+          @totem_messages.api_success source: @, model: saved_model, action: 'save', i18n_path: ns.to_o('space', 'save')
+          if @get('lti_setup')
+            lti_query_params = @get('lti_session.query_params.setup')
+            @get_route().transitionToExternal 'lti.setup', { queryParams: lti_query_params }
+          else
+            @get_app_route().transitionTo 'spaces.index'

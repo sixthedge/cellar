@@ -5,7 +5,7 @@ import base  from 'thinkspace-base/components/base'
 export default base.extend
 
   # ### Properties
-  auto_clear_after: 2000
+  auto_clear_after: 3000
   dismiss_after:    250
   dismissed:        false
 

@@ -6,7 +6,7 @@ export default {
 
   engine:
     mount:           'spaces'
-    external_routes: [{login: 'users.sign_in'}, 'cases.show', 'builder.new', 'thinkspace-team-builder.teams.manage']
+    external_routes: [{login: 'users.sign_in'}, 'cases.show', 'builder.new', 'thinkspace-team-builder.teams.manage', 'lti.setup']
 
   add_engines: [
     'thinkspace-message'

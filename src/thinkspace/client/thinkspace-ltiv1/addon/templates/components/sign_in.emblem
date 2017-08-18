@@ -1,0 +1,10 @@
+h1 OpenTBL LTI
+if loading.authenticating
+  h1 Logging you in as #{email}..
+  component '__loader/base'
+
+if loading.error
+  h1 sorry, there was an error
+  h2
+    | contact us at 
+    a support@opentbl.com

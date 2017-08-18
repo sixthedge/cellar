@@ -2,7 +2,6 @@ module Thinkspace
   module Common
     class User < ActiveRecord::Base
       include ::Totem::Settings.module.thinkspace.session_user_model
-      include ::Totem::Settings.module.thinkspace.lti_user_model
       include Thinkspace::Common::Avatar
       # ###
       # ### Validations
