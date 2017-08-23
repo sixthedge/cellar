@@ -1,3 +1,5 @@
-if is_selected
-  | -->
-= model.title
+.tile__item
+  h1.tile__name = model.title
+  .tile__info
+    span.text--bold Instructors:
+    span.spacing__margin-left--half Name

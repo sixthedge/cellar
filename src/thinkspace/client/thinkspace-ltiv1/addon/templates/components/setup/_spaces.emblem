@@ -1,4 +1,3 @@
-p Select a space
-ul
+ul.tile__list
   each spaces as |space|
-    component 'setup/space' model=space select='select_space' selected_space=selected_space
+    component 'setup/space' model=space select='select_space' selected_space=selected_space class='tile__container'
