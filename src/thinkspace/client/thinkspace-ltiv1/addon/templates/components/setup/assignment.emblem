@@ -1,0 +1,7 @@
+if is_selected
+  | -->
+span = model.friendly_title
+|  - 
+span = model.friendly_state
+|  - 
+span = model.friendly_due_at

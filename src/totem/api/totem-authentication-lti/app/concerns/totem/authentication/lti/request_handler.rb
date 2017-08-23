@@ -17,6 +17,7 @@ module Totem; module Authentication; module Lti
 
     attr_accessor :email
     attr_accessor :resource_link_id
+    attr_accessor :resource_link_title
     attr_accessor :context_title
     attr_accessor :consumer_key
     attr_accessor :consumer
@@ -45,7 +46,7 @@ module Totem; module Authentication; module Lti
     # => Return whether or not the request is valid
     def validate
       @email            ||= get_param_email_primary
-      raise_missing_param_error(EMAIL_PRIMARY_KEY)      unless email.present?
+      raise_missing_param_error("contact email: either #{LIS_PERSON_EMAIL_KEY} or #{TOOL_INSTANCE_EMAIL_KEY}") unless email.present?
 
       @resource_link_id ||= get_param_resource_link_id
       raise_missing_param_error(RESOURCE_LINK_ID_KEY)   unless resource_link_id.present?
@@ -53,7 +54,8 @@ module Totem; module Authentication; module Lti
       @consumer_key     ||= get_param_consumer_key
       raise_missing_param_error(OAUTH_CONSUMER_KEY_KEY) unless consumer_key.present?
 
-      @context_title    ||= get_param_context_title
+      @context_title       ||= get_param_context_title
+      @resource_link_title ||= get_param_resource_link_title
 
       @consumer         ||= get_consumer
       @consumer_secret  ||= get_consumer_secret
@@ -72,15 +74,7 @@ module Totem; module Authentication; module Lti
       @user       = get_or_create_user
       @resource   = get_resource
 
-      register
       self
-    end
-
-    # Register
-    # => Update the the outcome service url and result sourcedid contexts if present in the params
-    def register
-      find_or_create_outcome_service_url_context
-      find_or_create_result_sourcedid_context
     end
 
     def is_valid?
@@ -100,23 +94,6 @@ module Totem; module Authentication; module Lti
 
 
     private
-
-
-    def find_or_create_outcome_service_url_context
-      value         = get_param_outcome_service_url
-      return unless value.present?
-      context       = context_class.find_or_create_by(email: @email, key: OUTCOME_SERVICE_URL_KEY, contextable: space)
-      context.value = value
-      context.save
-    end
-
-    def find_or_create_result_sourcedid_context
-      value         = get_param_result_sourcedid
-      return unless value.present?
-      context       = context_class.find_or_create_by(email: @email, key: RESULT_SOURCEDID_KEY, ownerable: user, contextable: assignment)
-      context.value = value
-      context.save
-    end
 
     def get_provider
       provider_class.new(consumer_key, consumer_secret, params)
@@ -156,23 +133,26 @@ module Totem; module Authentication; module Lti
 
     # ### Param Helpers
     def get_param(key);                params[key];                        end
-    def get_param_email_primary;       get_param(EMAIL_PRIMARY_KEY);       end
     def get_param_roles;               get_param(ROLES_KEY);               end
     def get_param_consumer_key;        get_param(OAUTH_CONSUMER_KEY_KEY);  end
     def get_param_context_title;       get_param(CONTEXT_TITLE_KEY);       end
     def get_param_oauth_signature;     get_param(OAUTH_SIGNATURE_KEY);     end
     def get_param_resource_link_id;    get_param(RESOURCE_LINK_ID_KEY);    end
+    def get_param_resource_link_title; get_param(RESOURCE_LINK_TITLE_KEY); end
     def get_param_first_name;          get_param(FIRST_NAME_KEY);          end
     def get_param_last_name;           get_param(LAST_NAME_KEY);           end
     def get_param_outcome_service_url; get_param(OUTCOME_SERVICE_URL_KEY); end
     def get_param_result_sourcedid;    get_param(RESULT_SOURCEDID_KEY);    end
+    def get_param_email_primary
+      return get_param(LIS_PERSON_EMAIL_KEY) if has_param?(LIS_PERSON_EMAIL_KEY)
+      return get_param(TOOL_INSTANCE_EMAIL_KEY) if has_param?(TOOL_INSTANCE_EMAIL_KEY)
+    end
 
     def has_param?(key) get_param(key).present?; end
 
     def raise_missing_param_error(param)
       raise MissingParamError, "Param #{param} not provided to #{self.inspect}"
     end
-
 
     # ### Errors
     class RequestValidationError < StandardError;          end
@@ -196,6 +176,7 @@ module Totem; module Authentication; module Lti
 
     # ### Constants
     RESOURCE_LINK_ID_KEY    = 'resource_link_id'
+    RESOURCE_LINK_TITLE_KEY = 'resource_link_title'
     ROLES_KEY               = 'ext_roles'
 
     CONTEXT_TITLE_KEY       = 'context_title'
@@ -203,7 +184,8 @@ module Totem; module Authentication; module Lti
     OAUTH_CONSUMER_KEY_KEY  = 'oauth_consumer_key'
     OAUTH_SIGNATURE_KEY     = 'oauth_signature_key'
 
-    EMAIL_PRIMARY_KEY       = 'lis_person_contact_email_primary'
+    LIS_PERSON_EMAIL_KEY    = 'lis_person_contact_email_primary'
+    TOOL_INSTANCE_EMAIL_KEY = 'tool_consumer_instance_contact_email'
     FIRST_NAME_KEY          = 'lis_person_name_given'
     LAST_NAME_KEY           = 'lis_person_name_family'
     OUTCOME_SERVICE_URL_KEY = 'lis_outcome_service_url'

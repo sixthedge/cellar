@@ -11,13 +11,14 @@ module Thinkspace; module Ltiv1; module Api;
       type = space_class.name if @handler.resource_link_is_space?
       type = assignment_class.name if @handler.resource_link_is_assignment?
       {
-        email:            @handler.email,
-        context_title:    @handler.context_title,
-        context_type:     get_truncated_class_name(type),
-        consumer_title:   @handler.consumer.title,
-        resource_link_id: @handler.resource_link_id,
-        user_id:          @handler.user.id,
-        auth_token:       @session.authentication_token
+        email:               @handler.email,
+        context_title:       @handler.context_title,
+        context_type:        get_truncated_class_name(type),
+        consumer_title:      @handler.consumer.title,
+        resource_link_id:    @handler.resource_link_id,
+        resource_link_title: @handler.resource_link_title,
+        user_id:             @handler.user.id,
+        auth_token:          @session.authentication_token
       }
     end
 

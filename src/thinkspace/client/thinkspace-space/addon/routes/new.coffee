@@ -4,9 +4,6 @@ import base   from 'thinkspace-base/routes/base'
 
 export default base.extend
 
-  queryParams:
-    lti_setup: {}
-
   model: -> 
     @set 'space', @totem_scope.get_store().createRecord ns.to_p('space')
     @get('space')

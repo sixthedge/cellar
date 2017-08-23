@@ -26,12 +26,14 @@ export default ta.Model.extend resource_mixin, ta.totem_data, ta.add(
   due_at:           ta.attr('date')
 
   # # Computed properties
-  is_pubsub:            ember.computed.bool 'settings.pub_sub'
-  is_active:            ember.computed.equal 'state', 'active'
-  is_inactive:          ember.computed.equal 'state', 'inactive'
-  has_due_at:           ember.computed.notEmpty 'due_at'
-  has_release_at:       ember.computed.notEmpty 'release_at'
-  is_released:          ember.computed 'release_at', -> @get('release_at') < new Date()
+  is_pubsub:      ember.computed.bool 'settings.pub_sub'
+  is_active:      ember.computed.equal 'state', 'active'
+  is_inactive:    ember.computed.equal 'state', 'inactive'
+  is_neutral:     ember.computed.equal 'state', 'neutral'
+  is_archived:    ember.computed.equal 'state', 'archived'
+  has_due_at:     ember.computed.notEmpty 'due_at'
+  has_release_at: ember.computed.notEmpty 'release_at'
+  is_released:    ember.computed 'release_at', -> @get('release_at') < new Date()
 
   sync_rat_assessments: ember.computed.bool 'settings.rat.sync'
 
@@ -50,6 +52,11 @@ export default ta.Model.extend resource_mixin, ta.totem_data, ta.add(
   is_casespace:       ember.computed.equal 'bundle_type', 'casespace'
 
   friendly_title: ember.computed 'title', -> @get('title') || 'Untitled'
+  friendly_state: ember.computed 'state', ->
+    return 'Archived' if @get('is_archived')
+    return 'Draft' if @get('is_inactive')
+    return 'Active' if @get('is_active')
+    return 'Neutral'
 
   friendly_due_at:    ember.computed 'due_at', ->
     due_at = @get('due_at')

@@ -1,0 +1,10 @@
+if loading.assignments
+  component '__loader/base'
+else
+  if no_assignments
+    p No assignments for #{selected_space.title}
+  else
+    p #{selected_space.title} > Select a case
+    ul
+      each assignments as |assignment|
+        component 'setup/assignment' model=assignment select='select_assignment' selected_assignment=selected_assignment

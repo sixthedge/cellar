@@ -10,7 +10,6 @@ export default base.extend
   get_route: -> @get('container').lookup('route:new')
 
   init_base: ->
-    @set 'lti_setup', @get_query_param('lti_setup')
     @create_changeset()
 
   create_changeset: ->
@@ -30,8 +29,10 @@ export default base.extend
       @get('changeset').save().then =>
         @get('model').save().then (saved_model) =>
           @totem_messages.api_success source: @, model: saved_model, action: 'save', i18n_path: ns.to_o('space', 'save')
-          if @get('lti_setup')
-            lti_query_params = @get('lti_session.query_params.setup')
-            @get_route().transitionToExternal 'lti.setup', { queryParams: lti_query_params }
+          lti_session = @get('lti_session')
+          if lti_session.get('will_redirect')
+            lti_query_params = lti_session.get_redirect_query_params()
+            route            = lti_session.get('redirect_external_route')
+            @get_route().transitionToExternal route, { queryParams: lti_query_params }
           else
             @get_app_route().transitionTo 'spaces.index'

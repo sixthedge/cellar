@@ -1,0 +1,14 @@
+if loading.error
+  h3 Oops! Something went wrong. Please contact us at support@opentbl.com
+else
+  h3 
+    / Example: 'Which OpenTBL case does your Canvas assignment Quiz 3 belong to?'
+    | Which OpenTBL 
+    | #{provider_context_type} 
+    | does your 
+    if consumer_title
+      | #{consumer_title} 
+    | #{consumer_context_type} 
+    if resource_title
+      b #{resource_title} 
+    | belong to?

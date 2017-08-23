@@ -1,0 +1,3 @@
+h3 It looks like you dont have any OpenTBL spaces yet. Let's create one!
+link-to-external 'spaces.new' class='btn btn--primary'
+  | Create a space

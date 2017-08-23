@@ -44,12 +44,13 @@ module Totem
 
           def get_lti_setup_query_params
             {
-              email:            @handler.email,
-              context_title:    @handler.context_title,
-              resource_link_id: @handler.resource_link_id,
-              consumer_title:   @handler.consumer.title,
-              user_id:          @handler.user.id,
-              auth_token:       @session.authentication_token
+              email:               @handler.email,
+              context_title:       @handler.context_title,
+              resource_link_id:    @handler.resource_link_id,
+              resource_link_title: @handler.resource_link_title,
+              consumer_title:      @handler.consumer.title,
+              user_id:             @handler.user.id,
+              auth_token:          @session.authentication_token
             }
           end
 
