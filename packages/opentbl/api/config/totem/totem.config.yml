@@ -15,6 +15,7 @@ classes:
 modules:
   session_user_model:       Totem::Authentication::Session::Models::User
   session_user_actions:     Totem::Authentication::Session::Controllers::UserActions
+  lti_user_actions:         Totem::Authentication::Lti::Controllers::UserActions
   controller_model_class:   Totem::Core::Controllers::TotemControllerModelClass
   controller_api_render:    Totem::Core::Controllers::ApiRender
   controller_params:        Totem::Core::Controllers::TotemParams

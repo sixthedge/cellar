@@ -73,6 +73,9 @@ gem 'paperclip', '5.1.0'
 gem 'has_secure_token', '1.0.0'
 gem 'spreadsheet', '1.1.4'
 
+# LTI
+gem 'ims-lti', '1.2.2'
+
 # Cellar Totem
 gempath = "#{cellar_src}/totem/api"
 # Using a local version of active_model_serializers to freeze code that works with totem.
@@ -91,6 +94,7 @@ gem 'thinkspace-builder',              '0.2.0', path: "#{gempath}/thinkspace-bui
 gem 'thinkspace-casespace',            '0.2.0', path: "#{gempath}/thinkspace-casespace"
 gem 'thinkspace-common',               '0.2.0', path: "#{gempath}/thinkspace-common"
 gem 'thinkspace-importer',             '0.2.0', path: "#{gempath}/thinkspace-importer"
+gem 'thinkspace-ltiv1',                '0.2.0', path: "#{gempath}/thinkspace-ltiv1"
 gem 'thinkspace-peer-assessment',      '0.2.0', path: "#{gempath}/thinkspace-peer-assessment"
 gem 'thinkspace-pub-sub',              '0.2.0', path: "#{gempath}/thinkspace-pub-sub"
 gem 'thinkspace-readiness-assurance',  '0.2.0', path: "#{gempath}/thinkspace-readiness-assurance"

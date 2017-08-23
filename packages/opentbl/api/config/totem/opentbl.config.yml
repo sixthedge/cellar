@@ -19,6 +19,8 @@ authentication:
     user_model:           Thinkspace::Common::User
     api_session_model:    Thinkspace::Common::ApiSession
     password_reset_model: Thinkspace::Common::PasswordReset
+    context_model:        Thinkspace::Ltiv1::Context
+    consumer_model:       Thinkspace::Ltiv1::Consumer
 
 authorization:
   cancan:
