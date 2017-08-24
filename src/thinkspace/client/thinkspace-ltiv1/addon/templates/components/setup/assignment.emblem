@@ -1,7 +1,6 @@
-if is_selected
-  | -->
-span = model.friendly_title
-|  - 
-span = model.friendly_state
-|  - 
-span = model.friendly_due_at
+a.tile__item
+  h1.tile__name = model.friendly_title
+  .tile__sub-caption = model.friendly_due_at
+  .group
+    span.tile__info.is-left Exercise Type
+    .tile__status.tile__status--live.is-right = model.friendly_state
