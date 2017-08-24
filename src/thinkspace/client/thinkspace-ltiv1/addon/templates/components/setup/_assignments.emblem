@@ -3,7 +3,7 @@ if loading.assignments
 else
   .main-content__sub-header
     h2.text--inline-block #{selected_space.title}
-    .btn-group.is-right.btn-group--mobile-full
+    .btn-group.is-right.btn-group--mobile-full click='deselect_space'
       a.btn.btn--mobile-full Back to Spaces
 
   if no_assignments

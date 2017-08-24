@@ -1,36 +1,10 @@
-if loading.error
-  .dialogue.dialogue--red
-    h1 Oops! Something went wrong.
-    p Please contact us at support@opentbl.com
-else
-  / Start of the first page
-  .grid__container.spacing__margin-bottom--4
-    .grid__container
-      .illustration-msg__container
-        .illustration-msg--img-left
-          .illustration-msg__img-container.illustration-msg__img--150.spacing__margin-bottom--2
-            img src='/assets/images/illustrations/illustrations__lti__space.svg' alt="Link a Space" title="Link a Space" 
-          .illustration-msg__text-container
-            h2 Link a Space
-            p.spacing__margin-bottom--2 Link an OpenTBL space to your LMS. Students will be able to click a button and be directed straight to OpenTBL.  
-            .btn.btn--primary.btn--mobile-full Link a space
-    hr
-    .grid__container
-      .illustration-msg__container
-        .illustration-msg--img-left
-          .illustration-msg__img-container.illustration-msg__img--150.spacing__margin-bottom--2
-            img src='/assets/images/illustrations/illustrations__lti__exercise.svg' alt="Link an Exercise" title="Link an Exercise" 
-          .illustration-msg__text-container
-            h2 Link an Exercise
-            p.spacing__margin-bottom--2 Choose an exercise from one of your OpenTBL spaces to link directly from your LMS. 
-            .btn.btn--primary.btn--mobile-full Link an Exercise
-    / End of first page
-    
-  label 
+.main-content__sub-header
+  
+  label.text--inline-block
     / Example: 'Which OpenTBL case does your Canvas assignment Quiz 3 belong to?'
     / Select the space where
     | Which OpenTBL 
-    | #{provider_context_type} 
+    | space 
     | does your 
     if consumer_title
       | #{consumer_title} 
@@ -39,4 +13,7 @@ else
       b #{resource_title} 
     | belong to?
 
-  hr
+  .btn-group.is-right.btn-group--mobile-full click='reset_context_type'
+    a.btn.btn--mobile-full Go Back
+
+hr
