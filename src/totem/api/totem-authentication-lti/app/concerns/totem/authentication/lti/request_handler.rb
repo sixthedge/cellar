@@ -118,7 +118,9 @@ module Totem; module Authentication; module Lti
     end
 
     def get_resource
-      resource = context_class.find_or_create_by(email: @email, key: RESOURCE_LINK_ID_KEY, value: @resource_link_id)
+      resource = context_class.find_or_create_by(key: RESOURCE_LINK_ID_KEY, value: @resource_link_id)
+      resource.email = email
+      resource.save
       raise ResourceNotFoundError unless resource.contextable.present?
       resource
     end

@@ -9,6 +9,8 @@ export default base.extend authenticate,
 
   # ### Properties
 
+  context_type: 'space'
+
   selected_space:      null
   selected_assignment: null
 
@@ -19,7 +21,6 @@ export default base.extend authenticate,
     'user_id',
     'auth_token',
     'context_title',
-    'context_type',
     'resource_link_id',
     'resource_link_title',
     'consumer_title'
@@ -71,7 +72,7 @@ export default base.extend authenticate,
   no_assignments: ember.computed.empty 'assignments'
 
   provider_context_type: ember.computed 'context_type', -> 
-    return 'case' if @get('context_type') == 'assignment'
+    return 'exercise' if @get('context_type') == 'assignment'
     return 'space'
 
   consumer_context_type: ember.computed 'context_type', -> 
@@ -93,7 +94,6 @@ export default base.extend authenticate,
   show_confirmation: ember.computed 'selected_resource', 'context_type', ->
     resource = @get('selected_resource')
     type     = @get('context_type')
-    console.log "show conf?", ember.isPresent(resource), totem_scope.get_record_path(resource), ns.to_p(type)
     return (ember.isPresent(resource) && (totem_scope.get_record_path(resource) == ns.to_p(type)))
 
   # show assignments if a space is selected and the context type is an assignment
@@ -103,6 +103,10 @@ export default base.extend authenticate,
   # ### Actions
 
   actions:
+
+    set_context_type_space: -> @set 'context_type', 'space'
+
+    set_context_type_assignment: -> @set 'context_type', 'assignment'
 
     select_space: (space) ->
       @set 'selected_space', space

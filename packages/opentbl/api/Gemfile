@@ -75,6 +75,7 @@ gem 'spreadsheet', '1.1.4'
 
 # LTI
 gem 'ims-lti', '1.2.2'
+gem "attr_encrypted", "~> 3.0.0"
 
 # Cellar Totem
 gempath = "#{cellar_src}/totem/api"
