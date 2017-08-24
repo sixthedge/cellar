@@ -10,18 +10,35 @@ module Totem
             begin
               @handler.process
             rescue @handler.request_validation_error, @handler.consumer_not_found_error
-              return redirect_to_lti_sign_in_failure
+              return redirect_on_validation_error
             rescue @handler.resource_not_found_error
-              @session = find_or_create_api_session(@handler.user)
-              return redirect_to_lti_setup
+              return redirect_on_resource_not_found_error
             end
 
-            @session = find_or_create_api_session(@handler.user)
-            redirect_to_lti_sign_in_success
+            redirect_on_success
           end
 
 
           private
+
+
+          def redirect_on_validation_error
+            redirect_to_lti_sign_in_failure
+          end
+
+          def redirect_on_resource_not_found_error
+            if @handler.is_instructor?
+              @session = find_or_create_api_session(@handler.user)
+              redirect_to_lti_setup
+            else
+              redirect_to_lti_nag
+            end
+          end
+
+          def redirect_on_success
+            @session = find_or_create_api_session(@handler.user)
+            redirect_to_lti_sign_in_success
+          end
 
           def handler_class; Totem::Authentication::Lti::RequestHandler; end
 
@@ -29,6 +46,12 @@ module Totem
             {
               email: @handler.email,
               error: true
+            }
+          end
+
+          def get_lti_nag_query_params
+            {
+              email: @handler.email
             }
           end
 
@@ -84,9 +107,16 @@ module Totem
             redirect_to @url
           end
 
+          def redirect_to_lti_nag
+            qp   = get_lti_nag_query_params
+            @url = lti_nag_url
+            add_query_params_to_url(qp)
+            redirect_to @url
+          end
+
           def lti_sign_in_url; app_domain + '/lti/sign_in'; end
-          def lti_failure_url; app_domain + '/lti/sign_in'; end
           def lti_setup_url;   app_domain + '/lti/setup';   end
+          def lti_nag_url;     app_domain + '/lti/error';   end
 
           def app_domain; Rails.application.secrets.smtp['postmark']['domain']; end
 

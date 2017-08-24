@@ -48,7 +48,8 @@ module Thinkspace; module Ltiv1
     def find_or_create_outcome_service_url_context
       value         = get_param_outcome_service_url
       return unless value.present?
-      context       = context_class.find_or_create_by(email: @email, key: OUTCOME_SERVICE_URL_KEY)
+      context       = context_class.find_or_create_by(key: OUTCOME_SERVICE_URL_KEY, contextable: space)
+      context.email = email
       context.value = value
       context.save
     end
@@ -56,13 +57,11 @@ module Thinkspace; module Ltiv1
     def find_or_create_result_sourcedid_context
       value         = get_param_result_sourcedid
       return unless value.present?
-      context       = context_class.find_or_create_by(email: @email, key: RESULT_SOURCEDID_KEY, ownerable: user)
+      context       = context_class.find_or_create_by(key: RESULT_SOURCEDID_KEY, ownerable: user, contextable: assignment)
+      context.email = email
       context.value = value
       context.save
     end
-
-    def resource_contextable_is_assignment?; resource.contextable_type == assignment_class.name; end
-    def resource_contextable_is_space?;      resource.contextable_type == space_class.name;      end
 
     def get_space
       case
