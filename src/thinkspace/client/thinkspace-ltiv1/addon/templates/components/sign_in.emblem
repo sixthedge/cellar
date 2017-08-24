@@ -1,7 +1,9 @@
-h1 Welcome to OpenTBL!
-if loading.authenticating
-  h1 Logging you in as #{email}..
-  component '__loader/base'
+.main-content
+  .grid__container.grid__container--centered.spacing__margin-top--4.spacing__margin-bottom--4
+    h1 Logging in to OpenTBL!
+    if loading.authenticating
+      h1 Logging you in as #{email}..
+      component '__loader/base'
 
-if loading.error
-  partial 'components/shared/errors/authenticate'
+    if loading.error
+      partial 'components/shared/errors/authenticate'
