@@ -1,19 +1,17 @@
-.main-content__sub-header
-  
-  label.text--inline-block
-    / Example: 'Which OpenTBL case does your Canvas assignment Quiz 3 belong to?'
-    / Select the space where
-    | Which OpenTBL 
-    | space 
-    | does your 
-    if consumer_title
-      | #{consumer_title} 
-    | #{consumer_context_type} 
-    if resource_title
-      b #{resource_title} 
-    | belong to?
+label.text--inline-block
+  / Example: 'Which OpenTBL case does your Canvas assignment Quiz 3 belong to?'
+  / Select the space where
+  | Which OpenTBL 
+  | space 
+  | does your 
+  if consumer_title
+    | #{consumer_title} 
+  | #{consumer_context_type} 
+  if resource_title
+    b #{resource_title} 
+  | belong to?
 
-  .btn-group.is-right.btn-group--mobile-full click='reset_context_type'
-    a.btn.btn--mobile-full Go Back
+.btn-group.is-right.btn-group--mobile-full click='reset_context_type'
+  a.btn.btn--mobile-full Go Back
 
 hr
