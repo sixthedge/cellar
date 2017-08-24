@@ -41,7 +41,6 @@ export default ember.Mixin.create
         @transition_to_context()
         resolve()
       , (error) =>
-        console.log "LTI authenticate failed with error", error
         @reset_loading('authenticating')
         @set_loading('error')
         reject()

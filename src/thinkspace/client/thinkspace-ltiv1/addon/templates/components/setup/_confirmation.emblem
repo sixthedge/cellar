@@ -16,5 +16,5 @@ else
       .btn-group
         button.btn.btn--primary{action 'create'} role='button'
           | Link #{provider_context_type}
-        button.btn role='button'
+        button.btn role='button' click='deselect_all'
           | Go Back

@@ -11,17 +11,18 @@
         if loading.authenticate
           component '__loader/base'
         else
-          partial 'components/setup/title'
-
-          if no_spaces
-            partial 'components/setup/empty'
+          if no_context_type
+            partial 'components/setup/context_type'
           else
-            partial 'components/setup/spaces'
-
-            if show_assignments
-              partial 'components/setup/assignments'
 
             if show_confirmation
-              partial 'components/setup/confirmation'          
+              partial 'components/setup/confirmation'   
+            else
 
-          partial 'components/setup/footer'
+              if show_spaces
+                partial 'components/setup/spaces'
+
+              if show_assignments
+                partial 'components/setup/assignments'
+
+            partial 'components/setup/footer'

@@ -9,7 +9,7 @@ export default base.extend authenticate,
 
   # ### Properties
 
-  context_type: 'space'
+  context_type: null
 
   selected_space:      null
   selected_assignment: null
@@ -57,19 +57,19 @@ export default base.extend authenticate,
   get_route: -> @get('container').lookup('route:setup')
 
   get_assignments_for_space: (space) ->
+    @set_loading 'assignments'
     new ember.RSVP.Promise (resolve, reject) =>
-      @set_loading 'assignments'
       @tc.find_record(ns.to_p('space'), space.get('id')).then (space) =>
         assignments = space.get('assignments_due_at_asc')
-        console.log "assignments:", assignments
         @set 'assignments', assignments
         @reset_loading 'assignments'
         resolve(assignments)
 
   # ### Computed Properties
 
-  no_spaces:      ember.computed.empty 'spaces'
-  no_assignments: ember.computed.empty 'assignments'
+  no_spaces:       ember.computed.empty 'spaces'
+  no_assignments:  ember.computed.empty 'assignments'
+  no_context_type: ember.computed.empty 'context_type'
 
   provider_context_type: ember.computed 'context_type', -> 
     return 'exercise' if @get('context_type') == 'assignment'
@@ -96,10 +96,12 @@ export default base.extend authenticate,
     type     = @get('context_type')
     return (ember.isPresent(resource) && (totem_scope.get_record_path(resource) == ns.to_p(type)))
 
-  # show assignments if a space is selected and the context type is an assignment
-  show_assignments: ember.computed 'selected_space', 'context_type', ->
-    ember.isPresent(@get('selected_space')) && (@get('context_type') == 'assignment')
+  show_spaces: ember.computed 'selected_space', ->
+    !ember.isPresent(@get('selected_space'))
 
+  # show assignments if a space is selected and the context type is an assignment
+  show_assignments: ember.computed 'selected_space', 'selected_assignment', ->#, 'context_type', ->
+    ember.isPresent(@get('selected_space')) && !ember.isPresent(@get('selected_assignment'))
   # ### Actions
 
   actions:
@@ -108,12 +110,23 @@ export default base.extend authenticate,
 
     set_context_type_assignment: -> @set 'context_type', 'assignment'
 
+    reset_context_type: ->
+      @set 'context_type', null
+      @send 'deselect_all'
+
     select_space: (space) ->
       @set 'selected_space', space
       @get_assignments_for_space(space) if @get('context_type_is_assignment')
 
     select_assignment: (assignment) ->
       @set 'selected_assignment', assignment
+
+    deselect_space: ->
+      @set 'selected_space', null
+
+    deselect_all: ->
+      @set 'selected_space', null
+      @set 'selected_assignment', null
 
     create: ->
       @set_loading 'create'
