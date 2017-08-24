@@ -1,1 +1,18 @@
-h1 hey your instructor has yet to setup their thing!
+.main-content
+  .grid__container.grid__container--centered.spacing__margin-top--2.spacing__margin-bottom--4
+    .illustration-msg__container
+      .illustration-msg.illustration-msg--center.illustration-msg--img-top
+        .illustration-msg__img-container.illustration-msg__img--200
+          img src='/assets/images/illustrations/illustrations__lti__pending.svg' alt="No spaces" title="No Spaces" 
+        .illustration-msg__text-container
+          h2 Still under construction! 
+          p.spacing__margin-bottom--2 The space has not been linked to your LMS yet. If you have any questions please contact your instructor. 
+          link-to-external 'spaces.new' class='btn btn--primary' role='button'
+            | Back to LMS
+    hr
+    .illustration-msg__container
+      .illustration-msg.illustration-msg--center.illustration-msg--img-top
+        .illustration-msg__img-container.illustration-msg__img--75.spacing__margin-bottom--0
+          img src='/assets/images/branding/otbl-logo_default.svg' alt="No spaces" title="No Spaces"
+        .illustration-msg__text-container
+          a href='http://www.opentbl.com/' class='text--bold text__font-size--14' OpenTBL.com 
