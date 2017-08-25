@@ -11,7 +11,7 @@ export default function validateComparison(options = {}) {
     let compare_to = get(changes, options['compare_to']) || get(content, options['compare_to']);
     let type       = options['type'];
 
-    if (type === 'is' && value !== new_value) {
+    if (type === 'is' && oldValue !== new_value) {
       return options.message;
     } else if (type === 'lt' && new_value >= compare_to) {
       return options.message;

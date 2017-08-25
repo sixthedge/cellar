@@ -33,11 +33,14 @@ module Thinkspace; module PeerAssessment; module Exporters; class Assessment < T
     data = get_anonymized_review_json_for_ownerable(ownerable)
     return sheet.update_row(row_number, *(caller.get_ownerable_identifiers(ownerable)), 'N/A') if data.empty?
 
+    scores = []
+
     @assessment.quantitative_items.each do |quant_item|
       id    = quant_item['id'].to_s # question ids are saved as integers on the assessment, but represented as strings in the anonymized json
-      score = get_score_for_question(data, id)
-      sheet.update_row row_number, *(caller.get_ownerable_identifiers(ownerable)), score
+      scores << get_score_for_question(data, id)
     end
+    sheet.update_row row_number, *(caller.get_ownerable_identifiers(ownerable)), *scores
+
   end
 
   # ### Helpers
