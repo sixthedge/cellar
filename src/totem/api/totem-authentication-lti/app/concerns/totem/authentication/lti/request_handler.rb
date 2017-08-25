@@ -18,6 +18,7 @@ module Totem; module Authentication; module Lti
     attr_accessor :email
     attr_accessor :resource_link_id
     attr_accessor :resource_link_title
+    attr_accessor :return_url
     attr_accessor :context_title
     attr_accessor :consumer_key
     attr_accessor :consumer
@@ -56,6 +57,7 @@ module Totem; module Authentication; module Lti
 
       @context_title       ||= get_param_context_title
       @resource_link_title ||= get_param_resource_link_title
+      @return_url          ||= get_param_launch_return_url
 
       @consumer         ||= get_consumer
       @consumer_secret  ||= get_consumer_secret
@@ -145,6 +147,7 @@ module Totem; module Authentication; module Lti
     def get_param_last_name;           get_param(LAST_NAME_KEY);           end
     def get_param_outcome_service_url; get_param(OUTCOME_SERVICE_URL_KEY); end
     def get_param_result_sourcedid;    get_param(RESULT_SOURCEDID_KEY);    end
+    def get_param_launch_return_url;   get_param(LAUNCH_RETURN_URL);       end
     def get_param_email_primary
       return get_param(LIS_PERSON_EMAIL_KEY) if has_param?(LIS_PERSON_EMAIL_KEY)
       return get_param(TOOL_INSTANCE_EMAIL_KEY) if has_param?(TOOL_INSTANCE_EMAIL_KEY)
@@ -179,6 +182,7 @@ module Totem; module Authentication; module Lti
     # ### Constants
     RESOURCE_LINK_ID_KEY    = 'resource_link_id'
     RESOURCE_LINK_TITLE_KEY = 'resource_link_title'
+
     ROLES_KEY               = 'ext_roles'
 
     CONTEXT_TITLE_KEY       = 'context_title'
@@ -187,11 +191,14 @@ module Totem; module Authentication; module Lti
     OAUTH_SIGNATURE_KEY     = 'oauth_signature_key'
 
     LIS_PERSON_EMAIL_KEY    = 'lis_person_contact_email_primary'
-    TOOL_INSTANCE_EMAIL_KEY = 'tool_consumer_instance_contact_email'
     FIRST_NAME_KEY          = 'lis_person_name_given'
     LAST_NAME_KEY           = 'lis_person_name_family'
     OUTCOME_SERVICE_URL_KEY = 'lis_outcome_service_url'
     RESULT_SOURCEDID_KEY    = 'lis_result_sourcedid'
+
+    TOOL_INSTANCE_EMAIL_KEY = 'tool_consumer_instance_contact_email'
+
+    LAUNCH_RETURN_URL       = 'launch_presentation_return_url'
 
     VALID_INSTRUCTOR_ROLES  =
       [ 

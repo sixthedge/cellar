@@ -9,10 +9,12 @@ module Totem
 
             begin
               @handler.process
-            rescue @handler.request_validation_error, @handler.consumer_not_found_error
-              return redirect_on_validation_error
-            rescue @handler.resource_not_found_error
-              return redirect_on_resource_not_found_error
+            rescue @handler.request_validation_error, @handler.consumer_not_found_error => e1
+              return redirect_on_validation_error(e1)
+            rescue @handler.resource_not_found_error => e2
+              return redirect_on_resource_not_found_error(e2)
+            rescue => e3
+              print_exception_message(e3)
             end
 
             redirect_on_success
@@ -22,11 +24,13 @@ module Totem
           private
 
 
-          def redirect_on_validation_error
+          def redirect_on_validation_error(e)
+            print_exception_message(e)
             redirect_to_lti_sign_in_failure
           end
 
-          def redirect_on_resource_not_found_error
+          def redirect_on_resource_not_found_error(e)
+            print_exception_message(e)
             if @handler.is_instructor?
               @session = find_or_create_api_session(@handler.user)
               redirect_to_lti_setup
@@ -40,18 +44,25 @@ module Totem
             redirect_to_lti_sign_in_success
           end
 
+          def print_exception_message(e)
+            puts "LTI Request failed with exception #{e.class.name}: #{e.message}"
+            puts e.backtrace
+          end
+
           def handler_class; Totem::Authentication::Lti::RequestHandler; end
 
           def get_lti_sign_in_failure_query_params
             {
               email: @handler.email,
-              error: true
+              error: true,
+              return_url: @handler.return_url
             }
           end
 
           def get_lti_nag_query_params
             {
-              email: @handler.email
+              email:      @handler.email,
+              return_url: @handler.return_url
             }
           end
 
