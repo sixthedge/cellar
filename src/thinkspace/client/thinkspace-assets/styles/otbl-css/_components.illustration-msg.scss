@@ -53,6 +53,13 @@
   }
 }
 
+.illustration-msg__img--75 {
+
+  >img {
+    max-width: 75px;
+  }
+}
+
 .illustration-msg__text-container {
   >h2 {
     margin-bottom: .5rem;

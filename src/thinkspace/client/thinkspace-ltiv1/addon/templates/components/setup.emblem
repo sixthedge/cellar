@@ -3,7 +3,7 @@
     .grid__col--3of4.grid__mobile--full-width
       .main-content__header
         h1 Hi #{email}
-        p Lets link OpenTBL with your LMS.
+        p Lets link OpenTBL to your LMS.
 
       if loading.authenticate_error
         partial 'components/shared/errors/authenticate'
