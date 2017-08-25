@@ -14,7 +14,7 @@ module Totem
             rescue @handler.resource_not_found_error => e2
               return redirect_on_resource_not_found_error(e2)
             rescue => e3
-              print_exception_message(e3)
+              return redirect_on_unrecognized_error(e3)
             end
 
             redirect_on_success
@@ -23,6 +23,11 @@ module Totem
 
           private
 
+          # ### Redirect Helpers
+          def redirect_on_unrecognized_error(e)
+            print_exception_message(e)
+            redirect_to_lti_sign_in_failure
+          end
 
           def redirect_on_validation_error(e)
             print_exception_message(e)
@@ -44,13 +49,35 @@ module Totem
             redirect_to_lti_sign_in_success
           end
 
-          def print_exception_message(e)
-            puts "LTI Request failed with exception #{e.class.name}: #{e.message}"
-            puts e.backtrace
+          def redirect_to_lti_sign_in_success
+            qp   = get_lti_sign_in_success_query_params
+            @url = lti_sign_in_url
+            add_query_params_to_url(qp)
+            redirect_to @url
           end
 
-          def handler_class; Totem::Authentication::Lti::RequestHandler; end
+          def redirect_to_lti_sign_in_failure
+            qp   = get_lti_sign_in_failure_query_params
+            @url = lti_sign_in_url
+            add_query_params_to_url(qp)
+            redirect_to @url
+          end
 
+          def redirect_to_lti_setup
+            qp   = get_lti_setup_query_params
+            @url = lti_setup_url
+            add_query_params_to_url(qp)
+            redirect_to @url
+          end
+
+          def redirect_to_lti_nag
+            qp   = get_lti_nag_query_params
+            @url = lti_nag_url
+            add_query_params_to_url(qp)
+            redirect_to @url
+          end
+
+          # ### Query Param helpers
           def get_lti_sign_in_failure_query_params
             {
               email: @handler.email,
@@ -97,33 +124,12 @@ module Totem
             @url.chop!
           end
 
-          def redirect_to_lti_sign_in_success
-            qp   = get_lti_sign_in_success_query_params
-            @url = lti_sign_in_url
-            add_query_params_to_url(qp)
-            redirect_to @url
+          def print_exception_message(e)
+            puts "LTI Request failed with exception #{e.class.name}: #{e.message}"
+            puts e.backtrace
           end
 
-          def redirect_to_lti_sign_in_failure
-            qp   = get_lti_sign_in_failure_query_params
-            @url = lti_sign_in_url
-            add_query_params_to_url(qp)
-            redirect_to @url
-          end
-
-          def redirect_to_lti_setup
-            qp   = get_lti_setup_query_params
-            @url = lti_setup_url
-            add_query_params_to_url(qp)
-            redirect_to @url
-          end
-
-          def redirect_to_lti_nag
-            qp   = get_lti_nag_query_params
-            @url = lti_nag_url
-            add_query_params_to_url(qp)
-            redirect_to @url
-          end
+          def handler_class; Totem::Authentication::Lti::RequestHandler; end
 
           def lti_sign_in_url; app_domain + '/lti/sign_in'; end
           def lti_setup_url;   app_domain + '/lti/setup';   end

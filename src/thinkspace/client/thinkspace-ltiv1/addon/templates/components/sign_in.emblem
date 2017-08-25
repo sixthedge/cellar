@@ -11,4 +11,4 @@
             component '__loader/base'
 
           if loading.error
-            artial 'components/shared/errors/authenticate'
+            partial 'components/shared/errors/authenticate'

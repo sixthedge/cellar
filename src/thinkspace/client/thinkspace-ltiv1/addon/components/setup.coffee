@@ -79,7 +79,7 @@ export default base.extend authenticate,
     return 'course' if @get('context_type') == 'space'
     return 'assignment'
 
-  resource_title: ember.computed 'resource_link_title', 'context_title', ->
+  resource_title: ember.computed 'resource_link_title', 'context_title', 'context_type', ->
     return @get('resource_link_title') if @get('context_type_is_assignment')
     return @get('context_title') if @get('context_type_is_space')
 

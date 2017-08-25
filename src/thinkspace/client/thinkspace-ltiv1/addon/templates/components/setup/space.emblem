@@ -4,4 +4,4 @@
     span.text--bold Instructors:
     span.spacing__margin-left--half 
       each model.owners as |owner|
-        = __delimit-string owner.full_name owner model.owners ','
+        = __delimit-string owner.full_name owner model.owners ', '
