@@ -26,9 +26,13 @@ module Thinkspace; module PeerAssessment
       value['quantitative']
     end
 
-    def quantitative_items
-      return [] unless value.has_key?('quantitative')
-      value['quantitative']
+    def qualitative_items
+      return [] unless value.has_key?('qualitative')
+      value['qualitative']
+    end
+
+    def qualitative_item_ids
+      qualitative_items.map { |item| item['id'] }
     end
 
     def options

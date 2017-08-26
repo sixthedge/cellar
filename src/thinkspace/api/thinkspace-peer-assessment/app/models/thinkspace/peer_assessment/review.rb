@@ -49,14 +49,11 @@ module Thinkspace; module PeerAssessment
       Thinkspace::PeerAssessment::JsonAnonymizers::Review.new(assessment, reviews).process
     end
 
-    def qualitative_items
-      return [] unless value.present? && value.has_key?('qualitative')
-      value['qualitative']
-    end
     def quantitative_items
       return [] unless value.present? && value.has_key?('quantitative')
       value['quantitative']
     end
+
     def qualitative_item_values
       values = Hash.new
       qualitative_items.each do |id, attrs|
@@ -67,6 +64,21 @@ module Thinkspace; module PeerAssessment
         values[feedback_type] << value
       end
       values
+    end
+
+    def qualitative_items
+      return [] unless value.present? && value.has_key?('qualitative')
+      value['qualitative']
+    end
+
+    def qualitative_item_for_id(id)
+      return unless qualitative_items.present?
+      qualitative_items[id.to_s]
+    end
+
+    def qualitative_value_for_id(id)
+      item = qualitative_item_for_id(id) || {}
+      item['value']
     end
 
     def get_review_set; thinkspace_peer_assessment_review_set; end
