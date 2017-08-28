@@ -11,5 +11,4 @@ export default ember.Route.extend m_unauth_route,
 
   redirect: ->
     route = (config.simple_auth or {}).login_route or 'users.sign_in'
-    puts "ARE WE HERE IN REDIRECT???"
     @transitionTo route
