@@ -63,8 +63,8 @@ export default base.extend
     tc.query_data(ns.to_p('customer'), query, options).then =>
       @reset_loading('submit')
       totem_messages.api_success source: @, action: 'create', i18n_path: ns.to_o('customer', 'card_saved')
-      @sendAction('update')
-      return true
+      @sendAction('update').then =>
+        @send('updating_payment')
     , (error) =>
       ## Error display handled by api
       @reset_loading('submit')

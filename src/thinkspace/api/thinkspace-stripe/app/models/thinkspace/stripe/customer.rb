@@ -15,30 +15,9 @@ module Thinkspace
 
       def self.create_customer(ownerable, token)
         tsc = self.new(ownerable: ownerable)
-        ## TODO: Remove this
-        temp_email = 'dylanbel7+test7@gmail.com'
-
-        puts '********************TSC TSC TSC***********************'
-        puts '********************TSC TSC TSC***********************'
-        puts '********************TSC TSC TSC***********************'
-        puts '********************TSC TSC TSC***********************'
-        puts '********************TSC TSC TSC***********************'
-        puts '********************TSC TSC TSC***********************'
-        puts '********************TSC TSC TSC***********************'
-        puts '********************TSC TSC TSC***********************'
-        puts '********************TSC TSC TSC***********************'
-        puts tsc
-        puts tsc.inspect
-        puts '********************TSC TSC TSC***********************'
-        puts '********************TSC TSC TSC***********************'
-        puts '********************TSC TSC TSC***********************'
-        puts '********************TSC TSC TSC***********************'
-        puts '********************TSC TSC TSC***********************'
-        puts '********************TSC TSC TSC***********************'
-
 
         options = {
-          email: temp_email,
+          email: ownerable.email,
           description: "Customer for #{ownerable.email}",
           source: token
         }
@@ -73,16 +52,6 @@ module Thinkspace
       def self.update_subscription(ownerable, plan_id, token)
         tsc, sc = self.update_customer(ownerable, token) 
         ## Could use plan_id to upgrade/downgrade plans here
-
-        puts '*****************UPDATE SUBSCRIPTION***********************'
-        puts '*****************UPDATE SUBSCRIPTION***********************'
-        puts '*****************UPDATE SUBSCRIPTION***********************'
-        puts '*****************UPDATE SUBSCRIPTION***********************'
-        puts '*****************UPDATE SUBSCRIPTION***********************'
-        puts '*****************UPDATE SUBSCRIPTION***********************'
-        puts '*****************UPDATE SUBSCRIPTION***********************'
-        puts tsc, sc
-
       end
 
       def self.cancel_subscription(ownerable)
@@ -98,11 +67,7 @@ module Thinkspace
         tsc = self.get_ts_customer(ownerable)
         sc  = tsc.get_stripe_customer
         sub = sc.subscriptions.data.first
-        puts '********************REACTIVATING***********************'
-        puts '********************REACTIVATING***********************'      
         sub = sub.save
-        puts sub
-        puts sub.inspect
       end
 
       def self.create_or_update_subscription(ownerable, plan_id, token)

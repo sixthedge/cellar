@@ -37,6 +37,12 @@ else
   h3
     | Submit your payment information to open one!
 
+
+h1
+  | Plans
+
+p = plan.label
+
 // If we have an active subscription, allow user to edit subscription payment type
 
 

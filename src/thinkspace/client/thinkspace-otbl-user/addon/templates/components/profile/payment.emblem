@@ -1,9 +1,10 @@
-component 'profile/header'
+// Currently missing the content for the main profile page, so we don't need the tab navigation yet
+//component 'profile/header'
 
 if loading.all
   component '__loader/base'
 else
-  component '__stripe/subscription' data=sub_data cancel='cancel' reactivate='reactivate' updating_payment='updating_payment'
+  component '__stripe/subscription' data=sub_data plan=teacher_plan cancel='cancel' reactivate='reactivate' updating_payment='updating_payment'
 
   if display_payment
     component '__stripe/payment' data=sub_data update='update' updating_payment='updating_payment' has_sub=has_sub
