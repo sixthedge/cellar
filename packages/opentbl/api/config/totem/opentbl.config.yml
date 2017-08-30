@@ -47,4 +47,5 @@ paths:
   - path: thinkspace/report
   - path: thinkspace/resource
   - path: thinkspace/team
+  - path: thinkspace/stripe
   - path: thinkspace/seed
