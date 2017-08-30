@@ -34,6 +34,7 @@ export default {
       simulation:             'thinkspace/simulation'
       builder:                'thinkspace/builder'
       # indented_list:          'thinkspace/indented_list'
+      stripe:                 'thinkspace/stripe'
 
     # Convert commonly used key values to a full namespace path.
     # When using a 'ns.to_' function, the type key will be converted to a namespaced path.
@@ -81,6 +82,9 @@ export default {
       # file:         'resource'
       # link:         'resource'
       # tag:          'resource'
+
+      # thinkspace/stripe
+      customer:      'stripe'
 
       # thinkspace/team
       team:          'team'

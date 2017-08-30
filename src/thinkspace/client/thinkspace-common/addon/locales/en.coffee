@@ -345,15 +345,9 @@ export default {
             response:
               save: 'Response saved successfully.'
 
-
-
-
-
-
-
-
-
-
+          stripe:
+            customer:
+              card_saved: 'Payment successful!'
 
 
     # spaces:

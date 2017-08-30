@@ -1,0 +1,46 @@
+if has_subscription
+  if subscription_active
+    h1
+      | Your subscription is #{status}
+
+    if will_end
+      h3 
+        | Subscription is set to expire on #{friendly_period_end}. You will not be billed after that date.
+    else
+      h3
+        | The current billing period runs from #{friendly_period_start} - #{friendly_period_end}.
+
+    .btn-group
+      button.btn.btn--primary click='update_payment' role='button'
+        | Update Payment Info
+      if will_end
+        button.btn click='reactivate' role='button'
+          | Reactivate Subscription
+      else
+        button.btn click='cancel' role='button'
+          | Cancel Subscription
+
+  if subscription_cancelled
+    h1
+      | Your subscription is #{status}
+
+    h3
+      | To reactivate your subscription, update your payment information.
+
+    .btn-group
+      button.btn.btn--primary click='update_payment' role='button'
+        | Reactivate Subscription
+else
+  h1 
+    | You currently do not have an OpenTBL subscription.
+
+  h3
+    | Submit your payment information to open one!
+
+// If we have an active subscription, allow user to edit subscription payment type
+
+
+// If we have no subscription, prompt user to add one
+
+
+// If a user has a cancelled subscription, prompt user to reactivate it

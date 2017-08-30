@@ -10,3 +10,6 @@ export default buildRoutes ->
     @route 'fail',         path: '/reset/fail'
     @route 'success',      path: '/reset/success'
     @route 'confirmation', path: '/reset/confirmation'
+
+  @route 'profile', path: '/profile', ->
+    @route 'payment', path: '/payment'

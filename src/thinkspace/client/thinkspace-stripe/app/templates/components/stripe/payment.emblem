@@ -1,0 +1,19 @@
+
+form id="payment-form"
+  div class="form-row"
+    label for="card-element"
+      | Credit or debit card
+    div id="card-element"
+
+    div id="card-errors" role="alert"
+
+  .btn-group
+    if loading.submit
+      button.btn--disabled disabled=true
+        | Submitting...
+    else
+      button.btn.btn--primary
+        | Submit Payment
+    if has_sub
+      button.btn click='updating_payment' role='button'
+        | Cancel Editing

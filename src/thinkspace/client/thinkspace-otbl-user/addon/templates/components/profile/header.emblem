@@ -1,0 +1,5 @@
+= current_user.full_name
+
+ul
+  li: link-to 'profile.index': | Profile Information
+  li: link-to 'profile.payment': | Account Management
