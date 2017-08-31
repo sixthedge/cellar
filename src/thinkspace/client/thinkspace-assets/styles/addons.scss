@@ -156,5 +156,14 @@
 @import "otbl-css/helpers.clearfix";
 @import "otbl-css/helpers.text";
 @import "otbl-css/_helpers.quick-fixes";
-@import "otbl-css/_helpers.sticky"
+@import "otbl-css/_helpers.sticky";
+
+
+/*
+## VENDOR OVERRIDES
+- Stripe...............Stripe payment styles.
+
+*/
+
+@import "otbl-css/vendor-overrides.stripe";
 

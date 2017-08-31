@@ -1,5 +1,11 @@
-= current_user.full_name
+.main-content__header
+  h1 Your Account
 
-ul
-  li: link-to 'profile.index': | Profile Information
-  li: link-to 'profile.payment': | Account Management
+.menu-bar
+  ul.menu-bar__list
+    li.menu-bar__item
+      link-to 'profile.index' class='menu-bar__link' tabindex='0'
+        | Profile Information
+    li.menu-bar__item 
+      link-to 'profile.payment' class='menu-bar__link' tabindex='0'
+        | Payment
