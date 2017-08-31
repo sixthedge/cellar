@@ -1,5 +1,5 @@
-h2 Subscription
 .grid__container.spacing__margin-bottom--4
+  h2 Subscription
   if has_subscription
     if subscription_active
       .dialogue.dialogue--green.spacing__margin-bottom--2
@@ -42,12 +42,11 @@ h2 Subscription
       p
         | Submit your payment information to open one!
 
+.grid__container.spacing__margin-bottom--4
+  h2 Current Plan
 
-h2
-  | Current Plan
-
-.text--bold = plan.label
-.text__font-size--14 Unlimited courses and student invites. Technical support extends to both instructor and students. 
+  .text--bold = plan.label
+  .text__font-size--14 Unlimited courses and student invites. Technical support extends to both instructor and students. 
 
 // If we have an active subscription, allow user to edit subscription payment type
 
