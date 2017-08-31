@@ -1,5 +1,5 @@
 // Currently missing the content for the main profile page, so we don't need the tab navigation yet
-//component 'profile/header'
+component 'profile/header'
 
 if loading.all
   component '__loader/base'
