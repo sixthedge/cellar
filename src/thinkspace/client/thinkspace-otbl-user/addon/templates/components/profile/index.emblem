@@ -1,6 +1,12 @@
-component 'profile/header'
+.grid__container--flex
+  .grid__col--4of4
+    component 'profile/header'
 
-component '__accessibility/radio/group' value=role options=role_options changed='changed_role'
+.grid__container--flex.spacing__margin-bottom--4
+  .grid__col--4of4
+    h2 Account Role
 
-.btn.btn--primary click='update'
-  | Update Profile
+    component '__accessibility/radio/group' value=role options=role_options changed='changed_role'
+
+    button.btn.btn--primary click='update' role='button'
+      | Update Profile
