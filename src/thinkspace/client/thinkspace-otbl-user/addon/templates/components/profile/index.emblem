@@ -1,3 +1,6 @@
 component 'profile/header'
 
-h1 edit route hea boi
+component '__accessibility/radio/group' value=role options=role_options changed='changed_role'
+
+.btn.btn--primary click='update'
+  | Update Profile
