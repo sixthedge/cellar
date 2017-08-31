@@ -3,7 +3,7 @@ import base           from 'thinkspace-base/components/base'
 import tc             from 'totem/cache'
 import ns             from 'totem/ns'
 import totem_messages from 'totem-messages/messages'
-
+import config         from 'totem-config/config'
 
 export default base.extend
 
@@ -12,8 +12,9 @@ export default base.extend
   didInsertElement: -> @init_stripe()
 
   init_stripe: ->
-    stripe   = Stripe('pk_test_zZUgYO5aFHAIohHEFGimNtzv')
-    elements = stripe.elements()
+    stripe_key = config.stripe_key
+    stripe     = Stripe(stripe_key)
+    elements   = stripe.elements()
     @set('stripe', stripe)
     @set('elements', elements)
 

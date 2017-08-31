@@ -1,1 +1,1 @@
-Stripe.api_key = 'sk_test_PbfilQR7t2tAoOnrMxoLH1Ny'
+Stripe.api_key = Rails.application.secrets.stripe['payment']['secret_access_key']
