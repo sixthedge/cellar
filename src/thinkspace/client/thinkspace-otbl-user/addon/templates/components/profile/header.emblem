@@ -1,5 +1,5 @@
 .main-content__header
-  h1 = current_user.full_name
+  h1 Your Account
 
 .menu-bar
   ul.menu-bar__list
