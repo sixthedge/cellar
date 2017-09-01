@@ -51,7 +51,7 @@ external_routes: ['spaces.show', 'cases.show']
 engines: [
   'thinkspace-messages'
   'thinkspace-dock'
-  'thinkspace-toolbar': {external_routes: {home: 'spaces.index'}}
+  'thinkspace-toolbar':  {external_routes: {home: 'spaces.index', 'users.profile'}}
 ]
 ```
   * *external_routes* is only used for a routeable engine.

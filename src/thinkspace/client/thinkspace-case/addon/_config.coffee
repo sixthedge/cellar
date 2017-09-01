@@ -27,7 +27,7 @@ export default {
     'thinkspace-message'
     'thinkspace-message-pubsub'
     'thinkspace-dock'
-    'thinkspace-toolbar':  {external_routes: {home: 'spaces.index'}}
+    'thinkspace-toolbar':  {external_routes: {home: 'spaces.index', 'users.profile'}}
     'thinkspace-resource': {dock: {routes: ['cases.show'], right_pocket: true}}
     'thinkspace-report':   {external_routes: {login: 'users.sign_in', show_report: 'reports.show'}}
     'thinkspace-peer-assessment-results': {external_routes: {login: 'users.sign_in'}}

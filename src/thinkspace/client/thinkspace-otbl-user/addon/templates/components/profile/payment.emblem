@@ -1,5 +1,4 @@
 // Currently missing the content for the main profile page, so we don't need the tab navigation yet
-
 .grid__container--flex
   .grid__col--4of4
     component 'profile/header'
@@ -7,10 +6,13 @@
 
 .grid__container--flex.spacing__margin-bottom--4
   .grid__col--4of4
-    if loading.all
-      component '__loader/base'
+    unless is_teacher
+      h1 Students do not require a subscription.
     else
-      component '__stripe/subscription' data=sub_data plan=teacher_plan cancel='cancel' reactivate='reactivate' updating_payment='updating_payment'
+      if loading.all
+        component '__loader/base'
+      else
+        component '__stripe/subscription' data=sub_data plan=teacher_plan cancel='cancel' reactivate='reactivate' updating_payment='updating_payment'
 
-      if display_payment
-        component '__stripe/payment' data=sub_data update='update' updating_payment='updating_payment' has_sub=has_sub
+        if display_payment
+          component '__stripe/payment' data=sub_data update='update' updating_payment='updating_payment' has_sub=has_sub caller=this

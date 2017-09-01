@@ -13,7 +13,7 @@ export default {
 
   add_engines: [
     'thinkspace-message'
-    'thinkspace-toolbar':  {external_routes: {home: 'spaces.index'}}
+    'thinkspace-toolbar':  {external_routes: {home: 'spaces.index', 'users.profile'}}
   ]
 
 }

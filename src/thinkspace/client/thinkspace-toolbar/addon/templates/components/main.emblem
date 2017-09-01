@@ -33,6 +33,6 @@ if user_expansion_visible
             .icon.icon--16.spacing__margin-right--half.icon__cross--black
             | Close Menu
         li.account-panel__item
-          a.account-panel__link click='account' Account
+          link-to-external 'users.profile' class='account-panel__link': | Account
         li.account-panel__item
           a.account-panel__link click='sign_out' Log Out

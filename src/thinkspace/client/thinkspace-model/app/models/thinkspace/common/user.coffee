@@ -44,9 +44,9 @@ export default ta.Model.extend ta.add(
   is_student: ember.computed 'profile.roles', ->
     @has_profile_role('student')
   is_teacher: ember.computed 'profile.roles', ->
-    @has_profile_role('teacher')
+    @has_profile_role('teacher') or @has_profile_role('instructor')
 
   has_profile_role: (role) ->
     roles = @get('profile.roles')
     return false unless ember.isPresent(roles)
-    roles.includes(role)
+    ember.get(roles, "#{role}")
