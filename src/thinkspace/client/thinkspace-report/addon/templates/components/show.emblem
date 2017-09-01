@@ -1,13 +1,31 @@
-if all_data_loaded
-    h1 #{model.title}
-    hr
+mount 'thinkspace-toolbar'
+   
+.main-content
+  .grid__container--flex
+    .grid__col--4of4
+      .main-content__header
+        h1.text--inline-block Your report is ready!
+        p Click on the button below to download. 
+  .grid__container--flex.spacing__margin-bottom--4
+    .grid__col--4of4.grid__mobile--full-width
+      if loading.all
+        component '__loader/base'
+      else
+        each model.files as |file|
+          .illustration-msg__img-container.illustration-msg__img--100.is-left.spacing__margin-right--1
+                img src='/assets/images/illustrations/illustrations__file--spreadsheet.svg' alt="Report Download" title="Report Download"
+          .grid__container.spacing__margin-bottom--4
+            .text__font-size--14.spacing__margin-bottom--half
+              strong Space:  
+              span
+                = space.title
+            .text__font-size--14.spacing__margin-bottom--half
+              strong Exercise:  
+              span = assignment.title
+            .text__font-size--14.spacing__margin-bottom--1
+              strong File name:  
+              span
+                | #{file.title}
 
-    each model.files as |file|
-      .row
-        .ts-grid_columns.small-12.medium-2.large-2
-        .ts-grid_columns.small-12.medium-9.large-9.right
-          h6
-            | #{file.title}
-          a.btn.btn-primary.btn-small href=file.url
-            | Download File
-            .tsi.tsi-left.tsi-size_16.tsi-download_white.left
+            a.btn.btn--primary role='button' href=file.url
+              | Download File

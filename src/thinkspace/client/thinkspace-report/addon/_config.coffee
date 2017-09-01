@@ -15,4 +15,8 @@ export default {
       'report:file':   'report'
       'report:report': 'report'
 
+  add_engines: [
+    'thinkspace-message'
+    'thinkspace-toolbar': {external_routes: {home: 'spaces.index'}}
+  ]
 }

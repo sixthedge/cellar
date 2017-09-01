@@ -1,0 +1,57 @@
+.grid__container.spacing__margin-bottom--4
+  h2 Subscription
+  if has_subscription
+    if subscription_active
+      .dialogue.dialogue--green.spacing__margin-bottom--2
+        h1
+          | Your subscription is #{status}
+
+        if will_end
+          p 
+            | Subscription is set to expire on <strong>#{friendly_period_end}</strong>. You will not be billed after that date.
+        else
+          p
+            | The current billing period runs from <strong>#{friendly_period_start} - #{friendly_period_end}</strong>.
+
+      .btn-group
+        button.btn.btn--primary click='update_payment' role='button'
+          | Update Payment Info
+        if will_end
+          button.btn click='reactivate' role='button'
+            | Reactivate Subscription
+        else
+          button.btn click='cancel' role='button'
+            | Cancel Subscription
+
+    if subscription_cancelled
+      .dialogue.spacing__margin-bottom--2
+        h1
+          | Your subscription is #{status}
+
+        p
+          | To reactivate your subscription, update your payment information.
+
+      .btn-group
+        button.btn.btn--primary click='update_payment' role='button'
+          | Reactivate Subscription
+  else
+    .dialogue.spacing__margin-bottom--2
+      h1 
+        | You currently do not have an OpenTBL subscription.
+
+      p
+        | Submit your payment information to open one!
+
+.grid__container.spacing__margin-bottom--4
+  h2 Current Plan
+
+  .text--bold = plan.label
+  .text__font-size--14 Unlimited courses and student invites. Technical support extends to both instructor and students. 
+
+// If we have an active subscription, allow user to edit subscription payment type
+
+
+// If we have no subscription, prompt user to add one
+
+
+// If a user has a cancelled subscription, prompt user to reactivate it

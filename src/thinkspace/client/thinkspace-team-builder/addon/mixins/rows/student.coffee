@@ -11,8 +11,9 @@ export default ember.Object.extend
 
   last_name:   ember.computed.reads 'model.last_name'
   first_name:  ember.computed.reads 'model.first_name'
-  formal_name: ember.computed 'first_name', 'last_name', -> "#{@get('last_name')}, #{@get('first_name')}"
   team_id:     ember.computed.reads 'model.team_id'
+  email:       ember.computed.reads 'model.email'
+  formal_name: ember.computed 'first_name', 'last_name', -> "#{@get('last_name')}, #{@get('first_name')}"
 
   team: ember.computed 'teams.@each', 'model', ->
     @get('teams').findBy('id', @get('team_id'))

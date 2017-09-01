@@ -37,24 +37,18 @@ export default step.extend
   create_changesets: ->
     model         = @get('model')
     changeset     = totem_changeset.create(model)
-
     @set('changeset', changeset)
-
-    assessment  = @get('assessment')
-    validations = @init_validations()
-
+    assessment    = @get('assessment')
+    validations   = @init_validations()
     assessment_cs = totem_changeset.create(assessment, validations)
     @set 'assessment_changeset', assessment_cs
 
   init_validations: ->
-    assessment = @get('assessment')
-
+    assessment  = @get('assessment')
     validations = {}
-
     if assessment.get('is_balance')
       vpresence = totem_changeset.vpresence({presence: true, message: 'Points per member must be present for an evaluation using balance points'})
       validations.points_per_member = [vpresence]
-
     validations
 
   initialize: ->
@@ -78,22 +72,29 @@ export default step.extend
       assessment_changeset.validate().then =>
         resolve(assessment_changeset.get('isValid'))
 
+  save: ->
+    new ember.RSVP.Promise (resolve, reject) =>
+      assessment = @get('assessment')
+      changeset  = @get('assessment_changeset')
+      points     = changeset.get('points_per_member')
+      assessment.set_points_per_member(points)
+      assessment.save().then (saved_model) =>
+        resolve(saved_model)
+      , (error) => reject(error)
+
   update_model: -> 
     manager = @get('manager')
-    console.log('calling step update_model with manager ', manager)
     manager.save_model()
 
   set_manager_model: ->
     ## Used to initialize the manager service's 'model' property to an assessment if present.
     manager    = @get('manager')
     assessment = @get('assessment')
-
     manager.set_model(assessment) if ember.isPresent(assessment)
 
   init_template: ->
     new ember.RSVP.Promise (resolve, reject) =>
       assessment = @get('assessment')
-
       assessment.get('assessment_template').then (template) =>
         template = @get('assessment_templates.firstObject') unless ember.isPresent(template)
         @set('template', template)
@@ -152,8 +153,6 @@ export default step.extend
 
   add_item_with_type: (type) ->
     manager = @get('manager')
-    console.log('calling add_item_with_type ', type, @get('loading'))
-
     @set_loading("#{type}")
     manager.add_item_with_type(type).then =>
       @reset_loading("#{type}")

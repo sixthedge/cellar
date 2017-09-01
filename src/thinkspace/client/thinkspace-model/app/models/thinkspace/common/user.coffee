@@ -29,9 +29,9 @@ export default ta.Model.extend ta.add(
   color_string:  ember.computed 'initials', -> "#{@get('initials')}-#{@get('id')}"
   color:         'eeeeee'
 
-  invitation_status: ember.computed 'state', ->
-    return 'Accepted' if @get('is_active')
-    return 'Pending' if @get('is_inactive')
+  invitation_status: ember.computed 'state', -> 
+    return 'Yes' if @get('is_active')
+    return 'No'  if @get('is_inactive')
 
   is_active:   ember.computed.equal 'state', 'active'
   is_inactive: ember.computed.equal 'state', 'inactive'
@@ -44,9 +44,9 @@ export default ta.Model.extend ta.add(
   is_student: ember.computed 'profile.roles', ->
     @has_profile_role('student')
   is_teacher: ember.computed 'profile.roles', ->
-    @has_profile_role('teacher')
+    @has_profile_role('teacher') or @has_profile_role('instructor')
 
   has_profile_role: (role) ->
     roles = @get('profile.roles')
     return false unless ember.isPresent(roles)
-    roles.includes(role)
+    ember.get(roles, "#{role}")

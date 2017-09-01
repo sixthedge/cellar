@@ -6,7 +6,14 @@ export default {
 
   engine:
     mount: 'users'
+    external_routes: [
+      {login: 'users.sign_in'},
+      'spaces.index'
+    ]
 
-  add_engines: ['thinkspace-message']
+  add_engines: [
+    'thinkspace-message'
+    'thinkspace-toolbar':  {external_routes: {home: 'spaces.index', 'users.profile'}}
+  ]
 
 }

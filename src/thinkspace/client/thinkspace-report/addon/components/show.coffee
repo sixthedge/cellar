@@ -13,7 +13,16 @@ export default base.extend
         @get('thinkspace').transition_to_model_route(authable, 'reports')
 
   init_base: ->
-    @get_report().then => @set_all_data_loaded()
+    @set_loading 'all'
+    @get_report().then (report) =>
+      report.get('authable').then (authable) =>
+        model_name         = authable.get('constructor.modelName').split('/').pop()
+        models             = {}
+        models[model_name] = authable
+        @get('thinkspace').set_current_models(models).then =>
+          @set 'assignment', @get('thinkspace').get_current_assignment()
+          @set 'space', @get('thinkspace').get_current_space()
+          @reset_loading 'all'
 
   get_report: ->
     new ember.RSVP.Promise (resolve, reject) =>
@@ -29,4 +38,4 @@ export default base.extend
 
       @tc.query_action(ns.to_p('report:report'), query, options).then (report) =>
         @set 'model', report
-        resolve()
+        resolve(report)

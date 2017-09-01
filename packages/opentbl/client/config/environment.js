@@ -84,6 +84,9 @@ module.exports = function(environment) {
   var app_terms_url   = process.env['APP_URLS_TERMS']   || null;
   var app_ferpa_url   = process.env['APP_URLS_FERPA']   || null;
 
+  // Stripe
+  var app_stripe_payment_publishable_access_key = process.env['APP_STRIPE_PAYMENT_PUBLISHABLE_ACCESS_KEY'] || null;
+
   ENV.totem.api_host                    = app_api_host;
   ENV.totem.asset_path                  = app_asset_path;
   ENV.totem.pub_sub.socketio_url        = app_pub_sub_socketio_url;
@@ -92,6 +95,7 @@ module.exports = function(environment) {
   ENV.totem.uploader                    = {s3: (app_totem_uploader == 'true')};
   ENV.totem.rollbar                     = {access_token: app_rollbar_access_token};
   ENV.totem.urls                        = {privacy: app_privacy_url, terms: app_terms_url, ferpa: app_ferpa_url};
+  ENV.totem.stripe                      = app_stripe_payment_publishable_access_key;
 
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER             = true;

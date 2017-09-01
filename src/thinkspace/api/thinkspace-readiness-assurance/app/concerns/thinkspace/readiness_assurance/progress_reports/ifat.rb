@@ -32,6 +32,7 @@ class Ifat < Base
       attempt = q['attempt']
       count   = q['count']
       choice  = q['choice']
+      next unless @results[id].present?
       value   = @results[id]['choices'].find {|i| i.with_indifferent_access['id'] == choice }
       next unless value.present?
       value['total']         += count

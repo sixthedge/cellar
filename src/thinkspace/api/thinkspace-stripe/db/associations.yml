@@ -1,0 +1,8 @@
+# - model: thinkspace/stripe/customer
+#   associations:
+#     - {belongs_to: ownerable, polymorphic: true}
+
+- model: thinkspace/stripe/customer
+  associations:
+    - {belongs_to: timeable,  polymorphic: true}
+    - {belongs_to: ownerable, polymorphic: true}

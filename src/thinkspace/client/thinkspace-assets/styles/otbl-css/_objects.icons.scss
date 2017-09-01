@@ -136,6 +136,18 @@
 
 .icon__arrow-end--black {
   background-image: url('images/icons/otbl-icons__arrow-top--black.svg');
+
+  &.icon__arrow--right {
+    transform: rotate(90deg);
+  }
+
+  &.icon__arrow--left {
+    transform: rotate(-90deg);
+  }
+
+  &.icon__arrow--down {
+    transform: rotate(180deg);
+  }
 }
 
 .icon__arrow--black {

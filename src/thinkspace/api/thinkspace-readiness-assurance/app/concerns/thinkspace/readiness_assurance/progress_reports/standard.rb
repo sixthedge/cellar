@@ -87,6 +87,7 @@ class Standard < Base
       choice     = q['choice']
       total      = q['total']
       ownerables = q['ownerables']
+      next unless @results[id].present?
       choices    = @results[id]['choices']
       value      = choices.find {|i| i.with_indifferent_access['id'].to_s == choice.to_s } # Cast to string as the choice 'id' may be a UUID.
       next unless value.present?

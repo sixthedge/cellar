@@ -12,7 +12,7 @@
     strong Students may have some of their team-dependent work reset for these exercises. 
     | Affected students will have their exercises unlocked and be notified by email to re-submit their work.
 
-  p.spacing__margin-bottom--2 Learn more about <a href='#'> the effects of editing your teams.</a> 
+  p.spacing__margin-bottom--2 Learn more about <a href='http://www.opentbl.com/support/teams/effects-of-editing-teams' target="_blank"> the effects of editing your teams.</a> 
 
   .btn-group
     button.btn.btn--primary click='confirm'

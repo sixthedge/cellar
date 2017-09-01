@@ -228,7 +228,13 @@ class ApiMessages
 
   status_code_from_error: (error) -> @get_errors(error).status
 
-  get_errors: (error) -> if error and util.is_hash(error.errors) then error.errors else {}
+  get_errors: (error) -> 
+    if error and util.is_hash(error.errors)
+      error.errors
+    else if util.is_number(error['status'])
+      error
+    else 
+      {}
 
   is_unauthorized_access: (error) -> @get_errors(error).status == 423  # helper function
 

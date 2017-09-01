@@ -72,6 +72,7 @@ gem 'cancancan', '1.16.0'
 gem 'paperclip', '5.1.0'
 gem 'has_secure_token', '1.0.0'
 gem 'spreadsheet', '1.1.4'
+gem 'stripe', '3.3.0'
 
 # LTI
 gem 'ims-lti', '1.2.2'
@@ -101,6 +102,7 @@ gem 'thinkspace-pub-sub',              '0.2.0', path: "#{gempath}/thinkspace-pub
 gem 'thinkspace-readiness-assurance',  '0.2.0', path: "#{gempath}/thinkspace-readiness-assurance"
 gem 'thinkspace-report',               '0.2.0', path: "#{gempath}/thinkspace-report"
 gem 'thinkspace-resource',             '0.2.0', path: "#{gempath}/thinkspace-resource"
+gem 'thinkspace-stripe',                '0.2.0', path: "#{gempath}/thinkspace-stripe"
 gem 'thinkspace-team',                 '0.2.0', path: "#{gempath}/thinkspace-team"
 
 group :development, :test do

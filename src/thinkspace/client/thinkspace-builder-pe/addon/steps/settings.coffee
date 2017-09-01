@@ -1,6 +1,6 @@
 import ember           from 'ember'
 import totem_changeset from 'totem/changeset'
-import v_comparison    from 'thinkspace-builder-pe/validators/comparison'
+import vcomparison    from 'thinkspace-builder-pe/validators/comparison'
 import step            from './step'
 
 ###
@@ -21,8 +21,8 @@ export default step.extend
     vpresence = totem_changeset.vpresence(true)
 
     changeset = totem_changeset.create(model,
-      release_at: [vpresence, v_comparison({initial_val: model.get('release_at'), val: 'due_at', message: 'Release date must be set before the due date', type: 'lt'})],
-      due_at:     [vpresence, v_comparison({initial_val: model.get('due_at'), val: 'release_at', message: 'Release date must be set before the due date', type: 'gt'})]
+      release_at: [vpresence, vcomparison({compare_to: 'due_at',     type: 'lt', message: 'Release date must be set before the due date'})],
+      due_at:     [vpresence, vcomparison({compare_to: 'release_at', type: 'gt', message: 'Due date must be set after the release date'})]
     )
 
     changeset.set 'show_errors', true
