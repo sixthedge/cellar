@@ -1,0 +1,12 @@
+.main-content__header
+  h1 Your Account
+
+.menu-bar
+  ul.menu-bar__list
+    li.menu-bar__item
+      link-to 'profile.index' class='menu-bar__link' tabindex='0'
+        | Profile Information
+    if is_teacher
+      li.menu-bar__item 
+        link-to 'profile.payment' class='menu-bar__link' tabindex='0'
+          | Payment

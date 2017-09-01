@@ -15,14 +15,14 @@ module Thinkspace
 
         def create
           Thinkspace::Common::User.transaction do
-            response = nil
+            r = nil
             begin
-              response = ::Totem::Settings.oauth.current_create_user(self, params)
+              r = ::Totem::Settings.oauth.current_create_user(self, params)
             rescue => e
               permission_denied(e.message)
             end
-            permission_denied(parse_s2s_errors(response['errors'])) unless response['valid'] # Invalid creation from S2S
-            set_user_values(response)
+            permission_denied(parse_s2s_errors(r['errors'])) unless r['valid'] # Invalid creation from S2S
+            set_user_values(r)
             update_terms_accepted_at
             if @user.save
               @user.activate!
@@ -106,13 +106,13 @@ module Thinkspace
 
         def set_user_values(s2s_params={})
           if s2s_params.empty?
-            @user.oauth_user_id = response['id']
-            @user.first_name    = response['first_name']
-            @user.last_name     = response['last_name']
-            @user.email         = response['email']
+            @user.first_name    = params_root[:first_name]
+            @user.last_name     = params_root[:last_name]
           else
-            @user.first_name                       = params_root[:first_name]
-            @user.last_name                        = params_root[:last_name]
+            @user.oauth_user_id = s2s_params['id']
+            @user.first_name    = s2s_params['first_name']
+            @user.last_name     = s2s_params['last_name']
+            @user.email         = s2s_params['email']
           end
           @user.email_optin                      = params_root[:email_optin]
           @user.profile                          = params_root[:profile]

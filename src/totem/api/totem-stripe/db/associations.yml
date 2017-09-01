@@ -1,0 +1,5 @@
+- model: totem/stripe/customer
+  associations:
+    - {belongs_to: ownerable, polymorphic: true}
+  serializers:
+    - attributes: [id]

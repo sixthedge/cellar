@@ -14,6 +14,8 @@ export default ->
     original_render.call(@, _env, visitor)
     if _env.lifecycleHooks.length > 0 and component._state == 'hasElement'
       owner_view = component.ownerView
-      owner_view._env.lifecycleHooks.push({ type: 'didInsertElement', view: component })
+      hooks      = owner_view._env.lifecycleHooks
+      has_hook   = hooks.find (hook) => hook.type == 'didInsertElement' && hook.view == component
+      owner_view._env.lifecycleHooks.push({ type: 'didInsertElement', view: component }) unless has_hook
     # Originally tried the below, but the 'didInsertElement' hook was called to early and the component was not actually in the DOM yet:
     # _env.renderer.dispatchLifecycleHooks(_env) if _env.lifecycleHooks.length > 0 and component._state == 'hasElement'

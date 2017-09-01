@@ -8,6 +8,7 @@
   associations:
     - {has_many: thinkspace/common/spaces}
     - {has_many: thinkspace/common/users, through: thinkspace/common/institution_users}
+    - {has_one:  thinkspace/stripe/customer, as: ownerable, dependent: destroy, serialize: false}
   serializers:
     - attributes: [id, title, description, state, info]
 
@@ -44,6 +45,7 @@
     - {has_many: thinkspace/common/disciplines,  through: thinkspace/common/user_disciplines, source: discipline, source_type: 'Thinkspace::Common::Discipline'}
     - {has_many: thinkspace/common/user_disciplines, as: user, serialize: false}
     - {has_one:  thinkspace/common/configuration,    as: configurable, dependent: destroy, serialize: false}
+    - {has_one:  thinkspace/stripe/customer,         as: ownerable, dependent: destroy, serialize: false}
   serializers:
     - attributes: [id, first_name, last_name, email, state, avatar_url, avatar_title, avatar_updated_at, profile, email_optin, activated_at, tos_current, color]
 

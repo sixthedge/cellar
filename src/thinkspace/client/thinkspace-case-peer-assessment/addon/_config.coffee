@@ -14,6 +14,6 @@ export default {
     'thinkspace-dock'
     'thinkspace-peer-assessment-results': {external_routes: {login: 'users.sign_in'}}
     'thinkspace-peer-assessment-instructor': {external_routes: {login: 'users.sign_in', pe_details: 'pe.details'}}
-    'thinkspace-toolbar':  {external_routes: {home: 'spaces.index'}}
+    'thinkspace-toolbar':  {external_routes: {home: 'spaces.index', 'users.profile'}}
   ]
 }

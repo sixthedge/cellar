@@ -1,0 +1,41 @@
+///*------------------------------------*\
+//    #STRIPE
+//\*------------------------------------*/
+
+.stripe__input {
+  border:           2px solid $color-gray-base;
+  border-radius:    $border-radius;
+  font-size:        .875rem;
+  color:            $color-black-base;
+  padding:          1em 0.4em 0;
+  width:            100%;
+  min-height:       2rem;
+  background-color: white;
+  vertical-align:   middle;
+  max-width:        $max-width--content;
+
+  &:focus {
+    border:  2px solid $color-blue-base;
+    outline: none;
+  }
+
+}
+
+.stripe__field {
+  height:      2rem;
+  line-height: 2rem;
+  color:       $color-black-base;
+
+}
+
+.stripe__error {
+  white-space: normal;
+  word-wrap:   break-word;
+  width:       100%;
+  max-width:   $max-width--content;
+  font-size:   .75rem;
+  line-height: 1.15rem;
+  font-weight: $font-weight--bold;
+  position:    relative;
+  color: $color-red-base;
+}

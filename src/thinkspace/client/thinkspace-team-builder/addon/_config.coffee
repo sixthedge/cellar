@@ -15,7 +15,7 @@ export default {
     'thinkspace-message'
     'thinkspace-message-pubsub'
     'thinkspace-dock'
-    'thinkspace-toolbar':  {external_routes: {home: 'spaces.index'}}
+    'thinkspace-toolbar':  {external_routes: {home: 'spaces.index', 'users.profile'}}
   ]
 
 
