@@ -6,7 +6,7 @@ export default {
 
   engine:
     mount: 'pe'
-    external_routes: [{login: 'users.sign_in'}, 'cases.show']
+    external_routes: [{login: 'users.sign_in'}, 'cases.show', 'lti.setup']
 
   query_params:
     assessment: ownerable: true, authable: true

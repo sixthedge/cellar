@@ -7,4 +7,12 @@ import auth_mixin from 'ember-simple-auth/mixins/application-route-mixin';
 // if use 'routes/application.coffee' will cause a duplicate-file error.
 // Therefore, using 'application.js' with the 'application_route_minin.coffee'.
 
-export default ember.Route.extend(auth_mixin, app_mixin);
+export default ember.Route.extend(auth_mixin, app_mixin, {
+
+  sessionAuthenticated: function() {
+    const is_lti = this.get('session.is_lti');
+    if (!is_lti) { this._super(); }
+  }
+});
+
+

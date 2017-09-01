@@ -22,6 +22,8 @@ export default base.extend initialize, navigate,
   current_step:       null
   current_step_index: ember.computed.reads 'current_step.index'
 
+  lti_session: ember.inject.service()
+
   # ## Methods
 
   # Called inside each step's route to initialize the state of the steps by mapping the step prototypes into the steps map.
@@ -44,9 +46,15 @@ export default base.extend initialize, navigate,
     ]
 
   transition_to_cases_show: ->
-    model = @get('model')
-    route = @get('route')
-    route.transitionToExternal 'cases.show', model
+    model       = @get('model')
+    route       = @get('route')
+    lti_session = @get('lti_session')
+    if lti_session.get('will_redirect')
+      lti_query_params = lti_session.get_redirect_query_params()
+      route_name       = lti_session.get('redirect_external_route')
+      route.transitionToExternal route_name, { queryParams: lti_query_params }
+    else
+      route.transitionToExternal 'cases.show', model
 
   _warn: (message) ->
     console.warn "[pe builder service] #{message}"

@@ -1,0 +1,18 @@
+if loading.assignments
+  component '__loader/base'
+else
+  .main-content__sub-header
+    h2.text--inline-block #{selected_space.title}
+    .btn-group.is-right.btn-group--mobile-full click='deselect_space'
+      a.btn.btn--mobile-full Back to Spaces
+
+  if no_assignments
+    p No assignments for #{selected_space.title}
+  else
+    / .breadcrumbs
+    /   a.breadcrumbs__link #{selected_space.title}
+    label Select an exercise to link:
+    hr
+    ul.tile__list
+      each assignments as |assignment|
+        component 'setup/assignment' model=assignment select='select_assignment' selected_assignment=selected_assignment class='tile__container'

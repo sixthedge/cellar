@@ -74,12 +74,17 @@ gem 'has_secure_token', '1.0.0'
 gem 'spreadsheet', '1.1.4'
 gem 'stripe', '3.3.0'
 
+# LTI
+gem 'ims-lti', '1.2.2'
+gem "attr_encrypted", "~> 3.0.0"
+
 # Cellar Totem
 gempath = "#{cellar_src}/totem/api"
 # Using a local version of active_model_serializers to freeze code that works with totem.
 gem 'active_model_serializers',                path: "#{gempath}/vendor/active_model_serializers-0.10.2"
 gem 'totem',                          '0.5.0', path: "#{gempath}"
 gem 'totem-authentication-session',   '0.5.0', path: "#{gempath}/totem-authentication-session"
+gem 'totem-authentication-lti',       '0.5.0', path: "#{gempath}/totem-authentication-lti"
 gem 'totem-authorization-cancan',     '0.5.0', path: "#{gempath}/totem-authorization-cancan"
 gem 'totem-core',                     '0.5.0', path: "#{gempath}/totem-core"
 gem 'totem-pub-sub',                  '0.5.0', path: "#{gempath}/totem-pub-sub"
@@ -92,12 +97,13 @@ gem 'thinkspace-builder',              '0.2.0', path: "#{gempath}/thinkspace-bui
 gem 'thinkspace-casespace',            '0.2.0', path: "#{gempath}/thinkspace-casespace"
 gem 'thinkspace-common',               '0.2.0', path: "#{gempath}/thinkspace-common"
 gem 'thinkspace-importer',             '0.2.0', path: "#{gempath}/thinkspace-importer"
+gem 'thinkspace-ltiv1',                '0.2.0', path: "#{gempath}/thinkspace-ltiv1"
 gem 'thinkspace-peer-assessment',      '0.2.0', path: "#{gempath}/thinkspace-peer-assessment"
 gem 'thinkspace-pub-sub',              '0.2.0', path: "#{gempath}/thinkspace-pub-sub"
 gem 'thinkspace-readiness-assurance',  '0.2.0', path: "#{gempath}/thinkspace-readiness-assurance"
 gem 'thinkspace-report',               '0.2.0', path: "#{gempath}/thinkspace-report"
 gem 'thinkspace-resource',             '0.2.0', path: "#{gempath}/thinkspace-resource"
-gem 'thinkspace-stripe',                '0.2.0', path: "#{gempath}/thinkspace-stripe"
+gem 'thinkspace-stripe',               '0.2.0', path: "#{gempath}/thinkspace-stripe"
 gem 'thinkspace-team',                 '0.2.0', path: "#{gempath}/thinkspace-team"
 
 group :development, :test do

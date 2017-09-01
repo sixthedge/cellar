@@ -6,7 +6,7 @@ export default {
 
   engine:
     mount: 'rat'
-    external_routes: [{login: 'users.sign_in'}, 'cases.show']
+    external_routes: [{login: 'users.sign_in'}, 'cases.show', 'lti.setup']
 
   add_engines: [
     'thinkspace-message'

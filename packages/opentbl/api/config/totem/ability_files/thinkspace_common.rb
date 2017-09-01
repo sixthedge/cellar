@@ -75,4 +75,9 @@ class ThinkspaceCommon < ::Totem::Settings.authorization.platforms.thinkspace.ca
     can [:read, :latest_for], agreement
   end
 
+  def contexts
+    context = Thinkspace::Ltiv1::Context
+    can [:sync], context
+  end
+
 end; end; end

@@ -1,0 +1,22 @@
+.footnote
+  if context_type_is_assignment
+    if selected_space
+      .text--bold Haven't created an exercise yet?
+      .text--regular 
+        link-to-external 'builder.new' (query-params space_id=selected_space.id)
+          | Create a new exercise 
+        span and it will show up as an option above. 
+    else
+      .text--bold Haven't created a space yet?
+      .text--regular 
+        link-to-external 'spaces.new' 
+          | Create a new space 
+        span and it will show up as an option above. 
+
+
+  else
+    .text--bold Haven't created a space yet?
+    .text--regular 
+      link-to-external 'spaces.new' 
+        | Create a new space 
+      span and it will show up as an option above. 

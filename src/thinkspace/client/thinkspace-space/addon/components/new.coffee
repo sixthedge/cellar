@@ -5,6 +5,10 @@ import totem_changeset from 'totem/changeset'
 
 export default base.extend
 
+  lti_session: ember.inject.service()
+
+  get_route: -> @get('container').lookup('route:new')
+
   init_base: ->
     @create_changeset()
 
@@ -24,4 +28,11 @@ export default base.extend
     submit: ->
       @get('changeset').save().then =>
         @get('model').save().then (saved_model) =>
-          @get_app_route().transitionTo 'spaces.index'
+          @totem_messages.api_success source: @, model: saved_model, action: 'save', i18n_path: ns.to_o('space', 'save')
+          lti_session = @get('lti_session')
+          if lti_session.get('will_redirect')
+            lti_query_params = lti_session.get_redirect_query_params()
+            route            = lti_session.get('redirect_external_route')
+            @get_route().transitionToExternal route, { queryParams: lti_query_params }
+          else
+            @get_app_route().transitionTo 'spaces.index'

@@ -28,7 +28,7 @@ partial 'components/header'
         .text__font-size--14
           | Settings
     .mobile-progress__item.is-right
-      .mobile-progress__link click='next_step'
+      .mobile-progress__link click='exit'
         .text__font-size--12.text--bold
           | Complete!
         .text__font-size--14

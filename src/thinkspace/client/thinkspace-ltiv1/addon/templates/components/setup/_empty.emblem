@@ -1,0 +1,9 @@
+.illustration-msg__container
+  .illustration-msg.illustration-msg--center.illustration-msg--img-top
+    .illustration-msg__img-container.illustration-msg__img--200
+      img src='/assets/images/illustrations/illustrations__empty__spaces.svg' alt="No spaces" title="No Spaces" 
+    .illustration-msg__text-container
+      h2 Create a space
+      p It looks like you dont have any OpenTBL spaces yet. Let's create one! 
+      link-to-external 'spaces.new' class='btn btn--primary' role='button'
+        | Create a space
