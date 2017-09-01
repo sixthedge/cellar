@@ -84,6 +84,7 @@ gempath = "#{cellar_src}/totem/api"
 gem 'active_model_serializers',                path: "#{gempath}/vendor/active_model_serializers-0.10.2"
 gem 'totem',                          '0.5.0', path: "#{gempath}"
 gem 'totem-authentication-session',   '0.5.0', path: "#{gempath}/totem-authentication-session"
+gem 'totem-authentication-lti',       '0.5.0', path: "#{gempath}/totem-authentication-lti"
 gem 'totem-authorization-cancan',     '0.5.0', path: "#{gempath}/totem-authorization-cancan"
 gem 'totem-core',                     '0.5.0', path: "#{gempath}/totem-core"
 gem 'totem-pub-sub',                  '0.5.0', path: "#{gempath}/totem-pub-sub"
@@ -102,7 +103,7 @@ gem 'thinkspace-pub-sub',              '0.2.0', path: "#{gempath}/thinkspace-pub
 gem 'thinkspace-readiness-assurance',  '0.2.0', path: "#{gempath}/thinkspace-readiness-assurance"
 gem 'thinkspace-report',               '0.2.0', path: "#{gempath}/thinkspace-report"
 gem 'thinkspace-resource',             '0.2.0', path: "#{gempath}/thinkspace-resource"
-gem 'thinkspace-stripe',                '0.2.0', path: "#{gempath}/thinkspace-stripe"
+gem 'thinkspace-stripe',               '0.2.0', path: "#{gempath}/thinkspace-stripe"
 gem 'thinkspace-team',                 '0.2.0', path: "#{gempath}/thinkspace-team"
 
 group :development, :test do

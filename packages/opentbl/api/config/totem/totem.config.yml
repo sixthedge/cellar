@@ -44,5 +44,6 @@ authorization:
 paths:
   - path: totem/core
   - path: totem/authentication/session
+  - path: totem/authentication/lti
   - path: totem/authorization/cancan
   - path: totem/pub_sub

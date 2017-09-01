@@ -43,6 +43,7 @@ paths:
   - path: thinkspace/common
   - path: thinkspace/casespace
   - path: thinkspace/importer
+  - path: thinkspace/ltiv1
   - path: thinkspace/peer_assessment
   - path: thinkspace/pub_sub
   - path: thinkspace/readiness_assurance

@@ -97,6 +97,8 @@ module Thinkspace; module Ltiv1
       end
     end
 
+    def resource_contextable_is_assignment?; resource.contextable_type == assignment_class.name; end
+    def resource_contextable_is_space?;      resource.contextable_type == space_class.name;      end
 
     # ### Classes
     def assignment_class; Thinkspace::Casespace::Assignment; end
