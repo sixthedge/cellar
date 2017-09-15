@@ -1,0 +1,28 @@
+.main-content
+  .grid__container.spacing__margin-bottom--4
+    .grid__col--3of4.grid__mobile--full-width
+      .main-content__header
+        h1 Hi #{email}
+        p Lets link OpenTBL to your LMS.
+
+      if loading.authenticate_error
+        partial 'components/shared/errors/authenticate'
+      else
+        if loading.authenticate
+          component '__loader/base'
+        else
+          if no_context_type
+            partial 'components/setup/context_type'
+          else
+
+            if show_confirmation
+              partial 'components/setup/confirmation'   
+            else
+
+              if show_spaces
+                partial 'components/setup/spaces'
+
+              if show_assignments
+                partial 'components/setup/assignments'
+
+            partial 'components/setup/footer'

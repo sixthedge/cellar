@@ -1,0 +1,6 @@
+a.tile__item
+  h1.tile__name = model.friendly_title
+  .tile__sub-caption = model.friendly_due_at
+  .group
+    span.tile__info.is-left = model.assignment_type.title
+    .tile__status.tile__status--live.is-right = model.friendly_state

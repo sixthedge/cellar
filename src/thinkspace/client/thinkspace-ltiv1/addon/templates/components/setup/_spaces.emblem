@@ -1,0 +1,7 @@
+partial 'components/setup/title'
+if no_spaces
+  partial 'components/setup/empty'
+else
+  ul.tile__list
+    each spaces as |space|
+      component 'setup/space' model=space select='select_space' selected_space=selected_space class='tile__container'

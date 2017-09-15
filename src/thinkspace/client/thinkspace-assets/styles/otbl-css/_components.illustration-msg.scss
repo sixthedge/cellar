@@ -12,6 +12,7 @@
   max-width: 500px;
 }
 
+
 .illustration-msg--center {
   margin: 0 auto;
 }
@@ -20,7 +21,14 @@
 
 // image positions
 .illustration-msg--img-right {
+  float: right;
+}
 
+.illustration-msg--img-left {
+  .illustration-msg__img-container {
+    float: left;
+    margin-right: 2rem;
+  }
 }
 
 .illustration-msg--img-top {
@@ -41,6 +49,20 @@
 .illustration-msg__img--200 {
   >img {
     max-width: 200px;
+  }
+}
+
+.illustration-msg__img--150 {
+  width: 150px;
+  >img {
+    max-width: 150px;
+  }
+}
+
+.illustration-msg__img--75 {
+
+  >img {
+    max-width: 75px;
   }
 }
 

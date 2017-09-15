@@ -1,0 +1,14 @@
+.main-content
+  .grid__container.grid__container--centered.spacing__margin-top--4.spacing__margin-bottom--4
+    .illustration-msg__container
+      .illustration-msg.illustration-msg--center.illustration-msg--img-top
+        .illustration-msg__img-container.illustration-msg__img--75.spacing__margin-bottom--0
+          img src='/assets/images/branding/otbl-logo_default.svg' alt="OpenTBL" title="OpenTBL"
+        .illustration-msg__text-container
+          h2 Logging in to OpenTBL!
+          if loading.authenticating
+            p Logging you in as #{email}..
+            component '__loader/base'
+
+          if loading.error
+            partial 'components/shared/errors/authenticate'
