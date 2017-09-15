@@ -1,7 +1,6 @@
 li.tile__container
   link-to 'show' model class='tile__item'
     h1.tile__name = model.title
-    .tile__sub-caption Summer 2017
     div.group
       .tile__info.is-left 
         if has_owners
