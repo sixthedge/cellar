@@ -56,7 +56,9 @@ export default ember.Service.extend
     model = @get 'model'
     model.save().then =>
       totem_messages.api_success source: @, model: model, action: 'update', i18n_path: ns.to_o('tbl:assessment', 'save')
-    , (error) => @error(error)
+    , (error) => 
+      totem_messages.api_failure error, source: @, model: model, action: 'update'
+
 
   # ### New item helpers
   get_new_quant_item: (label, type, settings={}) ->

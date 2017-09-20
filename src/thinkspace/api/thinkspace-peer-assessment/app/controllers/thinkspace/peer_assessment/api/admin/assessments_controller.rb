@@ -19,7 +19,7 @@ module Thinkspace; module PeerAssessment; module Api; module Admin;
     # - `team_sets`
     # - `progress_reports`
     def update
-      access_denied_state_error :update if @assessment.active?
+      access_denied("Assessment has reviews, cannot update.", "You cannot make changes to this evaluation, students have already started to take it.") if assessment_has_reviews?
       @assessment.value = params_root[:value]
       @assessment.assessment_template_id = params_association_id(:assessment_template_id)
       @assessment.save ? controller_render(@assessment) : controller_render_error(@assessment)
@@ -79,6 +79,14 @@ module Thinkspace; module PeerAssessment; module Api; module Admin;
 
     def authorize_authable
       authorize! :update, @assessment.authable
+    end
+
+    def assessment_has_reviews?
+      @assessment.
+      thinkspace_peer_assessment_team_sets.
+      joins(thinkspace_peer_assessment_review_sets: :thinkspace_peer_assessment_reviews).
+      where('thinkspace_peer_assessment_reviews.value IS NOT NULL').
+      count > 0
     end
 
     def set_state_error_variables
