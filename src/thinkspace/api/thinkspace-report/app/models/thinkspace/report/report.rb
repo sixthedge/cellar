@@ -40,7 +40,7 @@ class Report < ActiveRecord::Base
     end
     klass.present? ? klass.generate(self) : send_error_notification('INVALID_CLASS')
   end
-  # handle_asynchronously :generate
+  handle_asynchronously :generate
 
   # ### File helpers
   def add_file(options)
