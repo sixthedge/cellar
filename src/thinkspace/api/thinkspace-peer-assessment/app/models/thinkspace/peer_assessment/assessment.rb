@@ -49,7 +49,7 @@ module Thinkspace; module PeerAssessment
     end
 
     def get_points_per_member
-      options.with_indifferent_access.dig(:points, :per_member) || 0.0
+      (options.with_indifferent_access.dig(:points, :per_member) || 0.0).to_f
     end
 
     def get_min_max_score_for_reviews(number_of_reviews=0.0)
