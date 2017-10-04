@@ -26,14 +26,6 @@ export default base.extend initialize, navigate,
 
   lti_session: ember.inject.service()
 
-  step_prototypes:    ember.computed -> 
-    [
-      details_step,
-      content_step,
-      settings_step,
-      confirmation_step
-    ]
-
   # ## Methods
 
   # Called inside each step's route to initialize the state of the steps by mapping the step prototypes into the steps map.
