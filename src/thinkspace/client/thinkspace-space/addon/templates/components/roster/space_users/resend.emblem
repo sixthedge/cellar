@@ -1,0 +1,3 @@
+unless loading.space_user
+  if is_inactive
+    .btn.btn--primary.btn--mobile-full click='resend' Resend

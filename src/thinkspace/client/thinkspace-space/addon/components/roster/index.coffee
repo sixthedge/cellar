@@ -31,7 +31,8 @@ export default base.extend
       column.create({display: 'Last Name',      property: 'last_name', direction: 'ASC'})
       column.create({display: 'First Name',     property: 'first_name'}),
       column.create({display: 'Email',          property: 'email'}),
-      column.create({display: 'Has Logged In?',  property: 'invitation_status', sortable: false}),
+      column.create({display: 'Has Logged In?', property: 'invitation_status', sortable: false}),
+      column.create({display: 'Resend Invite',  component: 'roster/space_users/resend', sortable: false, data: {space: @get('model')}} ),
     ]
 
   student_sort: (column) ->
