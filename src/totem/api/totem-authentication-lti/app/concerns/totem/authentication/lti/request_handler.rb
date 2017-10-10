@@ -47,7 +47,7 @@ module Totem; module Authentication; module Lti
     # => Return whether or not the request is valid
     def validate
       @email            ||= get_param_email_primary
-      raise_missing_param_error("contact email: either #{LIS_PERSON_EMAIL_KEY} or #{TOOL_INSTANCE_EMAIL_KEY}") unless email.present?
+      raise_missing_param_error(LIS_PERSON_EMAIL_KEY) unless email.present?
 
       @resource_link_id ||= get_param_resource_link_id
       raise_missing_param_error(RESOURCE_LINK_ID_KEY)   unless resource_link_id.present?
@@ -148,10 +148,7 @@ module Totem; module Authentication; module Lti
     def get_param_outcome_service_url; get_param(OUTCOME_SERVICE_URL_KEY); end
     def get_param_result_sourcedid;    get_param(RESULT_SOURCEDID_KEY);    end
     def get_param_launch_return_url;   get_param(LAUNCH_RETURN_URL);       end
-    def get_param_email_primary
-      return get_param(LIS_PERSON_EMAIL_KEY) if has_param?(LIS_PERSON_EMAIL_KEY)
-      return get_param(TOOL_INSTANCE_EMAIL_KEY) if has_param?(TOOL_INSTANCE_EMAIL_KEY)
-    end
+    def get_param_email_primary;       get_param(LIS_PERSON_EMAIL_KEY);    end
 
     def has_param?(key) get_param(key).present?; end
 
