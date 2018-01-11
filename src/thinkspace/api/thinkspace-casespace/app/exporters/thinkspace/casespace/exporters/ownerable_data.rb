@@ -84,7 +84,14 @@ module Thinkspace; module Casespace; module Exporters; class OwnerableData < Thi
     if has_ownerables?
       ownerables = current_ownerables
     else
-      phase.collaboration? ? ownerables = phase.thinkspace_team_teams : ownerables = phase.get_space.thinkspace_common_users
+      if phase.is_team_based?
+        assignment       = phase.thinkspace_casespace_assignment
+        assignment_teams = assignment.thinkspace_team_teams
+        phase_teams      = phase.thinkspace_team_teams
+        phase_teams.present? ? ownerables = phase_teams : ownerables = assignment_teams
+      else
+        ownerables = phase.get_space.thinkspace_common_users
+      end
     end
     export_phase_ownerable_data(phase, ownerables)
   end
