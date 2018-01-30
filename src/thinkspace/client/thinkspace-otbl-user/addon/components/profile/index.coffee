@@ -14,6 +14,9 @@ export default base.extend
       {label: "I'm an instructor", value: 'instructor'}
     ]
 
+  first_name: ember.computed.reads 'model.first_name'
+  last_name:  ember.computed.reads 'model.last_name'
+
   init_base: ->
     @init_student()
     @init_role()
@@ -41,10 +44,18 @@ export default base.extend
         @set('role', 'instructor')
         model.set('profile.roles', {student: false, instructor: true})
 
+  set_names: ->
+    first_name = @get('first_name')
+    last_name  = @get('last_name')
+    model      = @get('model')
+    model.set('first_name', first_name)
+    model.set('last_name', last_name)
+
   actions:
     changed_role: (role) -> @toggle_role(role)
 
     update: -> 
+      @set_names()
       model = @get('model')
       model.save().then =>
         location.reload(true)
