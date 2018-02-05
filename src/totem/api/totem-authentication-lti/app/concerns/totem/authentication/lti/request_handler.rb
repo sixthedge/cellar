@@ -180,7 +180,7 @@ module Totem; module Authentication; module Lti
     RESOURCE_LINK_ID_KEY    = 'resource_link_id'
     RESOURCE_LINK_TITLE_KEY = 'resource_link_title'
 
-    ROLES_KEY               = 'ext_roles'
+    ROLES_KEY               = 'roles'
 
     CONTEXT_TITLE_KEY       = 'context_title'
 
@@ -199,9 +199,7 @@ module Totem; module Authentication; module Lti
 
     VALID_INSTRUCTOR_ROLES  =
       [ 
-        'Instructor',
-        'urn:lti:instrole:ims/lis/Instructor',
-        'urn:lti:role:ims/lis/Instructor'
+        'Instructor'
       ]
 
   end
