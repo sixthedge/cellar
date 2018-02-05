@@ -73,6 +73,7 @@ gem 'paperclip', '5.1.0'
 gem 'has_secure_token', '1.0.0'
 gem 'spreadsheet', '1.1.4'
 gem 'stripe', '3.3.0'
+gem 'clockwork', '2.0.2'
 
 # LTI
 gem 'ims-lti', '1.2.2'

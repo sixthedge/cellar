@@ -124,6 +124,15 @@ module Thinkspace
       def team_ownerable?; category = team_category; category.present? && category.team_ownerable?; end
       def peer_review?;    category = team_category; category.present? && category.peer_review?; end
       def collaboration?;  category = team_category; category.present? && category.collaboration?; end
+      def is_team_based?
+        return true if collaboration?
+        team_based = []
+        components = thinkspace_casespace_phase_components
+        components.each do |c|
+          c.respond_to?(:is_team_based?) ? team_based.push(c.is_team_based?) : team_based.push(false)
+        end
+        components.include?(true)
+      end
 
       def get_teams(ownerable=nil)
         if ownerable.blank?

@@ -85,6 +85,10 @@ Rails.application.configure do
     :socket_failure_delay => 0.2
     }
 
+  config.action_dispatch.default_headers = {
+    'X-Frame-Options' => 'ALLOWALL'
+  }
+  
   ::Totem::Core::Config::Platform.process(config)
 
 end

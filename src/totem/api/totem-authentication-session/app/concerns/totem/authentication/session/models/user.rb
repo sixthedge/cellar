@@ -89,7 +89,7 @@ module Totem
                 self.oauth_user_id = value
               else
                 method = "#{attribute}=".to_sym
-                self.send method, value if self.respond_to?(method)
+                self.send method, value if self.respond_to?(method) && !self.send(attribute).present?
               end
             end
             self.save

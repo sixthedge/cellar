@@ -6,7 +6,7 @@ module Thinkspace; module Casespace; module Exporters; class AssignmentScore < T
   def initialize(caller, assignment, ownerables)
     @caller      = caller
     @assignment  = assignment
-    @ownerables  = ownerables.uniq
+    @ownerables  = ownerables.order(:last_name).uniq
     @phase_class = Thinkspace::Casespace::Phase
     @team_class  = Thinkspace::Team::Team
     @user_class  = Thinkspace::Common::User
@@ -23,7 +23,7 @@ module Thinkspace; module Casespace; module Exporters; class AssignmentScore < T
       row        = Array.new
       row_number = index + 1 # Offset by 1 due to header row
       phases.each do |phase|
-        phase.collaboration? ? score = get_team_score(phase, ownerable) : score = get_ownerable_score(phase, ownerable)
+        phase.is_team_based? ? score = get_team_score(phase, ownerable) : score = get_ownerable_score(phase, ownerable)
         row.push score
       end
       row.push get_total(row) # Add total at end.
@@ -37,7 +37,9 @@ module Thinkspace; module Casespace; module Exporters; class AssignmentScore < T
   end
 
   def get_team_score(phase, ownerable)
-    teams = team_class.users_teams(phase, ownerable)
+    phase_teams                  = team_class.users_teams(phase, ownerable)
+    assignment_teams             = team_class.users_teams(@assignment, ownerable)
+    phase_teams.present? ? teams = phase_teams : teams = assignment_teams
     raise InvalidTeamsLength, "Multiple teams for [phase_id: #{phase.id}] for ownerable: #{ownerable.inspect}" if teams.length > 1
     team = teams.first
     team.present? ? get_ownerable_score(phase, team) : 0.0

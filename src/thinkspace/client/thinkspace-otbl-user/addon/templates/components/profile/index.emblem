@@ -4,6 +4,12 @@
 
 .grid__container--flex.spacing__margin-bottom--4
   .grid__col--4of4
+    h2 Name
+    label First name
+    = input value=first_name placeholder='First name'
+    label Last name
+    = input value=last_name placeholder='Last name'
+
     h2 Account Role
 
     component '__accessibility/radio/group' value=role options=role_options changed='changed_role'

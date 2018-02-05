@@ -46,6 +46,7 @@ module Thinkspace
       def trat?; get_ra_type == 'trat'; end
 
       def ifat?; get_settings.dig('questions', 'ifat') == true; end
+      def is_team_based?; trat?; end
 
       # ###
       # ### Question Helpers.

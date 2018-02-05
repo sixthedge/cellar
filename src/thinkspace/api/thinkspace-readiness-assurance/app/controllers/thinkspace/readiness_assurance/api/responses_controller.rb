@@ -17,7 +17,7 @@ module Thinkspace
             publish_trat_response
             controller_render_no_content
           else
-            controller_render(@response)
+            controller_render_no_content
           end
           publish_progress_report
         end

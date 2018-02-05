@@ -4,13 +4,13 @@ module Thinkspace; module ReadinessAssurance; module Exporters; class Assessment
   attr_reader :caller, :assessment, :phase, :assignment, :teams, :users, :team_sets, :review_sets, :reviews
 
   def initialize(caller, assessment, phase, teams)
-    @caller      = caller
-    @assessment  = assessment
-    @phase       = phase
-    @assignment  = phase.thinkspace_casespace_assignment
-    @teams       = teams.order(:title)
-    @users       = phase.get_space.thinkspace_common_users.order(:last_name).uniq
-    @responses   = @assessment.thinkspace_readiness_assurance_responses
+    @caller     = caller
+    @assessment = assessment
+    @phase      = phase
+    @assignment = phase.thinkspace_casespace_assignment
+    @teams      = teams
+    @users      = phase.get_space.thinkspace_common_users.order(:last_name).uniq
+    @responses  = @assessment.thinkspace_readiness_assurance_responses
   end
 
   def process
