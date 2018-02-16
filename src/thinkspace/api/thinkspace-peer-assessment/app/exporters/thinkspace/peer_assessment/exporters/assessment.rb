@@ -43,7 +43,8 @@ module Thinkspace; module PeerAssessment; module Exporters; class Assessment < T
 
     @assessment.quantitative_items.each do |quant_item|
       id    = quant_item['id'].to_s # question ids are saved as integers on the assessment, but represented as strings in the anonymized json
-      scores << get_score_for_question(data, id)
+      score = get_score_for_question(data, id)
+      scores << score if (score.is_a?(Float) || score.is_a?(Fixnum))
     end
     add_totals_to_scores(scores)  
     sheet.update_row row_number, *(identifiers), *scores
