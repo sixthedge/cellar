@@ -30,8 +30,11 @@ namespace :thinkspace do
           new_review = new_review_set.thinkspace_peer_assessment_reviews.find_by(reviewable: old_review.reviewable)
           next unless (new_review.present? && new_review.value.nil?)
           new_review.value = old_review.value
+          new_review.state = old_review.state
           new_review.save
         end
+        new_review_set.state = old_review_set.state
+        new_review_set.save
       end
 
       old_team_sets.destroy_all
