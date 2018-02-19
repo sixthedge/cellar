@@ -103,10 +103,17 @@ module Totem; module Authentication; module Lti
 
     def get_or_create_user
       user  = user_class.find_by(email: email)
+      sync_user_from_params(user) if user.present?
       user  = user_class.create(email: email, first_name: get_param_first_name, last_name: get_param_last_name) unless user.present?
       user.state = 'active'
       user.save
       user
+    end
+
+    def sync_user_from_params(user)
+      return unless user.present?
+      user.first_name = get_param_first_name unless user.first_name.present?
+      user.last_name  = get_param_last_name  unless user.last_name.present?
     end
 
     def get_consumer       
