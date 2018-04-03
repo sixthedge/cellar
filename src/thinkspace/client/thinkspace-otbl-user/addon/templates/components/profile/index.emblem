@@ -4,6 +4,9 @@
 
 .grid__container--flex.spacing__margin-bottom--4
   .grid__col--4of4
+    if is_teacher
+      .bordered-panel.bordered-panel--authentication.bordered-panel--shadow.bordered-panel--mobile.spacing__pad--2.grid__container--centered
+        h1 Please note that OpenTBL will be unavailable after May 12th, 2018.
     h2 Name
     label First name
     = input value=first_name placeholder='First name'

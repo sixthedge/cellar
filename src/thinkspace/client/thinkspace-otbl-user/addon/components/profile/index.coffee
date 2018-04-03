@@ -4,7 +4,6 @@ import base        from 'thinkspace-base/components/base'
 import totem_scope from 'totem/scope'
 
 export default base.extend
-
   role: null
   role_options:
     group:
@@ -16,6 +15,7 @@ export default base.extend
 
   first_name: ember.computed.reads 'model.first_name'
   last_name:  ember.computed.reads 'model.last_name'
+  is_teacher: ember.computed.reads 'session.user.is_teacher'
 
   init_base: ->
     @init_student()
